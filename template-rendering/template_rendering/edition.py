@@ -146,11 +146,14 @@ def check(edition: Edition, templates: dict[str, Template] | None = None) -> lis
 
 
 def render(edition: Edition, templates: dict[str, Template] | None = None,
-           labels: Labels | None = None, head: str = "", foot: str = "") -> str:
+           labels: Labels | None = None, head: str = "", foot: str = "",
+           document: bool = True) -> str:
     """The page for an edition that has passed check().
 
-    `head` goes at the end of <head> and `foot` at the end of <body>, both
-    inserted as is, like each story's `extra`.
+    `head` goes after the page's styles and `foot` at the very end, both
+    inserted as is, like each story's `extra`. With `document=False` the
+    page has no <!doctype>, <html>, <head> or <body> of its own, for hosts
+    that wrap every page in theirs.
     """
     templates = templates if templates is not None else load_templates()
     t = labels or Labels()
@@ -175,6 +178,7 @@ def render(edition: Edition, templates: dict[str, Template] | None = None,
         css=stylesheet(templates, [s.storyboard for s in edition.stories], "edition.css"),
         head=Markup(head),
         foot=Markup(foot),
+        document=document,
         t=t,
         brand=BRAND,
     )

@@ -114,6 +114,13 @@ class HostMarkupTests(unittest.TestCase):
         self.assertIn("<script>boot()</script>\n</body>", html)
         self.assertIn("&lt;b&gt;Night&lt;/b&gt; train", html)
 
+    def test_a_fragment_leaves_the_document_to_the_host(self):
+        html = edition.render(one_story_edition(), foot="<script>boot()</script>", document=False)
+        self.assertIsNone(re.search(r"</?(!doctype|html|head|body)\b", html, re.I))
+        self.assertTrue(html.startswith('<meta name="generator" content="it\'s news">\n<title>Today</title>'))
+        self.assertIn('<div class="edition-page" lang="en">', html)
+        self.assertTrue(html.endswith("</div>\n<script>boot()</script>\n"))
+
 
 class LabelTests(unittest.TestCase):
     T = Labels({"lang": "fr", "bottom_line": "L'essentiel", "topic.world": "Monde",

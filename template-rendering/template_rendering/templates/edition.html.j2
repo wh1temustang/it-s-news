@@ -1,9 +1,13 @@
 {% import "story.html.j2" as parts with context %}
+{# Without `document`, the page is a fragment for a host that wraps pages in
+   its own <html>, <head> and <body>. #}
+{% if document %}
 <!doctype html>
 <html lang="{{ t.lang }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+{% endif %}
 <meta name="generator" content="it's news">
 <title>{{ edition.title }}</title>
 {% if edition.dek %}
@@ -15,8 +19,11 @@
 {% if head %}
 {{ head }}
 {% endif %}
+{% if document %}
 </head>
-<body class="edition-page">
+<body>
+{% endif %}
+<div class="edition-page" lang="{{ t.lang }}">
 <header class="masthead">
   <h1>{{ edition.title }}</h1>
   {% if edition.dek %}
@@ -58,8 +65,11 @@
   {% endif %}
   <p>{{ t("presented_by", brand=brand) }} {{ t("checked_edition") }}</p>
 </footer>
+</div>
 {% if foot %}
 {{ foot }}
 {% endif %}
+{% if document %}
 </body>
 </html>
+{% endif %}

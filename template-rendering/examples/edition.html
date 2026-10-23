@@ -45,8 +45,10 @@
 [data-topic="culture"]  { --accent: #a21caf; }
 [data-topic="sports"]   { --accent: #b91c1c; }
 
+/* Dark mode follows the reader's system, unless the page's host sets
+   data-theme="light" or "dark" on the root element for a reader's own choice. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0f1115;
     --surface: #181b21;
     --ink: #eef0f4;
@@ -62,18 +64,50 @@
     --land: #262a32;
     --coast: #414856;
     --border: #4a5160;
+    color-scheme: dark;
   }
-  [data-topic="world"]    { --accent: #7aa2ff; }
-  [data-topic="politics"] { --accent: #b197fc; }
-  [data-topic="business"] { --accent: #2dd4bf; }
-  [data-topic="science"]  { --accent: #22d3ee; }
-  [data-topic="tech"]     { --accent: #8b93ff; }
-  [data-topic="climate"]  { --accent: #4ade80; }
-  [data-topic="health"]   { --accent: #f472b6; }
-  [data-topic="local"]    { --accent: #fb923c; }
-  [data-topic="culture"]  { --accent: #e879f9; }
-  [data-topic="sports"]   { --accent: #f87171; }
+  :root:not([data-theme="light"]) [data-topic="world"]    { --accent: #7aa2ff; }
+  :root:not([data-theme="light"]) [data-topic="politics"] { --accent: #b197fc; }
+  :root:not([data-theme="light"]) [data-topic="business"] { --accent: #2dd4bf; }
+  :root:not([data-theme="light"]) [data-topic="science"]  { --accent: #22d3ee; }
+  :root:not([data-theme="light"]) [data-topic="tech"]     { --accent: #8b93ff; }
+  :root:not([data-theme="light"]) [data-topic="climate"]  { --accent: #4ade80; }
+  :root:not([data-theme="light"]) [data-topic="health"]   { --accent: #f472b6; }
+  :root:not([data-theme="light"]) [data-topic="local"]    { --accent: #fb923c; }
+  :root:not([data-theme="light"]) [data-topic="culture"]  { --accent: #e879f9; }
+  :root:not([data-theme="light"]) [data-topic="sports"]   { --accent: #f87171; }
 }
+
+:root[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #181b21;
+  --ink: #eef0f4;
+  --muted: #a3a9b5;
+  --line: #2a2e37;
+  --on-accent: #0b0d10;
+  --alt: #fbbf24;
+  --good: #4ade80;
+  --bad: #f87171;
+  --pending: #fbbf24;
+  --neutral: #9ca3af;
+  --water: #142130;
+  --land: #262a32;
+  --coast: #414856;
+  --border: #4a5160;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] [data-topic="world"]    { --accent: #7aa2ff; }
+:root[data-theme="dark"] [data-topic="politics"] { --accent: #b197fc; }
+:root[data-theme="dark"] [data-topic="business"] { --accent: #2dd4bf; }
+:root[data-theme="dark"] [data-topic="science"]  { --accent: #22d3ee; }
+:root[data-theme="dark"] [data-topic="tech"]     { --accent: #8b93ff; }
+:root[data-theme="dark"] [data-topic="climate"]  { --accent: #4ade80; }
+:root[data-theme="dark"] [data-topic="health"]   { --accent: #f472b6; }
+:root[data-theme="dark"] [data-topic="local"]    { --accent: #fb923c; }
+:root[data-theme="dark"] [data-topic="culture"]  { --accent: #e879f9; }
+:root[data-theme="dark"] [data-topic="sports"]   { --accent: #f87171; }
+
+:root[data-theme="light"] { color-scheme: light; }
 
 * { box-sizing: border-box; }
 
@@ -272,7 +306,7 @@ a { color: var(--accent); }
 
 .toc {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   z-index: 10;
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--bg) 90%, transparent);
@@ -903,7 +937,8 @@ a { color: var(--accent); }
 
 </style>
 </head>
-<body class="edition-page">
+<body>
+<div class="edition-page" lang="en">
 <header class="masthead">
   <h1>it&#39;s news sample edition</h1>
   <p class="dek">Two fictional stories, one page: how an edition groups stories into sections.</p>
@@ -1177,5 +1212,6 @@ a { color: var(--accent); }
   <p class="edition-footer">That&#39;s the whole edition. Both stories are fictional samples.</p>
   <p>Presented by <b>it's news</b>. Every figure and quote in these stories was checked against their articles.</p>
 </footer>
+</div>
 </body>
 </html>

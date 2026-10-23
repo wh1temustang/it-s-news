@@ -110,6 +110,11 @@ news itself adds no scripts, so anything interactive (a feedback form, say)
 is the host's to write and keep safe. Its CSS can use the tokens in
 `templates/base.css`, so it follows the page into dark mode.
 
+Hosts that wrap every page in their own `<html>`, `<head>` and `<body>` pass
+`document=False` to get the page without them. A host that lets readers pick
+a theme sets `data-theme="light"` or `"dark"` on the root element, and the
+page follows it instead of the system setting.
+
 ## Adding a template
 
 1. Create `template_rendering/templates/<id>/` with:
