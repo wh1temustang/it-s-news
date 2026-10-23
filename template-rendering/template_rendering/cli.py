@@ -1,4 +1,4 @@
-"""Command line: python -m itsnews <command> ...
+"""Command line: python -m template_rendering <command> ...
 
     prompt   ARTICLE                 print the full instructions for the agent
     check    ARTICLE STORYBOARD      validate a storyboard against its article
@@ -108,7 +108,7 @@ def cmd_templates(args) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="itsnews",
+        prog="template_rendering",
         description="Turn a news article into a visual page, using templates an agent picks.",
     )
     sub = parser.add_subparsers(dest="command", required=True)

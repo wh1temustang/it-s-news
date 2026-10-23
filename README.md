@@ -9,57 +9,15 @@ long video with more creative presentation: timelines, info boards, maps,
 charts and other visual formats that get the key facts across in seconds, not
 minutes.
 
-## How it works
+## Approaches
 
-The first approach renders an article with **pre-built templates**: vivid,
-but deterministic. An AI agent reads the article (`.md`) and the template
-catalog, then decides which templates tell this story. Code checks the
-agent's choices against the article and renders the page.
+There is more than one way to make news quick to take in, so it's news tries
+several. Each approach lives in its own folder, with its own README, setup
+and tests.
 
-```
- article.md ──► AI agent ──► storyboard.json ──► itsnews check ──► itsnews render ──► page.html
-```
-
-- **Templates:** timeline, info board, map, big number, bar chart, line
-  chart, comparison, cause and effect, and quote.
-- **The agent** answers one question per scene ("Where does it run?", "What
-  happens next?") and picks the template that answers it fastest. It follows
-  [agent/prompt.md](agent/prompt.md) and [agent/catalog.md](agent/catalog.md).
-- **The check** rejects any figure or quote that isn't in the article, and
-  any text over its template's word budget.
-- **The page** is one self-contained HTML file, with light and dark themes,
-  that loads nothing from the network.
-
-More detail in [agent/README.md](agent/README.md).
-
-## Quick start
-
-Requires Python 3.10 or newer.
-
-```bash
-python3 -m venv .venv && .venv/bin/pip install -e .
-source .venv/bin/activate
-
-# Render a sample article from its storyboard
-python -m itsnews render examples/night-train.md examples/night-train.storyboard.json
-open output/night-train.html
-
-# See every template
-python -m itsnews gallery && open output/gallery.html
-
-# Present your own article: print the prompt for your AI agent...
-python -m itsnews prompt my-article.md > prompt.txt
-# ...save its reply as my-article.storyboard.json, then:
-python -m itsnews check  my-article.md my-article.storyboard.json
-python -m itsnews render my-article.md my-article.storyboard.json
-
-# Run the tests
-python -m unittest discover -s tests -v
-```
-
-The sample articles in [examples/](examples/) are fictional. Each comes with
-its storyboard and the page rendered from it, for example
-[examples/night-train.html](examples/night-train.html).
+| Approach | What it does |
+|---|---|
+| [Template rendering](template-rendering/) | An AI agent picks pre-built visual templates (timeline, info board, map, charts and more) for an article. Code checks every figure and quote against the article, then renders a self-contained page. See [an example page](template-rendering/examples/night-train.html). |
 
 ## Open source: no credentials, no private data
 
@@ -89,5 +47,5 @@ already have it.
 
 ## License
 
-MIT. See [LICENSE](LICENSE). Map data comes from
+MIT. See [LICENSE](LICENSE). The map data in template rendering comes from
 [Natural Earth](https://www.naturalearthdata.com/) and is in the public domain.

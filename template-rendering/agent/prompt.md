@@ -111,7 +111,7 @@ or maps.
 
 ## After you answer
 
-Your storyboard goes through `itsnews check`, which reports schema problems
-and every number or quote it can't find in the article. If it reports
-anything, fix exactly what it names and answer again with the whole
-corrected storyboard.
+Your storyboard goes through `python -m template_rendering check`, which
+reports schema problems and every number or quote it can't find in the
+article. If it reports anything, fix exactly what it names and answer again
+with the whole corrected storyboard.

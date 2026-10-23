@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build itsnews/data/world.json from Natural Earth land and border data.
+"""Build template_rendering/data/world.json from Natural Earth land and border data.
 
 The map template draws coastlines and country borders from this file. It is
 generated once and committed; rerun this only to change the source data or
@@ -10,7 +10,7 @@ Usage:
     curl -fsSL -O $NE/ne_50m_land.geojson
     curl -fsSL -O $NE/ne_50m_admin_0_boundary_lines_land.geojson
     python3 tools/build_world.py ne_50m_land.geojson \\
-        ne_50m_admin_0_boundary_lines_land.geojson itsnews/data/world.json
+        ne_50m_admin_0_boundary_lines_land.geojson template_rendering/data/world.json
 
 Natural Earth is public domain (https://www.naturalearthdata.com/).
 

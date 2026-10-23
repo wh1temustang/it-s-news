@@ -1,42 +1,22 @@
 # Notes for AI agents
 
-## Presenting an article
+it's news tries more than one approach to making news quick to take in. Each
+approach lives in its own folder, with its own AGENTS.md, setup and tests.
+Before working in a folder, read its AGENTS.md.
 
-When asked to present, storyboard or render a news article (`.md`):
+## Approaches
 
-1. Read [agent/prompt.md](agent/prompt.md) and [agent/catalog.md](agent/catalog.md)
-   in full, then the schema of each template you're considering
-   (`itsnews/templates/<id>/schema.json`). Don't work from memory.
-2. Read the whole article.
-3. Write the storyboard as `<article>.storyboard.json` next to the article,
-   following the prompt.
-4. Run `python -m itsnews check <article.md> <storyboard.json>` and fix every
-   problem it reports. Repeat until it passes. Never change the article to
-   make the check pass.
-5. Run `python -m itsnews render <article.md> <storyboard.json>`. The page goes
-   to `output/<article>.html`.
-6. Report which templates you chose and why, plus anything the article
-   couldn't support.
+- [template-rendering/](template-rendering/AGENTS.md): an AI agent picks
+  pre-built visual templates for an article, and code checks and renders the
+  page. Use it when asked to present, storyboard or render a news article,
+  unless another approach is named.
 
-## Working on the code
+## Adding an approach
 
-- Setup: `python3 -m venv .venv && .venv/bin/pip install -e .`
-- Tests: `.venv/bin/python -m unittest discover -s tests -v`
-- Gallery of every template: `.venv/bin/python -m itsnews gallery`, written
-  to `output/gallery.html`
-- Layout: `itsnews/` is the package (checker, renderer, templates),
-  `agent/` holds the prompt and the catalog, `examples/` holds fictional
-  sample articles with their storyboards and rendered pages, and `tools/`
-  holds one-off data builders.
-- The example pages (`examples/<name>.html`) are committed. After changing a
-  template, the renderer or an example, render them again with
-  `.venv/bin/python -m itsnews render examples/<name>.md examples/<name>.storyboard.json -o examples/<name>.html`.
-  A test fails while they're stale.
-- Rendering must stay deterministic: no timestamps, randomness or network
-  access in `itsnews/`.
-- Pages must stay self-contained: inline CSS, no external fonts, scripts or
-  images.
-- To add a template, follow "Adding a template" in [agent/README.md](agent/README.md).
+- Give it its own top-level folder with a README.md, an AGENTS.md, a
+  CLAUDE.md that holds `@AGENTS.md`, and its own setup and tests.
+- List it above, in the "Approaches" table in [README.md](README.md), and as
+  a job in [.github/workflows/tests.yml](.github/workflows/tests.yml).
 
 ## Rules
 
@@ -45,5 +25,4 @@ When asked to present, storyboard or render a news article (`.md`):
   personal data (see [README.md](README.md)).
 - Sample articles must be fictional, say so in their first lines, and set
   `fictional: true` in their front matter.
-- `output/` is generated and not committed. The example pages in
-  `examples/` are the exception.
+- Generated output (`output/`) is not committed.

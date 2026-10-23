@@ -4,8 +4,8 @@ from __future__ import annotations
 import re
 import unittest
 
-from itsnews import geo
-from itsnews.article import parse
+from template_rendering import geo
+from template_rendering.article import parse
 
 VIENNA, BARCELONA = (48.21, 16.37), (41.39, 2.17)
 

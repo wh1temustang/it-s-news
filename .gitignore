@@ -238,5 +238,5 @@ service-account*.json
 # macOS
 .DS_Store
 
-# Rendered pages (python -m itsnews render / gallery)
+# Rendered pages (python -m template_rendering render / gallery)
 output/

@@ -9,9 +9,9 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from itsnews import article, cli, storyboard
-from itsnews.catalog import PACKAGE_DIR
-from itsnews.render import FICTIONAL_BANNER, render_gallery, render_page
+from template_rendering import article, cli, storyboard
+from template_rendering.catalog import PACKAGE_DIR
+from template_rendering.render import FICTIONAL_BANNER, render_gallery, render_page
 
 EXAMPLES = PACKAGE_DIR.parent / "examples"
 PAIRS = sorted(

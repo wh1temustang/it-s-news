@@ -1,6 +1,6 @@
 """The template registry.
 
-Each folder in itsnews/templates/ that holds a schema.json is one template:
+Each folder in template_rendering/templates/ that holds a schema.json is one template:
 
     templates/<id>/
       schema.json        what the agent must fill in (title, x-icon, limits)

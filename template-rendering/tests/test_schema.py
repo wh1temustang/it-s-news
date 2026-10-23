@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import unittest
 
-from itsnews.schema import validate
+from template_rendering.schema import validate
 
 TILE = {
     "type": "object",

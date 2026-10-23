@@ -3,8 +3,8 @@ from __future__ import annotations
 
 import unittest
 
-from itsnews import article, grounding
-from itsnews.catalog import load_templates
+from template_rendering import article, grounding
+from template_rendering.catalog import load_templates
 
 ARTICLE = article.parse("""---
 title: Test story

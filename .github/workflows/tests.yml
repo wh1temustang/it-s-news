@@ -6,8 +6,11 @@ on:
   pull_request:
 
 jobs:
-  unittest:
+  template-rendering:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: template-rendering
     strategy:
       matrix:
         python-version: ["3.10", "3.13"]

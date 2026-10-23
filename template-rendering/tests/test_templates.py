@@ -8,9 +8,9 @@ from __future__ import annotations
 import re
 import unittest
 
-from itsnews.catalog import PACKAGE_DIR, TEMPLATES_DIR, load_templates
-from itsnews.render import _environment, _scene
-from itsnews.schema import validate
+from template_rendering.catalog import PACKAGE_DIR, TEMPLATES_DIR, load_templates
+from template_rendering.render import _environment, _scene
+from template_rendering.schema import validate
 
 CATALOG = (PACKAGE_DIR.parent / "agent" / "catalog.md").read_text(encoding="utf-8")
 TEMPLATES = load_templates()

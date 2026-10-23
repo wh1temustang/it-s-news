@@ -95,7 +95,7 @@ def render_gallery(templates: dict[str, Template] | None = None) -> str:
     storyboard = {
         "headline": {
             "title": "Template gallery",
-            "dek": "Every it's news template, filled with its example data.",
+            "dek": "Every template, filled with its example data.",
             "topic": "tech",
         },
         "scenes": [
