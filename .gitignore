@@ -231,6 +231,8 @@ id_rsa*
 id_ed25519*
 credentials*.json
 service-account*.json
+# Claude Code's per-machine settings: local paths and allowed commands.
+**/.claude/settings.local.json
 
 # Rust
 **/*.rs.bk
