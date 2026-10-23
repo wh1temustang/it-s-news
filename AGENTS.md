@@ -26,8 +26,12 @@ When asked to present, storyboard or render a news article (`.md`):
   to `output/gallery.html`
 - Layout: `itsnews/` is the package (checker, renderer, templates),
   `agent/` holds the prompt and the catalog, `examples/` holds fictional
-  sample articles with their storyboards, and `tools/` holds one-off
-  data builders.
+  sample articles with their storyboards and rendered pages, and `tools/`
+  holds one-off data builders.
+- The example pages (`examples/<name>.html`) are committed. After changing a
+  template, the renderer or an example, render them again with
+  `.venv/bin/python -m itsnews render examples/<name>.md examples/<name>.storyboard.json -o examples/<name>.html`.
+  A test fails while they're stale.
 - Rendering must stay deterministic: no timestamps, randomness or network
   access in `itsnews/`.
 - Pages must stay self-contained: inline CSS, no external fonts, scripts or
@@ -41,4 +45,5 @@ When asked to present, storyboard or render a news article (`.md`):
   personal data (see [README.md](README.md)).
 - Sample articles must be fictional, say so in their first lines, and set
   `fictional: true` in their front matter.
-- `output/` is generated and not committed.
+- `output/` is generated and not committed. The example pages in
+  `examples/` are the exception.

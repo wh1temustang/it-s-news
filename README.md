@@ -57,7 +57,9 @@ python -m itsnews render my-article.md my-article.storyboard.json
 python -m unittest discover -s tests -v
 ```
 
-The sample articles in [examples/](examples/) are fictional.
+The sample articles in [examples/](examples/) are fictional. Each comes with
+its storyboard and the page rendered from it, for example
+[examples/night-train.html](examples/night-train.html).
 
 ## Open source: no credentials, no private data
 

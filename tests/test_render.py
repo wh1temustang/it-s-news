@@ -41,6 +41,14 @@ class ExampleTests(unittest.TestCase):
             a, s = load(md, sb)
             self.assertEqual(render_page(s, a), render_page(copy.deepcopy(s), a), md.name)
 
+    def test_committed_pages_match_a_fresh_render(self):
+        for md, sb in PAIRS:
+            page = md.with_suffix(".html")
+            a, s = load(md, sb)
+            self.assertTrue(page.is_file(), f"{page.name} is missing: render it (see AGENTS.md)")
+            self.assertEqual(page.read_text(encoding="utf-8"), render_page(s, a),
+                             f"{page.name} is stale: render it again (see AGENTS.md)")
+
     def test_pages_load_nothing_from_elsewhere(self):
         pages = [render_page(*reversed(load(md, sb))) for md, sb in PAIRS]
         for html in pages + [render_gallery()]:
