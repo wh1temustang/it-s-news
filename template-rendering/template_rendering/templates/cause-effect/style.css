@@ -1,0 +1,55 @@
+
+/* --- cause and effect --- */
+
+.ce {
+  display: grid;
+  gap: 26px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ce-step {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 140ms + 200ms);
+}
+
+/* The arrow down to the next step. */
+.ce-step:not(.ce-last)::after {
+  content: "";
+  position: absolute;
+  left: 27px;
+  bottom: -21px;
+  border: 8px solid transparent;
+  border-top: 10px solid var(--accent);
+  opacity: 0.6;
+}
+
+.ce-n {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  color: var(--accent);
+  font-weight: 800;
+  line-height: 28px;
+  text-align: center;
+}
+
+.ce-step p { margin: 0; font-size: 17px; line-height: 1.35; }
+
+.ce-last {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.ce-last .ce-n { background: var(--accent); color: var(--on-accent); }
+.ce-last p { font-weight: 700; }

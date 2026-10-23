@@ -1,0 +1,9 @@
+<blockquote class="qt">
+  <p class="qt-text">{{ data.text }}</p>
+  <footer class="qt-by">
+    <b>{{ data.speaker }}</b>
+    {% if data.role is defined %}
+    <span>{{ data.role }}</span>
+    {% endif %}
+  </footer>
+</blockquote>

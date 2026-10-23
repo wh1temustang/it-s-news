@@ -1,0 +1,48 @@
+{
+  "title": "Bar chart",
+  "x-icon": "📊",
+  "description": "Several things measured in the same unit at the same moment: who is bigger, who rose, who fell.",
+  "type": "object",
+  "required": ["bars"],
+  "additionalProperties": false,
+  "properties": {
+    "unit": {
+      "type": "string",
+      "maxLength": 30,
+      "description": "What the values measure: \"% change\", \"million riders\"."
+    },
+    "bars": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 8,
+      "description": "Sorted so the order means something (largest first, or most negative to most positive). Never alphabetical.",
+      "items": {
+        "type": "object",
+        "required": ["label", "value"],
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 28,
+            "description": "What this bar is."
+          },
+          "value": {
+            "type": "number",
+            "description": "The number from the article, as a plain number: 3.2 for \"3.2 million\", -1.5 for \"down 1.5%\"."
+          },
+          "display": {
+            "type": "string",
+            "maxLength": 14,
+            "description": "Optional text shown instead of the bare number, as the article writes it: \"-1.5%\", \"$3.2M\"."
+          }
+        }
+      }
+    },
+    "note": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Optional caveat or time frame: \"First quarter, compared with a year earlier\"."
+    }
+  }
+}

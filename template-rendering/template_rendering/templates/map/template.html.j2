@@ -1,0 +1,22 @@
+<figure class="map">
+  <div class="map-canvas">
+    <svg viewBox="0 0 {{ data.width }} {{ data.height }}" aria-hidden="true">
+      <path class="map-land" d="{{ data.land }}"/>
+      <path class="map-borders" d="{{ data.borders }}"/>
+    </svg>
+    {% for pin in data.pins %}
+    <span class="map-pin{% if pin.main %} map-pin--main{% endif %}" style="left: {{ pin.left }}%; top: {{ pin.top }}%; --j: {{ loop.index0 }}" aria-hidden="true">{{ pin.n }}</span>
+    {% endfor %}
+    {% if data.scale %}
+    <span class="map-scale" style="width: {{ data.scale.pct }}%" aria-hidden="true">{{ data.scale.label }}</span>
+    {% endif %}
+  </div>
+  <figcaption>
+    <ol class="map-legend">
+    {% for place in data.places %}
+      <li><span class="map-key" aria-hidden="true">{{ loop.index }}</span><span><b>{{ place.name }}</b>{% if place.note is defined %}<span class="map-note">{{ place.note }}</span>{% endif %}</span></li>
+    {% endfor %}
+    </ol>
+    <p class="note">Map data: Natural Earth</p>
+  </figcaption>
+</figure>

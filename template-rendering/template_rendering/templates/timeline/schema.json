@@ -1,0 +1,40 @@
+{
+  "title": "Timeline",
+  "x-icon": "🕒",
+  "description": "A story that unfolds over time: how it got here, where it is now, what comes next.",
+  "type": "object",
+  "required": ["events"],
+  "additionalProperties": false,
+  "properties": {
+    "events": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 7,
+      "description": "Oldest first.",
+      "items": {
+        "type": "object",
+        "required": ["when", "what"],
+        "additionalProperties": false,
+        "properties": {
+          "when": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 24,
+            "description": "The date as the article gives it: \"March 3\", \"2019\", \"Last week\"."
+          },
+          "what": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "What happened, in one short line."
+          },
+          "state": {
+            "type": "string",
+            "enum": ["past", "now", "next"],
+            "description": "past (the default), now for the news itself, next for something scheduled or expected."
+          }
+        }
+      }
+    }
+  }
+}

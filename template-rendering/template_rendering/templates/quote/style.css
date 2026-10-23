@@ -1,0 +1,35 @@
+
+/* --- quote --- */
+
+.qt {
+  position: relative;
+  margin: 0;
+  padding: 6px 0 0 54px;
+}
+
+.qt::before {
+  content: "\201C";
+  position: absolute;
+  left: -4px;
+  top: -18px;
+  color: var(--accent);
+  font: 900 96px/1 var(--serif);
+}
+
+.qt-text {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.qt-by {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  margin-top: 14px;
+  font-size: 15px;
+}
+
+.qt-by span { color: var(--muted); }

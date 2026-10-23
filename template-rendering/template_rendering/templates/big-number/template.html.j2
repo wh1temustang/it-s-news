@@ -1,0 +1,14 @@
+{% set arrows = {"up": "▲", "down": "▼", "flat": "▶"} %}
+<div class="bn">
+{% for number in data.numbers %}
+  <div class="bn-item{% if loop.first %} bn-lead{% endif %}" style="--j: {{ loop.index0 }}">
+    <p class="bn-value">
+      {%- if number.trend is defined %}<span class="bn-trend" aria-hidden="true">{{ arrows[number.trend] }}</span><span class="sr-only">{{ number.trend }} to </span>{% endif -%}
+      {{ number.value }}</p>
+    <p class="bn-label">{{ number.label }}</p>
+    {% if number.context is defined %}
+    <p class="bn-context">{{ number.context }}</p>
+    {% endif %}
+  </div>
+{% endfor %}
+</div>

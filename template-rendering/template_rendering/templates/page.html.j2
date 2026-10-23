@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>{{ headline.title }} · it's news</title>
+<meta name="description" content="{{ headline.dek }}">
+<style>
+{{ css }}
+</style>
+</head>
+<body data-topic="{{ headline.topic }}">
+{% if banner %}
+<p class="banner" role="note">{{ banner }}</p>
+{% endif %}
+<main class="story">
+  <header class="hero">
+    <p class="kicker">{{ topic_label }}</p>
+    <h1>{{ headline.title }}</h1>
+    <p class="dek">{{ headline.dek }}</p>
+    {% if source or published %}
+    <p class="byline">
+      {%- if source %}{% if url %}<a href="{{ url }}" rel="noopener noreferrer">{{ source }}</a>{% else %}{{ source }}{% endif %}{% endif %}
+      {%- if source and published %} · {% endif %}
+      {%- if published %}<span>{{ published }}</span>{% endif -%}
+    </p>
+    {% endif %}
+  </header>
+
+  {% for scene in scenes %}
+  <section class="scene scene--{{ scene.id }}" style="--i: {{ loop.index0 }}" aria-labelledby="q{{ loop.index }}">
+    <p class="scene-kind"><span aria-hidden="true">{{ scene.icon }}</span> {{ scene.name }}</p>
+    <h2 id="q{{ loop.index }}">{{ scene.question }}</h2>
+    {{ scene.html }}
+  </section>
+  {% endfor %}
+
+  {% if bottom_line %}
+  <section class="bottom-line" style="--i: {{ scenes | length }}">
+    <h2>Bottom line</h2>
+    <p>{{ bottom_line }}</p>
+  </section>
+  {% endif %}
+
+  <footer class="colophon">
+    {% if url %}
+    <p><a href="{{ url }}" rel="noopener noreferrer">Read the full article{% if source %} at {{ source }}{% endif %}</a></p>
+    {% endif %}
+    {% if checked %}
+    <p>Presented by <b>it's news</b>. Every figure and quote in this story was checked against the article.</p>
+    {% else %}
+    <p>Presented by <b>it's news</b>.</p>
+    {% endif %}
+  </footer>
+</main>
+</body>
+</html>

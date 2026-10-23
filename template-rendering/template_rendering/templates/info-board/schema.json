@@ -1,0 +1,45 @@
+{
+  "title": "Info board",
+  "x-icon": "📋",
+  "description": "The essentials at a glance: a few labelled facts, or where each part of a story stands.",
+  "type": "object",
+  "required": ["tiles"],
+  "additionalProperties": false,
+  "properties": {
+    "tiles": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 6,
+      "description": "Most important first.",
+      "items": {
+        "type": "object",
+        "required": ["label", "value"],
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 24,
+            "description": "What the tile is about: \"Cost\", \"Opens\", \"Airport\"."
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32,
+            "description": "The fact itself, as short as possible: \"$48 million\", \"Closed\"."
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 60,
+            "description": "Optional context for the value."
+          },
+          "tone": {
+            "type": "string",
+            "enum": ["good", "bad", "pending", "neutral"],
+            "description": "Optional status colour. Use it for states (open, closed, under review), never to judge a fact. The value must say the status in words too."
+          }
+        }
+      }
+    }
+  }
+}

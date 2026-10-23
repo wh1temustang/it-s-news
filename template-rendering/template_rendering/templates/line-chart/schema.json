@@ -1,0 +1,48 @@
+{
+  "title": "Line chart",
+  "x-icon": "📈",
+  "description": "One measure tracked over time, when the trend is the point.",
+  "type": "object",
+  "required": ["points"],
+  "additionalProperties": false,
+  "properties": {
+    "unit": {
+      "type": "string",
+      "maxLength": 30,
+      "description": "What the values measure: \"Daily riders\", \"% of homes\"."
+    },
+    "points": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 12,
+      "description": "Oldest first, at the time points the article gives. Never fill gaps with guesses.",
+      "items": {
+        "type": "object",
+        "required": ["x", "y"],
+        "additionalProperties": false,
+        "properties": {
+          "x": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12,
+            "description": "The time label: \"2021\", \"March\", \"Spring 2025\"."
+          },
+          "y": {
+            "type": "number",
+            "description": "The value from the article, as a plain number."
+          },
+          "display": {
+            "type": "string",
+            "maxLength": 12,
+            "description": "Optional text shown instead of the bare number: \"4.1%\", \"$2.4B\"."
+          }
+        }
+      }
+    },
+    "note": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Optional caveat: \"Monthly averages\"."
+    }
+  }
+}

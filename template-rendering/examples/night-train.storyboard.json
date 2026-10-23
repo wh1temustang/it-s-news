@@ -1,0 +1,63 @@
+{
+  "headline": {
+    "title": "Night train to link Vienna and Barcelona",
+    "dek": "From April 9, a sleeper runs three nights a week: the first direct overnight link between the two cities since 2009.",
+    "topic": "world"
+  },
+  "scenes": [
+    {
+      "template": "info-board",
+      "question": "What's the trip like?",
+      "why": "The practical facts (time, frequency, price, sale date) are what a would-be traveller needs first.",
+      "data": {
+        "tiles": [
+          {"label": "Journey", "value": "14 h 35 min", "note": "Leaves 7:40 pm, arrives 10:15 am"},
+          {"label": "Runs", "value": "3 nights a week", "note": "From April 9"},
+          {"label": "Fares", "value": "From €49", "note": "€89 couchette bed, €259 private cabin for two"},
+          {"label": "Tickets", "value": "On sale March 20"}
+        ]
+      }
+    },
+    {
+      "template": "map",
+      "question": "Where does it run?",
+      "why": "A route across four countries is easier to grasp on a map than as a list of cities.",
+      "data": {
+        "places": [
+          {"name": "Vienna", "lat": 48.21, "lng": 16.37, "note": "Departs"},
+          {"name": "Zurich", "lat": 47.38, "lng": 8.54, "note": "Stop"},
+          {"name": "Lyon", "lat": 45.76, "lng": 4.84, "note": "Stop"},
+          {"name": "Barcelona", "lat": 41.39, "lng": 2.17, "note": "Arrives the next morning"}
+        ]
+      }
+    },
+    {
+      "template": "comparison",
+      "question": "Train or plane?",
+      "why": "The article sets the train against flying on emissions and time, the two reasons readers would switch.",
+      "data": {
+        "left_label": "Night train",
+        "right_label": "Plane",
+        "rows": [
+          {"aspect": "CO2 per passenger", "left": "About 18 kg", "right": "142 kg"},
+          {"aspect": "Travel time", "left": "14 h 35 min, overnight", "right": "About five and a half hours door to door"}
+        ]
+      }
+    },
+    {
+      "template": "timeline",
+      "question": "How did it come about, and what's next?",
+      "why": "The launch follows a run of dated steps, and three more dates are ahead.",
+      "data": {
+        "events": [
+          {"when": "June 2025", "what": "Four countries' rail managers agree to share night-train slots"},
+          {"when": "September 2025", "what": "Nocturne Rail orders 24 sleeper carriages"},
+          {"when": "Thursday", "what": "The route is announced", "state": "now"},
+          {"when": "March 20", "what": "Tickets go on sale", "state": "next"},
+          {"when": "April 9", "what": "First train runs", "state": "next"},
+          {"when": "December", "what": "Could run every night, if the first season sells well", "state": "next"}
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "question": "Where would the night train run?",
+  "data": {
+    "places": [
+      {"name": "Vienna", "lat": 48.21, "lng": 16.37, "note": "Departs 7:40 pm"},
+      {"name": "Zurich", "lat": 47.38, "lng": 8.54},
+      {"name": "Lyon", "lat": 45.76, "lng": 4.84},
+      {"name": "Barcelona", "lat": 41.39, "lng": 2.17, "note": "Arrives 10:15 am"}
+    ]
+  }
+}

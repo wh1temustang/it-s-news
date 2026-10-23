@@ -1,0 +1,12 @@
+{
+  "question": "Who would use the bridge?",
+  "data": {
+    "unit": "Forecast trips per day",
+    "bars": [
+      {"label": "Walking", "value": 5200},
+      {"label": "Cycling", "value": 2900},
+      {"label": "Scooters", "value": 900}
+    ],
+    "note": "City forecast for the first full year"
+  }
+}

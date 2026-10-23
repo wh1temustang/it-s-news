@@ -9,6 +9,16 @@ long video with more creative presentation: timelines, info boards, maps,
 charts and other visual formats that get the key facts across in seconds, not
 minutes.
 
+## Approaches
+
+There is more than one way to make news quick to take in, so it's news tries
+several. Each approach lives in its own folder, with its own README, setup
+and tests.
+
+| Approach | What it does |
+|---|---|
+| [Template rendering](template-rendering/) | An AI agent picks pre-built visual templates (timeline, info board, map, charts and more) for an article. Code checks every figure and quote against the article, then renders a self-contained page. See [an example page](template-rendering/examples/night-train.html). |
+
 ## Open source: no credentials, no private data
 
 it's news is an open-source project. Everything committed here is public, and
@@ -37,4 +47,5 @@ already have it.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE). The map data in template rendering comes from
+[Natural Earth](https://www.naturalearthdata.com/) and is in the public domain.

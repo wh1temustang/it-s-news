@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "itsnews-template-rendering"
+version = "0.1.0"
+description = "it's news, template rendering: present a news article with visual templates (timeline, info board, map, charts) that an AI agent picks."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = ["jinja2>=3.1"]
+
+[project.scripts]
+template-rendering = "template_rendering.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["template_rendering*"]
+
+[tool.setuptools.package-data]
+template_rendering = ["*.json", "data/*.json", "templates/*", "templates/*/*"]

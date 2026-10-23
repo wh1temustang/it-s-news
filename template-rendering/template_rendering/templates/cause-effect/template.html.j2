@@ -1,0 +1,8 @@
+<ol class="ce">
+{% for step in data.steps %}
+  <li class="ce-step{% if loop.last %} ce-last{% endif %}" style="--j: {{ loop.index0 }}">
+    <span class="ce-n" aria-hidden="true">{{ loop.index }}</span>
+    <p>{{ step }}</p>
+  </li>
+{% endfor %}
+</ol>

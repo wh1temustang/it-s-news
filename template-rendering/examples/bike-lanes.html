@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>Port Ellery keeps its downtown bike lanes · it's news</title>
+<meta name="description" content="After an 18-month pilot, council voted 7-4 to make the lanes permanent, despite mixed results for local businesses.">
+<style>
+/* it's news: page shell and design tokens.
+   Templates style themselves with these tokens only, never raw colours, so
+   light and dark mode come for free. Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --ink: #15171c;
+  --muted: #5b616d;
+  --line: #e4e0d6;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --alt: #b45309;
+  --good: #15803d;
+  --bad: #b91c1c;
+  --pending: #b45309;
+  --neutral: #6b7280;
+  --water: #dce9f2;
+  --land: #ebe6da;
+  --coast: #b8ae98;
+  --border: #c9bfa8;
+  --radius: 18px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+[data-topic="world"]    { --accent: #2563eb; }
+[data-topic="politics"] { --accent: #7c3aed; }
+[data-topic="business"] { --accent: #0f766e; }
+[data-topic="science"]  { --accent: #0e7490; }
+[data-topic="tech"]     { --accent: #4f46e5; }
+[data-topic="climate"]  { --accent: #15803d; }
+[data-topic="health"]   { --accent: #be185d; }
+[data-topic="local"]    { --accent: #c2410c; }
+[data-topic="culture"]  { --accent: #a21caf; }
+[data-topic="sports"]   { --accent: #b91c1c; }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --ink: #eef0f4;
+    --muted: #a3a9b5;
+    --line: #2a2e37;
+    --on-accent: #0b0d10;
+    --alt: #fbbf24;
+    --good: #4ade80;
+    --bad: #f87171;
+    --pending: #fbbf24;
+    --neutral: #9ca3af;
+    --water: #142130;
+    --land: #262a32;
+    --coast: #414856;
+    --border: #4a5160;
+  }
+  [data-topic="world"]    { --accent: #7aa2ff; }
+  [data-topic="politics"] { --accent: #b197fc; }
+  [data-topic="business"] { --accent: #2dd4bf; }
+  [data-topic="science"]  { --accent: #22d3ee; }
+  [data-topic="tech"]     { --accent: #8b93ff; }
+  [data-topic="climate"]  { --accent: #4ade80; }
+  [data-topic="health"]   { --accent: #f472b6; }
+  [data-topic="local"]    { --accent: #fb923c; }
+  [data-topic="culture"]  { --accent: #e879f9; }
+  [data-topic="sports"]   { --accent: #f87171; }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.story {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* --- headline --- */
+
+.hero { margin-bottom: 28px; }
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.dek {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2.6vw, 21px);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* --- scenes --- */
+
+.scene,
+.bottom-line {
+  margin-top: 18px;
+  padding: 22px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+}
+
+.scene-kind {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene h2,
+.bottom-line h2 {
+  margin: 0 0 18px;
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.bottom-line {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.bottom-line h2 {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom-line p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Shared by the chart templates. */
+.chart-unit {
+  margin: -10px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .story { padding-top: 28px; }
+  .scene, .bottom-line { padding: 18px 16px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- bar chart --- */
+
+.bc {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bc-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  align-items: baseline;
+}
+
+.bc-label { font-size: 16px; font-weight: 600; }
+
+.bc-value {
+  font-size: 16px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.bc-track {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 14px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+}
+
+.bc-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: max(var(--w), 1.5%);
+  border-radius: 7px;
+  background: var(--accent);
+  transform-origin: left;
+  animation: bc-grow 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 80ms + 250ms);
+}
+
+/* With negative values the bars grow out from a centre line. */
+.bc--diverging .bc-track::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--muted);
+}
+
+.bc--diverging .bc-bar { left: 50%; width: max(calc(var(--w) / 2), 1%); }
+
+.bc--diverging .bc-neg .bc-bar {
+  left: auto;
+  right: 50%;
+  background: var(--bad);
+  transform-origin: right;
+}
+
+.bc-neg .bc-value { color: var(--bad); }
+
+@keyframes bc-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* --- big number --- */
+
+.bn {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 22px 18px;
+}
+
+.bn-item {
+  animation: bn-pop 0.6s cubic-bezier(0.3, 1.3, 0.6, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 110ms + 200ms);
+}
+
+.bn-value {
+  margin: 0;
+  color: var(--accent);
+  font-size: clamp(40px, 8vw, 60px);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.bn-lead .bn-value { font-size: clamp(52px, 11vw, 80px); }
+
+.bn-trend {
+  margin-right: 6px;
+  font-size: 0.45em;
+  vertical-align: 0.35em;
+}
+
+.bn-label {
+  margin: 8px 0 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.bn-context {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+@keyframes bn-pop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- info board --- */
+
+.ib {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ib-tile {
+  --tone: var(--accent);
+  padding: 14px 14px 16px;
+  border-top: 4px solid var(--tone);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tone) 8%, var(--surface));
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
+}
+
+.ib-tile[data-tone="good"]    { --tone: var(--good); }
+.ib-tile[data-tone="bad"]     { --tone: var(--bad); }
+.ib-tile[data-tone="pending"] { --tone: var(--pending); }
+.ib-tile[data-tone="neutral"] { --tone: var(--neutral); }
+
+.ib-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ib-value {
+  margin: 4px 0 0;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ib-tile:not([data-tone="none"]) .ib-value { color: var(--tone); }
+
+.ib-note {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+/* --- line chart --- */
+
+.lc { margin: 0; color: var(--accent); }
+.lc svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.lc-base {
+  stroke: var(--line);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.lc-area { animation: rise 0.8s both; animation-delay: calc(var(--i, 0) * 90ms + 700ms); }
+
+.lc-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* pathLength="1" makes a dash of 1 the whole line, for the draw-in. */
+  stroke-dasharray: 1;
+  animation: lc-draw 1.1s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 250ms);
+}
+
+.lc-dot { fill: var(--surface); stroke: currentColor; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.lc-dot--key { fill: currentColor; }
+
+.lc-label {
+  fill: var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.lc-tick { fill: var(--muted); font-size: 13px; }
+
+/* SVG text scales with the chart, so give it bigger units on small screens. */
+@media (max-width: 520px) {
+  .lc-line { stroke-width: 6; }
+  .lc-label { font-size: 24px; }
+  .lc-tick { font-size: 21px; }
+}
+
+@keyframes lc-draw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* --- quote --- */
+
+.qt {
+  position: relative;
+  margin: 0;
+  padding: 6px 0 0 54px;
+}
+
+.qt::before {
+  content: "\201C";
+  position: absolute;
+  left: -4px;
+  top: -18px;
+  color: var(--accent);
+  font: 900 96px/1 var(--serif);
+}
+
+.qt-text {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.qt-by {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  margin-top: 14px;
+  font-size: 15px;
+}
+
+.qt-by span { color: var(--muted); }
+
+</style>
+</head>
+<body data-topic="local">
+<p class="banner" role="note">Fictional sample: this is not real news.</p>
+<main class="story">
+  <header class="hero">
+    <p class="kicker">Local</p>
+    <h1>Port Ellery keeps its downtown bike lanes</h1>
+    <p class="dek">After an 18-month pilot, council voted 7-4 to make the lanes permanent, despite mixed results for local businesses.</p>
+    <p class="byline">it&#39;s news sample desk · <span>2026-05-07</span></p>
+  </header>
+
+  <section class="scene scene--info-board" style="--i: 0" aria-labelledby="q1">
+    <p class="scene-kind"><span aria-hidden="true">📋</span> Info board</p>
+    <h2 id="q1">What did council decide?</h2>
+    <ul class="ib">
+  <li class="ib-tile" data-tone="good" style="--j: 0">
+    <p class="ib-label">Decision</p>
+    <p class="ib-value">Lanes stay</p>
+    <p class="ib-note">Council vote, 7-4</p>
+  </li>
+  <li class="ib-tile" data-tone="none" style="--j: 1">
+    <p class="ib-label">Length</p>
+    <p class="ib-value">6.5 km</p>
+    <p class="ib-note">Harbour Street and Main Avenue</p>
+  </li>
+  <li class="ib-tile" data-tone="none" style="--j: 2">
+    <p class="ib-label">Cost to finish</p>
+    <p class="ib-value">$4.1 million</p>
+    <p class="ib-note">Concrete curbs replace plastic posts</p>
+  </li>
+  <li class="ib-tile" data-tone="none" style="--j: 3">
+    <p class="ib-label">Works</p>
+    <p class="ib-value">2027 to 2028</p>
+    <p class="ib-note">Starting in March 2027</p>
+  </li>
+</ul>
+
+  </section>
+  <section class="scene scene--line-chart" style="--i: 1" aria-labelledby="q2">
+    <p class="scene-kind"><span aria-hidden="true">📈</span> Line chart</p>
+    <h2 id="q2">Are more people cycling?</h2>
+    <p class="chart-unit">Bike trips per day</p>
+<figure class="lc">
+  <svg viewBox="0 0 600 280" role="img" aria-label="Before: 1200; Spring 2025: 2100; Autumn 2025: 2800; Spring 2026: 3400">
+    <defs>
+      <linearGradient id="lc-fill-1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="currentColor" stop-opacity="0.28"/>
+        <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <line class="lc-base" x1="24" x2="576" y1="244" y2="244"/>
+    <path class="lc-area" d="M24.0 186.7 L208.0 134.7 L392.0 94.2 L576.0 59.5 L576.0 244 L24.0 244 Z" fill="url(#lc-fill-1)"/>
+    <path class="lc-line" d="M24.0 186.7 L208.0 134.7 L392.0 94.2 L576.0 59.5" pathLength="1"/>
+    <circle class="lc-dot lc-dot--key" cx="24.0" cy="186.7" r="5.5"/>
+    <text class="lc-label" x="24.0" y="212.7" text-anchor="start">1,200</text>
+    <circle class="lc-dot" cx="208.0" cy="134.7" r="3.5"/>
+    <circle class="lc-dot" cx="392.0" cy="94.2" r="3.5"/>
+    <circle class="lc-dot lc-dot--key" cx="576.0" cy="59.5" r="5.5"/>
+    <text class="lc-label" x="576.0" y="45.5" text-anchor="end">3,400</text>
+    <text class="lc-tick" x="24.0" y="270" text-anchor="start">Before</text>
+    <text class="lc-tick" x="208.0" y="270" text-anchor="middle">Spring 2025</text>
+    <text class="lc-tick" x="392.0" y="270" text-anchor="middle">Autumn 2025</text>
+    <text class="lc-tick" x="576.0" y="270" text-anchor="end">Spring 2026</text>
+  </svg>
+</figure>
+<p class="note">Before: the month before the pilot. Then: city counters.</p>
+
+  </section>
+  <section class="scene scene--big-number" style="--i: 2" aria-labelledby="q3">
+    <p class="scene-kind"><span aria-hidden="true">🔢</span> Big number</p>
+    <h2 id="q3">What else changed on the street?</h2>
+    <div class="bn">
+  <div class="bn-item bn-lead" style="--j: 0">
+    <p class="bn-value"><span class="bn-trend" aria-hidden="true">▼</span><span class="sr-only">down to </span>17</p>
+    <p class="bn-label">Injury collisions during the 18-month pilot</p>
+    <p class="bn-context">down from 31 in the 18 months before</p>
+  </div>
+  <div class="bn-item" style="--j: 1">
+    <p class="bn-value"><span class="bn-trend" aria-hidden="true">▲</span><span class="sr-only">up to </span>11 min</p>
+    <p class="bn-label">Rush-hour drive along Main Avenue</p>
+    <p class="bn-context">up from 9 minutes</p>
+  </div>
+</div>
+
+  </section>
+  <section class="scene scene--bar-chart" style="--i: 3" aria-labelledby="q4">
+    <p class="scene-kind"><span aria-hidden="true">📊</span> Bar chart</p>
+    <h2 id="q4">Did businesses gain or lose?</h2>
+    <p class="chart-unit">Change in card spending</p>
+<ul class="bc bc--diverging">
+  <li class="bc-row" style="--w: 100.0%; --j: 0">
+    <span class="bc-label">Shops on the corridor</span>
+    <span class="bc-value">+6%</span>
+    <span class="bc-track" aria-hidden="true"><span class="bc-bar"></span></span>
+  </li>
+  <li class="bc-row" style="--w: 66.67%; --j: 1">
+    <span class="bc-label">Whole city</span>
+    <span class="bc-value">+4%</span>
+    <span class="bc-track" aria-hidden="true"><span class="bc-bar"></span></span>
+  </li>
+  <li class="bc-row bc-neg" style="--w: 50.0%; --j: 2">
+    <span class="bc-label">Restaurants on the corridor</span>
+    <span class="bc-value">-3%</span>
+    <span class="bc-track" aria-hidden="true"><span class="bc-bar"></span></span>
+  </li>
+</ul>
+<p class="note">Compared with the same period before the pilot</p>
+
+  </section>
+  <section class="scene scene--quote" style="--i: 4" aria-labelledby="q5">
+    <p class="scene-kind"><span aria-hidden="true">💬</span> Quote</p>
+    <h2 id="q5">Why keep the lanes?</h2>
+    <blockquote class="qt">
+  <p class="qt-text">The numbers made the decision for us... Fewer people are getting hurt, and more people are coming downtown.</p>
+  <footer class="qt-by">
+    <b>Dana Whitcombe</b>
+    <span>Mayor of Port Ellery</span>
+  </footer>
+</blockquote>
+
+  </section>
+
+
+  <footer class="colophon">
+    <p>Presented by <b>it's news</b>. Every figure and quote in this story was checked against the article.</p>
+  </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{
+  "headline": {
+    "title": "Port Ellery keeps its downtown bike lanes",
+    "dek": "After an 18-month pilot, council voted 7-4 to make the lanes permanent, despite mixed results for local businesses.",
+    "topic": "local"
+  },
+  "scenes": [
+    {
+      "template": "info-board",
+      "question": "What did council decide?",
+      "why": "The decision and what it commits the city to are the news; the tiles state them without a paragraph.",
+      "data": {
+        "tiles": [
+          {"label": "Decision", "value": "Lanes stay", "note": "Council vote, 7-4", "tone": "good"},
+          {"label": "Length", "value": "6.5 km", "note": "Harbour Street and Main Avenue"},
+          {"label": "Cost to finish", "value": "$4.1 million", "note": "Concrete curbs replace plastic posts"},
+          {"label": "Works", "value": "2027 to 2028", "note": "Starting in March 2027"}
+        ]
+      }
+    },
+    {
+      "template": "line-chart",
+      "question": "Are more people cycling?",
+      "why": "Four counts of the same measure over time; the climb is the pilot's main result.",
+      "data": {
+        "unit": "Bike trips per day",
+        "points": [
+          {"x": "Before", "y": 1200},
+          {"x": "Spring 2025", "y": 2100},
+          {"x": "Autumn 2025", "y": 2800},
+          {"x": "Spring 2026", "y": 3400}
+        ],
+        "note": "Before: the month before the pilot. Then: city counters."
+      }
+    },
+    {
+      "template": "big-number",
+      "question": "What else changed on the street?",
+      "why": "Two before-and-after numbers carry the safety gain and the cost to drivers.",
+      "data": {
+        "numbers": [
+          {"value": "17", "label": "Injury collisions during the 18-month pilot", "context": "down from 31 in the 18 months before", "trend": "down"},
+          {"value": "11 min", "label": "Rush-hour drive along Main Avenue", "context": "up from 9 minutes", "trend": "up"}
+        ]
+      }
+    },
+    {
+      "template": "bar-chart",
+      "question": "Did businesses gain or lose?",
+      "why": "Three changes in the same unit, with one negative: a diverging bar chart shows the mixed result at once.",
+      "data": {
+        "unit": "Change in card spending",
+        "bars": [
+          {"label": "Shops on the corridor", "value": 6, "display": "+6%"},
+          {"label": "Whole city", "value": 4, "display": "+4%"},
+          {"label": "Restaurants on the corridor", "value": -3, "display": "-3%"}
+        ],
+        "note": "Compared with the same period before the pilot"
+      }
+    },
+    {
+      "template": "quote",
+      "question": "Why keep the lanes?",
+      "why": "The mayor's words tie the decision to the numbers shown above.",
+      "data": {
+        "text": "The numbers made the decision for us... Fewer people are getting hurt, and more people are coming downtown.",
+        "speaker": "Dana Whitcombe",
+        "role": "Mayor of Port Ellery"
+      }
+    }
+  ]
+}

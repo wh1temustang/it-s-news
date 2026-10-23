@@ -1,0 +1,12 @@
+{
+  "question": "How did we get here, and what's next?",
+  "data": {
+    "events": [
+      {"when": "2019", "what": "The city first floats a footbridge across the harbour"},
+      {"when": "May 2024", "what": "A design is picked from 41 entries"},
+      {"when": "Yesterday", "what": "Council approves the final budget", "state": "now"},
+      {"when": "Spring 2027", "what": "Construction is due to start", "state": "next"},
+      {"when": "2029", "what": "The bridge is expected to open", "state": "next"}
+    ]
+  }
+}

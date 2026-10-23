@@ -231,9 +231,14 @@ id_rsa*
 id_ed25519*
 credentials*.json
 service-account*.json
+# Claude Code's per-machine settings: local paths and allowed commands.
+**/.claude/settings.local.json
 
 # Rust
 **/*.rs.bk
 
 # macOS
 .DS_Store
+
+# Rendered pages (python -m template_rendering render / gallery)
+output/

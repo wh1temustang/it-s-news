@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>Night train to link Vienna and Barcelona · it's news</title>
+<meta name="description" content="From April 9, a sleeper runs three nights a week: the first direct overnight link between the two cities since 2009.">
+<style>
+/* it's news: page shell and design tokens.
+   Templates style themselves with these tokens only, never raw colours, so
+   light and dark mode come for free. Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --ink: #15171c;
+  --muted: #5b616d;
+  --line: #e4e0d6;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --alt: #b45309;
+  --good: #15803d;
+  --bad: #b91c1c;
+  --pending: #b45309;
+  --neutral: #6b7280;
+  --water: #dce9f2;
+  --land: #ebe6da;
+  --coast: #b8ae98;
+  --border: #c9bfa8;
+  --radius: 18px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+[data-topic="world"]    { --accent: #2563eb; }
+[data-topic="politics"] { --accent: #7c3aed; }
+[data-topic="business"] { --accent: #0f766e; }
+[data-topic="science"]  { --accent: #0e7490; }
+[data-topic="tech"]     { --accent: #4f46e5; }
+[data-topic="climate"]  { --accent: #15803d; }
+[data-topic="health"]   { --accent: #be185d; }
+[data-topic="local"]    { --accent: #c2410c; }
+[data-topic="culture"]  { --accent: #a21caf; }
+[data-topic="sports"]   { --accent: #b91c1c; }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --ink: #eef0f4;
+    --muted: #a3a9b5;
+    --line: #2a2e37;
+    --on-accent: #0b0d10;
+    --alt: #fbbf24;
+    --good: #4ade80;
+    --bad: #f87171;
+    --pending: #fbbf24;
+    --neutral: #9ca3af;
+    --water: #142130;
+    --land: #262a32;
+    --coast: #414856;
+    --border: #4a5160;
+  }
+  [data-topic="world"]    { --accent: #7aa2ff; }
+  [data-topic="politics"] { --accent: #b197fc; }
+  [data-topic="business"] { --accent: #2dd4bf; }
+  [data-topic="science"]  { --accent: #22d3ee; }
+  [data-topic="tech"]     { --accent: #8b93ff; }
+  [data-topic="climate"]  { --accent: #4ade80; }
+  [data-topic="health"]   { --accent: #f472b6; }
+  [data-topic="local"]    { --accent: #fb923c; }
+  [data-topic="culture"]  { --accent: #e879f9; }
+  [data-topic="sports"]   { --accent: #f87171; }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.story {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* --- headline --- */
+
+.hero { margin-bottom: 28px; }
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.dek {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2.6vw, 21px);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* --- scenes --- */
+
+.scene,
+.bottom-line {
+  margin-top: 18px;
+  padding: 22px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+}
+
+.scene-kind {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene h2,
+.bottom-line h2 {
+  margin: 0 0 18px;
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.bottom-line {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.bottom-line h2 {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom-line p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Shared by the chart templates. */
+.chart-unit {
+  margin: -10px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .story { padding-top: 28px; }
+  .scene, .bottom-line { padding: 18px 16px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- comparison --- */
+
+.cmp-head,
+.cmp-cells {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.cmp-head {
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.cmp-side {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.cmp-side--l { background: var(--accent); color: var(--on-accent); }
+.cmp-side--r { background: var(--alt); color: var(--on-accent); }
+
+.cmp-vs {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 26px;
+  text-align: center;
+}
+
+.cmp-row {
+  padding-top: 12px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 70ms + 200ms);
+}
+
+.cmp-aspect {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.cmp-cell {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.cmp-cell--l { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
+.cmp-cell--r { background: color-mix(in srgb, var(--alt) 12%, var(--surface)); }
+
+/* --- info board --- */
+
+.ib {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ib-tile {
+  --tone: var(--accent);
+  padding: 14px 14px 16px;
+  border-top: 4px solid var(--tone);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tone) 8%, var(--surface));
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
+}
+
+.ib-tile[data-tone="good"]    { --tone: var(--good); }
+.ib-tile[data-tone="bad"]     { --tone: var(--bad); }
+.ib-tile[data-tone="pending"] { --tone: var(--pending); }
+.ib-tile[data-tone="neutral"] { --tone: var(--neutral); }
+
+.ib-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ib-value {
+  margin: 4px 0 0;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ib-tile:not([data-tone="none"]) .ib-value { color: var(--tone); }
+
+.ib-note {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+/* --- map --- */
+
+.map { margin: 0; }
+
+.map-canvas {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--water);
+}
+
+.map-canvas svg { display: block; width: 100%; height: auto; }
+
+.map-land {
+  fill: var(--land);
+  stroke: var(--coast);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.map-borders {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Pins are HTML so they stay the same size however small the map gets. */
+.map-pin {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border: 2.5px solid var(--accent);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--accent);
+  font: 700 13px/21px var(--sans);
+  text-align: center;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+  animation: map-drop 0.5s cubic-bezier(0.3, 1.4, 0.6, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 120ms + 350ms);
+}
+
+.map-pin--main {
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 15px;
+  line-height: 27px;
+}
+
+.map-pin--main::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  animation: map-ping 2.4s ease-out 1s infinite both;
+}
+
+.map-scale {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  padding-bottom: 3px;
+  border: 2px solid var(--ink);
+  border-top: 0;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  height: 18px;
+  opacity: 0.75;
+}
+
+.map-legend {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.map-legend li { display: flex; gap: 10px; align-items: baseline; }
+
+.map-key {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font: 700 12px/18px var(--sans);
+  text-align: center;
+}
+
+.map-legend li:first-child .map-key { background: var(--accent); color: var(--on-accent); }
+
+.map-note { color: var(--muted); }
+.map-note::before { content: " · "; }
+
+@keyframes map-drop {
+  from { opacity: 0; transform: translateY(-14px) scale(0.6); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes map-ping {
+  from { opacity: 0.8; transform: scale(0.6); }
+  to   { opacity: 0; transform: scale(1.5); }
+}
+
+/* --- timeline --- */
+
+.tl { margin: 0; padding: 0; list-style: none; }
+
+.tl-item {
+  position: relative;
+  padding: 0 0 20px 32px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 80ms + 200ms);
+}
+
+.tl-item:last-child { padding-bottom: 0; }
+
+/* The rail runs from each dot down to the next one. */
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 20px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--accent);
+  opacity: 0.35;
+}
+
+.tl-item:last-child::before { display: none; }
+
+.tl-item:has(+ .tl-next)::before {
+  background: repeating-linear-gradient(to bottom, var(--muted) 0 4px, transparent 4px 8px);
+  opacity: 0.7;
+}
+
+.tl-dot {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tl-now .tl-dot {
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+  animation: tl-pulse 2.2s ease-out infinite;
+}
+
+.tl-next .tl-dot {
+  border-style: dashed;
+  border-color: var(--muted);
+  background: var(--surface);
+}
+
+.tl-when {
+  margin: 0;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tl-what {
+  margin: 2px 0 0;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.tl-now .tl-what { font-size: 19px; font-weight: 700; }
+.tl-next .tl-when,
+.tl-next .tl-what { color: var(--muted); }
+
+.tl-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 11px;
+  vertical-align: 1px;
+}
+
+.tl-next .tl-tag {
+  border: 1px solid var(--muted);
+  background: transparent;
+  color: var(--muted);
+}
+
+@keyframes tl-pulse {
+  70%  { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+
+</style>
+</head>
+<body data-topic="world">
+<p class="banner" role="note">Fictional sample: this is not real news.</p>
+<main class="story">
+  <header class="hero">
+    <p class="kicker">World</p>
+    <h1>Night train to link Vienna and Barcelona</h1>
+    <p class="dek">From April 9, a sleeper runs three nights a week: the first direct overnight link between the two cities since 2009.</p>
+    <p class="byline">it&#39;s news sample desk · <span>2026-03-14</span></p>
+  </header>
+
+  <section class="scene scene--info-board" style="--i: 0" aria-labelledby="q1">
+    <p class="scene-kind"><span aria-hidden="true">📋</span> Info board</p>
+    <h2 id="q1">What&#39;s the trip like?</h2>
+    <ul class="ib">
+  <li class="ib-tile" data-tone="none" style="--j: 0">
+    <p class="ib-label">Journey</p>
+    <p class="ib-value">14 h 35 min</p>
+    <p class="ib-note">Leaves 7:40 pm, arrives 10:15 am</p>
+  </li>
+  <li class="ib-tile" data-tone="none" style="--j: 1">
+    <p class="ib-label">Runs</p>
+    <p class="ib-value">3 nights a week</p>
+    <p class="ib-note">From April 9</p>
+  </li>
+  <li class="ib-tile" data-tone="none" style="--j: 2">
+    <p class="ib-label">Fares</p>
+    <p class="ib-value">From €49</p>
+    <p class="ib-note">€89 couchette bed, €259 private cabin for two</p>
+  </li>
+  <li class="ib-tile" data-tone="none" style="--j: 3">
+    <p class="ib-label">Tickets</p>
+    <p class="ib-value">On sale March 20</p>
+  </li>
+</ul>
+
+  </section>
+  <section class="scene scene--map" style="--i: 1" aria-labelledby="q2">
+    <p class="scene-kind"><span aria-hidden="true">📍</span> Map</p>
+    <h2 id="q2">Where does it run?</h2>
+    <figure class="map">
+  <div class="map-canvas">
+    <svg viewBox="0 0 800 500" aria-hidden="true">
+      <path class="map-land" d="M125.2 -8l-2.4 1l-5.7 -1l-19.3 0l-5.6 0.5l-1.9 -0.5l-17.8 0l-2.7 1.4l-15.6 0.9l2.2 4.3l-2.5 1.3l-9.5 -1.8l-2.4 1.8l-10.7 -4.8l-6.8 -0.4l-12.2 3.9l-2.8 3.4l-2.7 9.9l-3.1 3.5l-3.3 0.4l-8.4 -4.7l0 -19.1zM39.5 47.7l-1.2 2.6l-3.1 -1.7l4.3 -0.9zM54.5 59l0.3 2.1l-7 0l0.6 -3.9l6.1 1.8zM80.2 202.6l-0.9 3.4l-4.9 -6.5l-0.6 -3.4l3.1 2.1l3.3 4.4zM83.6 -4l-5.5 4.3l-9.5 -3.4l7.6 -4.4l7.4 3.5zM160.7 503.6l-1.2 2.6l-5.8 -1.8l3.9 -7.7l6.5 -1.7l1.5 1.2l0.3 2.2l-5.2 5.2zM212.7 466.1l2.8 1.3l4.9 -0.9l1.5 0.9l0.3 2.5l-6.7 13.4l-5.2 3.9l-8.3 -3.9l-1.5 -5.2l-1.5 -1.3l-2.2 -0.8l-4 3.4l-3.9 -3.9l0 -1.7l16.2 -12.9l9.2 -2.2l-1.3 1.8l0.9 2.5l-1.2 3.1zM247.6 463.9l-12.8 -5.2l-1 -0.8l0.3 -3.5l6.5 -0.8l5.2 2.1l2.7 4.8l-0.9 3.4zM370 412.2l-1.2 2.1l-1.2 -0.4l1.8 -4.3l1.5 -0.9l0.6 0.9l-1.5 2.6zM375.8 497.1l-1.8 4.3l-1.8 -3l0 -2.6l3.6 1.3zM406.4 335.8l-0.9 6.5l2.5 4.7l0.6 18.1l-4.6 8.7l-0.9 10.8l-5.5 12.9l-8.9 -6l-2.8 -3.1l2.5 -4.7l-5.2 -2.6l1.2 -4.7l-0.6 -2.6l-3.7 0l0 -1.3l2.5 -3.5l0 -2.6l-3.4 -2.5l-0.6 -2.6l3.3 -2.6l-1.5 -2.6l-1.8 -0.9l4.3 -8.2l3 -2.6l7.1 -2.1l3 -3l4.6 1.7l0.6 -0.9l1.6 -13.3l1.8 0l1.2 1.7l0.6 7.3zM411 419.1l5.5 16.3l-5.2 10l2.2 10.7l-2.8 28.9l-1.8 7.8l-2.2 1.3l-7 -3.5l-3.4 0.9l-2.7 -1.7l-1.3 8.6l-1.5 3.5l-2.7 2.1l-7.1 -0.9l-7 -12l-0.6 -11.7l1.5 -3.4l0 -6.9l0.6 -1.3l2.2 0.8l0.3 -4.7l-1.6 -2.6l-2.7 -0.8l0 -5.2l1.8 -3.9l0 -6.9l-1.8 -2.6l-1.9 -6.5l-4.8 -6.4l-0.4 -5.2l1.3 -6l4.3 2.5l6.4 0l7.6 -4.3l5.5 -6.9l3.4 -1.3l2.1 -4.3l1.6 -0.8l1.5 2.6l5.5 2.1l2.5 4.3l2.4 1.3l-2.1 3.9l2.4 2.2zM434.6 333.7l0.9 2.6l-0.3 3.8l-2.5 -2.1l-6.4 0.8l-0.6 -2.1l0.6 -0.9l7.1 -0.4l1.2 -1.7zM542.9 426.4l-2.1 0l0 -2.2l2.7 0.9l-0.6 1.3zM559.7 256l-0.3 1.8l-1.8 -2.2l-3.4 -9.9l0.9 -5.2l-1.5 -5.2l1.2 -0.8l1 -0.5l0.9 6.1l2.4 2.6l-0.6 4.3l1.2 9zM569.5 242.2l-3.6 0.9l-2.5 -3l-3.1 -0.5l-2.1 -2.5l2.5 -2.2l1.5 -3l7.3 10.3zM570.1 251.7l1 2.2l-5.5 -2.6l-0.7 -1.3l1 -2.2l1.8 0.5l2.4 3.4zM581.2 288l0.3 0.8l-1.9 -0.4l-8.2 -11.2l9.8 10.8zM581.2 269.8l-1 1.3l-7.6 -7.7l-5.2 -9.1l15.3 15.1l-1.5 0.4zM582.4 281.9l0.6 1.3l-4 -2.6l-1.5 -3l4.9 4.3zM586.7 285.8l2.1 3l-2.1 -0.4l-3.1 -4.3l3.1 1.7zM625.8 327.6l13.5 1.8l3.1 1.7l-6.5 -0.5l-3.9 1.3l-4.6 -1.3l-1.6 -3zM630.1 316l-4.9 0l-6.4 -2.2l0.9 -3l4.6 0.4l7 1.3l1.9 1.8l-3.1 1.7zM642.4 322l-15.6 0.5l-9.2 -3.9l4.3 -0.9l4.2 0.9l1.3 1.7l15 1.7zM655.2 337.5l4 3.1l-12.3 -3.9l8.3 0.8zM808 -8l0 516l0 -61.3l-1 5.1l0.6 3.5l0.4 0.5l0 49.8l-1 0.1l1 0.4l0 1.9l-55.8 0l-0.3 -2.3l0.3 -2.6l3.4 -0.4l6.7 1.7l1.2 -0.8l-0.9 -4.8l-10.4 0.9l-2.1 -1.3l-7.4 -9.5l-5.2 -3l-3.3 -9.5l-5.9 -6.9l-1.2 -6.9l-3.3 -7.3l-11.4 -7.4l-2.4 -3l-2.5 -5.6l3.7 1.3l0.6 -1.3l-3.7 -10.8l3.7 -11.6l0.6 -13.4l-1.2 -7.7l1.8 -6.1l2.5 -3.4l0 -6.5l-3.4 -3l-4 -0.4l-4.5 -3.5l-2.2 -4.7l-7 -8.2l-8 -5.6l0.6 -2.6l-3.9 0.4l-21.5 -15.9l-7.3 -1.8l-9.8 -5.6l-6.4 -1.7l5.2 -0.9l15.3 7.8l-12 -11.2l-6.1 -4.3l-7 -7.8l-15.6 -6.5l-8 1.3l-4.3 -0.4l-1.5 -2.2l0 -3.8l-13.5 -10.8l-9.4 -11.2l-2.2 -3.9l4.9 -1.3l5.8 0.9l-6.1 -4.8l-8.9 -9.5l-2.4 -4.7l0.3 -11.2l-1.8 -4.8l-9.2 -9.5l-7.4 -1.7l-2.1 7.8l-8.3 13.8l-3.3 0l-7.1 -11.7l-3.3 -15.9l7.9 -6.5l-4.6 -6l-2.1 0l-2.8 2.6l-7.9 -2.6l-5.5 5.6l-16.3 7.7l-2.1 -0.4l3.4 -3l-1.6 -0.4l-6.7 4.3l-1.2 9l1.8 1.3l3.1 7.3l4 3.1l-1.9 5.1l-2.4 2.2l-3.1 -1.3l-0.9 4.8l1.5 12.5l3.1 9l8.9 9.9l6.7 3.1l11.9 9.9l8 5.1l7.3 16.9l6.4 21.1l5.2 7.8l11.1 11.6l10.1 8.2l9.1 5.2l7.1 0.8l17.1 -1.3l6.1 1.8l1 3.8l-1.3 2.2l-7.3 6l-0.3 4.8l3.3 3l16.6 9.1l16.8 7.3l11.3 9.5l14.7 7.7l2.8 4.4l8.8 8.1l4 6.5l0.9 5.2l-4.6 12.1l-3.6 -1.3l-4.3 -3.9l-6.4 -14.7l-14.4 -2.6l-4.3 -2.5l-2.4 -4.4l-4.6 -0.4l-3.1 2.2l-8 13.8l-4.2 12l-0.3 4.8l2.4 4.7l6.7 2.6l8.9 8.6l0.3 10.4l1.5 6l-2.1 3.5l-4.6 -0.9l-5.8 2.2l-3.5 3.1l-13.5 0l0.2 -5.3l-3.1 -3.4l-2.7 -14.3l-5.2 -12l-4.9 -15.6l-3.1 -2.6l-9.2 -0.8l-10.4 -7.3l-0.6 -3.1l1.8 -3l-1.2 -3.9l-3.4 -6.9l-2.1 -1.7l-13.2 3l3.7 -5.6l-4.6 -3.4l-8.2 0l0.3 -2.6l-5.8 -11.2l-4 -4.8l-1.9 -0.4l-3.6 0.9l-9.2 -2.6l-4.9 2.1l-7.3 -7.3l-6.8 -2.6l-16.8 -20.3l-8.3 -6l-5.2 -9.1l-10.4 -5.6l-4.9 1.3l-1.2 -1.3l2.4 -1.7l-0.3 -3.4l-7 -8.7l-4.3 -2.5l-2.7 -6.1l-6.2 -1.3l0.4 -9.9l-2.2 -7.3l-4 -6.1l-2.1 -14.6l-1.8 -4.3l-4.3 -3.1l-9.8 -3.4l-13.5 -9.5l-15.9 -4.3l-6.7 3l-16.9 20.3l-22.6 7.7l-16.5 14.3l-1.9 4.7l-2.7 2.6l-13.8 5.6l-2.7 -1.3l-6.8 0l-4.3 -3.4l-7.9 -2.2l-2.8 -4.7l-7.6 -1.3l-0.3 -3l-10.7 3l-15 -4.8l-5.2 -4.7l-4.3 1.3l-4 4.3l-15.9 11.6l-6.4 11.7l-0.3 3.4l1.5 10.8l6.7 12.9l-4.3 1.3l-0.6 4.4l2.8 3.4l0.3 6l-7.7 7.4l-21.1 12.9l-7 7.8l-32.2 9.9l-9.7 10.3l2.7 0.9l2.8 3.5l-5.2 3.8l-3.7 0.9l-7.4 12.5l-13.4 19l-7.7 15.5l0 4.3l4 15.5l5.2 7.4l5.5 3l0.1 0.1l-129 0l0 -200.3l5.3 -1.6l3.7 0.8l5.2 -1.7l16.8 6.5l5.2 -3.5l8.3 1.7l8.2 3.5l10.7 -0.9l11.1 -3.8l4.5 -5.2l4 -19.9l3.1 -23.2l2.4 -4.4l2.8 -1.3l-2.2 -3l-3 3.9l1.8 -21.1l3.4 -16l7.6 6.5l1.9 3l2.4 9.5l4.3 3.9l-2.8 -3.9l-2.7 -12.5l-1.8 -3.9l-12.6 -10.3l-0.3 -2.6l5.5 1.3l-2.1 -8.2l-1.6 -16.4l-7.3 -1.7l-12.2 -6.9l-9.2 -15.6l2.1 -7.3l-1.8 -3l-3.7 -2.2l1.5 -2.6l1.3 -1.7l2.4 -0.4l8.9 2.1l-7.4 -3.8l-11.3 1.2l-4.6 -1.2l-0.9 -3.1l3.1 -3.8l-3.7 -2.6l-6.7 0.8l-1 -1.3l2.2 -2.6l-1.8 -1.2l-5.2 1.2l-3.1 -0.8l-3.1 -3l-8.5 -0.9l-2.2 -1.7l-11.9 -3.9l-5 0.3l0 -37.8l0.1 0l10.7 0l7.3 -4.3l7.4 -1.3l7 2.1l9.5 10.8l7.4 -4.7l11.3 0l2.4 3l2.8 -5.2l2.7 3l13.5 -0.8l-3.1 -2.2l-2.7 -4.7l-0.3 -16.9l-7.1 -12.5l-1.8 -4.7l0.3 -3.5l8.3 0.5l6.7 -1.7l3.4 1.2l0.9 8.2l2.7 4.4l19 1.7l11 2.1l9.2 -4.3l8.6 -2.1l0.6 -0.9l-4.9 0.4l-4.6 -2.1l-0.6 -2.2l2.4 -6l13.2 -6.9l19.3 -6.1l4.9 -3.8l5.5 -6.9l-1.2 -1.8l0.9 -19.4l0.8 -1.8zM730.8 481.6l0.6 2.1l-6.7 -3.4l-2.2 -5.6l-4.9 -6.1l0 -1.7l5.9 -2.1l2.7 2.1l0.3 0.9l-2.7 3.4l1.5 2.2l1.8 6.5l3.7 1.7zM748.6 508l0.9 -1l0.5 1z"/>
+      <path class="map-borders" d="M160.1 344.9l0.6 6.9l8 -2.6M160.1 344.9l2.1 -1.7l6.5 1.7l0.9 1.7l-0.9 2.6M160.1 344.9l-2.5 -3.9l-1.8 -0.9l-18 -6l-1.6 2.2l-0.6 4.7l-11.3 0l-1.8 -1.3l-7.4 1.3l-7.9 -6l-8.9 1.3l-5.2 -6.1l-5.2 -0.4l-7.7 -3l-3.3 -1.8l-0.4 -1.7l-2.1 2.6l-2.7 -0.4l-0.7 -0.9l1.9 -3.4l0.3 -3.9l-9.2 -3l-2.4 -2.6l0 -1.8M168.7 349.2l6.7 3l1.8 3l1.3 0.5l5.2 -3.1l13.7 3.5l1.6 -3l5.8 -2.2l9.8 1.3M199.6 -8l1.2 1.4l2.4 1.7l8.3 -3l3.7 5.2l1.2 5.6l10.1 2.1l2.7 7.4l1.9 -1.3l6.1 0l2.8 0.8l3.9 3.1l-0.9 4.7l1.5 2.2l-1.5 3.8l0.3 1.3l6.8 1.3l5.5 -0.8l3.3 -1.8l1.6 -4.3l3.3 -2.1l1.3 0.4l-2.2 7.8l1.5 2.1l1 5.2l4.2 0.4l8.3 4.3l7 7.4l8.6 -1.3M293.5 45.6l6.7 3.9l5.2 -2.2l4.9 2.2M299.6 -6.6l7.7 6.5l-2.2 2.1l1 2.2l4.2 2.1l0.7 5.6l-5.6 3.9l-1.8 4.8M299.6 -6.6l-7.3 -0.4l-1.9 -0.5l-0.2 -0.5M303.6 20.6l-0.9 -1.3l-3.4 -0.9l-3.3 3.9l-4 6.9l-0.6 4.7l4.9 7.4l-2.8 4.3M310.3 49.5l1.3 -6.5l3 -4.7l0.3 -3.9l-5.2 -1.8l-3.6 -3.4l-2.8 -4.7l0.3 -3.9M310.3 49.5l3.7 0.4l2.2 2.2l6.4 9.9l4.6 -2.2l3.3 1.3l1.3 3l12.5 -1.7l2.5 2.6l2.4 1.3l15.9 3.9l0.3 3.4l-9.2 10.8l-3.9 15.5l-2.8 5.2l-1.2 4.3l0.9 2.6l-0.6 3.9l-1.8 10.3l1.2 2.6l1.5 0.9M331.1 201.3l-7.6 -10.4l1.5 -4.7l-1.8 -6.1l-10.1 -0.4l-6.1 4.3l1.2 3.5l-2.1 2.6l-5.9 2.1l-1.2 -0.4l0 -2.6l4 -3l0.6 -4.3l-1.8 -2.2l0.3 -1.3l2.7 -6.5l7.7 -6.4l1.5 -8.2l6.4 -3.5l10.1 -12.5l-3 -3l2.1 -2.6l5.2 -1.7l1.9 2.6l4.2 0l2.5 -1.3l2.1 -3.9l4 -1.7M331.1 201.3l3.4 2.1l12.6 -4.3l7.6 2.6l6.1 -4.3l4.3 -6.1l-0.9 -4.7l8.3 -7.8l1.5 0l1.2 8.7l5.5 6l5.5 1.3l-1.2 3.4l5.2 7.4l2.1 -0.9l1 -1.3l-1.6 -5.6l7.7 -12.1l0.3 -8.2l5.2 0l1.5 5.7l1.6 1.7l3.3 0.4l9.2 -2.6l3.1 5.2l2.7 0l-0.6 -5.2l-2.1 -5.2l1.5 -5.1l3.4 -0.9l2.1 2.6l4.9 0.4l0.3 -3l-1.2 -2.1l1.5 -8.2M300 -8l-0.4 1.4M344 295.3l-1.5 -0.9l-0.3 1.7M345.5 294.4l-0.3 -3.9l6.1 -9.4l-1.2 -3.5l-9.8 0.9l-10.7 -6.1l-2.1 -2.6l-0.9 -2.1l0.6 -1.7l-1.6 -3.5l3.7 -7.3l2.2 -1.7l-1.3 -4.8l-7.6 -3.9l-1.5 -4.3l-1.9 -2.1l0 -2.2l1.9 -0.9l4.5 0l7.4 -4.3l2.1 -6l-11 -15.5l0.3 -3.1l6.7 -5.1M407.7 132.7l-10.5 -6.5l-9.1 0.5l-1.6 -1.8l-3 0l-4.9 -3.4l-4 2.1l-1.2 1.8l1.5 1.7l3.7 0l-0.3 1.3l-3.4 0.8l-7.6 -0.4l-8.3 2.2l-9.5 -1.3M408 143.5l3 -8.6l-3.3 -2.2M409.5 152.5l0.9 -2.1l-2.4 -6.9M409.5 152.5l-2.8 0l-0.3 -4.7l1.6 -4.3M436.1 161.2l-1.2 -4.4l-1.9 -0.8l-6.7 5.6l-7.6 -3.9l-1 -3l-8.2 -2.2M436.1 161.2l7.4 0.4l4.2 3l4.9 0l4.3 -6.9l3.4 -1.7l16.5 -0.4l11.9 -3.9l1 0.8l-2.2 3.5l0.6 1.7l7.4 10.4l23.8 5.6l16.3 2.1M497 285.4l-1.2 2.1l0.9 1.7l1.8 -0.4l0.3 -3.9l-1.8 0.5M535.6 175.8l-0.7 2.6l-8.5 6l-0.6 2.6l1.2 2.2l6.4 1.3l-4.6 7.3l0.9 1.7l3.1 0.5l-0.9 6.4l4.3 2.2l4.6 6.5l-4.6 0.8M538.9 78.8l5.5 3.4l1.9 3.9l9.8 0.9l3.6 -2.2l6.2 1.3l0.6 -3l2.4 -3.4l0.9 -0.9l3.1 0l1.5 -9.1l3.1 -0.8l2.7 2.1l4.6 -0.8l12 4.7l3.9 0l7.1 4.8l9.5 0.4l3.3 -2.6l1.9 0l10.4 4.3l2.1 4.3M538.9 78.8l-7.9 -8.2l-4.6 -0.9l-3.4 -5.1l-4.6 -2.6l-6.7 -7.4l-3.4 0l-4 -3.4l-8.8 -14.2l3.6 -6.9l-9.1 -8.7l-3.7 -8.6l2.4 0.4l3.4 4.8l5.2 -7.3l3.1 -1.8l6.7 -1.7l5.2 0.9l2.5 -3.5l4.8 -0.8l1.9 -3.1l4 -1.7l2.1 0.9l3.7 -4.3l10.4 -2.6l2.3 -1M538.9 78.8l-0.6 7.8l-2.1 2.1l-1.3 0.9l-5.8 -2.6l-3.6 9.5l-14.4 6.9l-4.3 3.9l0 1.2l5.8 8.2l0 3.5l-1.5 3.9l4 0.8l0.6 1.8l-1.3 7.7l-6.1 -2.6l-1.2 -4.3l-2.4 -1.3l-6.5 1.3l-8.2 -3.4l-0.6 4.3l-14.4 1.7l-10.1 3.9l-2.8 3l-7.9 1.3l-1.9 -0.4l-3.3 -5.2l-13.2 -1.3l-2.1 7.8l-1.9 2.6l-4 1.2l0.7 -3.4l-4 -1.3l-0.3 -2.6l-2.8 -2.6l-6.7 -3l-3.1 2.2l-3.9 0.4M608.7 161.2l-3.4 2.5l-0.6 5.2l-5.8 -1.3l-4.3 0.5l-5.8 3l-6.7 -0.5l-10.1 1.3l-4 4.8l-6.4 4.3l-26 -5.2M608.7 161.2l4.9 -4.8l6.1 -1.7l1.2 -4.8l-1.5 -1.2l-0.6 -3.1l1.2 -2.1l-0.6 -5.6l5.5 -2.2l1.9 -3.9l-1.3 -3l-6.7 -2.6l5.2 -3.4l6.1 3l8.6 -1.3l-1.2 -5.6l1.8 -5.2l1.8 -2.1M621.9 176.7l-4.3 -6.1l0 -1.7l-1.3 -1.7l-1.8 -6l-5.8 0M621.9 176.7l-6.2 -1.3l-2.4 2.1l0.3 3.9l-0.6 0.9l-4.9 0l-4.3 3.9l-8.9 3.4l-1.5 2.6l2.4 3.9l-0.6 8.2l-11.3 5.6l2.2 3l-2.2 3.5l1.8 4.7l-3 1.3l-8.9 -2.6l-4.9 0.9l-6.7 -7.8l-6.1 7.8l-8.6 0l-3.1 -1.3l-3.3 3.4l-8 -2.1l-1.2 -1.8M635 86.1l3.4 -7.7l2.4 -2.6l1.6 -0.9l8.8 1.3l8.6 -2.6l4.6 -4.7l5.5 -3l2.1 -8.2l6.2 -3.5l7.3 -6.5l7 -0.8M641.1 111.6l-1.8 -1.3l-6.7 -15.1l-0.3 -2.2l2.7 -6.9M641.1 111.6l5.2 0.8l9.8 7.8l3.7 1.7l29.4 -0.8l1.8 -2.6l-0.9 -3.9l1.2 -2.6l3.7 -2.2l17.1 -2.5l2.8 -4.4l2.1 -0.4l8.3 3.9l1.5 -0.9l11.6 -6.4l4.9 -10l11.7 -0.8l6.1 1.7l11.6 -1.7l3.4 2.1l4.9 6.5l12.5 -2.6M680.6 346.6l2.5 5.6M680.6 346.6l-9.8 -5.6l-8.6 -6.9l-1.2 -2.2l-4 0M680.6 346.6l3.4 -3.4l-2.5 -6.1l-0.3 -9.5l4.9 -1.3l0 -3.8l1.5 -4.8l5.6 -5.2l2.4 0.5l1.5 2.1l1.6 0l0.3 -3l-3.1 -6l0.3 -1.3l7.4 0M692.5 46.9l3.4 0.4l0.9 4.3l5.5 0l3.1 -4.7l5.8 -3.9l5.8 8.2l4.3 1.7l0.6 4.3l-0.9 3l4.9 -0.8l4.3 1.7l3 -6l6.2 -3l7.9 0l7.7 3.4l3.9 -1.3l2.5 -3.4l17.1 0.4l7.7 3l2.4 1.7l1.6 3.9l15.9 6.1M692.5 46.9l-0.6 -4.3l-6.7 -6.5l-0.9 -5.2l-6.4 -2.1l-1.3 0.8l-8.5 -5.6l-4.9 3l-7.4 -6.4l-1.2 -1.8l3.7 -1.2l0.9 -1.8l-1.2 -3.4l-8.6 2.6l-8.3 -5.6l-8.2 -2.2l3.3 8.2l-10.7 6l-9.5 -11.6l-3.6 -2.2l4.6 -3.4l1.8 -3l-4.3 -3.9l-8.3 2.1l-1.8 -2.5l-6.7 -3.1l-7.1 -1.8M695 201.3l-7.4 0.8l-4.2 4.8l-5.2 2.1l-16.9 -1.7l-5.2 -3.4l-0.9 -1.8l-9.2 -3.9l-2.1 -3.4l-9.2 -7.3l-2.1 -3.9l-10.7 -6.9M698.1 247l-0.4 -1.3l2.8 -1.3l0.3 -1.7l-1.2 -7.4l2.1 -0.4l0.3 -2.2l4.9 1.3l2.8 0l0.3 -1.7l-2.2 -2.6l-7.3 -3l-2.8 -2.6l0.4 -3l1.5 -2.2l-4.3 -3.4l0.9 -2.6l-3.4 -7.8l1.6 -1.2l0.6 -2.6M703.6 304.8l0.9 3.4l5.8 4.8l6.1 7.3l10.1 3.9l10.1 6l2.2 2.2l0 2.6M703.6 304.8l3.3 -2.6l4.6 1.3l1.5 -3.5l-0.3 -2.6l-7.3 -11.6l10.1 -1.7l-0.9 -2.6l-6.5 -6.9l-5.8 -3l-0.9 -2.6l0.9 -7.4l4.3 -7.3l1.9 -7.8l-3.4 -1.2l-6.1 1.7l-6.2 -0.5l-1.5 -1.2l-1.2 -5.2l-2.8 -2.2l-11.6 -2.1l-8.6 -0.5l-3.9 2.6l-1.9 0l-4.9 -3.4l-4.6 1.7l-11.3 -2.2l-6.4 -4.7l-4 3.4l-7.9 -0.8l-7.4 9l-4 -2.5l-3.9 -5.2l-6.5 -0.5l-0.9 0.9l-1.5 17.7l11 10.8l3.4 12.9l2.7 4.3l8.9 9.1l3.7 5.6l11.3 11.2l5.8 3l0.6 6.1l11 12.9l-0.3 2.2l-1.5 0.8M728.3 469.5l4 2.2l3.7 -0.9l1.8 -5.2l2.2 0l-2.2 -7.7l3.1 -3.1l6.1 -1.2l1.5 -1.8l4.6 -14.2l4.3 -1.7l2.5 -5.6l-2.2 -6.9l0 -3.1M730.2 347l-8.3 3.1l-1.5 -2.2l-0.3 -4.3l-2.5 0l-11.3 19.8l2.5 4.3l-0.7 8.7M735.7 193.5l-2.5 -1.3l-16.8 -1.3l-2.4 0.4l-3.4 4.4l-4.3 2.5l-4 0.5l-1.8 -1.3l-2.1 2.6l-3.4 1.3M735.7 193.5l3.7 5.6l6.7 4.8l4 5.6l1.8 -0.5l0.6 12.1l7.1 6.5l12.5 5.6l1.8 1.7l-2.1 5.2l-2.1 0.8l5.5 4.8l-5.2 1.7l0 1.3M735.7 193.5l8.3 -2.6l3 1.7l3.1 -1.7l1.5 -3.4l8.6 0.4l2.4 -1.7l2.2 -4.8l2.1 -0.8l-0.3 -3.5l2.1 -5.2l5.5 -3.8l-0.3 -3.9l4.9 -7.4l0.3 -3.4l4 -4.3l2.5 -6.9l3.9 -4.3l0 -4.8l8.9 -9.5l6.1 -1.7l3.5 0M738.8 335l-3.7 1.3l-0.9 2.1l-4.3 -0.4l-0.6 1.3l1.8 4.3l-0.9 3.4M738.8 335l3.9 -1.3l0.3 -3.9l4.3 -3.5l1.2 -3l-1.2 -4.3l5.5 -2.6l1.3 3.9l6.7 3.4l4.9 5.7l0.6 2.1l4.9 3.5l-0.3 3.4l11 3.5l-4.3 12l-2.7 2.6l1.2 3.5M745.8 376.4l0.3 -6.1l-2.8 -9l-7.6 -5.2l-5.5 -9.1M757.7 420.3l-0.9 -2.1l-6.7 -1.3l-1.6 -5.6l-2.7 -3l-2.5 -6.1l0 -5.1l-1.2 -5.6l2.2 -2.2l-0.3 -6l1.8 -6.9M757.7 420.3l11 -0.8l2.5 -1.7l5.5 1.7l6.1 -3.5l4.6 -6.9l1.8 -0.8l5.9 -1.3l9.4 1.7l3.4 -0.9l0.1 0M770 248.7l4.9 1.7l3.6 3.5l8.3 1.7l3.7 2.2l1.8 3.4l3.4 -0.8l4.6 -5.2l4.5 -1.3l3.2 1.9M808 260.8l-1.6 0.4l-1.9 4.3l1.3 2.6l2.2 1.9M776.1 360l-5.2 1.3l-1.9 1.3l-1.2 3.8l-4.6 -3l-2.4 0l-8.6 4.3l-1.8 8.7l-4.6 0M793.5 94.3l0.3 -6.9l4.9 -5.2l2.8 -7.7l4.6 -8.6M800 357.4l-3.1 -2.2l-5.8 2.6l-4.6 -0.8l-10.4 3M800 357.4l2.4 -0.9l3.1 -4.7l0 -2.6l-1.6 -1.7l-0.9 -3.9l0.9 -5.2l-0.9 -1.7l0.9 -2.2l4.1 -0.9M808 309.3l-1.6 -1.1l-5.5 -14.2l0 -3.5l1.5 -6.4l5.5 -3l0.1 -0.5M806.1 65.9l1.9 0.5M808 106.5l-0.7 -0.1l-1.8 -3.5l-5.2 -2.1l-3.1 -6.5l-3.7 0M808 366.9l-0.7 -0.5l-7.3 -9"/>
+    </svg>
+    <span class="map-pin map-pin--main" style="left: 77.16%; top: 20.59%; --j: 0" aria-hidden="true">1</span>
+    <span class="map-pin" style="left: 47.21%; top: 27.75%; --j: 1" aria-hidden="true">2</span>
+    <span class="map-pin" style="left: 33.05%; top: 41.72%; --j: 2" aria-hidden="true">3</span>
+    <span class="map-pin" style="left: 22.84%; top: 79.41%; --j: 3" aria-hidden="true">4</span>
+    <span class="map-scale" style="width: 9.69%" aria-hidden="true">200 km</span>
+  </div>
+  <figcaption>
+    <ol class="map-legend">
+      <li><span class="map-key" aria-hidden="true">1</span><span><b>Vienna</b><span class="map-note">Departs</span></span></li>
+      <li><span class="map-key" aria-hidden="true">2</span><span><b>Zurich</b><span class="map-note">Stop</span></span></li>
+      <li><span class="map-key" aria-hidden="true">3</span><span><b>Lyon</b><span class="map-note">Stop</span></span></li>
+      <li><span class="map-key" aria-hidden="true">4</span><span><b>Barcelona</b><span class="map-note">Arrives the next morning</span></span></li>
+    </ol>
+    <p class="note">Map data: Natural Earth</p>
+  </figcaption>
+</figure>
+
+  </section>
+  <section class="scene scene--comparison" style="--i: 2" aria-labelledby="q3">
+    <p class="scene-kind"><span aria-hidden="true">⚖️</span> Comparison</p>
+    <h2 id="q3">Train or plane?</h2>
+    <div class="cmp">
+  <div class="cmp-head" aria-hidden="true">
+    <span class="cmp-side cmp-side--l">Night train</span>
+    <span class="cmp-vs">vs</span>
+    <span class="cmp-side cmp-side--r">Plane</span>
+  </div>
+  <div class="cmp-row" style="--j: 0">
+    <p class="cmp-aspect">CO2 per passenger</p>
+    <div class="cmp-cells">
+      <p class="cmp-cell cmp-cell--l"><span class="sr-only">Night train: </span>About 18 kg</p>
+      <p class="cmp-cell cmp-cell--r"><span class="sr-only">Plane: </span>142 kg</p>
+    </div>
+  </div>
+  <div class="cmp-row" style="--j: 1">
+    <p class="cmp-aspect">Travel time</p>
+    <div class="cmp-cells">
+      <p class="cmp-cell cmp-cell--l"><span class="sr-only">Night train: </span>14 h 35 min, overnight</p>
+      <p class="cmp-cell cmp-cell--r"><span class="sr-only">Plane: </span>About five and a half hours door to door</p>
+    </div>
+  </div>
+</div>
+
+  </section>
+  <section class="scene scene--timeline" style="--i: 3" aria-labelledby="q4">
+    <p class="scene-kind"><span aria-hidden="true">🕒</span> Timeline</p>
+    <h2 id="q4">How did it come about, and what&#39;s next?</h2>
+    <ol class="tl">
+  <li class="tl-item tl-past" style="--j: 0">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">June 2025</p>
+    <p class="tl-what">Four countries&#39; rail managers agree to share night-train slots</p>
+  </li>
+  <li class="tl-item tl-past" style="--j: 1">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">September 2025</p>
+    <p class="tl-what">Nocturne Rail orders 24 sleeper carriages</p>
+  </li>
+  <li class="tl-item tl-now" style="--j: 2">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">Thursday <span class="tl-tag">Now</span></p>
+    <p class="tl-what">The route is announced</p>
+  </li>
+  <li class="tl-item tl-next" style="--j: 3">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">March 20 <span class="tl-tag">Ahead</span></p>
+    <p class="tl-what">Tickets go on sale</p>
+  </li>
+  <li class="tl-item tl-next" style="--j: 4">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">April 9 <span class="tl-tag">Ahead</span></p>
+    <p class="tl-what">First train runs</p>
+  </li>
+  <li class="tl-item tl-next" style="--j: 5">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">December <span class="tl-tag">Ahead</span></p>
+    <p class="tl-what">Could run every night, if the first season sells well</p>
+  </li>
+</ol>
+
+  </section>
+
+
+  <footer class="colophon">
+    <p>Presented by <b>it's news</b>. Every figure and quote in this story was checked against the article.</p>
+  </footer>
+</main>
+</body>
+</html>

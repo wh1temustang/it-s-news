@@ -1,0 +1,28 @@
+{% if data.unit is defined %}
+<p class="chart-unit">{{ data.unit }}</p>
+{% endif %}
+<figure class="lc">
+  <svg viewBox="0 0 {{ data.w }} {{ data.h }}" role="img" aria-label="{% for p in data.points %}{{ p.x }}: {{ p.display | default(p.y) }}{% if not loop.last %}; {% endif %}{% endfor %}">
+    <defs>
+      <linearGradient id="lc-fill-{{ index }}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="currentColor" stop-opacity="0.28"/>
+        <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <line class="lc-base" x1="{{ data.left }}" x2="{{ data.right }}" y1="{{ data.baseline }}" y2="{{ data.baseline }}"/>
+    <path class="lc-area" d="{{ data.area }}" fill="url(#lc-fill-{{ index }})"/>
+    <path class="lc-line" d="{{ data.line }}" pathLength="1"/>
+    {% for dot in data.dots %}
+    <circle class="lc-dot{% if dot.label %} lc-dot--key{% endif %}" cx="{{ dot.x }}" cy="{{ dot.y }}" r="{{ 5.5 if dot.label else 3.5 }}"/>
+    {% if dot.label %}
+    <text class="lc-label" x="{{ dot.x }}" y="{{ (dot.y + 26) if dot.below else (dot.y - 14) }}" text-anchor="{{ dot.anchor }}">{{ dot.label }}</text>
+    {% endif %}
+    {% endfor %}
+    {% for tick in data.ticks %}
+    <text class="lc-tick" x="{{ tick.x }}" y="{{ data.h - 10 }}" text-anchor="{{ tick.anchor }}">{{ tick.text }}</text>
+    {% endfor %}
+  </svg>
+</figure>
+{% if data.note is defined %}
+<p class="note">{{ data.note }}</p>
+{% endif %}
