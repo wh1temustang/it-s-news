@@ -111,7 +111,7 @@ a { color: var(--accent); }
   text-transform: uppercase;
 }
 
-.hero h1 {
+.hero :is(h1, h3) {
   margin: 0;
   font-size: clamp(30px, 6vw, 48px);
   line-height: 1.08;
@@ -156,8 +156,8 @@ a { color: var(--accent); }
   text-transform: uppercase;
 }
 
-.scene h2,
-.bottom-line h2 {
+.scene :is(h2, h4),
+.bottom-line :is(h2, h4) {
   margin: 0 0 18px;
   font-size: clamp(21px, 3.4vw, 26px);
   line-height: 1.2;
@@ -170,7 +170,7 @@ a { color: var(--accent); }
   background: color-mix(in srgb, var(--accent) 12%, var(--surface));
 }
 
-.bottom-line h2 {
+.bottom-line :is(h2, h4) {
   margin-bottom: 6px;
   color: var(--accent);
   font-size: 15px;

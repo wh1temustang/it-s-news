@@ -78,6 +78,8 @@ before or after it. Its shape:
 
 ### Few words, by design
 
+- Write in the article's language. Quotes and numbers are copied from it, and
+  the rest of the storyboard should read the same way.
 - The schemas' character limits are the word budget, and part of the design.
   Shorten the wording, never the facts.
 - Use plain words and the active voice. Tile values and timeline entries are

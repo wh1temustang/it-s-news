@@ -1,0 +1,24 @@
+{
+  "title": "it's news sample edition",
+  "dek": "Two fictional stories, one page: how an edition groups stories into sections.",
+  "date": "March 14, 2026",
+  "footer": "That's the whole edition. Both stories are fictional samples.",
+  "sections": [
+    {
+      "id": "travel",
+      "title": "Travel",
+      "icon": "🚆",
+      "stories": [
+        {"article": "night-train.md", "storyboard": "night-train.storyboard.json"}
+      ]
+    },
+    {
+      "id": "cities",
+      "title": "Cities",
+      "icon": "🏙️",
+      "stories": [
+        {"article": "bike-lanes.md", "storyboard": "bike-lanes.storyboard.json"}
+      ]
+    }
+  ]
+}

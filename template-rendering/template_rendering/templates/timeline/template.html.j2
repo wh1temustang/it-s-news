@@ -4,8 +4,8 @@
   <li class="tl-item tl-{{ state }}" style="--j: {{ loop.index0 }}">
     <span class="tl-dot" aria-hidden="true"></span>
     <p class="tl-when">{{ event.when }}
-      {%- if state == "now" %} <span class="tl-tag">Now</span>
-      {%- elif state == "next" %} <span class="tl-tag">Ahead</span>{% endif -%}
+      {%- if state == "now" %} <span class="tl-tag">{{ t("timeline.now") }}</span>
+      {%- elif state == "next" %} <span class="tl-tag">{{ t("timeline.next") }}</span>{% endif -%}
     </p>
     <p class="tl-what">{{ event.what }}</p>
   </li>

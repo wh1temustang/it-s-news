@@ -21,6 +21,14 @@ When asked to present, storyboard or render a news article (`.md`):
 6. Report which templates you chose and why, plus anything the article
    couldn't support.
 
+## Presenting several articles as one edition
+
+Write a storyboard for each article as above, then list them in a manifest
+(see `template_rendering/edition.py` and `examples/edition.json`) and run
+`python -m template_rendering edition <manifest.json>`. It checks every
+storyboard again and writes `output/<manifest>.html`. For a page in another
+language, pass `--labels <file.json>` (see `template_rendering/labels.py`).
+
 ## Working on the code
 
 - Setup: `python3 -m venv .venv && .venv/bin/pip install -e .`
@@ -34,10 +42,15 @@ When asked to present, storyboard or render a news article (`.md`):
 - The example pages (`examples/<name>.html`) are committed, an exception to
   the repo's "no generated output" rule. After changing a template, the
   renderer or an example, render them again with
-  `.venv/bin/python -m template_rendering render examples/<name>.md examples/<name>.storyboard.json -o examples/<name>.html`.
+  `.venv/bin/python -m template_rendering render examples/<name>.md examples/<name>.storyboard.json -o examples/<name>.html`,
+  and the example edition with
+  `.venv/bin/python -m template_rendering edition examples/edition.json -o examples/edition.html`.
   A test fails while they're stale.
 - Rendering must stay deterministic: no timestamps, randomness or network
   access in `template_rendering/`.
 - Pages must stay self-contained: inline CSS, no external fonts, scripts or
-  images.
+  images. The only markup it's news doesn't write itself is what a host
+  passes to an edition (`Story.extra`, `head`, `foot`).
+- Page text that isn't from the storyboard goes through `labels.py`, so
+  other languages can replace it. Don't hard-code words in templates.
 - To add a template, follow "Adding a template" in [agent/README.md](agent/README.md).

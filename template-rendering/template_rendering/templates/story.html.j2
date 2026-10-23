@@ -1,0 +1,34 @@
+{# One story's headline, scenes and bottom line. Shared by the single-story
+   page, whose headings start at h1, and the edition, whose start at h3. #}
+{% macro hero(story, level) %}
+  <header class="hero">
+    <p class="kicker">{{ story.topic_label }}</p>
+    <h{{ level }}>{{ story.headline.title }}</h{{ level }}>
+    <p class="dek">{{ story.headline.dek }}</p>
+    {% if story.credits or story.published %}
+    <p class="byline">
+      {%- if story.credits_labelled %}{{ t("sources") }}{{ t("label_sep") }}{% endif %}
+      {%- for name, link in story.credits %}{% if not loop.first %}{{ t("list_sep") }}{% endif %}{% if link %}<a href="{{ link }}" rel="noopener noreferrer">{{ name }}</a>{% else %}{{ name }}{% endif %}{% endfor %}
+      {%- if story.credits and story.published %} · {% endif %}
+      {%- if story.published %}<span>{{ story.published }}</span>{% endif -%}
+    </p>
+    {% endif %}
+  </header>
+{% endmacro %}
+
+{% macro scenes(story, level) %}
+  {% for scene in story.scenes %}
+  <section class="scene scene--{{ scene.id }}" style="--i: {{ loop.index0 }}" aria-labelledby="{{ scene.anchor }}">
+    <p class="scene-kind"><span aria-hidden="true">{{ scene.icon }}</span> {{ scene.name }}</p>
+    <h{{ level }} id="{{ scene.anchor }}">{{ scene.question }}</h{{ level }}>
+    {{ scene.html }}
+  </section>
+  {% endfor %}
+
+  {% if story.bottom_line %}
+  <section class="bottom-line" style="--i: {{ story.scenes | length }}">
+    <h{{ level }}>{{ t("bottom_line") }}</h{{ level }}>
+    <p>{{ story.bottom_line }}</p>
+  </section>
+  {% endif %}
+{% endmacro %}
