@@ -17,7 +17,7 @@ and tests.
 
 | Approach | What it does |
 |---|---|
-| [Template rendering](template-rendering/) | An AI agent picks pre-built visual templates (timeline, info board, map, charts and more) for an article. Code checks every figure and quote against the article, then renders a self-contained page. See [an example page](template-rendering/examples/night-train.html). |
+| [Template rendering](template-rendering/) | An AI agent picks pre-built visual templates (timeline, info board, map, charts and more) for an article. Code checks every figure and quote against the article, then renders a self-contained page, or several stories as one edition. See [an example page](template-rendering/examples/night-train.html) and [an example edition](template-rendering/examples/edition.html). |
 
 ## Open source: no credentials, no private data
 

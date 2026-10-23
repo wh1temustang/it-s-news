@@ -1,0 +1,75 @@
+{% import "story.html.j2" as parts with context %}
+{# Without `document`, the page is a fragment for a host that wraps pages in
+   its own <html>, <head> and <body>. #}
+{% if document %}
+<!doctype html>
+<html lang="{{ t.lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% endif %}
+<meta name="generator" content="it's news">
+<title>{{ edition.title }}</title>
+{% if edition.dek %}
+<meta name="description" content="{{ edition.dek }}">
+{% endif %}
+<style>
+{{ css }}
+</style>
+{% if head %}
+{{ head }}
+{% endif %}
+{% if document %}
+</head>
+<body>
+{% endif %}
+<div class="edition-page" lang="{{ t.lang }}">
+<header class="masthead">
+  <h1>{{ edition.title }}</h1>
+  {% if edition.dek %}
+  <p class="dek">{{ edition.dek }}</p>
+  {% endif %}
+  {% if edition.date %}
+  <p class="byline">{{ edition.date }}</p>
+  {% endif %}
+</header>
+<nav class="toc" aria-label="{{ t("sections") }}">
+  <ul>
+  {% for section in sections %}
+    <li><a href="#{{ section.id }}">{% if section.icon %}<span aria-hidden="true">{{ section.icon }}</span> {% endif %}{{ section.title }} <span class="toc-n">{{ section.stories | length }}</span></a></li>
+  {% endfor %}
+  </ul>
+</nav>
+<main class="edition">
+{% for section in sections %}
+<section class="edition-section" id="{{ section.id }}" aria-labelledby="{{ section.id }}-title">
+  <h2 class="section-title" id="{{ section.id }}-title">{% if section.icon %}<span aria-hidden="true">{{ section.icon }}</span> {% endif %}{{ section.title }}</h2>
+  {% for story in section.stories %}
+<article class="story-card" id="{{ story.anchor }}" data-topic="{{ story.headline.topic }}">
+  {% if story.fictional %}
+  <p class="banner" role="note">{{ t("fictional") }}</p>
+  {% endif %}
+{{ parts.hero(story, 3) }}
+{{ parts.scenes(story, 4) }}
+{% if story.extra %}
+{{ story.extra }}
+{% endif %}
+</article>
+  {% endfor %}
+</section>
+{% endfor %}
+</main>
+<footer class="colophon">
+  {% if edition.footer %}
+  <p class="edition-footer">{{ edition.footer }}</p>
+  {% endif %}
+  <p>{{ t("presented_by", brand=brand) }} {{ t("checked_edition") }}</p>
+</footer>
+</div>
+{% if foot %}
+{{ foot }}
+{% endif %}
+{% if document %}
+</body>
+</html>
+{% endif %}

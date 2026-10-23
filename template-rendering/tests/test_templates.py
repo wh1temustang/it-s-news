@@ -9,7 +9,9 @@ import re
 import unittest
 
 from template_rendering.catalog import PACKAGE_DIR, TEMPLATES_DIR, load_templates
-from template_rendering.render import _environment, _scene
+from template_rendering.article import Article
+from template_rendering.labels import Labels
+from template_rendering.render import environment, story_view
 from template_rendering.schema import validate
 
 CATALOG = (PACKAGE_DIR.parent / "agent" / "catalog.md").read_text(encoding="utf-8")
@@ -74,18 +76,20 @@ class TemplateTests(unittest.TestCase):
             self.assertFalse(clash, f"{template.id}: {clash}")
 
     def test_each_example_is_valid_and_renders(self):
-        env = _environment()
+        env = environment()
         for template in TEMPLATES.values():
             example = template.example
             self.assertLessEqual(len(example["question"]), 60, template.id)
             self.assertEqual(validate(example["data"], template.schema), [], template.id)
-            scene = _scene(env, template, example, 0)
+            storyboard = {"headline": {"title": "T", "dek": "D", "topic": "world"},
+                          "scenes": [{"template": template.id, **example}]}
+            scene = story_view(env, TEMPLATES, storyboard, Article(body=""), Labels())["scenes"][0]
             self.assertIn("<", scene["html"], template.id)
             self.assertNotIn("{{", scene["html"], template.id)
 
     def test_styles_use_tokens_not_raw_colours(self):
         # Raw colours would break dark mode; base.css is where tokens are defined.
-        for path in TEMPLATES_DIR.glob("*/style.css"):
+        for path in [*TEMPLATES_DIR.glob("*/style.css"), TEMPLATES_DIR / "edition.css"]:
             css = path.read_text(encoding="utf-8")
             self.assertIsNone(re.search(r"#[0-9a-fA-F]{3,8}\b", css), path)
 

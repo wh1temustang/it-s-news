@@ -17,6 +17,6 @@
       <li><span class="map-key" aria-hidden="true">{{ loop.index }}</span><span><b>{{ place.name }}</b>{% if place.note is defined %}<span class="map-note">{{ place.note }}</span>{% endif %}</span></li>
     {% endfor %}
     </ol>
-    <p class="note">Map data: Natural Earth</p>
+    <p class="note">{{ t("map.credit") }}</p>
   </figcaption>
 </figure>

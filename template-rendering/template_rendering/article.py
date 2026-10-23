@@ -16,6 +16,11 @@ Front matter is plain `key: value` lines (no nesting, no lists), so no YAML
 library is needed. Every key is optional. The renderer credits `source`,
 links `url` and shows `published`; `fictional: true` puts a "not real news"
 banner on the page, which every sample article in this repo uses.
+
+A story drawn from several outlets credits them all with `sources`: one line
+of Markdown links, in any separator. It replaces `source` in the byline.
+
+    sources: [The Example Times / Ana Ruiz](https://example.com/a), [Wire Service](https://example.com/b)
 """
 from __future__ import annotations
 
@@ -25,6 +30,7 @@ from pathlib import Path
 
 _FRONT_MATTER = re.compile(r"\A---[ \t]*\n(.*?)\n---[ \t]*(?:\n|\Z)", re.DOTALL)
 _HEADING = re.compile(r"^#[ \t]+(.+?)[ \t]*#*[ \t]*$", re.MULTILINE)
+_LINK = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
 
 
 @dataclass(frozen=True)
@@ -48,6 +54,14 @@ class Article:
     def url(self) -> str | None:
         url = self.meta.get("url", "")
         return url if url.startswith(("https://", "http://")) else None
+
+    @property
+    def sources(self) -> list[tuple[str, str | None]]:
+        """(name, url) for each link in `sources`; url is None unless it's http(s)."""
+        return [
+            (name.strip(), link if link.startswith(("https://", "http://")) else None)
+            for name, link in _LINK.findall(self.meta.get("sources", ""))
+        ]
 
     @property
     def source_text(self) -> str:

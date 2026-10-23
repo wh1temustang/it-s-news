@@ -20,6 +20,11 @@ the page.
 - **The page** is one self-contained HTML file, with light and dark themes,
   that loads nothing from the network.
 
+- **An edition** puts several checked stories on one page, grouped into
+  sections, for a daily digest or a newsletter.
+- **Any language:** the page's own words (labels, credits, the footer) come
+  in English and can be replaced with a labels file.
+
 More detail in [agent/README.md](agent/README.md).
 
 ## Quick start
@@ -43,6 +48,10 @@ python -m template_rendering prompt my-article.md > prompt.txt
 python -m template_rendering check  my-article.md my-article.storyboard.json
 python -m template_rendering render my-article.md my-article.storyboard.json
 
+# Put several checked stories on one page
+python -m template_rendering edition examples/edition.json
+open output/edition.html
+
 # Run the tests
 python -m unittest discover -s tests -v
 ```
@@ -50,6 +59,7 @@ python -m unittest discover -s tests -v
 The sample articles in [examples/](examples/) are fictional. Each comes with
 its storyboard and the page rendered from it, for example
 [examples/night-train.html](examples/night-train.html).
+[examples/edition.html](examples/edition.html) shows both as one edition.
 
 Map data comes from [Natural Earth](https://www.naturalearthdata.com/) and is
 in the public domain.
