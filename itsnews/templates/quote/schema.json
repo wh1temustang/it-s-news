@@ -1,0 +1,28 @@
+{
+  "title": "Quote",
+  "x-icon": "💬",
+  "description": "A line someone said that carries the story, word for word from the article.",
+  "type": "object",
+  "required": ["text", "speaker"],
+  "additionalProperties": false,
+  "properties": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280,
+      "x-verbatim": true,
+      "description": "Copied exactly from the article, without the surrounding quotation marks. Mark a cut with \"...\"."
+    },
+    "speaker": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 48,
+      "description": "Who said it, as the article names them."
+    },
+    "role": {
+      "type": "string",
+      "maxLength": 80,
+      "description": "Optional: why their words matter, e.g. \"Transport minister\"."
+    }
+  }
+}

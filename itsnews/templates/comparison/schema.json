@@ -1,0 +1,53 @@
+{
+  "title": "Comparison",
+  "x-icon": "⚖️",
+  "description": "Two sides answering the same questions: two options, before and after, two parties' positions.",
+  "type": "object",
+  "required": ["left_label", "right_label", "rows"],
+  "additionalProperties": false,
+  "properties": {
+    "left_label": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 24,
+      "description": "Name of the first side: \"Night train\", \"Before\", \"Government\"."
+    },
+    "right_label": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 24,
+      "description": "Name of the second side."
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 6,
+      "description": "One row per point of comparison, the most telling first.",
+      "items": {
+        "type": "object",
+        "required": ["aspect", "left", "right"],
+        "additionalProperties": false,
+        "properties": {
+          "aspect": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 28,
+            "description": "What is compared: \"Journey time\", \"Price\"."
+          },
+          "left": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 48,
+            "description": "The first side's answer. Write \"Not stated\" when the article gives none."
+          },
+          "right": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 48,
+            "description": "The second side's answer. Write \"Not stated\" when the article gives none."
+          }
+        }
+      }
+    }
+  }
+}

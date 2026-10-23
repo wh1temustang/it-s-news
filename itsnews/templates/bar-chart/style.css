@@ -1,0 +1,74 @@
+
+/* --- bar chart --- */
+
+.bc {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bc-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  align-items: baseline;
+}
+
+.bc-label { font-size: 16px; font-weight: 600; }
+
+.bc-value {
+  font-size: 16px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.bc-track {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 14px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+}
+
+.bc-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: max(var(--w), 1.5%);
+  border-radius: 7px;
+  background: var(--accent);
+  transform-origin: left;
+  animation: bc-grow 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 80ms + 250ms);
+}
+
+/* With negative values the bars grow out from a centre line. */
+.bc--diverging .bc-track::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--muted);
+}
+
+.bc--diverging .bc-bar { left: 50%; width: max(calc(var(--w) / 2), 1%); }
+
+.bc--diverging .bc-neg .bc-bar {
+  left: auto;
+  right: 50%;
+  background: var(--bad);
+  transform-origin: right;
+}
+
+.bc-neg .bc-value { color: var(--bad); }
+
+@keyframes bc-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}

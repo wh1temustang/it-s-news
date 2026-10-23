@@ -1,0 +1,11 @@
+<ul class="ib">
+{% for tile in data.tiles %}
+  <li class="ib-tile" data-tone="{{ tile.tone | default('none') }}" style="--j: {{ loop.index0 }}">
+    <p class="ib-label">{{ tile.label }}</p>
+    <p class="ib-value">{{ tile.value }}</p>
+    {% if tile.note is defined %}
+    <p class="ib-note">{{ tile.note }}</p>
+    {% endif %}
+  </li>
+{% endfor %}
+</ul>

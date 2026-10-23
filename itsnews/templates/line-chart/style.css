@@ -1,0 +1,49 @@
+
+/* --- line chart --- */
+
+.lc { margin: 0; color: var(--accent); }
+.lc svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.lc-base {
+  stroke: var(--line);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.lc-area { animation: rise 0.8s both; animation-delay: calc(var(--i, 0) * 90ms + 700ms); }
+
+.lc-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* pathLength="1" makes a dash of 1 the whole line, for the draw-in. */
+  stroke-dasharray: 1;
+  animation: lc-draw 1.1s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 250ms);
+}
+
+.lc-dot { fill: var(--surface); stroke: currentColor; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.lc-dot--key { fill: currentColor; }
+
+.lc-label {
+  fill: var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.lc-tick { fill: var(--muted); font-size: 13px; }
+
+/* SVG text scales with the chart, so give it bigger units on small screens. */
+@media (max-width: 520px) {
+  .lc-line { stroke-width: 6; }
+  .lc-label { font-size: 24px; }
+  .lc-tick { font-size: 21px; }
+}
+
+@keyframes lc-draw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}

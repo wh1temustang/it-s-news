@@ -1,0 +1,70 @@
+
+/* --- comparison --- */
+
+.cmp-head,
+.cmp-cells {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.cmp-head {
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.cmp-side {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.cmp-side--l { background: var(--accent); color: var(--on-accent); }
+.cmp-side--r { background: var(--alt); color: var(--on-accent); }
+
+.cmp-vs {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 26px;
+  text-align: center;
+}
+
+.cmp-row {
+  padding-top: 12px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 70ms + 200ms);
+}
+
+.cmp-aspect {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.cmp-cell {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.cmp-cell--l { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
+.cmp-cell--r { background: color-mix(in srgb, var(--alt) 12%, var(--surface)); }

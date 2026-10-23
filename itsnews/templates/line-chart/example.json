@@ -1,0 +1,15 @@
+{
+  "question": "Is ferry ridership falling?",
+  "data": {
+    "unit": "Average weekday ferry riders",
+    "points": [
+      {"x": "2020", "y": 6100},
+      {"x": "2021", "y": 5600},
+      {"x": "2022", "y": 5450},
+      {"x": "2023", "y": 4800},
+      {"x": "2024", "y": 4300},
+      {"x": "2025", "y": 3900}
+    ],
+    "note": "Harbour ferry counts, yearly averages"
+  }
+}

@@ -1,0 +1,13 @@
+<ol class="tl">
+{% for event in data.events %}
+  {% set state = event.state | default("past") %}
+  <li class="tl-item tl-{{ state }}" style="--j: {{ loop.index0 }}">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">{{ event.when }}
+      {%- if state == "now" %} <span class="tl-tag">Now</span>
+      {%- elif state == "next" %} <span class="tl-tag">Ahead</span>{% endif -%}
+    </p>
+    <p class="tl-what">{{ event.what }}</p>
+  </li>
+{% endfor %}
+</ol>

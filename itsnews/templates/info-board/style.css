@@ -1,0 +1,53 @@
+
+/* --- info board --- */
+
+.ib {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ib-tile {
+  --tone: var(--accent);
+  padding: 14px 14px 16px;
+  border-top: 4px solid var(--tone);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tone) 8%, var(--surface));
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
+}
+
+.ib-tile[data-tone="good"]    { --tone: var(--good); }
+.ib-tile[data-tone="bad"]     { --tone: var(--bad); }
+.ib-tile[data-tone="pending"] { --tone: var(--pending); }
+.ib-tile[data-tone="neutral"] { --tone: var(--neutral); }
+
+.ib-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ib-value {
+  margin: 4px 0 0;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ib-tile:not([data-tone="none"]) .ib-value { color: var(--tone); }
+
+.ib-note {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}

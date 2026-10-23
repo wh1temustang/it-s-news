@@ -1,0 +1,12 @@
+{
+  "question": "How does it compare with the ferry?",
+  "data": {
+    "left_label": "Footbridge",
+    "right_label": "Ferry today",
+    "rows": [
+      {"aspect": "Crossing time", "left": "4 min on foot", "right": "12 min, plus the wait"},
+      {"aspect": "Cost", "left": "Free", "right": "$3.50 a trip"},
+      {"aspect": "Hours", "left": "Always open", "right": "6 am to 11 pm"}
+    ]
+  }
+}

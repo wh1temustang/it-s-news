@@ -1,0 +1,234 @@
+/* it's news: page shell and design tokens.
+   Templates style themselves with these tokens only, never raw colours, so
+   light and dark mode come for free. Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --ink: #15171c;
+  --muted: #5b616d;
+  --line: #e4e0d6;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --alt: #b45309;
+  --good: #15803d;
+  --bad: #b91c1c;
+  --pending: #b45309;
+  --neutral: #6b7280;
+  --water: #dce9f2;
+  --land: #ebe6da;
+  --coast: #b8ae98;
+  --border: #c9bfa8;
+  --radius: 18px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+[data-topic="world"]    { --accent: #2563eb; }
+[data-topic="politics"] { --accent: #7c3aed; }
+[data-topic="business"] { --accent: #0f766e; }
+[data-topic="science"]  { --accent: #0e7490; }
+[data-topic="tech"]     { --accent: #4f46e5; }
+[data-topic="climate"]  { --accent: #15803d; }
+[data-topic="health"]   { --accent: #be185d; }
+[data-topic="local"]    { --accent: #c2410c; }
+[data-topic="culture"]  { --accent: #a21caf; }
+[data-topic="sports"]   { --accent: #b91c1c; }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --ink: #eef0f4;
+    --muted: #a3a9b5;
+    --line: #2a2e37;
+    --on-accent: #0b0d10;
+    --alt: #fbbf24;
+    --good: #4ade80;
+    --bad: #f87171;
+    --pending: #fbbf24;
+    --neutral: #9ca3af;
+    --water: #142130;
+    --land: #262a32;
+    --coast: #414856;
+    --border: #4a5160;
+  }
+  [data-topic="world"]    { --accent: #7aa2ff; }
+  [data-topic="politics"] { --accent: #b197fc; }
+  [data-topic="business"] { --accent: #2dd4bf; }
+  [data-topic="science"]  { --accent: #22d3ee; }
+  [data-topic="tech"]     { --accent: #8b93ff; }
+  [data-topic="climate"]  { --accent: #4ade80; }
+  [data-topic="health"]   { --accent: #f472b6; }
+  [data-topic="local"]    { --accent: #fb923c; }
+  [data-topic="culture"]  { --accent: #e879f9; }
+  [data-topic="sports"]   { --accent: #f87171; }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.story {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* --- headline --- */
+
+.hero { margin-bottom: 28px; }
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.dek {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2.6vw, 21px);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* --- scenes --- */
+
+.scene,
+.bottom-line {
+  margin-top: 18px;
+  padding: 22px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+}
+
+.scene-kind {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene h2,
+.bottom-line h2 {
+  margin: 0 0 18px;
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.bottom-line {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.bottom-line h2 {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom-line p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Shared by the chart templates. */
+.chart-unit {
+  margin: -10px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .story { padding-top: 28px; }
+  .scene, .bottom-line { padding: 18px 16px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

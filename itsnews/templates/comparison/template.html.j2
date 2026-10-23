@@ -1,0 +1,16 @@
+<div class="cmp">
+  <div class="cmp-head" aria-hidden="true">
+    <span class="cmp-side cmp-side--l">{{ data.left_label }}</span>
+    <span class="cmp-vs">vs</span>
+    <span class="cmp-side cmp-side--r">{{ data.right_label }}</span>
+  </div>
+  {% for row in data.rows %}
+  <div class="cmp-row" style="--j: {{ loop.index0 }}">
+    <p class="cmp-aspect">{{ row.aspect }}</p>
+    <div class="cmp-cells">
+      <p class="cmp-cell cmp-cell--l"><span class="sr-only">{{ data.left_label }}: </span>{{ row.left }}</p>
+      <p class="cmp-cell cmp-cell--r"><span class="sr-only">{{ data.right_label }}: </span>{{ row.right }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>

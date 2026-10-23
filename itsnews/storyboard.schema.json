@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Storyboard",
+  "description": "An agent's plan for presenting one article: a short headline and a few scenes, each answering one reader question with one template.",
+  "type": "object",
+  "required": ["headline", "scenes"],
+  "additionalProperties": false,
+  "properties": {
+    "headline": {
+      "type": "object",
+      "required": ["title", "dek", "topic"],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "The headline in plain words. Shorten the article's own headline if it runs long."
+        },
+        "dek": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160,
+          "description": "One sentence under the headline: what happened, and why a reader should care."
+        },
+        "topic": {
+          "type": "string",
+          "enum": ["world", "politics", "business", "science", "tech", "climate", "health", "local", "culture", "sports"],
+          "description": "Sets the page's accent colour and the label above the headline."
+        }
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "In reading order. Each scene answers a different question.",
+      "items": {
+        "type": "object",
+        "required": ["template", "question", "data"],
+        "additionalProperties": false,
+        "properties": {
+          "template": {
+            "type": "string",
+            "description": "A template id from the catalog, e.g. \"timeline\"."
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60,
+            "description": "The reader question this scene answers, shown as its heading, e.g. \"What happens next?\""
+          },
+          "why": {
+            "type": "string",
+            "maxLength": 240,
+            "description": "Why this template fits this question. Not shown to readers; kept so a reviewer can follow the choice."
+          },
+          "data": {
+            "type": "object",
+            "description": "The template's content, shaped by that template's schema."
+          }
+        }
+      }
+    },
+    "bottom_line": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Optional closing sentence on what this means for the reader. Leave it out when the scenes already say it."
+    }
+  }
+}

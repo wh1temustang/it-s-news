@@ -1,0 +1,21 @@
+{
+  "title": "Cause and effect",
+  "x-icon": "🔗",
+  "description": "A chain of consequences, usually ending with what it means for the reader.",
+  "type": "object",
+  "required": ["steps"],
+  "additionalProperties": false,
+  "properties": {
+    "steps": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5,
+      "description": "In order: each step leads to the next. The article must support every link.",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 90
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+
+/* --- big number --- */
+
+.bn {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 22px 18px;
+}
+
+.bn-item {
+  animation: bn-pop 0.6s cubic-bezier(0.3, 1.3, 0.6, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 110ms + 200ms);
+}
+
+.bn-value {
+  margin: 0;
+  color: var(--accent);
+  font-size: clamp(40px, 8vw, 60px);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.bn-lead .bn-value { font-size: clamp(52px, 11vw, 80px); }
+
+.bn-trend {
+  margin-right: 6px;
+  font-size: 0.45em;
+  vertical-align: 0.35em;
+}
+
+.bn-label {
+  margin: 8px 0 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.bn-context {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+@keyframes bn-pop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: none; }
+}

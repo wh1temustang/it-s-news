@@ -1,0 +1,12 @@
+{
+  "question": "What's the plan, in short?",
+  "data": {
+    "tiles": [
+      {"label": "Length", "value": "260 m", "note": "Pier 4 to the old customs house"},
+      {"label": "Budget", "value": "$48 million"},
+      {"label": "Daily users", "value": "About 9,000", "note": "City forecast for the first year"},
+      {"label": "Council vote", "value": "Approved", "tone": "good"},
+      {"label": "Ferry service", "value": "Under review", "tone": "pending"}
+    ]
+  }
+}

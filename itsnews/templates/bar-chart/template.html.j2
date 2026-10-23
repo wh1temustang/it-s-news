@@ -1,0 +1,15 @@
+{% if data.unit is defined %}
+<p class="chart-unit">{{ data.unit }}</p>
+{% endif %}
+<ul class="bc{% if data.diverging %} bc--diverging{% endif %}">
+{% for row in data.rows %}
+  <li class="bc-row{% if row.negative %} bc-neg{% endif %}" style="--w: {{ row.pct }}%; --j: {{ loop.index0 }}">
+    <span class="bc-label">{{ row.label }}</span>
+    <span class="bc-value">{{ row.display }}</span>
+    <span class="bc-track" aria-hidden="true"><span class="bc-bar"></span></span>
+  </li>
+{% endfor %}
+</ul>
+{% if data.note is defined %}
+<p class="note">{{ data.note }}</p>
+{% endif %}

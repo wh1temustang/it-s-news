@@ -1,0 +1,9 @@
+{
+  "question": "How much will it cost?",
+  "data": {
+    "numbers": [
+      {"value": "$48M", "label": "Approved budget for the footbridge", "trend": "up", "context": "up from $41M in the 2024 plan"},
+      {"value": "260 m", "label": "Span across the harbour"}
+    ]
+  }
+}

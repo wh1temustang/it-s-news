@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "itsnews"
+version = "0.1.0"
+description = "Present a news article with visual templates (timeline, info board, map, charts) that an AI agent picks."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = ["jinja2>=3.1"]
+
+[project.scripts]
+itsnews = "itsnews.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["itsnews*"]
+
+[tool.setuptools.package-data]
+itsnews = ["*.json", "data/*.json", "templates/*", "templates/*/*"]
