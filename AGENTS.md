@@ -13,9 +13,9 @@ Before working in a folder, read its AGENTS.md.
 
 ## Today's news
 
-- [daily-edition/](daily-edition/AGENTS.md): an Agent Skill that finds
-  today's news, writes each story up as an article, renders them with an
-  approach and publishes the page. When asked for an edition of today's or
+- [daily-edition/](daily-edition/AGENTS.md): an Agent Skill that reads
+  today's newsletters from email (or searches the web), writes each story up
+  as an article, renders them with an approach and publishes the page. When asked for an edition of today's or
   this week's news, follow
   [daily-edition/skills/daily-edition/SKILL.md](daily-edition/skills/daily-edition/SKILL.md).
 

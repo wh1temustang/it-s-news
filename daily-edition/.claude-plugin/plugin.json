@@ -1,12 +1,12 @@
 {
   "name": "its-news",
-  "version": "0.1.0",
-  "description": "Turn today's news into one visual page: the agent finds the stories and writes each up from its sources, and it's news renders them as timelines, maps, charts and info boards, checked against those write-ups.",
+  "version": "0.2.0",
+  "description": "Turn today's news into one visual page: the agent reads your newsletters from email (or searches the web) and writes each story up from them, and it's news renders them as timelines, maps, charts and info boards, checked against those write-ups.",
   "author": {
     "name": "wh1temustang"
   },
   "homepage": "https://github.com/wh1temustang/it-s-news/tree/main/daily-edition",
   "repository": "https://github.com/wh1temustang/it-s-news",
   "license": "MIT",
-  "keywords": ["news", "digest", "edition", "artifact", "visualization"]
+  "keywords": ["news", "digest", "edition", "newsletter", "email", "artifact", "visualization"]
 }

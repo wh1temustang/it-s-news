@@ -21,6 +21,8 @@ _SEMVER = re.compile(r"^\d+\.\d+\.\d+$")
 _PATH = re.compile(r"`([\w.-]+(?:/[\w.-]+)+\.(?:md|json|py))`")
 # A relative Markdown link target, without its #anchor.
 _LINK = re.compile(r"\]\((?!https?:|#|mailto:)([^)#\s]+)")
+# A setting line in prompt.md, such as `- Stories: 8 to 15`.
+_SETTING = re.compile(r"^- ([A-Z][\w ]*):", re.MULTILINE)
 
 
 def frontmatter(path: Path) -> dict[str, str]:
@@ -70,6 +72,16 @@ class SkillTest(unittest.TestCase):
                 with self.subTest(file=path.name, path=named):
                     self.assertTrue((REPO / named).exists(),
                                     f"{path.name} names {named}, which isn't in the repository")
+
+    def test_prompt_settings_are_defined(self):
+        """Each setting the scheduled prompt sets is one the skill knows."""
+        for path in skill_files():
+            text = path.read_text(encoding="utf-8")
+            settings = text.partition("## Settings")[2].partition("\n## ")[0]
+            for key in _SETTING.findall(PROMPT.read_text(encoding="utf-8")):
+                with self.subTest(skill=path.parent.name, setting=key):
+                    self.assertIn(f"{key}:", settings,
+                                  f"prompt.md sets {key}, which the skill's Settings don't define")
 
     def test_links_resolve(self):
         for path in skill_files() + DOCS:

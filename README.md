@@ -21,9 +21,9 @@ and tests.
 
 ## Today's news, every morning
 
-[daily-edition/](daily-edition/) is an Agent Skill that has an AI agent find
-today's news, write each story up from its sources, and render them as one
-page with an approach. Claude publishes the page as an artifact, on a
+[daily-edition/](daily-edition/) is an Agent Skill that has an AI agent read
+today's newsletters from your email (or search the web), write each story up
+from them, and render them as one page with an approach. Claude publishes the page as an artifact, on a
 schedule if you like; Muse Code and other agents write it to a file. The
 folder explains how to run it and how to share the skill.
 
