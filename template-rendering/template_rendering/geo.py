@@ -14,8 +14,9 @@ import json
 import math
 from dataclasses import dataclass
 from functools import lru_cache
+from pathlib import Path
 
-from .catalog import PACKAGE_DIR
+DATA_DIR = Path(__file__).resolve().parent / "data"
 
 WIDTH = 800
 ASPECT = 1.6          # width / height of a regional map
@@ -34,7 +35,7 @@ Ring = list[tuple[float, float]]
 
 @lru_cache(maxsize=1)
 def _world() -> tuple[list[tuple[tuple, Ring]], list[tuple[tuple, Ring]]]:
-    data = json.loads((PACKAGE_DIR / "data" / "world.json").read_text(encoding="utf-8"))
+    data = json.loads((DATA_DIR / "world.json").read_text(encoding="utf-8"))
     scale = data["scale"]
 
     def decode(encoded: list[int]) -> tuple[tuple, Ring]:

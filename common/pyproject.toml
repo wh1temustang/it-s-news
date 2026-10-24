@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "itsnews-common"
+version = "0.1.0"
+description = "it's news, common: the code its approaches share, from reading articles and checking storyboards to rendering template kits."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = ["jinja2>=3.1"]
+
+[tool.setuptools.packages.find]
+include = ["itsnews_common*"]
+
+[tool.setuptools.package-data]
+itsnews_common = ["*.json"]

@@ -1,0 +1,49 @@
+{
+  "title": "Starter pack",
+  "x-icon": "🎒",
+  "x-joke": true,
+  "description": "The essentials at a glance, as a starter pack: a few pieces that together sum up the story.",
+  "type": "object",
+  "required": ["subject", "pieces"],
+  "additionalProperties": false,
+  "properties": {
+    "subject": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "description": "Whose or what starter pack, completing \"The … starter pack\": \"Vienna night train\"."
+    },
+    "pieces": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 6,
+      "description": "Most telling first.",
+      "items": {
+        "type": "object",
+        "required": ["emoji", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "emoji": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8,
+            "pattern": "^\\W+$",
+            "x-ungrounded": true,
+            "description": "One emoji that pictures the piece. No letters or digits."
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 36,
+            "description": "The piece, as a fragment: \"€49 seats\", \"Stops in Zurich and Lyon\"."
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 60,
+            "description": "Optional context for the piece."
+          }
+        }
+      }
+    }
+  }
+}

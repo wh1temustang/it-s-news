@@ -1,0 +1,49 @@
+
+/* --- RemindMe --- */
+
+.rm {
+  margin: 0;
+  padding: 6px 14px;
+  list-style: none;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.rm-c {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  animation: rise 0.45s both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 80ms + 160ms);
+}
+
+.rm-c + .rm-c { border-top: 1px solid var(--line); }
+
+.rm-avatar {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--rail);
+  font-size: 16px;
+}
+
+.rm-cmd { margin: 0; }
+
+.rm-cmd code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--rail);
+  border: 1px solid var(--line);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rm-what {
+  margin: 4px 0 0;
+  font-size: 16px;
+}

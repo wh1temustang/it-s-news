@@ -1,0 +1,11 @@
+{
+  "question": "How fast are night trains growing?",
+  "data": {
+    "levels": [
+      {"text": "2021: 1.1 million passengers"},
+      {"text": "2022: 1.9 million"},
+      {"text": "2024: 3.2 million"},
+      {"text": "2025: 3.7 million"}
+    ]
+  }
+}

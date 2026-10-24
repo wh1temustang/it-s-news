@@ -1,0 +1,11 @@
+<ul class="meme rm">
+{% for reminder in data.reminders %}
+  <li class="rm-c" style="--j: {{ loop.index0 }}">
+    <span class="rm-avatar" aria-hidden="true">⏰</span>
+    <div>
+      <p class="rm-cmd"><code>{{ t("remindme.command") }} {{ reminder.when }}</code></p>
+      <p class="rm-what">{{ reminder.what }}</p>
+    </div>
+  </li>
+{% endfor %}
+</ul>

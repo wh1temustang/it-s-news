@@ -1,0 +1,44 @@
+
+/* --- expanding brain --- */
+
+.eb {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.eb-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  min-height: 104px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 120ms + 160ms);
+}
+
+.eb-row + .eb-row { border-top: 2px solid var(--meme-outline); }
+
+.eb-text {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 12px 14px;
+  border-right: 2px solid var(--meme-outline);
+  font-size: clamp(16px, 2.8vw, 19px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.eb-brain {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--meme-glow) calc(var(--lvl) * 33%), var(--meme-brain)) 0%,
+    var(--meme-brain) calc(45% + var(--lvl) * 15%));
+}
+
+.eb-brain span {
+  font-size: calc(30px + var(--lvl) * 13px);
+  line-height: 1;
+  filter: drop-shadow(0 0 calc(var(--lvl) * 9px) var(--meme-glow));
+}

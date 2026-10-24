@@ -31,14 +31,18 @@ language, pass `--labels <file.json>` (see `template_rendering/labels.py`).
 
 ## Working on the code
 
-- Setup: `python3 -m venv .venv && .venv/bin/pip install -e .`
+- Setup: `python3 -m venv .venv && .venv/bin/pip install -e ../common -e .`.
+  The checker, the renderer and the command line are shared with the other
+  approaches and live in [../common/](../common/AGENTS.md); this package holds
+  the templates, their words (`labels.py`) and their drawing code
+  (`visuals.py`, `geo.py`).
 - Tests: `.venv/bin/python -m unittest discover -s tests -v`
 - Gallery of every template: `.venv/bin/python -m template_rendering gallery`,
   written to `output/gallery.html`
-- Layout: `template_rendering/` is the package (checker, renderer,
-  templates), `agent/` holds the prompt and the catalog, `examples/` holds
-  fictional sample articles with their storyboards and rendered pages, and
-  `tools/` holds one-off data builders.
+- Layout: `template_rendering/` is the package (templates, the kit in
+  `kit.py`, drawing code), `agent/` holds the prompt and the catalog,
+  `examples/` holds fictional sample articles with their storyboards and
+  rendered pages, and `tools/` holds one-off data builders.
 - The example pages (`examples/<name>.html`) are committed, an exception to
   the repo's "no generated output" rule. After changing a template, the
   renderer or an example, render them again with
@@ -47,7 +51,7 @@ language, pass `--labels <file.json>` (see `template_rendering/labels.py`).
   `.venv/bin/python -m template_rendering edition examples/edition.json -o examples/edition.html`.
   A test fails while they're stale.
 - Rendering must stay deterministic: no timestamps, randomness or network
-  access in `template_rendering/`.
+  access in `template_rendering/` or `../common/`.
 - Pages must stay self-contained: inline CSS, no external fonts, scripts or
   images. The only markup it's news doesn't write itself is what a host
   passes to an edition (`Story.extra`, `head`, `foot`).

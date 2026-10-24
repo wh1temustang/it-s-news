@@ -1,0 +1,41 @@
+{
+  "title": "Stonks",
+  "x-icon": "📈",
+  "x-joke": true,
+  "description": "One to three numbers that went up or down, each on its own trading screen.",
+  "type": "object",
+  "required": ["numbers"],
+  "additionalProperties": false,
+  "properties": {
+    "numbers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "description": "The headline number first.",
+      "items": {
+        "type": "object",
+        "required": ["value", "label", "trend"],
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 14,
+            "description": "The number with its unit, as the article writes it: \"31%\", \"£52 million\"."
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60,
+            "description": "What the number counts, in a few words."
+          },
+          "trend": {
+            "type": "string",
+            "enum": ["up", "down"],
+            "description": "Which way it went, as the article says. Direction only, never good or bad."
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+
+/* --- change my mind --- */
+
+.cm-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 14px 0;
+  background: linear-gradient(var(--meme-sky) 0 55%, var(--meme-grass) 55% 100%);
+}
+
+.cm-sign {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 84px, 460px);
+  margin: 0 0 -6px;
+  padding: 16px 18px;
+  border: 3px solid var(--meme-wood-dark);
+  background: var(--meme-paper);
+  box-shadow: 0 6px 0 var(--meme-wood-dark);
+  transform: perspective(600px) rotateX(8deg) rotate(-1deg);
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 80ms + 200ms);
+}
+
+.cm-sign p {
+  margin: 0;
+  font-size: clamp(18px, 3.4vw, 23px);
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.cm-sign p::before { content: "\201C"; }
+.cm-sign p::after { content: "\201D"; }
+
+.cm-table {
+  position: relative;
+  width: 100%;
+  height: 46px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(var(--meme-wood) 0 40%, var(--meme-wood-dark) 40% 100%);
+}
+
+.cm-mug {
+  position: absolute;
+  left: 6px;
+  top: -32px;
+  font-size: 34px;
+  line-height: 1;
+}
+
+.cm-by {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  padding: 10px 14px 12px;
+  border-top: 2px solid var(--meme-outline);
+  font-size: 15px;
+}
+
+.cm-by span { color: var(--meme-muted); }

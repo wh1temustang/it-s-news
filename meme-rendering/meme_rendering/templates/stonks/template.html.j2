@@ -1,0 +1,18 @@
+<div class="st">
+{% for number in data.numbers %}
+  <div class="meme st-panel st-panel--{{ number.trend }}" style="--j: {{ loop.index0 }}">
+    <svg class="st-chart" viewBox="0 0 200 100" aria-hidden="true">
+      {% if number.trend == "up" %}
+      <polyline points="8,88 48,62 78,72 118,38 146,48 184,14"/>
+      <polygon points="191.5,7.3 185.5,24.7 173.5,11.3"/>
+      {% else %}
+      <polyline points="8,12 48,38 78,28 118,62 146,52 184,86"/>
+      <polygon points="191.5,92.7 185.5,75.3 173.5,88.7"/>
+      {% endif %}
+    </svg>
+    <p class="st-value caption">{{ number.value }}<span class="sr-only"> ({{ t("trend." ~ number.trend) }})</span></p>
+    <p class="st-label">{{ number.label }}</p>
+    <p class="st-word caption" aria-hidden="true">{{ t("stonks.caption") }}</p>
+  </div>
+{% endfor %}
+</div>

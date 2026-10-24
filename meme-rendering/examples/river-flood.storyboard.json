@@ -1,0 +1,52 @@
+{
+  "headline": {
+    "title": "Flooding closes Vellmoor's main bridge",
+    "dek": "The River Vell reached a record 4.2 metres: about 200 homes flooded and three people were taken to hospital.",
+    "topic": "local",
+    "mood": "serious"
+  },
+  "scenes": [
+    {
+      "template": "megathread",
+      "question": "What do we know so far?",
+      "why": "People were hurt, so no memes: the megathread lists the facts and how the river changed.",
+      "data": {
+        "facts": [
+          {"label": "Homes flooded", "value": "About 200"},
+          {"label": "Injured", "value": "3, with minor injuries"},
+          {"label": "In shelters", "value": "About 450 residents"},
+          {"label": "Mill Street bridge", "value": "Closed"}
+        ],
+        "updates": [
+          {"when": "Monday evening", "what": "The river has fallen to 3.1 metres"},
+          {"when": "Monday morning", "what": "The river peaks at 4.2 metres, above the 2014 record of 3.9 metres"},
+          {"when": "Sunday night", "what": "The River Vell bursts its banks after two days of heavy rain"}
+        ]
+      }
+    },
+    {
+      "template": "remindme",
+      "question": "What happens next?",
+      "why": "Three dates ahead that people in the town need to plan around.",
+      "data": {
+        "reminders": [
+          {"when": "Wednesday", "what": "Engineers inspect the bridge"},
+          {"when": "Thursday", "what": "Applications open for the flood fund"},
+          {"when": "End of the month", "what": "Repairs, if needed, could take until then"}
+        ]
+      }
+    },
+    {
+      "template": "thread",
+      "question": "What are people saying?",
+      "why": "The mayor explains the closure; a business owner by the bridge says what the water did.",
+      "data": {
+        "comments": [
+          {"speaker": "Ana Brandt", "role": "Mayor of Vellmoor", "text": "The bridge stays closed until engineers have checked every pillar... We would rather lose a week than take a risk with people's lives."},
+          {"speaker": "Tomas Reyes", "role": "Runs a bakery beside the bridge", "text": "[The water reached] halfway up the counter"}
+        ]
+      }
+    }
+  ],
+  "bottom_line": "Until the bridge reopens, buses take a detour of about 25 minutes through the Hollin Road crossing."
+}

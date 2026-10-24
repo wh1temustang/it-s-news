@@ -1,0 +1,47 @@
+
+/* --- distracted --- */
+
+.dt-scene {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: 6px;
+  min-height: 220px;
+  padding: 18px 10px 14px;
+  background: linear-gradient(var(--meme-sky) 0 62%, var(--meme-street) 62% 100%);
+}
+
+.dt-fig {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 80ms + 200ms);
+}
+
+.dt-fig--who { animation-delay: calc(var(--i, 0) * 80ms + 320ms); }
+.dt-fig--old { animation-delay: calc(var(--i, 0) * 80ms + 440ms); }
+
+.dt-emoji {
+  font-size: clamp(48px, 11vw, 72px);
+  line-height: 1;
+}
+
+/* The one in the middle looks back over their shoulder. */
+.dt-fig--who .dt-emoji {
+  transform: rotate(-14deg);
+  animation: dt-look 1.4s ease-in-out 0.9s both;
+}
+
+.dt-tag {
+  max-width: 100%;
+  font-size: clamp(15px, 3.2vw, 21px);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+@keyframes dt-look {
+  0%, 100% { transform: rotate(-14deg); }
+  50% { transform: rotate(-24deg) translateX(-4px); }
+}

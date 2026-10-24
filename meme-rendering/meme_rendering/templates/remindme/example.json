@@ -1,0 +1,9 @@
+{
+  "question": "What happens next?",
+  "data": {
+    "reminders": [
+      {"when": "Wednesday", "what": "Engineers inspect the bridge"},
+      {"when": "Thursday", "what": "Applications open for the flood fund"}
+    ]
+  }
+}

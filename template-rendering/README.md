@@ -25,14 +25,15 @@ the page.
 - **Any language:** the page's own words (labels, credits, the footer) come
   in English and can be replaced with a labels file.
 
-More detail in [agent/README.md](agent/README.md).
+More detail in [agent/README.md](agent/README.md). The checking and rendering
+code is shared with the other approaches, in [../common/](../common/).
 
 ## Quick start
 
 Requires Python 3.10 or newer. Run these from this folder.
 
 ```bash
-python3 -m venv .venv && .venv/bin/pip install -e .
+python3 -m venv .venv && .venv/bin/pip install -e ../common -e .
 source .venv/bin/activate
 
 # Render a sample article from its storyboard

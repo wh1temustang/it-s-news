@@ -74,7 +74,8 @@ own page. List the stories in a manifest and render it:
 python -m template_rendering edition examples/edition.json -o output/edition.html
 ```
 
-The manifest's shape is in `template_rendering/edition.schema.json`.
+The manifest's shape is in `../common/itsnews_common/edition.schema.json`,
+shared by every approach.
 
 ## Other languages
 
@@ -91,7 +92,8 @@ python -m template_rendering edition my-edition.json --labels labels.fr.json
 
 A site or pipeline that publishes with it's news can call it from Python
 instead of the command line. Pin a version, for example as a git submodule,
-and install it with `pip install ./template-rendering`.
+and install it with the shared code beside it, in one command:
+`pip install ./common ./template-rendering`.
 
 ```python
 from template_rendering import article, edition, storyboard

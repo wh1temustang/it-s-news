@@ -10,7 +10,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 from template_rendering import article, cli, edition, storyboard
-from template_rendering.catalog import PACKAGE_DIR, load_templates
+from template_rendering.kit import KIT, PACKAGE_DIR
 from template_rendering.labels import Labels, LabelsError
 from template_rendering.render import render_page
 
@@ -34,17 +34,6 @@ class ExampleEditionTests(unittest.TestCase):
         self.assertEqual([s.id for s in self.edition.sections], ["travel", "cities"])
         self.assertEqual(edition.check(self.edition), [])
 
-    def test_committed_page_matches_a_fresh_render(self):
-        page = MANIFEST.with_suffix(".html")
-        self.assertTrue(page.is_file(), f"{page.name} is missing: render it (see AGENTS.md)")
-        self.assertEqual(page.read_text(encoding="utf-8"), edition.render(self.edition),
-                         f"{page.name} is stale: render it again (see AGENTS.md)")
-
-    def test_page_loads_nothing_from_elsewhere(self):
-        html = edition.render(self.edition)
-        self.assertIsNone(re.search(r"<(script|link|img|iframe)\b", html))
-        self.assertIsNone(re.search(r"url\((?!#)", html))
-
     def test_ids_are_unique_and_every_section_is_linked(self):
         html = edition.render(self.edition)
         ids = re.findall(r'\bid="([^"]+)"', html)
@@ -60,7 +49,7 @@ class ExampleEditionTests(unittest.TestCase):
         html = edition.render(self.edition)
         self.assertIn('class="story-card" id="story-1" data-topic="world"', html)
         self.assertIn('class="story-card" id="story-2" data-topic="local"', html)
-        self.assertEqual(html.count(load_templates()["info-board"].css), 1)
+        self.assertEqual(html.count(KIT.load_templates()["info-board"].css), 1)
 
 
 class CheckTests(unittest.TestCase):

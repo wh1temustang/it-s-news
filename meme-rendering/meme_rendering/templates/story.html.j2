@@ -1,0 +1,33 @@
+{# One story as a post: the vote rail, the head, the scenes and the TL;DR.
+   Shared by the single-story page, whose headings start at h1, and the
+   edition, whose start at h3. The rail shows no score: every number on the
+   page comes from the article. #}
+{% macro post(story, level) %}
+  <div class="vote" aria-hidden="true"><span class="vote-up">▲</span><span>{{ t("vote") }}</span><span class="vote-down">▼</span></div>
+  <div class="post-body">
+  <header class="post-head">
+    <p class="post-meta"><span class="sub">{{ story.topic_label }}</span> · <span>{{ t("posted_by", brand=brand) }}</span>{% if story.published %} · <span>{{ story.published }}</span>{% endif %}</p>
+    <h{{ level }}>{{ story.headline.title }}{% if story.headline.get("mood") == "serious" %} <span class="flair">{{ t("serious") }}</span>{% endif %}</h{{ level }}>
+    <p class="dek">{{ story.headline.dek }}</p>
+    {% if story.credits %}
+    <p class="byline">
+      {%- if story.credits_labelled %}{{ t("sources") }}{{ t("label_sep") }}{% endif %}
+      {%- for name, link in story.credits %}{% if not loop.first %}{{ t("list_sep") }}{% endif %}{% if link %}<a href="{{ link }}" rel="noopener noreferrer">{{ name }}</a>{% else %}{{ name }}{% endif %}{% endfor -%}
+    </p>
+    {% endif %}
+  </header>
+  {% for scene in story.scenes %}
+  <section class="scene scene--{{ scene.id }}" style="--i: {{ loop.index0 }}" aria-labelledby="{{ scene.anchor }}">
+    <p class="scene-kind"><span aria-hidden="true">{{ scene.icon }}</span> {{ scene.name }}{% if loop.length > 1 %} <span class="scene-n" aria-hidden="true">{{ loop.index }}/{{ loop.length }}</span>{% endif %}</p>
+    <h{{ level + 1 }} id="{{ scene.anchor }}">{{ scene.question }}</h{{ level + 1 }}>
+    {{ scene.html }}
+  </section>
+  {% endfor %}
+  {% if story.bottom_line %}
+  <section class="tldr" style="--i: {{ story.scenes | length }}">
+    <h{{ level + 1 }}>{{ t("bottom_line") }}</h{{ level + 1 }}>
+    <p>{{ story.bottom_line }}</p>
+  </section>
+  {% endif %}
+  </div>
+{% endmacro %}

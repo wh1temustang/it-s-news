@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>Flooding closes Vellmoor&#39;s main bridge · it's news</title>
+<meta name="description" content="The River Vell reached a record 4.2 metres: about 200 homes flooded and three people were taken to hospital.">
+<style>
+/* it's news, meme rendering: page shell and design tokens.
+   A story reads like a Reddit post, and each scene is a meme format redrawn
+   in HTML and CSS. Templates style themselves with these tokens only, never
+   raw colours, so light and dark mode come for free. Memes are pictures, so
+   the --meme-* tokens keep their colours in dark mode, as an image would.
+   Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #dae0e6;
+  --surface: #ffffff;
+  --rail: #f6f7f8;
+  --ink: #1a1a1b;
+  --muted: #576f76;
+  --line: #ccd3d8;
+  --accent: #ff4500;
+  --on-accent: #ffffff;
+  --link: #0079d3;
+  --up: #ff4500;
+  --down: #7193ff;
+  --serious: #c4122f;
+  --sub: #0079d3;
+  --radius: 8px;
+
+  --meme-paper: #ffffff;
+  --meme-ink: #111111;
+  --meme-muted: #555555;
+  --meme-outline: #000000;
+  --meme-caption: #ffffff;
+  --meme-gold: #f4b23e;
+  --meme-sky: #bfe3ff;
+  --meme-grass: #7cb46b;
+  --meme-street: #cfc6b8;
+  --meme-wood: #8a5a33;
+  --meme-wood-dark: #5e3b1f;
+  --meme-panel: #e6e9ec;
+  --meme-button: #e3263c;
+  --meme-button-dark: #9e1022;
+  --meme-screen: #0d1b14;
+  --meme-grid: #1f3d2c;
+  --meme-rise: #35d07f;
+  --meme-fall: #ff5a5f;
+  --meme-brain: #262b40;
+  --meme-glow: #ffe27a;
+
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --impact: Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Each topic's community icon. Icons are pictures too, so they keep their
+   colour in dark mode. */
+[data-topic="world"]    { --sub: #0079d3; }
+[data-topic="politics"] { --sub: #7c3aed; }
+[data-topic="business"] { --sub: #0f766e; }
+[data-topic="science"]  { --sub: #0e7490; }
+[data-topic="tech"]     { --sub: #4f46e5; }
+[data-topic="climate"]  { --sub: #15803d; }
+[data-topic="health"]   { --sub: #be185d; }
+[data-topic="local"]    { --sub: #c2410c; }
+[data-topic="culture"]  { --sub: #a21caf; }
+[data-topic="sports"]   { --sub: #b91c1c; }
+
+/* Dark mode follows the reader's system, unless the page's host sets
+   data-theme="light" or "dark" on the root element for a reader's own choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #030303;
+    --surface: #1a1a1b;
+    --rail: #161617;
+    --ink: #d7dadc;
+    --muted: #8f9496;
+    --line: #343536;
+    --link: #4fbcff;
+    --down: #8fa8ff;
+    --serious: #ff5c6c;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #030303;
+  --surface: #1a1a1b;
+  --rail: #161617;
+  --ink: #d7dadc;
+  --muted: #8f9496;
+  --line: #343536;
+  --link: #4fbcff;
+  --down: #8fa8ff;
+  --serious: #ff5c6c;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--link); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.feed {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 24px 12px 56px;
+}
+
+/* --- the post --- */
+
+.post {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+/* Anything else in a post (a banner, a host's markup) spans both columns. */
+.post > :not(.vote, .post-body) { grid-column: 1 / -1; }
+
+.vote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 0;
+  background: var(--rail);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.vote-up,
+.vote-down { font-size: 18px; line-height: 1; }
+.vote-up { color: var(--up); }
+
+.post-body {
+  min-width: 0;
+  padding: 10px 14px 18px;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.sub::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 38%, var(--meme-paper) 0 22%, transparent 23%), var(--sub);
+}
+
+.post-head :is(h1, h3) {
+  margin: 8px 0 0;
+  font-size: clamp(22px, 4.4vw, 28px);
+  line-height: 1.2;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.flair {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: var(--serious);
+  color: var(--on-accent);
+  font-size: 12px;
+  font-weight: 700;
+  vertical-align: 0.3em;
+}
+
+.dek {
+  margin: 8px 0 0;
+  font-size: 17px;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* --- scenes: one meme each --- */
+
+.scene,
+.tldr {
+  margin-top: 20px;
+  animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 80ms + 60ms);
+}
+
+.scene-kind {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 2px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.scene-n {
+  margin-left: auto;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.scene :is(h2, h4) {
+  margin: 0 0 10px;
+  font-size: clamp(18px, 3vw, 21px);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.tldr {
+  padding: 12px 14px;
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+}
+
+.tldr :is(h2, h4) {
+  display: inline;
+  margin: 0 8px 0 0;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.tldr p {
+  display: inline;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* Shared by the formats: a meme's frame, and white Impact captions with a
+   black outline, the classic look. */
+.meme {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--meme-paper);
+  color: var(--meme-ink);
+}
+
+.caption {
+  color: var(--meme-caption);
+  font-family: var(--impact);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  text-shadow:
+    2px 2px 0 var(--meme-outline), -2px 2px 0 var(--meme-outline),
+    2px -2px 0 var(--meme-outline), -2px -2px 0 var(--meme-outline),
+    0 2px 0 var(--meme-outline), 0 -2px 0 var(--meme-outline),
+    2px 0 0 var(--meme-outline), -2px 0 0 var(--meme-outline);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .feed { padding: 12px 8px 40px; }
+  .post { grid-template-columns: 32px minmax(0, 1fr); }
+  .post-body { padding: 10px 10px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- megathread --- */
+
+.mt {
+  padding: 14px 16px 16px;
+  border-color: color-mix(in srgb, var(--meme-rise) 45%, var(--line));
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.mt-pin {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--meme-rise) 18%, var(--surface));
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mt-h {
+  margin: 12px 0 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mt-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.mt-fact {
+  padding: 8px 10px;
+  border-left: 3px solid var(--meme-rise);
+  border-radius: 4px;
+  background: var(--rail);
+}
+
+.mt-fact dt {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mt-fact dd {
+  margin: 2px 0 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.mt-updates {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mt-updates li {
+  padding: 6px 0 6px 12px;
+  border-left: 2px solid var(--line);
+  font-size: 15px;
+}
+
+.mt-updates b {
+  margin-right: 6px;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+/* --- RemindMe --- */
+
+.rm {
+  margin: 0;
+  padding: 6px 14px;
+  list-style: none;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.rm-c {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  animation: rise 0.45s both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 80ms + 160ms);
+}
+
+.rm-c + .rm-c { border-top: 1px solid var(--line); }
+
+.rm-avatar {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--rail);
+  font-size: 16px;
+}
+
+.rm-cmd { margin: 0; }
+
+.rm-cmd code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--rail);
+  border: 1px solid var(--line);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rm-what {
+  margin: 4px 0 0;
+  font-size: 16px;
+}
+
+/* --- thread --- */
+
+.th {
+  margin: 0;
+  padding: 12px 14px 4px;
+  list-style: none;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.th-c {
+  position: relative;
+  padding-bottom: 10px;
+  animation: rise 0.45s both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 90ms + 160ms);
+}
+
+.th-c--reply {
+  margin-left: 13px;
+  padding-left: 22px;
+  border-left: 2px solid var(--line);
+}
+
+.th-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.th-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--sub);
+  color: var(--meme-paper);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.th-avatar[data-n="1"] { background: var(--accent); }
+.th-avatar[data-n="2"] { background: var(--down); }
+.th-avatar[data-n="3"] { background: var(--muted); }
+
+.th-flair {
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--rail);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.th-text {
+  margin: 4px 0 0 34px;
+}
+
+.th-c--reply .th-text { margin-left: 34px; }
+
+.th-text p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.th-text p::before { content: "\201C"; }
+.th-text p::after { content: "\201D"; }
+
+</style>
+</head>
+<body data-topic="local">
+<p class="banner" role="note">Fictional sample: this is not real news.</p>
+<main class="feed">
+<article class="post">
+  <div class="vote" aria-hidden="true"><span class="vote-up">▲</span><span>Vote</span><span class="vote-down">▼</span></div>
+  <div class="post-body">
+  <header class="post-head">
+    <p class="post-meta"><span class="sub">r/local</span> · <span>Posted by <b>it's news</b></span> · <span>2026-10-12</span></p>
+    <h1>Flooding closes Vellmoor&#39;s main bridge <span class="flair">Serious</span></h1>
+    <p class="dek">The River Vell reached a record 4.2 metres: about 200 homes flooded and three people were taken to hospital.</p>
+    <p class="byline">it&#39;s news sample desk</p>
+  </header>
+  <section class="scene scene--megathread" style="--i: 0" aria-labelledby="q1">
+    <p class="scene-kind"><span aria-hidden="true">📌</span> Megathread <span class="scene-n" aria-hidden="true">1/3</span></p>
+    <h2 id="q1">What do we know so far?</h2>
+    <div class="meme mt">
+  <p class="mt-pin"><span aria-hidden="true">📌</span> Pinned megathread</p>
+  <p class="mt-h">What we know</p>
+  <dl class="mt-facts">
+    <div class="mt-fact" style="--j: 0">
+      <dt>Homes flooded</dt>
+      <dd>About 200</dd>
+    </div>
+    <div class="mt-fact" style="--j: 1">
+      <dt>Injured</dt>
+      <dd>3, with minor injuries</dd>
+    </div>
+    <div class="mt-fact" style="--j: 2">
+      <dt>In shelters</dt>
+      <dd>About 450 residents</dd>
+    </div>
+    <div class="mt-fact" style="--j: 3">
+      <dt>Mill Street bridge</dt>
+      <dd>Closed</dd>
+    </div>
+  </dl>
+  <p class="mt-h">Updates</p>
+  <ol class="mt-updates">
+    <li><b>Monday evening</b> The river has fallen to 3.1 metres</li>
+    <li><b>Monday morning</b> The river peaks at 4.2 metres, above the 2014 record of 3.9 metres</li>
+    <li><b>Sunday night</b> The River Vell bursts its banks after two days of heavy rain</li>
+  </ol>
+</div>
+
+  </section>
+  <section class="scene scene--remindme" style="--i: 1" aria-labelledby="q2">
+    <p class="scene-kind"><span aria-hidden="true">⏰</span> RemindMe <span class="scene-n" aria-hidden="true">2/3</span></p>
+    <h2 id="q2">What happens next?</h2>
+    <ul class="meme rm">
+  <li class="rm-c" style="--j: 0">
+    <span class="rm-avatar" aria-hidden="true">⏰</span>
+    <div>
+      <p class="rm-cmd"><code>RemindMe! Wednesday</code></p>
+      <p class="rm-what">Engineers inspect the bridge</p>
+    </div>
+  </li>
+  <li class="rm-c" style="--j: 1">
+    <span class="rm-avatar" aria-hidden="true">⏰</span>
+    <div>
+      <p class="rm-cmd"><code>RemindMe! Thursday</code></p>
+      <p class="rm-what">Applications open for the flood fund</p>
+    </div>
+  </li>
+  <li class="rm-c" style="--j: 2">
+    <span class="rm-avatar" aria-hidden="true">⏰</span>
+    <div>
+      <p class="rm-cmd"><code>RemindMe! End of the month</code></p>
+      <p class="rm-what">Repairs, if needed, could take until then</p>
+    </div>
+  </li>
+</ul>
+
+  </section>
+  <section class="scene scene--thread" style="--i: 2" aria-labelledby="q3">
+    <p class="scene-kind"><span aria-hidden="true">💬</span> Thread <span class="scene-n" aria-hidden="true">3/3</span></p>
+    <h2 id="q3">What are people saying?</h2>
+    <ol class="meme th">
+  <li class="th-c" style="--j: 0">
+    <p class="th-head">
+      <span class="th-avatar" data-n="0" aria-hidden="true">A</span>
+      <b class="th-name">Ana Brandt</b>
+      <span class="th-flair">Mayor of Vellmoor</span>
+    </p>
+    <blockquote class="th-text"><p>The bridge stays closed until engineers have checked every pillar... We would rather lose a week than take a risk with people&#39;s lives.</p></blockquote>
+  </li>
+  <li class="th-c" style="--j: 1">
+    <p class="th-head">
+      <span class="th-avatar" data-n="1" aria-hidden="true">T</span>
+      <b class="th-name">Tomas Reyes</b>
+      <span class="th-flair">Runs a bakery beside the bridge</span>
+    </p>
+    <blockquote class="th-text"><p>[The water reached] halfway up the counter</p></blockquote>
+  </li>
+</ol>
+
+  </section>
+  <section class="tldr" style="--i: 3">
+    <h2>TL;DR</h2>
+    <p>Until the bridge reopens, buses take a detour of about 25 minutes through the Hollin Road crossing.</p>
+  </section>
+  </div>
+
+</article>
+  <footer class="colophon">
+    <p>Presented by <b>it's news</b>. Every figure and quote in this story was checked against the article.</p>
+    <p>Meme formats redrawn in HTML. Not affiliated with Reddit.</p>
+  </footer>
+</main>
+</body>
+</html>

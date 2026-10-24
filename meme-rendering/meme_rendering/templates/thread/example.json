@@ -1,0 +1,9 @@
+{
+  "question": "Who's saying what?",
+  "data": {
+    "comments": [
+      {"speaker": "Marta Lindqvist", "role": "Chief executive, Pantry & Co", "text": "Our customers would rather talk to a person."},
+      {"speaker": "Priya Nair", "role": "Retail analyst", "text": "[Staffed tills] cost more every single hour", "reply": true}
+    ]
+  }
+}

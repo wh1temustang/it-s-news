@@ -1,0 +1,337 @@
+/* it's news, meme rendering: page shell and design tokens.
+   A story reads like a Reddit post, and each scene is a meme format redrawn
+   in HTML and CSS. Templates style themselves with these tokens only, never
+   raw colours, so light and dark mode come for free. Memes are pictures, so
+   the --meme-* tokens keep their colours in dark mode, as an image would.
+   Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #dae0e6;
+  --surface: #ffffff;
+  --rail: #f6f7f8;
+  --ink: #1a1a1b;
+  --muted: #576f76;
+  --line: #ccd3d8;
+  --accent: #ff4500;
+  --on-accent: #ffffff;
+  --link: #0079d3;
+  --up: #ff4500;
+  --down: #7193ff;
+  --serious: #c4122f;
+  --sub: #0079d3;
+  --radius: 8px;
+
+  --meme-paper: #ffffff;
+  --meme-ink: #111111;
+  --meme-muted: #555555;
+  --meme-outline: #000000;
+  --meme-caption: #ffffff;
+  --meme-gold: #f4b23e;
+  --meme-sky: #bfe3ff;
+  --meme-grass: #7cb46b;
+  --meme-street: #cfc6b8;
+  --meme-wood: #8a5a33;
+  --meme-wood-dark: #5e3b1f;
+  --meme-panel: #e6e9ec;
+  --meme-button: #e3263c;
+  --meme-button-dark: #9e1022;
+  --meme-screen: #0d1b14;
+  --meme-grid: #1f3d2c;
+  --meme-rise: #35d07f;
+  --meme-fall: #ff5a5f;
+  --meme-brain: #262b40;
+  --meme-glow: #ffe27a;
+
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --impact: Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Each topic's community icon. Icons are pictures too, so they keep their
+   colour in dark mode. */
+[data-topic="world"]    { --sub: #0079d3; }
+[data-topic="politics"] { --sub: #7c3aed; }
+[data-topic="business"] { --sub: #0f766e; }
+[data-topic="science"]  { --sub: #0e7490; }
+[data-topic="tech"]     { --sub: #4f46e5; }
+[data-topic="climate"]  { --sub: #15803d; }
+[data-topic="health"]   { --sub: #be185d; }
+[data-topic="local"]    { --sub: #c2410c; }
+[data-topic="culture"]  { --sub: #a21caf; }
+[data-topic="sports"]   { --sub: #b91c1c; }
+
+/* Dark mode follows the reader's system, unless the page's host sets
+   data-theme="light" or "dark" on the root element for a reader's own choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #030303;
+    --surface: #1a1a1b;
+    --rail: #161617;
+    --ink: #d7dadc;
+    --muted: #8f9496;
+    --line: #343536;
+    --link: #4fbcff;
+    --down: #8fa8ff;
+    --serious: #ff5c6c;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #030303;
+  --surface: #1a1a1b;
+  --rail: #161617;
+  --ink: #d7dadc;
+  --muted: #8f9496;
+  --line: #343536;
+  --link: #4fbcff;
+  --down: #8fa8ff;
+  --serious: #ff5c6c;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--link); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.feed {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 24px 12px 56px;
+}
+
+/* --- the post --- */
+
+.post {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+/* Anything else in a post (a banner, a host's markup) spans both columns. */
+.post > :not(.vote, .post-body) { grid-column: 1 / -1; }
+
+.vote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 0;
+  background: var(--rail);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.vote-up,
+.vote-down { font-size: 18px; line-height: 1; }
+.vote-up { color: var(--up); }
+
+.post-body {
+  min-width: 0;
+  padding: 10px 14px 18px;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.sub::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 38%, var(--meme-paper) 0 22%, transparent 23%), var(--sub);
+}
+
+.post-head :is(h1, h3) {
+  margin: 8px 0 0;
+  font-size: clamp(22px, 4.4vw, 28px);
+  line-height: 1.2;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.flair {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: var(--serious);
+  color: var(--on-accent);
+  font-size: 12px;
+  font-weight: 700;
+  vertical-align: 0.3em;
+}
+
+.dek {
+  margin: 8px 0 0;
+  font-size: 17px;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* --- scenes: one meme each --- */
+
+.scene,
+.tldr {
+  margin-top: 20px;
+  animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 80ms + 60ms);
+}
+
+.scene-kind {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 2px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.scene-n {
+  margin-left: auto;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.scene :is(h2, h4) {
+  margin: 0 0 10px;
+  font-size: clamp(18px, 3vw, 21px);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.tldr {
+  padding: 12px 14px;
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+}
+
+.tldr :is(h2, h4) {
+  display: inline;
+  margin: 0 8px 0 0;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.tldr p {
+  display: inline;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* Shared by the formats: a meme's frame, and white Impact captions with a
+   black outline, the classic look. */
+.meme {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--meme-paper);
+  color: var(--meme-ink);
+}
+
+.caption {
+  color: var(--meme-caption);
+  font-family: var(--impact);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  text-shadow:
+    2px 2px 0 var(--meme-outline), -2px 2px 0 var(--meme-outline),
+    2px -2px 0 var(--meme-outline), -2px -2px 0 var(--meme-outline),
+    0 2px 0 var(--meme-outline), 0 -2px 0 var(--meme-outline),
+    2px 0 0 var(--meme-outline), -2px 0 0 var(--meme-outline);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .feed { padding: 12px 8px 40px; }
+  .post { grid-template-columns: 32px minmax(0, 1fr); }
+  .post-body { padding: 10px 10px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

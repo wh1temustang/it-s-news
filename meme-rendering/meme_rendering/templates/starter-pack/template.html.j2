@@ -1,0 +1,14 @@
+<div class="meme sp">
+  <p class="sp-title">{{ t("starter_pack.title", subject=data.subject) }}</p>
+  <ul class="sp-grid">
+  {% for piece in data.pieces %}
+    <li class="sp-piece" style="--j: {{ loop.index0 }}">
+      <span class="sp-emoji" aria-hidden="true">{{ piece.emoji }}</span>
+      <span class="sp-text">{{ piece.text }}</span>
+      {% if piece.note is defined %}
+      <span class="sp-note">{{ piece.note }}</span>
+      {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+</div>

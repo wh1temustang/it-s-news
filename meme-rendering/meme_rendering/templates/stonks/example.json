@@ -1,0 +1,9 @@
+{
+  "question": "Did the trial work?",
+  "data": {
+    "numbers": [
+      {"value": "31%", "label": "Fall in losses from theft and scanning mistakes", "trend": "down"},
+      {"value": "5%", "label": "Rise in fresh food sales", "trend": "up"}
+    ]
+  }
+}

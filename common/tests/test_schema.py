@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import unittest
 
-from template_rendering.schema import validate
+from itsnews_common.schema import validate
 
 TILE = {
     "type": "object",
@@ -14,6 +14,7 @@ TILE = {
         "tone": {"type": "string", "enum": ["good", "bad"]},
         "count": {"type": "number", "minimum": 0, "maximum": 5},
         "link": {"type": "string", "format": "uri"},
+        "emoji": {"type": "string", "pattern": "^\\W+$"},
     },
 }
 BOARD = {"type": "object", "properties": {
@@ -40,7 +41,8 @@ class ValidateTests(unittest.TestCase):
     def test_missing_and_unknown_fields(self):
         errors = validate({"colour": "red"}, TILE)
         self.assertIn("$: missing required field 'label'", errors)
-        self.assertIn("$: unknown field 'colour'. Allowed: label, tone, count, link", errors)
+        self.assertIn("$: unknown field 'colour'. Allowed: label, tone, count, link, emoji",
+                      errors)
 
     def test_enum_lists_the_allowed_values(self):
         errors = validate({"label": "x", "tone": "great"}, TILE)
@@ -60,6 +62,11 @@ class ValidateTests(unittest.TestCase):
         self.assertEqual(validate({"label": "x", "link": "javascript:alert(1)"}, TILE),
                          ["$.link: must be an http(s) URL"])
         self.assertEqual(validate({"label": "x", "link": "https://example.com"}, TILE), [])
+
+    def test_pattern_is_searched_for(self):
+        self.assertEqual(validate({"label": "x", "emoji": "🚆✨"}, TILE), [])
+        self.assertEqual(validate({"label": "x", "emoji": "42"}, TILE),
+                         ["$.emoji: '42' doesn't match the pattern ^\\W+$"])
 
 
 if __name__ == "__main__":

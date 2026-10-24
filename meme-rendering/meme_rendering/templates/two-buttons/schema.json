@@ -1,0 +1,29 @@
+{
+  "title": "Two buttons",
+  "x-icon": "😰",
+  "x-joke": true,
+  "description": "A dilemma the story describes: someone has to pick between two options.",
+  "type": "object",
+  "required": ["who", "left", "right"],
+  "additionalProperties": false,
+  "properties": {
+    "who": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "description": "Who faces the choice: \"Other supermarket chains\"."
+    },
+    "left": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 48,
+      "description": "One option."
+    },
+    "right": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 48,
+      "description": "The other option."
+    }
+  }
+}

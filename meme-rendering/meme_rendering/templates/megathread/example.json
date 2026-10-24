@@ -1,0 +1,14 @@
+{
+  "question": "What do we know so far?",
+  "data": {
+    "facts": [
+      {"label": "Homes flooded", "value": "About 200"},
+      {"label": "Bridge", "value": "Closed"},
+      {"label": "In shelters", "value": "About 450 residents"}
+    ],
+    "updates": [
+      {"when": "Monday evening", "what": "The river has fallen to 3.1 metres"},
+      {"when": "Monday morning", "what": "The river peaks at a record 4.2 metres"}
+    ]
+  }
+}

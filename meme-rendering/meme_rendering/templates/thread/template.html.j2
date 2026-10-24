@@ -1,0 +1,15 @@
+<ol class="meme th">
+{% for comment in data.comments %}
+  <li class="th-c{% if comment.reply %} th-c--reply{% endif %}" style="--j: {{ loop.index0 }}">
+    <p class="th-head">
+      <span class="th-avatar" data-n="{{ loop.index0 % 4 }}" aria-hidden="true">{{ comment.speaker[:1] | upper }}</span>
+      {% if comment.reply %}<span class="sr-only">{{ t("thread.reply") }} </span>{% endif %}
+      <b class="th-name">{{ comment.speaker }}</b>
+      {% if comment.role is defined %}
+      <span class="th-flair">{{ comment.role }}</span>
+      {% endif %}
+    </p>
+    <blockquote class="th-text"><p>{{ comment.text }}</p></blockquote>
+  </li>
+{% endfor %}
+</ol>

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "itsnews-meme-rendering"
+version = "0.1.0"
+description = "it's news, meme rendering: present a news article as Reddit-style memes an AI agent picks, with every figure and quote checked against the article."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+# itsnews-common is ../common, installed beside this one; see README.md.
+dependencies = ["jinja2>=3.1", "itsnews-common"]
+
+[project.scripts]
+meme-rendering = "meme_rendering.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["meme_rendering*"]
+
+[tool.setuptools.package-data]
+meme_rendering = ["*.json", "templates/*", "templates/*/*"]

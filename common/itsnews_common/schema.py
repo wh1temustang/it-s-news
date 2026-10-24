@@ -1,15 +1,17 @@
 """A small JSON Schema validator for storyboards.
 
-Supports the subset the schemas in this package use: type, properties,
-required, additionalProperties: false, items, minItems, maxItems, minLength,
-maxLength, enum, minimum, maximum and format: "uri". Unknown keywords
-(description, default, x-*) are ignored.
+Supports the subset the approaches' schemas use: type, properties, required,
+additionalProperties: false, items, minItems, maxItems, minLength, maxLength,
+enum, minimum, maximum, pattern (a Python regular expression, searched for
+anywhere in the string) and format: "uri". Unknown keywords (description,
+default, x-*) are ignored.
 
 The messages are written for the agent that produced the storyboard: each
 names the field, what is wrong and, where it helps, what to do about it.
 """
 from __future__ import annotations
 
+import re
 from typing import Any
 
 _TYPES = {
@@ -65,6 +67,9 @@ def validate(value: Any, schema: dict, path: str = "$") -> list[str]:
             errors.append(
                 f"{path}: {len(value)} characters, the limit is {limit}. Shorten it."
             )
+        pattern = schema.get("pattern")
+        if pattern is not None and not re.search(pattern, value):
+            errors.append(f"{path}: {value!r} doesn't match the pattern {pattern}")
         if schema.get("format") == "uri" and not value.startswith(("https://", "http://")):
             errors.append(f"{path}: must be an http(s) URL")
 

@@ -1,0 +1,29 @@
+{
+  "title": "Distracted",
+  "x-icon": "👀",
+  "x-joke": true,
+  "description": "A shift the story reports: someone turns away from the old thing, toward a new one.",
+  "type": "object",
+  "required": ["who", "old", "new"],
+  "additionalProperties": false,
+  "properties": {
+    "who": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "description": "Who is turning: \"Pantry & Co\", \"European travellers\"."
+    },
+    "old": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "description": "What they're turning away from."
+    },
+    "new": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "description": "What they're turning toward."
+    }
+  }
+}

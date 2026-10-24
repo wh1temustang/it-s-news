@@ -1,0 +1,36 @@
+{
+  "title": "RemindMe",
+  "x-icon": "⏰",
+  "x-joke": false,
+  "description": "What happens next, as reminders: the dates ahead that the article gives. Fit for serious stories.",
+  "type": "object",
+  "required": ["reminders"],
+  "additionalProperties": false,
+  "properties": {
+    "reminders": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "description": "Soonest first.",
+      "items": {
+        "type": "object",
+        "required": ["when", "what"],
+        "additionalProperties": false,
+        "properties": {
+          "when": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32,
+            "description": "As the article says it: \"Wednesday\", \"March 20\", \"later this year\"."
+          },
+          "what": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "What is due then, as a fragment."
+          }
+        }
+      }
+    }
+  }
+}
