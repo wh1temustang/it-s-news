@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>Supermarket chain swaps self-checkouts for staffed tills · it's news</title>
+<meta name="description" content="After a six-month trial, Pantry &amp; Co brings back cashiers in 120 of its 310 stores by March.">
+<style>
+/* it's news, meme rendering: page shell and design tokens.
+   A story reads like a Reddit post, and each scene is a meme format redrawn
+   in HTML and CSS. Templates style themselves with these tokens only, never
+   raw colours, so light and dark mode come for free. Memes are pictures, so
+   the --meme-* tokens keep their colours in dark mode, as an image would.
+   Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #dae0e6;
+  --surface: #ffffff;
+  --rail: #f6f7f8;
+  --ink: #1a1a1b;
+  --muted: #576f76;
+  --line: #ccd3d8;
+  --accent: #ff4500;
+  --on-accent: #ffffff;
+  --link: #0079d3;
+  --up: #ff4500;
+  --down: #7193ff;
+  --serious: #c4122f;
+  --sub: #0079d3;
+  --radius: 8px;
+
+  --meme-paper: #ffffff;
+  --meme-ink: #111111;
+  --meme-muted: #555555;
+  --meme-outline: #000000;
+  --meme-caption: #ffffff;
+  --meme-gold: #f4b23e;
+  --meme-sky: #bfe3ff;
+  --meme-grass: #7cb46b;
+  --meme-street: #cfc6b8;
+  --meme-wood: #8a5a33;
+  --meme-wood-dark: #5e3b1f;
+  --meme-panel: #e6e9ec;
+  --meme-button: #e3263c;
+  --meme-button-dark: #9e1022;
+  --meme-screen: #0d1b14;
+  --meme-grid: #1f3d2c;
+  --meme-rise: #35d07f;
+  --meme-fall: #ff5a5f;
+  --meme-brain: #262b40;
+  --meme-glow: #ffe27a;
+
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --impact: Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Each topic's community icon. Icons are pictures too, so they keep their
+   colour in dark mode. */
+[data-topic="world"]    { --sub: #0079d3; }
+[data-topic="politics"] { --sub: #7c3aed; }
+[data-topic="business"] { --sub: #0f766e; }
+[data-topic="science"]  { --sub: #0e7490; }
+[data-topic="tech"]     { --sub: #4f46e5; }
+[data-topic="climate"]  { --sub: #15803d; }
+[data-topic="health"]   { --sub: #be185d; }
+[data-topic="local"]    { --sub: #c2410c; }
+[data-topic="culture"]  { --sub: #a21caf; }
+[data-topic="sports"]   { --sub: #b91c1c; }
+
+/* Dark mode follows the reader's system, unless the page's host sets
+   data-theme="light" or "dark" on the root element for a reader's own choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #030303;
+    --surface: #1a1a1b;
+    --rail: #161617;
+    --ink: #d7dadc;
+    --muted: #8f9496;
+    --line: #343536;
+    --link: #4fbcff;
+    --down: #8fa8ff;
+    --serious: #ff5c6c;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #030303;
+  --surface: #1a1a1b;
+  --rail: #161617;
+  --ink: #d7dadc;
+  --muted: #8f9496;
+  --line: #343536;
+  --link: #4fbcff;
+  --down: #8fa8ff;
+  --serious: #ff5c6c;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--link); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.feed {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 24px 12px 56px;
+}
+
+/* --- the post --- */
+
+.post {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+/* Anything else in a post (a banner, a host's markup) spans both columns. */
+.post > :not(.vote, .post-body) { grid-column: 1 / -1; }
+
+.vote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 0;
+  background: var(--rail);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.vote-up,
+.vote-down { font-size: 18px; line-height: 1; }
+.vote-up { color: var(--up); }
+
+.post-body {
+  min-width: 0;
+  padding: 10px 14px 18px;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.sub::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 38%, var(--meme-paper) 0 22%, transparent 23%), var(--sub);
+}
+
+.post-head :is(h1, h3) {
+  margin: 8px 0 0;
+  font-size: clamp(22px, 4.4vw, 28px);
+  line-height: 1.2;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.flair {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: var(--serious);
+  color: var(--on-accent);
+  font-size: 12px;
+  font-weight: 700;
+  vertical-align: 0.3em;
+}
+
+.dek {
+  margin: 8px 0 0;
+  font-size: 17px;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* --- scenes: one meme each --- */
+
+.scene,
+.tldr {
+  margin-top: 20px;
+  animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 80ms + 60ms);
+}
+
+.scene-kind {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 2px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.scene-n {
+  margin-left: auto;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.scene :is(h2, h4) {
+  margin: 0 0 10px;
+  font-size: clamp(18px, 3vw, 21px);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.tldr {
+  padding: 12px 14px;
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+}
+
+.tldr :is(h2, h4) {
+  display: inline;
+  margin: 0 8px 0 0;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.tldr p {
+  display: inline;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* Shared by the formats: a meme's frame, and white Impact captions with a
+   black outline, the classic look. */
+.meme {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--meme-paper);
+  color: var(--meme-ink);
+}
+
+.caption {
+  color: var(--meme-caption);
+  font-family: var(--impact);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  text-shadow:
+    2px 2px 0 var(--meme-outline), -2px 2px 0 var(--meme-outline),
+    2px -2px 0 var(--meme-outline), -2px -2px 0 var(--meme-outline),
+    0 2px 0 var(--meme-outline), 0 -2px 0 var(--meme-outline),
+    2px 0 0 var(--meme-outline), -2px 0 0 var(--meme-outline);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .feed { padding: 12px 8px 40px; }
+  .post { grid-template-columns: 32px minmax(0, 1fr); }
+  .post-body { padding: 10px 10px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- distracted --- */
+
+.dt-scene {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: 6px;
+  min-height: 220px;
+  padding: 18px 10px 14px;
+  background: linear-gradient(var(--meme-sky) 0 62%, var(--meme-street) 62% 100%);
+}
+
+.dt-fig {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 80ms + 200ms);
+}
+
+.dt-fig--who { animation-delay: calc(var(--i, 0) * 80ms + 320ms); }
+.dt-fig--old { animation-delay: calc(var(--i, 0) * 80ms + 440ms); }
+
+.dt-emoji {
+  font-size: clamp(48px, 11vw, 72px);
+  line-height: 1;
+}
+
+/* The one in the middle looks back over their shoulder. */
+.dt-fig--who .dt-emoji {
+  transform: rotate(-14deg);
+  animation: dt-look 1.4s ease-in-out 0.9s both;
+}
+
+.dt-tag {
+  max-width: 100%;
+  font-size: clamp(15px, 3.2vw, 21px);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+@keyframes dt-look {
+  0%, 100% { transform: rotate(-14deg); }
+  50% { transform: rotate(-24deg) translateX(-4px); }
+}
+
+/* --- expanding brain --- */
+
+.eb {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.eb-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  min-height: 104px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 120ms + 160ms);
+}
+
+.eb-row + .eb-row { border-top: 2px solid var(--meme-outline); }
+
+.eb-text {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 12px 14px;
+  border-right: 2px solid var(--meme-outline);
+  font-size: clamp(16px, 2.8vw, 19px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.eb-brain {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--meme-glow) calc(var(--lvl) * 33%), var(--meme-brain)) 0%,
+    var(--meme-brain) calc(45% + var(--lvl) * 15%));
+}
+
+.eb-brain span {
+  font-size: calc(30px + var(--lvl) * 13px);
+  line-height: 1;
+  filter: drop-shadow(0 0 calc(var(--lvl) * 9px) var(--meme-glow));
+}
+
+/* --- stonks --- */
+
+.st {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.st-panel {
+  --trend: var(--meme-rise);
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  min-height: 210px;
+  padding: 12px 14px 10px;
+  border-color: var(--meme-outline);
+  background:
+    repeating-linear-gradient(0deg, var(--meme-grid) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(90deg, var(--meme-grid) 0 1px, transparent 1px 28px),
+    var(--meme-screen);
+  color: var(--meme-caption);
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 110ms + 160ms);
+}
+
+.st-panel--down { --trend: var(--meme-fall); }
+
+.st-chart {
+  width: 100%;
+  height: auto;
+  max-height: 90px;
+  overflow: visible;
+}
+
+.st-chart polyline {
+  fill: none;
+  stroke: var(--trend);
+  stroke-width: 7;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 260;
+  animation: st-draw 1s ease-out both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 110ms + 260ms);
+}
+
+.st-chart polygon { fill: var(--trend); }
+
+.st-value {
+  margin: 8px 0 0;
+  /* As wide as the panel allows, so "£52 million" fits on one line. */
+  font-size: min(46px, 22cqi);
+}
+
+.st-label {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.st-word {
+  margin: auto 0 0;
+  padding-top: 8px;
+  color: var(--trend);
+  font-size: 26px;
+  text-align: right;
+}
+
+@keyframes st-draw {
+  from { stroke-dashoffset: 260; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* --- thread --- */
+
+.th {
+  margin: 0;
+  padding: 12px 14px 4px;
+  list-style: none;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.th-c {
+  position: relative;
+  padding-bottom: 10px;
+  animation: rise 0.45s both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 90ms + 160ms);
+}
+
+.th-c--reply {
+  margin-left: 13px;
+  padding-left: 22px;
+  border-left: 2px solid var(--line);
+}
+
+.th-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.th-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--sub);
+  color: var(--meme-paper);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.th-avatar[data-n="1"] { background: var(--accent); }
+.th-avatar[data-n="2"] { background: var(--down); }
+.th-avatar[data-n="3"] { background: var(--muted); }
+
+.th-flair {
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--rail);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.th-text {
+  margin: 4px 0 0 34px;
+}
+
+.th-c--reply .th-text { margin-left: 34px; }
+
+.th-text p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.th-text p::before { content: "\201C"; }
+.th-text p::after { content: "\201D"; }
+
+/* --- two buttons --- */
+
+.tb-scene {
+  display: grid;
+  gap: 14px;
+  padding: 16px 14px 14px;
+  background: var(--meme-panel);
+}
+
+.tb-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.tb-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.tb-label {
+  padding: 8px 10px;
+  border: 1px solid var(--meme-outline);
+  background: var(--meme-paper);
+  box-shadow: 2px 2px 0 var(--meme-outline);
+  font-size: clamp(14px, 2.8vw, 17px);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  transform: rotate(-2deg);
+}
+
+.tb-button + .tb-button .tb-label { transform: rotate(2deg); }
+
+.tb-knob {
+  width: 64px;
+  height: 64px;
+  border: 4px solid var(--meme-muted);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--meme-paper) 0 8%, var(--meme-button) 30%, var(--meme-button-dark) 100%);
+  box-shadow: 0 6px 0 var(--meme-button-dark);
+}
+
+.tb-who {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 2px solid var(--meme-outline);
+}
+
+.tb-emoji {
+  font-size: clamp(42px, 9vw, 58px);
+  line-height: 1;
+  animation: tb-sweat 0.9s ease-in-out 0.8s 3 both;
+}
+
+.tb-tag { font-size: clamp(17px, 3.6vw, 24px); }
+
+@keyframes tb-sweat {
+  0%, 100% { translate: 0 0; }
+  25% { translate: -3px 0; }
+  75% { translate: 3px 0; }
+}
+
+</style>
+</head>
+<body data-topic="business">
+<p class="banner" role="note">Fictional sample: this is not real news.</p>
+<main class="feed">
+<article class="post">
+  <div class="vote" aria-hidden="true"><span class="vote-up">▲</span><span>Vote</span><span class="vote-down">▼</span></div>
+  <div class="post-body">
+  <header class="post-head">
+    <p class="post-meta"><span class="sub">r/business</span> · <span>Posted by <b>it's news</b></span> · <span>2026-10-08</span></p>
+    <h1>Supermarket chain swaps self-checkouts for staffed tills</h1>
+    <p class="dek">After a six-month trial, Pantry &amp; Co brings back cashiers in 120 of its 310 stores by March.</p>
+    <p class="byline">it&#39;s news sample desk</p>
+  </header>
+  <section class="scene scene--distracted" style="--i: 0" aria-labelledby="q1">
+    <p class="scene-kind"><span aria-hidden="true">👀</span> Distracted <span class="scene-n" aria-hidden="true">1/5</span></p>
+    <h2 id="q1">What&#39;s changing?</h2>
+    <figure class="meme dt">
+  <div class="dt-scene" aria-hidden="true">
+    <div class="dt-fig dt-fig--new"><span class="dt-emoji">💃</span><span class="dt-tag caption">Staffed tills</span></div>
+    <div class="dt-fig dt-fig--who"><span class="dt-emoji">😍</span><span class="dt-tag caption">Pantry &amp; Co</span></div>
+    <div class="dt-fig dt-fig--old"><span class="dt-emoji">😠</span><span class="dt-tag caption">Self-checkout machines</span></div>
+  </div>
+  <figcaption class="sr-only">Pantry &amp; Co turns away from Self-checkout machines, toward Staffed tills.</figcaption>
+</figure>
+
+  </section>
+  <section class="scene scene--stonks" style="--i: 1" aria-labelledby="q2">
+    <p class="scene-kind"><span aria-hidden="true">📈</span> Stonks <span class="scene-n" aria-hidden="true">2/5</span></p>
+    <h2 id="q2">Did the trial work?</h2>
+    <div class="st">
+  <div class="meme st-panel st-panel--down" style="--j: 0">
+    <svg class="st-chart" viewBox="0 0 200 100" aria-hidden="true">
+      <polyline points="8,12 48,38 78,28 118,62 146,52 184,86"/>
+      <polygon points="191.5,92.7 185.5,75.3 173.5,88.7"/>
+    </svg>
+    <p class="st-value caption">31%<span class="sr-only"> (down)</span></p>
+    <p class="st-label">Fall in losses from theft and scanning mistakes</p>
+    <p class="st-word caption" aria-hidden="true">Stonks</p>
+  </div>
+  <div class="meme st-panel st-panel--down" style="--j: 1">
+    <svg class="st-chart" viewBox="0 0 200 100" aria-hidden="true">
+      <polyline points="8,12 48,38 78,28 118,62 146,52 184,86"/>
+      <polygon points="191.5,92.7 185.5,75.3 173.5,88.7"/>
+    </svg>
+    <p class="st-value caption">4 minutes<span class="sr-only"> (down)</span></p>
+    <p class="st-label">Average wait to pay, down from 6</p>
+    <p class="st-word caption" aria-hidden="true">Stonks</p>
+  </div>
+  <div class="meme st-panel st-panel--up" style="--j: 2">
+    <svg class="st-chart" viewBox="0 0 200 100" aria-hidden="true">
+      <polyline points="8,88 48,62 78,72 118,38 146,48 184,14"/>
+      <polygon points="191.5,7.3 185.5,24.7 173.5,11.3"/>
+    </svg>
+    <p class="st-value caption">5%<span class="sr-only"> (up)</span></p>
+    <p class="st-label">Rise in fresh food sales</p>
+    <p class="st-word caption" aria-hidden="true">Stonks</p>
+  </div>
+</div>
+
+  </section>
+  <section class="scene scene--expanding-brain" style="--i: 2" aria-labelledby="q3">
+    <p class="scene-kind"><span aria-hidden="true">🧠</span> Expanding brain <span class="scene-n" aria-hidden="true">3/5</span></p>
+    <h2 id="q3">How big is the rollout?</h2>
+    <ol class="meme eb">
+  <li class="eb-row" style="--lvl: 0; --j: 0">
+    <p class="eb-text"><span class="sr-only">Level 1: </span>Six-month trial: staffed tills in 12 stores</p>
+    <div class="eb-brain" aria-hidden="true"><span>🧠</span></div>
+  </li>
+  <li class="eb-row" style="--lvl: 1; --j: 1">
+    <p class="eb-text"><span class="sr-only">Level 2: </span>November: the first 40 stores switch</p>
+    <div class="eb-brain" aria-hidden="true"><span>🧠</span></div>
+  </li>
+  <li class="eb-row" style="--lvl: 2; --j: 2">
+    <p class="eb-text"><span class="sr-only">Level 3: </span>By March: 120 stores</p>
+    <div class="eb-brain" aria-hidden="true"><span>🧠</span></div>
+  </li>
+</ol>
+
+  </section>
+  <section class="scene scene--two-buttons" style="--i: 3" aria-labelledby="q4">
+    <p class="scene-kind"><span aria-hidden="true">😰</span> Two buttons <span class="scene-n" aria-hidden="true">4/5</span></p>
+    <h2 id="q4">Will other chains follow?</h2>
+    <figure class="meme tb">
+  <div class="tb-scene" aria-hidden="true">
+    <div class="tb-buttons">
+      <div class="tb-button"><span class="tb-label">Follow Pantry &amp; Co now</span><span class="tb-knob"></span></div>
+      <div class="tb-button"><span class="tb-label">Wait for a full year of results</span><span class="tb-knob"></span></div>
+    </div>
+    <div class="tb-who"><span class="tb-emoji">😰</span><span class="tb-tag caption">Other supermarket chains</span></div>
+  </div>
+  <figcaption class="sr-only">Other supermarket chains has to pick: Follow Pantry &amp; Co now, or Wait for a full year of results.</figcaption>
+</figure>
+
+  </section>
+  <section class="scene scene--thread" style="--i: 4" aria-labelledby="q5">
+    <p class="scene-kind"><span aria-hidden="true">💬</span> Thread <span class="scene-n" aria-hidden="true">5/5</span></p>
+    <h2 id="q5">Who&#39;s saying what?</h2>
+    <ol class="meme th">
+  <li class="th-c" style="--j: 0">
+    <p class="th-head">
+      <span class="th-avatar" data-n="0" aria-hidden="true">M</span>
+      <b class="th-name">Marta Lindqvist</b>
+      <span class="th-flair">Chief executive, Pantry &amp; Co</span>
+    </p>
+    <blockquote class="th-text"><p>People told us they were tired of arguing with a machine about an unexpected item in the bagging area</p></blockquote>
+  </li>
+  <li class="th-c th-c--reply" style="--j: 1">
+    <p class="th-head">
+      <span class="th-avatar" data-n="1" aria-hidden="true">P</span>
+<span class="sr-only">In response: </span>      <b class="th-name">Priya Nair</b>
+      <span class="th-flair">Retail analyst, Example Retail Research</span>
+    </p>
+    <blockquote class="th-text"><p>[Staffed tills] cost more every single hour, and the savings from lower theft may not last</p></blockquote>
+  </li>
+</ol>
+
+  </section>
+  <section class="tldr" style="--i: 5">
+    <h2>TL;DR</h2>
+    <p>Shoppers in 120 stores will mostly pay at a till again, but every store keeps at least two self-checkouts.</p>
+  </section>
+  </div>
+
+</article>
+  <footer class="colophon">
+    <p>Presented by <b>it's news</b>. Every figure and quote in this story was checked against the article.</p>
+    <p>Meme formats redrawn in HTML. Not affiliated with Reddit.</p>
+  </footer>
+</main>
+</body>
+</html>

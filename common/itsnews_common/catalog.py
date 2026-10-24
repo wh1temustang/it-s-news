@@ -1,6 +1,6 @@
-"""The template registry.
+"""A template registry.
 
-Each folder in template_rendering/templates/ that holds a schema.json is one template:
+Each folder in an approach's templates/ that holds a schema.json is one template:
 
     templates/<id>/
       schema.json        what the agent must fill in (title, x-icon, limits)
@@ -8,7 +8,8 @@ Each folder in template_rendering/templates/ that holds a schema.json is one tem
       example.json       a sample scene ({"question", "data"}) for the gallery and tests
       style.css          optional styles, inlined only when a page uses the template
 
-The page shell (page.html.j2, base.css) lives in templates/ itself.
+The page shell (page.html.j2, base.css and so on) lives in templates/ itself;
+see kit.py.
 """
 from __future__ import annotations
 
@@ -16,9 +17,6 @@ import json
 from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
-
-PACKAGE_DIR = Path(__file__).resolve().parent
-TEMPLATES_DIR = PACKAGE_DIR / "templates"
 
 
 @dataclass(frozen=True)
@@ -40,7 +38,7 @@ class Template:
 
     @property
     def markup(self) -> str:
-        """Path of the scene's Jinja2 template, relative to TEMPLATES_DIR."""
+        """Path of the scene's Jinja2 template, relative to the templates folder."""
         return f"{self.id}/template.html.j2"
 
     @cached_property
@@ -53,11 +51,7 @@ class Template:
         return path.read_text(encoding="utf-8") if path.is_file() else ""
 
 
-def load_templates() -> dict[str, Template]:
-    """All templates, keyed by id, in a stable (alphabetical) order."""
-    found = sorted(p.parent for p in TEMPLATES_DIR.glob("*/schema.json"))
+def load_templates(templates_dir: Path) -> dict[str, Template]:
+    """All templates in `templates_dir`, keyed by id, in a stable (alphabetical) order."""
+    found = sorted(p.parent for p in Path(templates_dir).glob("*/schema.json"))
     return {d.name: Template(d.name, d) for d in found}
-
-
-def storyboard_schema() -> dict:
-    return json.loads((PACKAGE_DIR / "storyboard.schema.json").read_text(encoding="utf-8"))

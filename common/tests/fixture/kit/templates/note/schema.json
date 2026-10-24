@@ -1,0 +1,13 @@
+{
+  "title": "Note",
+  "x-icon": "📝",
+  "description": "A fact, with an optional quote and an emoji.",
+  "type": "object",
+  "required": ["fact"],
+  "additionalProperties": false,
+  "properties": {
+    "fact": {"type": "string", "minLength": 1, "maxLength": 80},
+    "quote": {"type": "string", "maxLength": 120, "x-verbatim": true},
+    "emoji": {"type": "string", "maxLength": 8, "pattern": "^\\W+$", "x-ungrounded": true}
+  }
+}

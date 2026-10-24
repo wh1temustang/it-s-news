@@ -1,0 +1,40 @@
+
+/* --- nope, yep --- */
+
+.ny-who {
+  margin: 0;
+  padding: 8px 14px;
+  border-bottom: 2px solid var(--meme-outline);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.ny-row {
+  display: grid;
+  grid-template-columns: minmax(96px, 0.8fr) minmax(0, 1.2fr);
+  min-height: 112px;
+}
+
+.ny-row + .ny-row { border-top: 2px solid var(--meme-outline); }
+
+.ny-face {
+  display: grid;
+  place-items: center;
+  border-right: 2px solid var(--meme-outline);
+  background: var(--meme-gold);
+  font-size: clamp(40px, 8vw, 56px);
+}
+
+.ny-row--nope .ny-face { filter: saturate(0.7); }
+
+.ny-text {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 12px 16px;
+  font-size: clamp(17px, 3vw, 21px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.ny-row--nope .ny-text { color: var(--meme-muted); }

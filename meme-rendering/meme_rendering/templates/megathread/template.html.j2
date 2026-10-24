@@ -1,0 +1,20 @@
+<div class="meme mt">
+  <p class="mt-pin"><span aria-hidden="true">📌</span> {{ t("megathread.pinned") }}</p>
+  <p class="mt-h">{{ t("megathread.facts") }}</p>
+  <dl class="mt-facts">
+  {% for fact in data.facts %}
+    <div class="mt-fact" style="--j: {{ loop.index0 }}">
+      <dt>{{ fact.label }}</dt>
+      <dd>{{ fact.value }}</dd>
+    </div>
+  {% endfor %}
+  </dl>
+  {% if data.updates is defined and data.updates %}
+  <p class="mt-h">{{ t("megathread.updates") }}</p>
+  <ol class="mt-updates">
+  {% for update in data.updates %}
+    <li><b>{{ update.when }}</b> {{ update.what }}</li>
+  {% endfor %}
+  </ol>
+  {% endif %}
+</div>

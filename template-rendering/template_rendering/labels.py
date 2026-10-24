@@ -9,39 +9,21 @@ key it leaves out falls back to English. `lang` sets the page's language.
 
 Keys named `topic.<id>` label the topics; keys named `template.<id>` rename a
 template's scenes, which otherwise show the title in its schema.json.
+
+The page shell's words are shared by every approach (itsnews_common.labels);
+the ones below are this approach's templates' own.
 """
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
-from markupsafe import Markup, escape
+from itsnews_common import labels as common
+from itsnews_common.labels import BRAND, LabelsError
 
-BRAND = Markup("<b>it's news</b>")
+__all__ = ["BRAND", "DEFAULTS", "Labels", "LabelsError", "load_labels"]
 
 DEFAULTS: dict[str, str] = {
-    "lang": "en",
-    "topic.world": "World",
-    "topic.politics": "Politics",
-    "topic.business": "Business",
-    "topic.science": "Science",
-    "topic.tech": "Tech",
-    "topic.climate": "Climate",
-    "topic.health": "Health",
-    "topic.local": "Local",
-    "topic.culture": "Culture",
-    "topic.sports": "Sports",
-    "bottom_line": "Bottom line",
-    "sources": "Sources",
-    "label_sep": ": ",
-    "list_sep": ", ",
-    "read_more": "Read the full article",
-    "read_more_at": "Read the full article at {source}",
-    "presented_by": "Presented by {brand}.",
-    "checked": "Every figure and quote in this story was checked against the article.",
-    "checked_edition": "Every figure and quote in these stories was checked against their articles.",
-    "fictional": "Fictional sample: this is not real news.",
-    "sections": "Sections",
+    **common.DEFAULTS,
     "timeline.now": "Now",
     "timeline.next": "Ahead",
     "comparison.vs": "vs",
@@ -51,46 +33,12 @@ DEFAULTS: dict[str, str] = {
     "trend.flat": "flat to",
 }
 
-_OPEN_PREFIXES = ("topic.", "template.")
 
-
-class LabelsError(ValueError):
-    pass
-
-
-class Labels:
+class Labels(common.Labels):
     """Look up a label, escaped for HTML: labels("bottom_line")."""
 
-    def __init__(self, overrides: dict | None = None):
-        overrides = overrides or {}
-        if not isinstance(overrides, dict):
-            raise LabelsError("labels must be a JSON object of strings")
-        for key, value in overrides.items():
-            if key not in DEFAULTS and not key.startswith(_OPEN_PREFIXES):
-                raise LabelsError(f"unknown label {key!r}. Known labels: {', '.join(DEFAULTS)}")
-            if not isinstance(value, str):
-                raise LabelsError(f"label {key!r} must be a string")
-        self._text = {**DEFAULTS, **overrides}
-
-    @property
-    def lang(self) -> str:
-        return self._text["lang"]
-
-    def __call__(self, key: str, **values) -> Markup:
-        """The label, escaped; `values` fill its {placeholders} and are escaped too."""
-        text = escape(self._text[key])
-        return text.format(**values) if values else text
-
-    def topic(self, topic_id: str) -> str:
-        return self._text.get(f"topic.{topic_id}", topic_id)
-
-    def template(self, template) -> str:
-        return self._text.get(f"template.{template.id}", template.name)
+    DEFAULTS = DEFAULTS
 
 
 def load_labels(path: str | Path) -> Labels:
-    try:
-        data = json.loads(Path(path).read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as err:
-        raise LabelsError(f"{path}: {err}") from None
-    return Labels(data)
+    return common.load_labels(path, Labels)

@@ -9,7 +9,8 @@ description = "it's news, template rendering: present a news article with visual
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
-dependencies = ["jinja2>=3.1"]
+# itsnews-common is ../common, installed beside this one; see README.md.
+dependencies = ["jinja2>=3.1", "itsnews-common"]
 
 [project.scripts]
 template-rendering = "template_rendering.cli:main"

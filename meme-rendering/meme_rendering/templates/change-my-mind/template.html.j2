@@ -1,0 +1,12 @@
+<figure class="meme cm">
+  <div class="cm-scene">
+    <blockquote class="cm-sign"><p>{{ data.text }}</p></blockquote>
+    <div class="cm-table" aria-hidden="true"><span class="cm-mug">☕</span></div>
+  </div>
+  <figcaption class="cm-by">
+    <b>{{ data.speaker }}</b>
+    {% if data.role is defined %}
+    <span>{{ data.role }}</span>
+    {% endif %}
+  </figcaption>
+</figure>

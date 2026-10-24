@@ -1,0 +1,24 @@
+{
+  "title": "it's news, meme edition",
+  "dek": "Two fictional stories, one feed: memes for the light one, straight facts for the serious one.",
+  "date": "October 12, 2026",
+  "footer": "That's the whole feed. Both stories are fictional samples.",
+  "sections": [
+    {
+      "id": "business",
+      "title": "Business",
+      "icon": "🛒",
+      "stories": [
+        {"article": "self-checkout.md", "storyboard": "self-checkout.storyboard.json"}
+      ]
+    },
+    {
+      "id": "local",
+      "title": "Local",
+      "icon": "🌧️",
+      "stories": [
+        {"article": "river-flood.md", "storyboard": "river-flood.storyboard.json"}
+      ]
+    }
+  ]
+}

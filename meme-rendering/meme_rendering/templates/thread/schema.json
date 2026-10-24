@@ -1,0 +1,46 @@
+{
+  "title": "Thread",
+  "x-icon": "💬",
+  "x-joke": false,
+  "description": "Who said what, as a comment thread: quotes from the article, word for word, with replies for pushback. Fit for serious stories.",
+  "type": "object",
+  "required": ["comments"],
+  "additionalProperties": false,
+  "properties": {
+    "comments": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "description": "In the order the article gives them, or the main voice first.",
+      "items": {
+        "type": "object",
+        "required": ["speaker", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "speaker": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 48,
+            "description": "Who said it, named as the article names them. Never a made-up username."
+          },
+          "role": {
+            "type": "string",
+            "maxLength": 60,
+            "description": "Optional: why their words matter, shown as their flair, e.g. \"Mayor of Vellmoor\"."
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 220,
+            "x-verbatim": true,
+            "description": "Copied exactly from the article, without the surrounding quotation marks. Mark a cut with \"...\" and an added word with [brackets]."
+          },
+          "reply": {
+            "type": "boolean",
+            "description": "Optional: true when the article presents this quote as a response to, or pushback on, the one above. Indents it under that comment."
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+<ol class="meme eb">
+{% for level in data.levels %}
+  <li class="eb-row" style="--lvl: {{ loop.index0 }}; --j: {{ loop.index0 }}">
+    <p class="eb-text"><span class="sr-only">{{ t("expanding_brain.level", n=loop.index) }}: </span>{{ level.text }}</p>
+    <div class="eb-brain" aria-hidden="true"><span>🧠</span></div>
+  </li>
+{% endfor %}
+</ol>

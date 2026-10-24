@@ -19,6 +19,10 @@ and tests.
 |---|---|
 | [Template rendering](template-rendering/) | An AI agent picks pre-built visual templates (timeline, info board, map, charts and more) for an article. Code checks every figure and quote against the article, then renders a self-contained page, or several stories as one edition. See [an example page](template-rendering/examples/night-train.html) and [an example edition](template-rendering/examples/edition.html). |
 | [Animated explainer](animated-explainer/) | *Prototype.* Tells a story as a few pages of vector animation the reader clicks through, five by default. Each click builds one idea on screen, and numbers the article only implies are worked out in front of the reader. See [the example](animated-explainer/examples/night-train.html). |
+| [Meme rendering](meme-rendering/) | News for readers who'd rather scroll Reddit: each story is a post, told with meme formats an AI agent picks (distracted, stonks, two buttons, expanding brain and more), redrawn in HTML so the page stays self-contained. Code checks every figure and quote against the article, and serious stories get straight formats, never jokes. See [an example page](meme-rendering/examples/self-checkout.html) and [an example feed](meme-rendering/examples/edition.html). |
+
+Template rendering and meme rendering share their checking and rendering
+code, in [common/](common/).
 
 ## Today's news, every morning
 

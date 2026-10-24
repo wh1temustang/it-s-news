@@ -1,0 +1,62 @@
+{
+  "headline": {
+    "title": "Supermarket chain swaps self-checkouts for staffed tills",
+    "dek": "After a six-month trial, Pantry & Co brings back cashiers in 120 of its 310 stores by March.",
+    "topic": "business",
+    "mood": "light"
+  },
+  "scenes": [
+    {
+      "template": "distracted",
+      "question": "What's changing?",
+      "why": "The news is a switch from one way of paying to another, which is exactly what this format shows.",
+      "data": {"who": "Pantry & Co", "old": "Self-checkout machines", "new": "Staffed tills"}
+    },
+    {
+      "template": "stonks",
+      "question": "Did the trial work?",
+      "why": "Three trial results, each with a direction the article states.",
+      "data": {
+        "numbers": [
+          {"value": "31%", "label": "Fall in losses from theft and scanning mistakes", "trend": "down"},
+          {"value": "4 minutes", "label": "Average wait to pay, down from 6", "trend": "down"},
+          {"value": "5%", "label": "Rise in fresh food sales", "trend": "up"}
+        ]
+      }
+    },
+    {
+      "template": "expanding-brain",
+      "question": "How big is the rollout?",
+      "why": "The switch grows in three steps, from the trial to the full rollout.",
+      "data": {
+        "levels": [
+          {"text": "Six-month trial: staffed tills in 12 stores"},
+          {"text": "November: the first 40 stores switch"},
+          {"text": "By March: 120 stores"}
+        ]
+      }
+    },
+    {
+      "template": "two-buttons",
+      "question": "Will other chains follow?",
+      "why": "The analyst sets out the choice other chains face; the article gives both options.",
+      "data": {
+        "who": "Other supermarket chains",
+        "left": "Follow Pantry & Co now",
+        "right": "Wait for a full year of results"
+      }
+    },
+    {
+      "template": "thread",
+      "question": "Who's saying what?",
+      "why": "The chief executive's reason and the analyst's doubt, side by side, so both sides are heard.",
+      "data": {
+        "comments": [
+          {"speaker": "Marta Lindqvist", "role": "Chief executive, Pantry & Co", "text": "People told us they were tired of arguing with a machine about an unexpected item in the bagging area"},
+          {"speaker": "Priya Nair", "role": "Retail analyst, Example Retail Research", "text": "[Staffed tills] cost more every single hour, and the savings from lower theft may not last", "reply": true}
+        ]
+      }
+    }
+  ],
+  "bottom_line": "Shoppers in 120 stores will mostly pay at a till again, but every store keeps at least two self-checkouts."
+}

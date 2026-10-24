@@ -1,0 +1,30 @@
+{
+  "title": "Expanding brain",
+  "x-icon": "🧠",
+  "x-joke": true,
+  "description": "Three or four steps, each bigger than the last: a plan that scales up, or a figure that keeps growing.",
+  "type": "object",
+  "required": ["levels"],
+  "additionalProperties": false,
+  "properties": {
+    "levels": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 4,
+      "description": "Smallest first. Each step is bigger in size, scale or reach than the one before.",
+      "items": {
+        "type": "object",
+        "required": ["text"],
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 70,
+            "description": "The step, as a fragment: \"2021: 1.1 million passengers\"."
+          }
+        }
+      }
+    }
+  }
+}

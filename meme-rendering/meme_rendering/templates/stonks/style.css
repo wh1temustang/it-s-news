@@ -1,0 +1,73 @@
+
+/* --- stonks --- */
+
+.st {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.st-panel {
+  --trend: var(--meme-rise);
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  min-height: 210px;
+  padding: 12px 14px 10px;
+  border-color: var(--meme-outline);
+  background:
+    repeating-linear-gradient(0deg, var(--meme-grid) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(90deg, var(--meme-grid) 0 1px, transparent 1px 28px),
+    var(--meme-screen);
+  color: var(--meme-caption);
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 110ms + 160ms);
+}
+
+.st-panel--down { --trend: var(--meme-fall); }
+
+.st-chart {
+  width: 100%;
+  height: auto;
+  max-height: 90px;
+  overflow: visible;
+}
+
+.st-chart polyline {
+  fill: none;
+  stroke: var(--trend);
+  stroke-width: 7;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 260;
+  animation: st-draw 1s ease-out both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 110ms + 260ms);
+}
+
+.st-chart polygon { fill: var(--trend); }
+
+.st-value {
+  margin: 8px 0 0;
+  /* As wide as the panel allows, so "£52 million" fits on one line. */
+  font-size: min(46px, 22cqi);
+}
+
+.st-label {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.st-word {
+  margin: auto 0 0;
+  padding-top: 8px;
+  color: var(--trend);
+  font-size: 26px;
+  text-align: right;
+}
+
+@keyframes st-draw {
+  from { stroke-dashoffset: 260; }
+  to   { stroke-dashoffset: 0; }
+}

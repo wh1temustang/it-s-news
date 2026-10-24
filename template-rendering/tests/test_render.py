@@ -1,16 +1,15 @@
 """End to end: examples check clean, render the same every time, and stay self-contained."""
 from __future__ import annotations
 
-import copy
 import io
-import re
 import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
+from itsnews_common import testing
 from template_rendering import article, cli, storyboard
-from template_rendering.catalog import PACKAGE_DIR
+from template_rendering.kit import KIT, PACKAGE_DIR
 from template_rendering.render import FICTIONAL_BANNER, render_gallery, render_page
 
 EXAMPLES = PACKAGE_DIR.parent / "examples"
@@ -23,38 +22,9 @@ def load(md: Path, sb: Path):
     return article.load(md), storyboard.load(sb)
 
 
-class ExampleTests(unittest.TestCase):
-    def test_there_are_examples(self):
-        self.assertGreaterEqual(len(PAIRS), 2)
-
-    def test_examples_are_marked_fictional(self):
-        for md, _ in PAIRS:
-            self.assertTrue(article.load(md).fictional, md.name)
-
-    def test_examples_pass_the_check(self):
-        for md, sb in PAIRS:
-            a, s = load(md, sb)
-            self.assertEqual(storyboard.check(s, a), [], md.name)
-
-    def test_rendering_is_deterministic(self):
-        for md, sb in PAIRS:
-            a, s = load(md, sb)
-            self.assertEqual(render_page(s, a), render_page(copy.deepcopy(s), a), md.name)
-
-    def test_committed_pages_match_a_fresh_render(self):
-        for md, sb in PAIRS:
-            page = md.with_suffix(".html")
-            a, s = load(md, sb)
-            self.assertTrue(page.is_file(), f"{page.name} is missing: render it (see AGENTS.md)")
-            self.assertEqual(page.read_text(encoding="utf-8"), render_page(s, a),
-                             f"{page.name} is stale: render it again (see AGENTS.md)")
-
-    def test_pages_load_nothing_from_elsewhere(self):
-        pages = [render_page(*reversed(load(md, sb))) for md, sb in PAIRS]
-        for html in pages + [render_gallery()]:
-            self.assertIsNone(re.search(r"<(script|link|img|iframe)\b", html))
-            self.assertIsNone(re.search(r"url\((?!#)", html))
-            self.assertNotIn("@import", html)
+class ExampleTests(testing.ExampleTests, unittest.TestCase):
+    kit = KIT
+    examples = EXAMPLES
 
     def test_fictional_banner_and_scene_headings(self):
         md, sb = PAIRS[0]
@@ -79,10 +49,10 @@ class SafetyTests(unittest.TestCase):
         self.assertIn("&lt;b&gt;Src&lt;/b&gt;", html)
         self.assertNotIn("javascript:", html)
 
-    def test_gallery_does_not_claim_its_examples_were_checked(self):
+    def test_gallery_renders_every_template(self):
         html = render_gallery()
-        self.assertNotIn("checked against the article", html)
-        self.assertIn("made-up example data", html)
+        for template in KIT.load_templates().values():
+            self.assertIn(f"scene--{template.id}", html)
 
 
 class StoryboardTests(unittest.TestCase):

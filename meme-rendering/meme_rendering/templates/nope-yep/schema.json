@@ -1,0 +1,29 @@
+{
+  "title": "Nope, yep",
+  "x-icon": "🙅",
+  "x-joke": true,
+  "description": "A choice someone in the story made: what they turned down, and what they picked instead.",
+  "type": "object",
+  "required": ["who", "nope", "yep"],
+  "additionalProperties": false,
+  "properties": {
+    "who": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "description": "Who made the choice, as the article says: \"The city council\", \"Shoppers, says the chain\"."
+    },
+    "nope": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "description": "What they turned down."
+    },
+    "yep": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "description": "What they picked instead."
+    }
+  }
+}

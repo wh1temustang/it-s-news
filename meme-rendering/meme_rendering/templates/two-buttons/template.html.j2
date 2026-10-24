@@ -1,0 +1,10 @@
+<figure class="meme tb">
+  <div class="tb-scene" aria-hidden="true">
+    <div class="tb-buttons">
+      <div class="tb-button"><span class="tb-label">{{ data.left }}</span><span class="tb-knob"></span></div>
+      <div class="tb-button"><span class="tb-label">{{ data.right }}</span><span class="tb-knob"></span></div>
+    </div>
+    <div class="tb-who"><span class="tb-emoji">😰</span><span class="tb-tag caption">{{ data.who }}</span></div>
+  </div>
+  <figcaption class="sr-only">{{ t("two_buttons.summary", who=data.who, left=data.left, right=data.right) }}</figcaption>
+</figure>

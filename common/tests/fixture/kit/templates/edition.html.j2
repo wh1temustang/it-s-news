@@ -1,0 +1,15 @@
+{% if document %}<!doctype html><html lang="{{ t.lang }}"><head>{% endif %}
+<title>{{ edition.title }}</title><style>{{ css }}</style>{{ head }}
+{% if document %}</head><body>{% endif %}
+{% for section in sections %}<a href="#{{ section.id }}">{{ section.title }}</a>{% endfor %}
+{% for section in sections %}
+<section class="edition" id="{{ section.id }}">
+{% for story in section.stories %}
+<article id="{{ story.anchor }}"><h3>{{ story.headline.title }}</h3>
+{% for scene in story.scenes %}<div id="{{ scene.anchor }}">{{ scene.html }}</div>{% endfor %}
+{{ story.extra }}</article>
+{% endfor %}
+</section>
+{% endfor %}
+{{ foot }}
+{% if document %}</body></html>{% endif %}

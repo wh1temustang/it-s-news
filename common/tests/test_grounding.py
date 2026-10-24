@@ -2,9 +2,9 @@
 from __future__ import annotations
 
 import unittest
+from types import SimpleNamespace
 
-from template_rendering import article, grounding
-from template_rendering.catalog import load_templates
+from itsnews_common import article, grounding
 
 ARTICLE = article.parse("""---
 title: Test story
@@ -21,7 +21,23 @@ getting hurt, and *more* people are coming downtown."
 
 Read [the report](https://example.com/report-555) for details.
 """)
-TEMPLATES = load_templates()
+TEXT = {"type": "string"}
+# Grounding reads only each template's schema; these mirror the shapes the
+# approaches use: free text, chart values, general knowledge, quotes.
+TEMPLATES = {
+    "info-board": SimpleNamespace(schema={"properties": {"tiles": {"items": {"properties": {
+        "label": TEXT, "value": TEXT}}}}}),
+    "bar-chart": SimpleNamespace(schema={"properties": {"bars": {"items": {"properties": {
+        "label": TEXT, "value": {"type": "number"}}}}}}),
+    "map": SimpleNamespace(schema={"properties": {
+        "places": {"items": {"properties": {
+            "name": TEXT,
+            "lat": {"type": "number", "x-ungrounded": True},
+            "lng": {"type": "number", "x-ungrounded": True}}}},
+        "scope": {"type": "string", "x-ungrounded": True}}}),
+    "quote": SimpleNamespace(schema={"properties": {
+        "text": {"type": "string", "x-verbatim": True}, "speaker": TEXT}}),
+}
 
 
 def board(*values: str) -> dict:

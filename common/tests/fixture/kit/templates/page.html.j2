@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="{{ t.lang }}">
+<head><title>{{ story.headline.title }}</title><style>{{ css }}</style></head>
+<body>
+{% if banner %}<p class="banner">{{ banner }}</p>{% endif %}
+<h1>{{ story.headline.title }}</h1>
+<p class="kicker">{{ story.topic_label }}</p>
+{% for scene in story.scenes %}
+<section class="scene scene--{{ scene.id }}" id="{{ scene.anchor }}"><h2>{{ scene.question }}</h2>{{ scene.html }}</section>
+{% endfor %}
+<p>{{ t("presented_by", brand=brand) }}{% if checked %} {{ t("checked") }}{% endif %}</p>
+</body>
+</html>

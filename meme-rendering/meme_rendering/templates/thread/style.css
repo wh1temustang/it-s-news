@@ -1,0 +1,72 @@
+
+/* --- thread --- */
+
+.th {
+  margin: 0;
+  padding: 12px 14px 4px;
+  list-style: none;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.th-c {
+  position: relative;
+  padding-bottom: 10px;
+  animation: rise 0.45s both;
+  animation-delay: calc(var(--i, 0) * 80ms + var(--j, 0) * 90ms + 160ms);
+}
+
+.th-c--reply {
+  margin-left: 13px;
+  padding-left: 22px;
+  border-left: 2px solid var(--line);
+}
+
+.th-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.th-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--sub);
+  color: var(--meme-paper);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.th-avatar[data-n="1"] { background: var(--accent); }
+.th-avatar[data-n="2"] { background: var(--down); }
+.th-avatar[data-n="3"] { background: var(--muted); }
+
+.th-flair {
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--rail);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.th-text {
+  margin: 4px 0 0 34px;
+}
+
+.th-c--reply .th-text { margin-left: 34px; }
+
+.th-text p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.th-text p::before { content: "\201C"; }
+.th-text p::after { content: "\201D"; }

@@ -1,0 +1,29 @@
+{
+  "title": "Change my mind",
+  "x-icon": "☕",
+  "x-joke": true,
+  "description": "Someone's stance, word for word from the article, on a sign at their table.",
+  "type": "object",
+  "required": ["text", "speaker"],
+  "additionalProperties": false,
+  "properties": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "x-verbatim": true,
+      "description": "Copied exactly from the article, without the surrounding quotation marks. Mark a cut with \"...\"."
+    },
+    "speaker": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 48,
+      "description": "Who said it, as the article names them."
+    },
+    "role": {
+      "type": "string",
+      "maxLength": 80,
+      "description": "Optional: why their words matter, e.g. \"Independent transport economist\"."
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{% import "story.html.j2" as parts with context %}
+<!doctype html>
+<html lang="{{ t.lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>{{ story.headline.title }} · it's news</title>
+<meta name="description" content="{{ story.headline.dek }}">
+<style>
+{{ css }}
+</style>
+</head>
+<body data-topic="{{ story.headline.topic }}">
+{% if banner %}
+<p class="banner" role="note">{{ banner }}</p>
+{% endif %}
+<main class="feed">
+<article class="post">
+{{ parts.post(story, 1) }}
+</article>
+  <footer class="colophon">
+    {% if url %}
+    <p><a href="{{ url }}" rel="noopener noreferrer">{% if source %}{{ t("read_more_at", source=source) }}{% else %}{{ t("read_more") }}{% endif %}</a></p>
+    {% endif %}
+    <p>{{ t("presented_by", brand=brand) }}{% if checked %} {{ t("checked") }}{% endif %}</p>
+    <p>{{ t("not_affiliated") }}</p>
+  </footer>
+</main>
+</body>
+</html>

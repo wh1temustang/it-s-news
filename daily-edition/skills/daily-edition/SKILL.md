@@ -119,7 +119,7 @@ Follow the approach's `AGENTS.md` for an edition, one section per topic. With
    still fails after three rounds. When the edition's language isn't the
    sources', leave out quote scenes: a translation isn't the speaker's words.
 2. Write `output/editions/<date>/edition.json`, shaped as
-   `template-rendering/template_rendering/edition.schema.json` describes, with
+   `common/itsnews_common/edition.schema.json` describes, with
    paths relative to it: the title, the date as readers write it, a one-line
    `dek`, and the `footer` "Written by an AI agent from the newsletters named
    under each headline." (from the web: "from the reports linked under each

@@ -1,0 +1,12 @@
+{
+  "question": "What comes with the night train?",
+  "data": {
+    "subject": "Vienna–Barcelona night train",
+    "pieces": [
+      {"emoji": "🌙", "text": "Leaves Vienna at 7:40 pm"},
+      {"emoji": "🛏️", "text": "€89 couchette bed", "note": "Seats from €49"},
+      {"emoji": "🏔️", "text": "Stops in Zurich and Lyon"},
+      {"emoji": "🌊", "text": "Wake up by the sea"}
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "title": "Megathread",
+  "x-icon": "📌",
+  "x-joke": false,
+  "description": "A pinned megathread: what we know so far, and the latest updates. Straight facts, fit for serious stories.",
+  "type": "object",
+  "required": ["facts"],
+  "additionalProperties": false,
+  "properties": {
+    "facts": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 6,
+      "description": "Most important first.",
+      "items": {
+        "type": "object",
+        "required": ["label", "value"],
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 24,
+            "description": "What the fact is about: \"Homes flooded\", \"Bridge\"."
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "description": "The fact itself, as short as possible: \"About 200\", \"Closed\"."
+          }
+        }
+      }
+    },
+    "updates": {
+      "type": "array",
+      "maxItems": 5,
+      "description": "Optional: dated developments, newest first, as live threads list them.",
+      "items": {
+        "type": "object",
+        "required": ["when", "what"],
+        "additionalProperties": false,
+        "properties": {
+          "when": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 24,
+            "description": "As the article says it: \"Monday morning\", \"March 3\"."
+          },
+          "what": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 90,
+            "description": "What happened, as a fragment."
+          }
+        }
+      }
+    }
+  }
+}
