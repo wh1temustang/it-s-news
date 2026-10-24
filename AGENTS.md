@@ -10,6 +10,10 @@ Before working in a folder, read its AGENTS.md.
   pre-built visual templates for an article, and code checks and renders the
   page. Use it when asked to present, storyboard or render a news article,
   unless another approach is named.
+- [animated-explainer/](animated-explainer/AGENTS.md): a prototype that tells
+  an article as a few pages of click-through vector animation. It has one
+  hand-built example and no pipeline yet. Use it only when asked for an
+  animated explainer.
 
 ## Today's news
 

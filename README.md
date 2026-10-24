@@ -18,6 +18,7 @@ and tests.
 | Approach | What it does |
 |---|---|
 | [Template rendering](template-rendering/) | An AI agent picks pre-built visual templates (timeline, info board, map, charts and more) for an article. Code checks every figure and quote against the article, then renders a self-contained page, or several stories as one edition. See [an example page](template-rendering/examples/night-train.html) and [an example edition](template-rendering/examples/edition.html). |
+| [Animated explainer](animated-explainer/) | *Prototype.* Tells a story as a few pages of vector animation the reader clicks through, five by default. Each click builds one idea on screen, and numbers the article only implies are worked out in front of the reader. See [the example](animated-explainer/examples/night-train.html). |
 
 ## Today's news, every morning
 
