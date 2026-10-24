@@ -39,8 +39,10 @@ Before working in a folder, read its AGENTS.md.
 
 - Give it its own top-level folder with a README.md, an AGENTS.md, a
   CLAUDE.md that holds `@AGENTS.md`, and its own setup and tests.
-- List it above, in the "Approaches" table in [README.md](README.md), and as
-  a job in [.github/workflows/tests.yml](.github/workflows/tests.yml).
+- List it above, give it a section beside the others at the top of
+  [README.md](README.md), with a picture in `docs/images/` and links to an
+  example, and add it as a job in
+  [.github/workflows/tests.yml](.github/workflows/tests.yml).
 - Reuse [common/](common/README.md) rather than copying from another
   approach. If an agent picks templates and code renders them, make it a
   template kit, as meme rendering does. Install common beside it in the
