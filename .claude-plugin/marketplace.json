@@ -1,0 +1,16 @@
+{
+  "name": "its-news",
+  "owner": {
+    "name": "wh1temustang"
+  },
+  "metadata": {
+    "description": "it's news: make news quick to take in, with visual pages an AI agent builds."
+  },
+  "plugins": [
+    {
+      "name": "its-news",
+      "source": "./daily-edition",
+      "description": "The daily-edition skill: today's news as one visual page, published as an artifact."
+    }
+  ]
+}

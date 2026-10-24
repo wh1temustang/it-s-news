@@ -11,6 +11,14 @@ Before working in a folder, read its AGENTS.md.
   page. Use it when asked to present, storyboard or render a news article,
   unless another approach is named.
 
+## Today's news
+
+- [daily-edition/](daily-edition/AGENTS.md): an Agent Skill that finds
+  today's news, writes each story up as an article, renders them with an
+  approach and publishes the page. When asked for an edition of today's or
+  this week's news, follow
+  [daily-edition/skills/daily-edition/SKILL.md](daily-edition/skills/daily-edition/SKILL.md).
+
 ## Adding an approach
 
 - Give it its own top-level folder with a README.md, an AGENTS.md, a

@@ -19,6 +19,14 @@ and tests.
 |---|---|
 | [Template rendering](template-rendering/) | An AI agent picks pre-built visual templates (timeline, info board, map, charts and more) for an article. Code checks every figure and quote against the article, then renders a self-contained page, or several stories as one edition. See [an example page](template-rendering/examples/night-train.html) and [an example edition](template-rendering/examples/edition.html). |
 
+## Today's news, every morning
+
+[daily-edition/](daily-edition/) is an Agent Skill that has an AI agent find
+today's news, write each story up from its sources, and render them as one
+page with an approach. Claude publishes the page as an artifact, on a
+schedule if you like; Muse Code and other agents write it to a file. The
+folder explains how to run it and how to share the skill.
+
 ## Open source: no credentials, no private data
 
 it's news is an open-source project. Everything committed here is public, and
