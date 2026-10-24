@@ -242,3 +242,6 @@ service-account*.json
 
 # Rendered pages (python -m template_rendering render / gallery)
 output/
+
+# Claude Code worktrees: each is a separate checkout of another branch.
+.claude/worktrees/
