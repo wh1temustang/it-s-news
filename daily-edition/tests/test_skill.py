@@ -23,6 +23,8 @@ _PATH = re.compile(r"`([\w.-]+(?:/[\w.-]+)+\.(?:md|json|py))`")
 _LINK = re.compile(r"\]\((?!https?:|#|mailto:)([^)#\s]+)")
 # A setting line in prompt.md, such as `- Stories: 8 to 15`.
 _SETTING = re.compile(r"^- ([A-Z][\w ]*):", re.MULTILINE)
+# An outlet's domain in the Free outlets setting, such as `(pbs.org/newshour)`.
+_OUTLET = re.compile(r"\(([a-z0-9-]+(?:\.[a-z0-9-]+)+)(?:/[^)]*)?\)")
 
 
 def frontmatter(path: Path) -> dict[str, str]:
@@ -82,6 +84,19 @@ class SkillTest(unittest.TestCase):
                 with self.subTest(skill=path.parent.name, setting=key):
                     self.assertIn(f"{key}:", settings,
                                   f"prompt.md sets {key}, which the skill's Settings don't define")
+
+    def test_free_outlets_are_allowed(self):
+        """A cloud run's allowed domains, in README.md, cover every Free outlet."""
+        readme = (FOLDER / "README.md").read_text(encoding="utf-8")
+        block = readme.partition("**Allowed domains**")[2].partition("```text\n")[2].partition("```")[0]
+        allowed = {line.strip().removeprefix("*.") for line in block.splitlines() if line.strip()}
+        for path in skill_files():
+            setting = path.read_text(encoding="utf-8").partition("- Free outlets:")[2].partition("\n- ")[0]
+            domains = _OUTLET.findall(setting)
+            self.assertTrue(domains, f"{path.parent.name} names no Free outlets")
+            for domain in domains:
+                with self.subTest(skill=path.parent.name, domain=domain):
+                    self.assertIn(domain, allowed, f"README.md's allowed domains leave out {domain}")
 
     def test_links_resolve(self):
         for path in skill_files() + DOCS:

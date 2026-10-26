@@ -96,8 +96,8 @@ to "present this article".
 
 [daily-edition/](daily-edition/) is an Agent Skill that does the whole morning
 run. An AI agent reads today's newsletters from your email (or searches the
-web), writes each story up from them and renders them as one page with an
-approach. From a clone, in Claude Code:
+web), writes each story up from them, with detail from free news sites, and
+renders them as one page with an approach. From a clone, in Claude Code:
 
 ```bash
 claude "Make an it's news edition from my newsletters, 8 stories."
