@@ -43,8 +43,29 @@ before or after it. Its shape:
    when the article holds enough material to fill a template's minimum (the
    catalog's "Needs" column). Drop the others. Don't stretch thin material
    into a scene.
-4. **Match each question to one template** with the catalog table. If two
-   templates fit, pick the one that shows the answer faster.
+4. **Inventory the article's data shapes before matching.** List what the
+   article actually holds: sets of numbers in one unit, sequences of dated
+   events or deadlines, places that matter, direct quotes, two sides
+   answering the same points, chains of cause and effect. Each shape has a
+   template that shows it fastest, and a storyboard that turns every shape
+   into info boards and big numbers is under-using the kit. In particular:
+   - 2+ values in the same unit at the same time (an actual against a
+     forecast, rivals, this year against last) → `bar-chart`, not a board.
+   - 3+ values of one measure at different times → `line-chart`.
+   - 2+ dated events, or a run of deadlines → `timeline`, with the news
+     marked `now` and what's scheduled marked `next`.
+   - A specific place the story turns on → `map`, even when the article
+     also states the place in words.
+   - Two sides answering the same 2+ points → `comparison`.
+   - A stated chain of 3+ linked steps → `cause-effect`.
+   - A quote that carries the story → `quote`.
+   Use `info-board` and `big-number` for what's left: loose essentials with
+   no stronger shape, and the one number that is the news. They are the
+   fallback, not the default.
+5. **Match each question to one template** with the catalog table. If two
+   templates fit, pick the one that shows the answer faster — and prefer
+   the more specific template from the inventory above over a board or a
+   big number.
 5. **Choose and order the scenes.** Two to four is typical, five at most,
    and one is fine for a short item. The first scene answers the question
    your one-sentence summary raises. No two scenes may answer the same
@@ -73,6 +94,14 @@ before or after it. Its shape:
   outcomes or context that the article doesn't give.
 - **The one exception is geography.** Map latitude, longitude and `scope`
   are general knowledge; fill them in yourself.
+- **Time claims are facts too.** "Overdue", "due today" or "in three days"
+  is a claim the checker cannot verify. Make it only when the article gives
+  both the date and the reference point it is counted from (such as the
+  article's own date), and keep the article's date words in the storyboard.
+- **Never convert units or currencies.** Copy the article's units as it
+  writes them, in any language or script ("136億加元" stays in 億）. A
+  converted figure is a new figure, and the checker's token matching will
+  not catch the mistake.
 - **Keep vague things vague.** If the article says "hundreds" or "later this
   year", say that.
 
@@ -104,6 +133,9 @@ or maps.
 ## Self-check before answering
 
 - Each scene answers a different question, worded the way a reader would ask it.
+- Every data shape in the inventory got the most specific template that
+  fits it; no chartable set, dated sequence, place, pair of sides or chain
+  was flattened into a board or a big number.
 - The first scene answers the most important question.
 - Every number shown appears in the article, written the same way.
 - Every quote matches the article word for word.
