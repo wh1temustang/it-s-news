@@ -4,36 +4,30 @@
     "hero": "⛴️",
     "friends": [
       "🌊",
-      "☀️",
-      "🐦"
+      "☀️"
     ],
     "opening": "Once upon a time, a little ferry had a very big dream.",
     "pages": [
       {
         "hero": "⛴️",
         "friends": [
-          "🌊",
-          "🌊",
-          "🐳"
+          "🌊"
         ],
         "text": "Every day, she carried about 9,000 people across the harbour."
       },
       {
         "hero": "🌉",
         "friends": [
-          "🚶",
-          "🚶‍♀️",
-          "🌈"
+          "🚶"
         ],
         "text": "Then the town built a footbridge, 260 m long!"
       },
       {
-        "hero": "🗳️",
+        "hero": "🎉",
         "friends": [
-          "🎉",
-          "💰"
+          "🌉"
         ],
-        "text": "The town's leaders voted yes and set aside $48 million."
+        "text": "Now everyone can walk across whenever they like."
       }
     ],
     "closing": "for the first time, crossing the harbour won't depend on a timetable."

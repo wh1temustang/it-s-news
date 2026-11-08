@@ -53,10 +53,8 @@
   line-height: 1;
 }
 
-.sb-f1 { left: 6%;  top: 9%;    transform: rotate(-10deg); }
-.sb-f2 { right: 7%; top: 11%;   transform: rotate(8deg); }
-.sb-f3 { left: 10%; bottom: 11%; transform: rotate(6deg);  font-size: 46px; }
-.sb-f4 { right: 10%; bottom: 13%; transform: rotate(-7deg); font-size: 46px; }
+.sb-f1 { left: 7%;  top: 10%;   transform: rotate(-10deg); }
+.sb-f2 { right: 8%; bottom: 12%; transform: rotate(8deg); }
 
 .sb-opening {
   margin: 0 8px 6px;
