@@ -6,6 +6,7 @@
     edition  MANIFEST                check, then write several stories as one page
     gallery                          render every template's example
     templates                        list the templates
+    scan     PAGE                    check a page makes no network references
 
 render, edition and gallery take --labels FILE to write the page's own
 words in another language (see labels.py). The commands are shared by every
