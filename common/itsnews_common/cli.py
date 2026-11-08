@@ -6,6 +6,10 @@
     edition  MANIFEST                check, then write several stories as one page
     gallery                          render every template's example
     templates                        list the templates
+    scan     PAGE                    check a page makes no network references
+
+render, edition and gallery scan the page before writing it (see scan.py):
+a page that would load anything from the network is not written.
 
 render, edition and gallery take --labels FILE to write the page's own
 words in another language (see labels.py).
@@ -23,6 +27,7 @@ from pathlib import Path
 
 from . import article as article_mod
 from . import edition as edition_mod
+from . import scan as scan_mod
 from . import storyboard as storyboard_mod
 from .kit import Kit
 from .labels import LabelsError, load_labels
@@ -35,6 +40,11 @@ def _report(errors: list[str], fix: str = "Fix the storyboard and run check agai
 
 
 def _write(out: Path, html: str) -> int:
+    findings = scan_mod.network_references(html)
+    if findings:
+        _report(findings, "The page was not written. Remove the network "
+                          "references and render again.")
+        return 1
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
     print(f"✓ wrote {out}")
@@ -108,6 +118,19 @@ class _Commands:
             print(f"{template.icon}  {template.id:<16} {template.schema.get('description', '')}")
         return 0
 
+    def scan(self, args) -> int:
+        try:
+            html = Path(args.page).read_text(encoding="utf-8")
+        except OSError as err:
+            _report([f"{args.page}: {err}"], "Fix the path and run scan again.")
+            return 1
+        findings = scan_mod.network_references(html)
+        if findings:
+            _report(findings, "The page is not self-contained.")
+            return 1
+        print(f"✓ {args.page} is self-contained (no network references)")
+        return 0
+
 
 def main(kit: Kit, argv: list[str] | None = None, description: str = "") -> int:
     commands = _Commands(kit)
@@ -143,6 +166,10 @@ def main(kit: Kit, argv: list[str] | None = None, description: str = "") -> int:
 
     p = sub.add_parser("templates", help="list the templates")
     p.set_defaults(func=commands.templates)
+
+    p = sub.add_parser("scan", help="check a page makes no network references")
+    p.add_argument("page", help="a rendered page (.html)")
+    p.set_defaults(func=commands.scan)
 
     args = parser.parse_args(argv)
     try:
