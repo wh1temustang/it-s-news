@@ -14,6 +14,7 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 | How do two sides differ? | `comparison` | two sides answering the same 2+ points | the sides don't answer the same questions |
 | Why is it happening? What does it lead to? | `cause-effect` | 3+ linked steps, each one stated in the article | the links are your own inference |
 | What did someone say that matters? | `quote` | a direct quote from a named speaker | the quote is filler ("We are pleased to announce…") |
+| Can you tell it like a story? | `storybook` | a light story with a clear hero and 2–3 key points | the story is grave (death, disaster, war, crime, illness) or the facts need a chart's precision |
 
 If no row fits a question, leave the question out. Fewer, stronger scenes
 beat a full page.
@@ -63,6 +64,26 @@ must be something the article says, not something you conclude.
 **`quote`**: one quote that carries the story: a decision, a warning, a
 stance. Name the speaker as the article does, and give their `role` when it
 explains why their words matter.
+
+**`storybook`**: the story told as a children's picture book, for a reader
+who wants the news as a bedtime-story-shaped treat (or to show a child).
+Simplify first, then tell it: pick the few facts the story is actually
+about — usually two or three key points — and leave supporting detail
+(ages, prices, walk-on names) out, even when it is interesting. The book
+is a cover plus one page per key point: each page is one big emoji scene
+— a `hero` emoji drawn very big, with at most two `friends` emoji beside
+it, and only ones that picture the beat (the sea under a boat, a question
+mark over a mystery); decoration for its own sake is noise — over ONE
+short, friendly sentence that carries that key point. If a point needs
+two sentences, give it two pages. The last page adds "And so" and
+"The End" (both localisable labels). The words get simpler and warmer,
+never sillier than the story: every number is copied exactly, and the
+checker grounds the sentences as for any other template. The emoji are
+decoration, marked ungrounded, and carry no fact. Use it as the telling
+of the whole story, not mixed with the factual templates on the same
+story. Never use it for grave news — deaths, disasters, war, crime,
+illness or anyone's misfortune — where a picture-book tone would make
+light of it.
 
 ## Ordering
 

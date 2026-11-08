@@ -59,6 +59,10 @@ before or after it. Its shape:
    - Two sides answering the same 2+ points → `comparison`.
    - A stated chain of 3+ linked steps → `cause-effect`.
    - A quote that carries the story → `quote`.
+   - A light story with a clear hero, when the reader wants it told as a
+     story → `storybook`, as the story's whole telling (see the catalog).
+     Simplify first: only the 2–3 key points get a page; supporting detail
+     stays out. Never for grave news.
    Use `info-board` and `big-number` for what's left: loose essentials with
    no stronger shape, and the one number that is the news. They are the
    fallback, not the default.
