@@ -1,53 +1,85 @@
 {
   "title": "Storybook",
   "x-icon": "📖",
-  "description": "The story told as a children's picture-book page: a storybook opening, a few big friendly beats, and a closing line. The words get simpler and warmer; the facts stay exactly as the article gives them.",
+  "description": "A children's picture book: a cover, then one page per beat — each page one big emoji scene built from a hero emoji and its friends, over one short, friendly sentence. The words get simpler and warmer; the facts stay exactly as the article gives them.",
   "type": "object",
   "required": [
+    "hero",
     "opening",
-    "beats"
+    "pages"
   ],
   "additionalProperties": false,
   "properties": {
+    "hero": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8,
+      "x-ungrounded": true,
+      "description": "The cover's hero emoji: the story's main character or thing, drawn very big."
+    },
+    "friends": {
+      "type": "array",
+      "maxItems": 4,
+      "description": "Optional: up to four more emoji placed around the hero to compose the scene — the sky, the sea, the weather, the hero's friends. Decoration only; they carry no fact.",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 8,
+        "x-ungrounded": true,
+        "description": "One emoji in the scene."
+      }
+    },
     "opening": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 120,
-      "description": "The opening line of the storybook page, in simple words: who the story is about and where it happens, as the article gives them. Start it like a story ('In a small town by the sea, …'), never with a fact the article doesn't give."
+      "maxLength": 90,
+      "description": "The cover line, short and storybook-warm: who the story is about and where it happens, as the article gives them. Start it like a story ('Once upon a time, …')."
     },
-    "beats": {
+    "pages": {
       "type": "array",
       "minItems": 2,
-      "maxItems": 4,
-      "description": "The story in order, one beat per thing that happens. Each beat is one short, simple sentence a child could follow, and every number in it is copied from the article exactly.",
+      "maxItems": 5,
+      "description": "The story in order, one page per beat. If a beat needs two sentences, give it two pages instead of a longer page.",
       "items": {
         "type": "object",
         "required": [
-          "picture",
+          "hero",
           "text"
         ],
         "additionalProperties": false,
         "properties": {
-          "picture": {
+          "hero": {
             "type": "string",
             "minLength": 1,
             "maxLength": 8,
             "x-ungrounded": true,
-            "description": "One emoji that pictures the beat, chosen by you: \"🚂\", \"🌧️\", \"🎉\". Decoration only; it carries no fact."
+            "description": "This page's hero emoji, drawn very big: the thing this beat is about."
+          },
+          "friends": {
+            "type": "array",
+            "maxItems": 4,
+            "description": "Optional: up to four more emoji placed around the hero to compose the scene — the sky, the sea, the weather, the hero's friends. Decoration only; they carry no fact.",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8,
+              "x-ungrounded": true,
+              "description": "One emoji in the scene."
+            }
           },
           "text": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 110,
-            "description": "One beat of the story in simple words: \"The little train carried 9,000 people across the harbour every day.\""
+            "maxLength": 72,
+            "description": "ONE short, friendly sentence a child could follow, carrying one fact from the article, numbers copied exactly: \"For 32 years, Petal splish-splashed across the river.\""
           }
         }
       }
     },
     "closing": {
       "type": "string",
-      "maxLength": 120,
-      "description": "Optional: the last line of the page, what the story means or what happens next, only as the article gives it. The template adds 'And so' in front of it, so start with a small letter: \"nobody in the town needed a timetable any more\"."
+      "maxLength": 110,
+      "description": "Optional: the last page's line, what the story means or what happens next, only as the article gives it. The template adds 'And so' in front of it, so start with a small letter."
     }
   }
 }

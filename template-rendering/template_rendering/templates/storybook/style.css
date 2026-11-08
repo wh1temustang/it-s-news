@@ -1,96 +1,133 @@
 
 /* --- storybook ---
-   A children's picture-book page: a big friendly opening line, one
-   pictured beat at a time, and a warm closing line. Only the base.css
-   tokens, so the page follows the story's topic colour and dark mode. */
+   A children's picture book: a cover page, then one page per beat, each
+   page mostly one huge picture with one short, friendly sentence under
+   it, and a last page that says The End. Only the base.css tokens, so
+   the book follows the story's topic colour and dark mode. */
 
 .sb {
-  padding: 6px 6px 2px;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--accent) 5%, transparent);
-}
-
-.sb-opening {
-  margin: 6px 4px 20px;
-  font-family: var(--serif);
-  font-size: clamp(23px, 3.8vw, 30px);
-  line-height: 1.35;
-  text-wrap: pretty;
-}
-
-.sb-opening::first-letter {
-  float: left;
-  margin: 4px 10px 0 0;
-  padding: 2px 12px 6px;
-  border-radius: 12px;
-  background: var(--accent);
-  color: var(--on-accent);
-  font-size: 52px;
-  font-weight: 800;
-  line-height: 1;
-}
-
-.sb-beats {
   display: grid;
-  gap: 12px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  gap: 22px;
 }
 
-.sb-beat {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 16px;
-  border: 2px solid color-mix(in srgb, var(--accent) 35%, var(--line));
-  border-radius: 999px 18px 18px 999px;
-  background: var(--surface);
+.sb-page {
+  position: relative;
+  padding: 20px 20px 26px;
+  border: 3px solid color-mix(in srgb, var(--accent) 40%, var(--line));
+  border-radius: 26px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  text-align: center;
   animation: sb-pop 0.55s cubic-bezier(0.3, 1.3, 0.6, 1) both;
   animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 130ms + 200ms);
 }
 
-.sb-picture {
-  flex: none;
+/* The pages lean a little, like a storybook laid open on a rug. */
+.sb-page:nth-child(odd)  { transform: rotate(-0.4deg); }
+.sb-page:nth-child(even) { transform: rotate(0.4deg); }
+
+.sb-bigpic {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 62px;
-  height: 62px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
-  font-size: 32px;
+  min-height: 300px;
+  margin-bottom: 20px;
+  padding: 24px 12px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 18% 22%, color-mix(in srgb, var(--accent) 26%, transparent) 0 26px, transparent 27px),
+    radial-gradient(circle at 84% 16%, color-mix(in srgb, var(--alt) 32%, transparent) 0 18px, transparent 19px),
+    radial-gradient(circle at 78% 82%, color-mix(in srgb, var(--accent) 18%, transparent) 0 34px, transparent 35px),
+    color-mix(in srgb, var(--accent) 13%, var(--surface));
+}
+
+.sb-hero {
+  font-size: clamp(130px, 34vw, 190px);
+  line-height: 1.1;
+}
+
+/* The friends gather around the hero to make a little scene. Their
+   places are fixed, so the same storyboard always draws the same scene. */
+.sb-friend {
+  position: absolute;
+  font-size: 56px;
   line-height: 1;
 }
 
-.sb-text {
-  margin: 0;
-  font-size: clamp(18px, 2.8vw, 21px);
-  font-weight: 600;
-  line-height: 1.4;
+.sb-f1 { left: 6%;  top: 9%;    transform: rotate(-10deg); }
+.sb-f2 { right: 7%; top: 11%;   transform: rotate(8deg); }
+.sb-f3 { left: 10%; bottom: 11%; transform: rotate(6deg);  font-size: 46px; }
+.sb-f4 { right: 10%; bottom: 13%; transform: rotate(-7deg); font-size: 46px; }
+
+.sb-opening {
+  margin: 0 8px 6px;
+  font-family: var(--serif);
+  font-size: clamp(25px, 4.2vw, 33px);
+  line-height: 1.35;
   text-wrap: pretty;
 }
 
+.sb-text {
+  margin: 0 10px 4px;
+  font-size: clamp(23px, 3.8vw, 29px);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+
+.sb-pagenum {
+  position: absolute;
+  right: 16px;
+  bottom: 10px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.sb-last {
+  display: grid;
+  align-content: center;
+  min-height: 240px;
+}
+
 .sb-closing {
-  margin: 22px 4px 8px;
+  margin: 0 10px;
   font-family: var(--serif);
-  font-size: clamp(19px, 3vw, 23px);
+  font-size: clamp(22px, 3.6vw, 28px);
   line-height: 1.45;
   text-wrap: pretty;
 }
 
 .sb-closing b { color: var(--accent); }
 
-.sb-closing::after {
-  content: "★ ★ ★";
-  display: block;
-  margin-top: 16px;
+.sb-end {
+  margin: 20px 0 0;
   color: var(--accent);
-  font-size: 14px;
-  letter-spacing: 0.5em;
-  text-align: center;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.sb-end::before,
+.sb-end::after {
+  content: "★";
+  margin: 0 12px;
+  letter-spacing: 0;
 }
 
 @keyframes sb-pop {
-  from { opacity: 0; transform: translateX(-12px) scale(0.96); }
-  to   { opacity: 1; transform: none; }
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-page { transform: none; }
 }

@@ -1,14 +1,29 @@
 <div class="sb">
-  <p class="sb-opening">{{ data.opening }}</p>
-  <ol class="sb-beats">
-  {% for beat in data.beats %}
-    <li class="sb-beat" style="--j: {{ loop.index0 }}">
-      <span class="sb-picture" aria-hidden="true">{{ beat.picture }}</span>
-      <p class="sb-text">{{ beat.text }}</p>
-    </li>
+  <div class="sb-page sb-cover">
+    <div class="sb-bigpic" aria-hidden="true">
+      <span class="sb-hero">{{ data.hero }}</span>
+      {% for friend in data.friends | default([]) %}
+      <span class="sb-friend sb-f{{ loop.index }}">{{ friend }}</span>
+      {% endfor %}
+    </div>
+    <p class="sb-opening">{{ data.opening }}</p>
+  </div>
+  {% for page in data.pages %}
+  <div class="sb-page" style="--j: {{ loop.index0 }}">
+    <div class="sb-bigpic" aria-hidden="true">
+      <span class="sb-hero">{{ page.hero }}</span>
+      {% for friend in page.friends | default([]) %}
+      <span class="sb-friend sb-f{{ loop.index }}">{{ friend }}</span>
+      {% endfor %}
+    </div>
+    <p class="sb-text">{{ page.text }}</p>
+    <p class="sb-pagenum" aria-hidden="true">{{ loop.index + 1 }}</p>
+  </div>
   {% endfor %}
-  </ol>
   {% if data.closing is defined %}
-  <p class="sb-closing"><b>{{ t("storybook.and_so") }}</b> {{ data.closing }}</p>
+  <div class="sb-page sb-last">
+    <p class="sb-closing"><b>{{ t("storybook.and_so") }}</b> {{ data.closing }}</p>
+    <p class="sb-end">{{ t("storybook.the_end") }}</p>
+  </div>
   {% endif %}
 </div>
