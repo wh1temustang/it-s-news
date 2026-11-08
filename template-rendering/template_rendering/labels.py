@@ -26,6 +26,8 @@ DEFAULTS: dict[str, str] = {
     **common.DEFAULTS,
     "timeline.now": "Now",
     "timeline.next": "Ahead",
+    "storybook.and_so": "And so",
+    "storybook.the_end": "The End",
     "comparison.vs": "vs",
     "map.credit": "Map data: Natural Earth",
     "trend.up": "up to",
