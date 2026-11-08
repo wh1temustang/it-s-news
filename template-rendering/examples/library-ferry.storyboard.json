@@ -1,0 +1,36 @@
+{
+  "headline": {
+    "dek": "After 32 years of carrying passengers, the MV Petal will carry 8,000 books to 6 villages instead.",
+    "title": "The little ferry who became a library",
+    "topic": "local"
+  },
+  "scenes": [
+    {
+      "data": {
+        "beats": [
+          {
+            "picture": "⛴️",
+            "text": "For 32 years, the brave little ferry carried people back and forth across the Willow River."
+          },
+          {
+            "picture": "📚",
+            "text": "Soon her decks will be filled with 8,000 books instead, and she will be a library that floats."
+          },
+          {
+            "picture": "🗺️",
+            "text": "From May 3, she will visit 6 villages along the river, and stay in each one for two days."
+          },
+          {
+            "picture": "🧭",
+            "text": "Captain Rosa Delgado, who steered the ferry for 20 years, will stay at the wheel for her new adventure."
+          }
+        ],
+        "closing": "the villages by the river are getting a library of their own again, for the first time since 2019.",
+        "opening": "In the town of Port Willow, a little ferry called the Petal had worked very hard for a very long time."
+      },
+      "question": "Tell me the story like a picture book",
+      "template": "storybook",
+      "why": "A light, happy story with one clear hero (the boat), a simple sequence of events, and a happy next chapter: the picture-book telling carries every fact without a chart."
+    }
+  ]
+}
