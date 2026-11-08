@@ -1,0 +1,21 @@
+{
+  "question": "Tell me the story like a picture book",
+  "data": {
+    "opening": "In a busy town by the sea, a little ferry had a very big dream.",
+    "beats": [
+      {
+        "picture": "⛴️",
+        "text": "Every day, the little ferry carried about 9,000 people back and forth across the harbour."
+      },
+      {
+        "picture": "🌉",
+        "text": "Then the town built a footbridge, 260 m long, so people could walk across whenever they liked."
+      },
+      {
+        "picture": "🗳️",
+        "text": "The town's leaders voted yes, and set aside $48 million to build it."
+      }
+    ],
+    "closing": "for the first time, crossing the harbour won't depend on a timetable."
+  }
+}

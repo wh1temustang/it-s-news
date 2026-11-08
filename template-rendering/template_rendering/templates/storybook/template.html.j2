@@ -1,0 +1,14 @@
+<div class="sb">
+  <p class="sb-opening">{{ data.opening }}</p>
+  <ol class="sb-beats">
+  {% for beat in data.beats %}
+    <li class="sb-beat" style="--j: {{ loop.index0 }}">
+      <span class="sb-picture" aria-hidden="true">{{ beat.picture }}</span>
+      <p class="sb-text">{{ beat.text }}</p>
+    </li>
+  {% endfor %}
+  </ol>
+  {% if data.closing is defined %}
+  <p class="sb-closing"><b>{{ t("storybook.and_so") }}</b> {{ data.closing }}</p>
+  {% endif %}
+</div>
