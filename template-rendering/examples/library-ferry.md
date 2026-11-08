@@ -1,27 +1,18 @@
 ---
-title: Retired ferry to sail again as a floating library
+title: 退役渡輪將變身漂浮圖書館
 source: it's news sample desk
 published: 2026-11-06
 fictional: true
 ---
 
-# Retired ferry to sail again as a floating library
+# 退役渡輪將變身漂浮圖書館
 
-*This is a fictional article written to test it's news. The town, the
-people and the figures are invented.*
+*呢篇係為咗測試 it's news 而寫嘅虛構文章，入面嘅城鎮、人物同數字全部都係作嘅。*
 
-The MV Petal, a small ferry that carried passengers across the Willow
-River for 32 years, will sail again next spring as a floating library,
-the Port Willow council decided on Tuesday.
+喺柳河上面行駛咗32年嘅小渡輪「花瓣號」，明年春天會以漂浮圖書館嘅身份再次啟航，柳港鎮議會星期二公布。
 
-The council set aside $1.2 million to repaint the boat and fill it with
-8,000 books. From May 3, the library boat will visit 6 villages along the
-river, stopping in each one for two days at a time.
+議會撥款120萬美元，將渡輪翻新，同放滿8,000本書。由5月3日起，圖書船會巡遊河邊6條村莊，每條村停留2日。
 
-Rosa Delgado, 61, who steered the Petal as a ferry for 20 years, will
-stay on as its captain. "A library should go to its readers, the way the
-ferry always went to its passengers," she said.
+61歲嘅羅莎·德爾加多為花瓣號掌舵20年，將會留任船長。佢話：「圖書館應該去搵讀者，就好似渡輪一直去接乘客一樣。」
 
-The old car deck will become a reading room, with a children's corner in
-the wheelhouse. Villages on the route have not had a library of their own
-since the last branch closed in 2019.
+舊時泊車嘅甲板會改做閱覽室，駕駛室會變成兒童閱讀角。河邊嘅村莊自從2019年最後一間圖書館分館關閉之後，就冇再有自己嘅圖書館。

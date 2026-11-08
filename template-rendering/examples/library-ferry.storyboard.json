@@ -1,36 +1,69 @@
 {
   "headline": {
-    "dek": "After 32 years of carrying passengers, the MV Petal will carry 8,000 books to 6 villages instead.",
-    "title": "The little ferry who became a library",
+    "title": "小渡輪嘅新冒險",
+    "dek": "行駛咗32年嘅花瓣號，唔再載人過河，改為載住8,000本書去探訪6條村。",
     "topic": "local"
   },
   "scenes": [
     {
+      "template": "storybook",
+      "question": "講個故仔嚟聽吓",
+      "why": "一個開心嘅故事，有一個好清楚嘅主角（隻船）、簡單嘅先後次序，同一章開心嘅新篇章：用繪本嚟講，唔使圖表都載得晒所有事實。",
       "data": {
-        "beats": [
+        "hero": "⛴️",
+        "friends": [
+          "🌊",
+          "☀️",
+          "🐦"
+        ],
+        "opening": "從前從前，柳河上面有一隻好勤力嘅小渡輪，佢叫花瓣號。",
+        "pages": [
           {
-            "picture": "⛴️",
-            "text": "For 32 years, the brave little ferry carried people back and forth across the Willow River."
+            "hero": "⛴️",
+            "friends": [
+              "🌊",
+              "🌊",
+              "🐳"
+            ],
+            "text": "32年嚟，花瓣號日日載住村民，渡過柳河。"
           },
           {
-            "picture": "📚",
-            "text": "Soon her decks will be filled with 8,000 books instead, and she will be a library that floats."
+            "hero": "📚",
+            "friends": [
+              "⛴️",
+              "✨",
+              "🎉"
+            ],
+            "text": "而家佢唔載人喇，改為載8,000本書俾大家睇！"
           },
           {
-            "picture": "🗺️",
-            "text": "From May 3, she will visit 6 villages along the river, and stay in each one for two days."
+            "hero": "🎨",
+            "friends": [
+              "💰",
+              "🖌️"
+            ],
+            "text": "鎮議會撥咗120萬美元，幫佢翻新變身。"
           },
           {
-            "picture": "🧭",
-            "text": "Captain Rosa Delgado, who steered the ferry for 20 years, will stay at the wheel for her new adventure."
+            "hero": "🗺️",
+            "friends": [
+              "🏡",
+              "🏡",
+              "⛴️"
+            ],
+            "text": "5月3日起，佢會去勻6條村，每條村停2日。"
+          },
+          {
+            "hero": "🧭",
+            "friends": [
+              "⚓",
+              "❤️"
+            ],
+            "text": "掌舵20年嘅羅莎船長，會繼續陪住佢出發。"
           }
         ],
-        "closing": "the villages by the river are getting a library of their own again, for the first time since 2019.",
-        "opening": "In the town of Port Willow, a little ferry called the Petal had worked very hard for a very long time."
-      },
-      "question": "Tell me the story like a picture book",
-      "template": "storybook",
-      "why": "A light, happy story with one clear hero (the boat), a simple sequence of events, and a happy next chapter: the picture-book telling carries every fact without a chart."
+        "closing": "河邊嘅村莊，自2019年以嚟，再次有自己嘅圖書館喇。"
+      }
     }
   ]
 }
