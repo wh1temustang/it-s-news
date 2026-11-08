@@ -19,7 +19,8 @@ approach itself; approaches install it beside their own package.
 | `labels.py` | The words a page adds itself, in English or any other language |
 | `edition.py` | Several stories on one page: the manifest, the model and its checks |
 | `kit.py` | A **template kit**: one approach's templates, words and hooks, and the deterministic renderer they share |
-| `cli.py` | The command line every kit gets: `prompt`, `check`, `render`, `edition`, `gallery`, `templates` |
+| `scan.py` | Proves a rendered page reaches nothing on the network: no external loads, no network APIs in script, no CSS imports |
+| `cli.py` | The command line every kit gets: `prompt`, `check`, `render`, `edition`, `gallery`, `templates`, `scan` |
 | `testing.py` | Tests every kit must pass, to mix into an approach's own tests |
 
 ## Template kits
