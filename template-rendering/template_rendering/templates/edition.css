@@ -107,6 +107,28 @@
 
 .story-card .hero h3 { font-size: clamp(25px, 4.8vw, 36px); }
 
+/* --- an embedded animated explainer, after a deep story's scenes --- */
+
+.animated-embed { margin: 24px 0 8px; }
+
+.animated-embed figcaption {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.animated-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
 .edition-page > .colophon { padding-bottom: 64px; }
 
 .edition-footer {
