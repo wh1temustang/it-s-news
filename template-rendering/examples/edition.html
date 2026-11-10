@@ -386,7 +386,18 @@ a { color: var(--accent); }
 
 /* --- an embedded animated explainer, after a deep story's scenes --- */
 
-.animated-embed { margin: 24px 0 8px; }
+/* The animation is a screen, not a paragraph: it breaks out of the text
+   column to the device screen's width and takes most of its height, so
+   the stage is big enough to watch and tap comfortably. On a narrow
+   screen the frame runs nearly full-screen, which is also what switches
+   the explainer's own layout to its portrait stage. */
+
+.animated-embed {
+  margin: 24px 0 8px;
+  width: min(1120px, calc(100vw - 32px));
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
 
 .animated-embed figcaption {
   margin-bottom: 8px;
@@ -400,10 +411,19 @@ a { color: var(--accent); }
 .animated-embed iframe {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
+  max-height: 85vh;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--surface);
+}
+
+@media (max-width: 760px) {
+  .animated-embed iframe {
+    aspect-ratio: auto;
+    height: 92vh;
+    max-height: none;
+  }
 }
 
 .edition-page > .colophon { padding-bottom: 64px; }
