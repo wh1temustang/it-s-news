@@ -6,9 +6,11 @@ The repo-wide rules in [../AGENTS.md](../AGENTS.md) apply here too.
 
 This is a prototype. There is no package, setup or tests yet. The folder holds
 one hand-built page, [examples/night-train.html](examples/night-train.html),
-with its article and the tool that cut its map. Use this approach only when
-the user asks for an animated explainer. Template rendering stays the default
-for presenting an article.
+with its article and the tool that cut its map. Use this approach when the
+user asks for an animated explainer, or when an edition routes a deep story
+to it (see "Which stories get an animation" in
+[../template-rendering/AGENTS.md](../template-rendering/AGENTS.md)). Template
+rendering stays the default for presenting an article.
 
 ## The example page
 
@@ -46,6 +48,19 @@ for presenting an article.
 - There are two layouts: a 1600×900 viewBox, and a 900×1400 one for phones
   held upright. The CSS and the JavaScript use the same media query to pick
   one. Check both after a change.
+
+## In an edition
+
+An explainer built for one story of a template-rendering edition is saved
+beside its article as `<article-stem>.animated.html` and named in the
+edition manifest's story entry as `"animated"`. The edition embeds it in an
+iframe after the story's template scenes, and the shared edition check
+(`itsnews_common.edition.check_animated`) verifies the script against the
+article before anything renders: numbers a reader sees must appear in the
+article, a quote beat's text must match word for word, and a page that
+loads anything from the network is refused. Layout numbers (ranks,
+coordinates, axis scales, drawn hours) and a `math` beat's worked result
+are not facts and are not checked; the operands on either side of them are.
 
 ## Checking a change
 
