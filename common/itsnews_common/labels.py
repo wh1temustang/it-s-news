@@ -48,6 +48,7 @@ DEFAULTS: dict[str, str] = {
     "checked_edition": "Every figure and quote in these stories was checked against their articles.",
     "fictional": "Fictional sample: this is not real news.",
     "sections": "Sections",
+    "animated": "Animated explainer",
 }
 
 _OPEN_PREFIXES = ("topic.", "template.")
