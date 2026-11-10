@@ -17,10 +17,9 @@ approach itself; approaches install it beside their own package.
 | `storyboard.py` | Loads an agent's storyboard and checks its shape and scenes |
 | `catalog.py` | Finds an approach's templates, each a folder with a schema and markup |
 | `labels.py` | The words a page adds itself, in English or any other language |
-| `edition.py` | Several stories on one page: the manifest, the model and its checks |
+| `edition.py` | Several stories on one page: the manifest, the model and its checks, including an embedded animated page |
 | `kit.py` | A **template kit**: one approach's templates, words and hooks, and the deterministic renderer they share |
-| `scan.py` | Proves a rendered page reaches nothing on the network: no external loads, no network APIs in script, no CSS imports |
-| `cli.py` | The command line every kit gets: `prompt`, `check`, `render`, `edition`, `gallery`, `templates`, `scan` |
+| `cli.py` | The command line every kit gets: `prompt`, `check`, `render`, `edition`, `gallery`, `templates` |
 | `testing.py` | Tests every kit must pass, to mix into an approach's own tests |
 
 ## Template kits
