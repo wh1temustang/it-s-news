@@ -1,0 +1,227 @@
+{# Reactive: one scene the reader touches. Three kinds, chosen by data.kind:
+   scratch rubs a foil away to reveal a number, wipe drags a divider
+   across a before-and-after pair, hold fills a value up while the reader
+   presses and holds. Scratch, wipe and hold use a small inline script
+   each, scoped to their own scene through document.currentScript.
+   No network calls. Affordances over instructions: no scene shows a
+   helper sentence — the foil, the divider grip and the fill bar are the
+   only cues, plus one-word buttons for keyboard and no-canvas users. #}
+{% if data.kind == "scratch" %}
+<div class="rx rx-scratch">
+  <div class="rx-scratch-box">
+    <p class="rx-value">{{ data.value }}</p>
+    <canvas class="rx-foil" role="img" aria-label="{{ data.label }}"></canvas>
+  </div>
+  <p class="rx-label">{{ data.label }}</p>
+  <button type="button" class="rx-reveal">{{ t("reactive.reveal") }}</button>
+<script>
+(function () {
+  var root = document.currentScript.closest('.rx-scratch');
+  if (!root || root.dataset.rxWired) return;
+  root.dataset.rxWired = '1';
+  var canvas = root.querySelector('.rx-foil');
+  var reveal = root.querySelector('.rx-reveal');
+  function revealAll() {
+    root.classList.add('rx-cleared');
+    root.dataset.cleared = 'true';
+  }
+  reveal.addEventListener('click', revealAll);
+  var ctx = canvas.getContext && canvas.getContext('2d');
+  if (!ctx) { root.classList.add('rx-no-canvas'); return; }
+  var dpr = window.devicePixelRatio || 1;
+  var w = canvas.clientWidth || 320, h = canvas.clientHeight || 120;
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
+  var cs = getComputedStyle(document.documentElement);
+  var line = (cs.getPropertyValue('--line') || '').trim() || '#d8d2c4';
+  var muted = (cs.getPropertyValue('--muted') || '').trim() || '#6b7280';
+  var grad = ctx.createLinearGradient(0, 0, w * dpr, h * dpr);
+  grad.addColorStop(0, line);
+  grad.addColorStop(0.5, muted);
+  grad.addColorStop(1, line);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  var drawing = false, strokes = 0;
+  function pos(e) {
+    var r = canvas.getBoundingClientRect();
+    return [(e.clientX - r.left) * dpr, (e.clientY - r.top) * dpr];
+  }
+  function erase(e) {
+    var p = pos(e);
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(p[0], p[1], 24 * dpr, 0, Math.PI * 2);
+    ctx.fill();
+    strokes += 1;
+    if (strokes % 8 === 0) checkCleared();
+  }
+  function checkCleared() {
+    try {
+      var img = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      var gone = 0, total = 0;
+      for (var i = 3; i < img.length; i += 16) { total += 1; if (img[i] === 0) gone += 1; }
+      if (total && gone / total > 0.5) revealAll();
+    } catch (err) { /* canvas unreadable: leave the foil in place */ }
+  }
+  function down(e) { drawing = true; erase(e); e.preventDefault(); }
+  function move(e) { if (drawing) erase(e); }
+  function up() { drawing = false; checkCleared(); }
+  canvas.addEventListener('pointerdown', down);
+  canvas.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', up);
+  canvas.addEventListener('mousedown', down);
+  canvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', up);
+})();
+</script>
+</div>
+{% elif data.kind == "wipe" %}
+<div class="rx rx-wipe">
+  <div class="rx-wipe-box">
+    <div class="rx-wipe-before">
+      <p class="rx-wipe-value">{% if data.unit_after is defined and data.unit_after %}{{ data.before_value }}{{ data.unit }}{% else %}{{ data.unit }}{{ data.before_value }}{% endif %}</p>
+      <p class="rx-wipe-tag">{{ data.before_label }}</p>
+    </div>
+    <div class="rx-wipe-after">
+      <p class="rx-wipe-value">{% if data.unit_after is defined and data.unit_after %}{{ data.after_value }}{{ data.unit }}{% else %}{{ data.unit }}{{ data.after_value }}{% endif %}</p>
+      <p class="rx-wipe-tag">{{ data.after_label }}</p>
+    </div>
+    <div class="rx-wipe-divider" role="slider" tabindex="0" aria-label="{{ data.label }}" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span class="rx-wipe-handle" aria-hidden="true">&#8596;</span></div>
+  </div>
+  <p class="rx-label">{{ data.label }}</p>
+  <button type="button" class="rx-wipe-go">{{ t("reactive.wipe_button") }}</button>
+<script>
+(function () {
+  var root = document.currentScript.closest('.rx-wipe');
+  if (!root || root.dataset.rxWired) return;
+  root.dataset.rxWired = '1';
+  var box = root.querySelector('.rx-wipe-box');
+  var after = root.querySelector('.rx-wipe-after');
+  var divider = root.querySelector('.rx-wipe-divider');
+  var go = root.querySelector('.rx-wipe-go');
+  var pos = 50;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setPos(p) {
+    pos = Math.max(0, Math.min(100, p));
+    after.style.clipPath = 'inset(0 0 0 ' + pos + '%)';
+    divider.style.left = pos + '%';
+    divider.setAttribute('aria-valuenow', String(Math.round(pos)));
+  }
+  function fromEvent(e) {
+    var r = box.getBoundingClientRect();
+    if (!r.width) return;
+    setPos((e.clientX - r.left) / r.width * 100);
+  }
+  var dragging = false;
+  divider.addEventListener('pointerdown', function (e) {
+    dragging = true; fromEvent(e); e.preventDefault();
+  });
+  window.addEventListener('pointermove', function (e) { if (dragging) fromEvent(e); });
+  window.addEventListener('pointerup', function () { dragging = false; });
+  divider.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { setPos(pos - 5); e.preventDefault(); }
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { setPos(pos + 5); e.preventDefault(); }
+    else if (e.key === 'Home') { setPos(0); e.preventDefault(); }
+    else if (e.key === 'End') { setPos(100); e.preventDefault(); }
+  });
+  go.addEventListener('click', function () {
+    var end = pos === 0 ? 100 : 0;
+    if (reduced) { setPos(end); return; }
+    var start = pos, t0 = null;
+    function step(t) {
+      if (t0 === null) t0 = t;
+      var k = Math.min(1, (t - t0) / 800);
+      setPos(start + (end - start) * k);
+      if (k < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+  setPos(50);
+})();
+</script>
+</div>
+{% elif data.kind == "hold" %}
+<div class="rx rx-hold">
+  <div class="rx-hold-box" role="button" tabindex="0" aria-label="{{ data.label }}">
+    <div class="rx-hold-fill"></div>
+    <p class="rx-readout"><span class="rx-hold-value" {% if data.from_value is defined %}data-from="{{ data.from_value }}" {% endif %}data-to="{{ data.to_value }}" data-unit="{{ data.unit }}" data-unit-after="{% if data.unit_after is defined and data.unit_after %}1{% else %}0{% endif %}" data-seconds="{{ data.fill_seconds if data.fill_seconds is defined else 3 }}">{% if data.unit_after is defined and data.unit_after %}0{{ data.unit }}{% else %}{{ data.unit }}0{% endif %}</span></p>
+  </div>
+  <p class="rx-label">{{ data.label }}</p>
+  <button type="button" class="rx-fill">{{ t("reactive.fill") }}</button>
+<script>
+(function () {
+  var root = document.currentScript.closest('.rx-hold');
+  if (!root || root.dataset.rxWired) return;
+  root.dataset.rxWired = '1';
+  var box = root.querySelector('.rx-hold-box');
+  var fill = root.querySelector('.rx-hold-fill');
+  var readout = root.querySelector('.rx-hold-value');
+  var go = root.querySelector('.rx-fill');
+  function decimalsOf(s) {
+    var i = String(s).indexOf('.');
+    return i < 0 ? 0 : String(s).length - i - 1;
+  }
+  var hasFrom = readout.dataset.from !== undefined && readout.dataset.from !== '';
+  var from = hasFrom ? parseFloat(readout.dataset.from) : 0;
+  var to = parseFloat(readout.dataset.to);
+  /* The rate rule: a full hold takes fill_seconds whatever the size, so
+     the per-second rate is the target divided by fill_seconds. A bigger
+     number fills faster in absolute units; a fast-moving number gets the
+     short end of fill_seconds, a slow one the long end. When from_value
+     is given, the fill counts the change between the two article numbers;
+     otherwise it counts from zero up to to_value. */
+  var d = Math.max(decimalsOf(readout.dataset.to), hasFrom ? decimalsOf(readout.dataset.from) : 0);
+  var target = hasFrom ? Math.abs(from - to) : to;
+  target = Math.round(target * Math.pow(10, d)) / Math.pow(10, d);
+  var seconds = parseFloat(readout.dataset.seconds) || 3;
+  var rate = target / seconds;
+  var unit = readout.dataset.unit || '';
+  var after = readout.dataset.unitAfter === '1';
+  var current = 0, raf = null, last = null, auto = false, done = false;
+  function fmt(v, dec) {
+    var s = v.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+    return after ? s + unit : unit + s;
+  }
+  function draw() {
+    fill.style.width = (target ? current / target * 100 : 0) + '%';
+    readout.textContent = done ? fmt(target, d) : fmt(current, Math.max(1, d));
+  }
+  function step(t) {
+    if (last === null) last = t;
+    var dt = (t - last) / 1000;
+    last = t;
+    current = Math.min(target, current + rate * dt);
+    if (current >= target) { done = true; stop(); }
+    draw();
+    if (!done) raf = requestAnimationFrame(step);
+  }
+  function start() {
+    if (done) { current = 0; done = false; draw(); }
+    if (raf !== null) return;
+    last = null;
+    raf = requestAnimationFrame(step);
+  }
+  function stop() {
+    if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+    last = null;
+  }
+  box.addEventListener('pointerdown', function (e) { auto = false; start(); e.preventDefault(); });
+  window.addEventListener('pointerup', function () { if (!auto) stop(); });
+  box.addEventListener('pointercancel', function () { if (!auto) stop(); });
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      if (!e.repeat) { auto = false; start(); }
+      e.preventDefault();
+    }
+  });
+  box.addEventListener('keyup', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && !auto) stop();
+  });
+  go.addEventListener('click', function () {
+    if (raf !== null && auto) { auto = false; stop(); }
+    else { auto = true; start(); }
+  });
+})();
+</script>
+</div>
+{% endif %}
