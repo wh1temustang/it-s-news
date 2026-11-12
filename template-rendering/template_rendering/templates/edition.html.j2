@@ -51,6 +51,12 @@
   {% endif %}
 {{ parts.hero(story, 3) }}
 {{ parts.scenes(story, 4) }}
+{% if story.animated %}
+<figure class="animated-embed">
+  <figcaption>{{ t("animated") }}</figcaption>
+  <iframe srcdoc="{{ story.animated }}" title="{{ story.headline.title }}" loading="lazy"></iframe>
+</figure>
+{% endif %}
 {% if story.extra %}
 {{ story.extra }}
 {% endif %}

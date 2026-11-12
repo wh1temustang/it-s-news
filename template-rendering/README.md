@@ -21,7 +21,11 @@ the page.
   that loads nothing from the network.
 
 - **An edition** puts several checked stories on one page, grouped into
-  sections, for a daily digest or a newsletter.
+  sections, for a daily digest or a newsletter. One deep story in an
+  edition may also carry its [animated explainer](../animated-explainer/),
+  embedded in the same page after its template scenes — simple stories
+  stay templates, the long one unfolds. The example edition does this:
+  the night train story is told both ways.
 - **Any language:** the page's own words (labels, credits, the footer) come
   in English and can be replaced with a labels file.
 

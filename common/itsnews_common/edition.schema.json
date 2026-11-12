@@ -61,7 +61,12 @@
               "additionalProperties": false,
               "properties": {
                 "article": {"type": "string", "minLength": 1},
-                "storyboard": {"type": "string", "minLength": 1}
+                "storyboard": {"type": "string", "minLength": 1},
+                "animated": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Optional: a self-contained animated explainer page built for the same article. Its script is checked against the article, and the page is embedded after the story's template scenes."
+                }
               }
             }
           }

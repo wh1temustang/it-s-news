@@ -20,6 +20,15 @@ It tells the fictional night train story, the same article that template
 rendering uses in its example ([examples/night-train.md](examples/night-train.md)).
 "Read it as text", under the screen, gives the same story as text.
 
+An explainer can also live inside a template-rendering edition: the story
+keeps its template scenes for skimming, and the animation is embedded in
+the same page after them for readers who want the deep version. Which
+stories earn one is an editorial rule, not a per-story request — see
+"Which stories get an animation" in
+[../template-rendering/AGENTS.md](../template-rendering/AGENTS.md). The
+sample edition in template rendering's examples embeds this page that way,
+and the edition check verifies its script against the article first.
+
 ## Length
 
 Each scene is one page, and each click plays the next step on the page. A

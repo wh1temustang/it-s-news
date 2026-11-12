@@ -216,7 +216,7 @@ class Kit:
                                        anchor=f"{anchor}-", first_index=index)
                 index += len(view["scenes"])
                 stories.append({**view, "anchor": anchor, "fictional": story.article.fictional,
-                                "extra": Markup(story.extra)})
+                                "extra": Markup(story.extra), "animated": story.animated})
             sections.append({"id": section.id, "title": section.title, "icon": section.icon,
                              "stories": stories})
 
