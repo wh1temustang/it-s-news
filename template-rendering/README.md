@@ -11,7 +11,9 @@ the page.
 ```
 
 - **Templates:** timeline, info board, map, big number, bar chart, line
-  chart, comparison, cause and effect, and quote.
+  chart, comparison, cause and effect, and quote. Plus reactive scenes —
+  scratch, wipe and hold — for a number the reader should feel rather
+  than read.
 - **The agent** answers one question per scene ("Where does it run?", "What
   happens next?") and picks the template that answers it fastest. It follows
   [agent/prompt.md](agent/prompt.md) and [agent/catalog.md](agent/catalog.md).
@@ -24,7 +26,9 @@ the page.
   sections, for a daily digest or a newsletter. One deep story in an
   edition may also carry its [animated explainer](../animated-explainer/),
   embedded in the same page after its template scenes — simple stories
-  stay templates, the long one unfolds. The example edition does this:
+  stay templates, the long one unfolds. A story may also use a reactive
+  scene (scratch, wipe or hold) where a number is worth feeling; at most
+  one per page, and never for grave news. The example edition does this:
   the night train story is told both ways.
 - **Any language:** the page's own words (labels, credits, the footer) come
   in English and can be replaced with a labels file.
