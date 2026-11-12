@@ -65,6 +65,11 @@ borrow from the others where a story earns it:
   reactive scene per page, and never the default: only when the story
   earns it, and never for serious, sad or grave news.
 
+<p align="center">
+  <img src="docs/images/reactive.gif" width="480" alt="A reactive scene in action: a foil is rubbed away to reveal 84 mm, a divider wipes from the old 61 mm record to 84 mm, and holding fills the river's rise to 2 metres.">
+</p>
+<p align="center"><sub>Scratch, wipe and hold for the Willow Creek rain story.</sub></p>
+
 [Reactive example](template-rendering/examples/reactive-rain.html) ·
 [mixed example edition](template-rendering/examples/edition.html)
 
