@@ -59,6 +59,16 @@ before or after it. Its shape:
    - Two sides answering the same 2+ points → `comparison`.
    - A stated chain of 3+ linked steps → `cause-effect`.
    - A quote that carries the story → `quote`.
+   - A number or turn the reader should feel rather than read (a fall from
+     a peak, a total worth uncovering, a before and after to compare) → `reactive`,
+     at most one scene per page. Reactive is never the default: use it only
+     when the story earns it — a surprising number worth revealing
+     (`scratch`), a before-and-after contrast that *is* the story (`wipe`),
+     or a magnitude worth feeling in the hand (`hold`); otherwise prefer a
+     static template. Never for serious, sad or grave news — no reactive
+     scenes on deaths, disasters, war or suffering, full stop. A reactive
+     scene shows no helper sentences: affordances over instructions, the
+     gesture must be obvious from the shape alone.
    Use `info-board` and `big-number` for what's left: loose essentials with
    no stronger shape, and the one number that is the news. They are the
    fallback, not the default.

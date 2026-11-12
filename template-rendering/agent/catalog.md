@@ -14,6 +14,7 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 | How do two sides differ? | `comparison` | two sides answering the same 2+ points | the sides don't answer the same questions |
 | Why is it happening? What does it lead to? | `cause-effect` | 3+ linked steps, each one stated in the article | the links are your own inference |
 | What did someone say that matters? | `quote` | a direct quote from a named speaker | the quote is filler ("We are pleased to announce…") |
+| What does it feel like to touch? | `reactive` | one number or turn the reader should feel: a figure worth uncovering, a before and after to compare, or a value to fill up by holding | the number is small enough to just read, or the turn needs a chart's precision |
 
 If no row fits a question, leave the question out. Fewer, stronger scenes
 beat a full page.
@@ -63,6 +64,32 @@ must be something the article says, not something you conclude.
 **`quote`**: one quote that carries the story: a decision, a warning, a
 stance. Name the speaker as the article does, and give their `role` when it
 explains why their words matter.
+
+**`reactive`**: one scene the reader touches, for the number or turn that
+lands harder felt than read. Pick the kind by what the reader does:
+`scratch` hides one headline number under a foil the reader rubs away;
+`wipe` puts a before and an after side by side with a draggable divider
+between them, so the reader's own thumb reveals the change — both values
+are article numbers; `hold` counts a value up while the reader presses
+and holds, with a progress fill, and the readout never passes the article
+number. The hold has a rate rule: a full hold takes `fill_seconds`
+(default 3 seconds) whatever the size, so the rate is the target divided
+by `fill_seconds` — a bigger number fills faster in absolute units. Give
+a fast-moving number (a crash, a surge) the short end, 1.5–2 seconds, so
+it feels urgent, and a slow-moving one about 4 seconds. When the fill
+counts a change between two article numbers (the dollars lost from a peak
+to where the price is now), give `from_value` and `to_value`: both are
+article numbers, the page computes the difference, and the storyboard
+holds only numbers the article states. At most one reactive scene per
+page. Affordances over instructions: a reactive scene shows no helper
+sentences — the gesture must be obvious from the shape alone (the foil,
+the divider grip, the fill bar). Reactive is never the default: use one
+only when it fits the story — a surprising number worth revealing
+(`scratch`), a before-and-after contrast that *is* the story (`wipe`),
+or a magnitude worth feeling in the hand (`hold`). Otherwise prefer a
+static template. And never for serious, sad or grave news — no reactive
+scenes on deaths, disasters, war or suffering, full stop: a foil over a
+toll is the wrong tone.
 
 ## Ordering
 
