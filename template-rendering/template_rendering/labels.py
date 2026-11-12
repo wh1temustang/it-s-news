@@ -31,6 +31,9 @@ DEFAULTS: dict[str, str] = {
     "trend.up": "up to",
     "trend.down": "down to",
     "trend.flat": "flat to",
+    "reactive.reveal": "Reveal",
+    "reactive.wipe_button": "Wipe",
+    "reactive.fill": "Fill",
 }
 
 

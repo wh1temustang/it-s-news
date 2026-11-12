@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>Willow Creek&#39;s wettest day in 40 years · it's news</title>
+<meta name="description" content="84 mm in a single day — the most since the gauge started measuring in 1986.">
+<style>
+/* it's news: page shell and design tokens.
+   Templates style themselves with these tokens only, never raw colours, so
+   light and dark mode come for free. Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --ink: #15171c;
+  --muted: #5b616d;
+  --line: #e4e0d6;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --alt: #b45309;
+  --good: #15803d;
+  --bad: #b91c1c;
+  --pending: #b45309;
+  --neutral: #6b7280;
+  --water: #dce9f2;
+  --land: #ebe6da;
+  --coast: #b8ae98;
+  --border: #c9bfa8;
+  --radius: 18px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+[data-topic="world"]    { --accent: #2563eb; }
+[data-topic="politics"] { --accent: #7c3aed; }
+[data-topic="business"] { --accent: #0f766e; }
+[data-topic="science"]  { --accent: #0e7490; }
+[data-topic="tech"]     { --accent: #4f46e5; }
+[data-topic="climate"]  { --accent: #15803d; }
+[data-topic="health"]   { --accent: #be185d; }
+[data-topic="local"]    { --accent: #c2410c; }
+[data-topic="culture"]  { --accent: #a21caf; }
+[data-topic="sports"]   { --accent: #b91c1c; }
+
+/* Dark mode follows the reader's system, unless the page's host sets
+   data-theme="light" or "dark" on the root element for a reader's own choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --ink: #eef0f4;
+    --muted: #a3a9b5;
+    --line: #2a2e37;
+    --on-accent: #0b0d10;
+    --alt: #fbbf24;
+    --good: #4ade80;
+    --bad: #f87171;
+    --pending: #fbbf24;
+    --neutral: #9ca3af;
+    --water: #142130;
+    --land: #262a32;
+    --coast: #414856;
+    --border: #4a5160;
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) [data-topic="world"]    { --accent: #7aa2ff; }
+  :root:not([data-theme="light"]) [data-topic="politics"] { --accent: #b197fc; }
+  :root:not([data-theme="light"]) [data-topic="business"] { --accent: #2dd4bf; }
+  :root:not([data-theme="light"]) [data-topic="science"]  { --accent: #22d3ee; }
+  :root:not([data-theme="light"]) [data-topic="tech"]     { --accent: #8b93ff; }
+  :root:not([data-theme="light"]) [data-topic="climate"]  { --accent: #4ade80; }
+  :root:not([data-theme="light"]) [data-topic="health"]   { --accent: #f472b6; }
+  :root:not([data-theme="light"]) [data-topic="local"]    { --accent: #fb923c; }
+  :root:not([data-theme="light"]) [data-topic="culture"]  { --accent: #e879f9; }
+  :root:not([data-theme="light"]) [data-topic="sports"]   { --accent: #f87171; }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #181b21;
+  --ink: #eef0f4;
+  --muted: #a3a9b5;
+  --line: #2a2e37;
+  --on-accent: #0b0d10;
+  --alt: #fbbf24;
+  --good: #4ade80;
+  --bad: #f87171;
+  --pending: #fbbf24;
+  --neutral: #9ca3af;
+  --water: #142130;
+  --land: #262a32;
+  --coast: #414856;
+  --border: #4a5160;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] [data-topic="world"]    { --accent: #7aa2ff; }
+:root[data-theme="dark"] [data-topic="politics"] { --accent: #b197fc; }
+:root[data-theme="dark"] [data-topic="business"] { --accent: #2dd4bf; }
+:root[data-theme="dark"] [data-topic="science"]  { --accent: #22d3ee; }
+:root[data-theme="dark"] [data-topic="tech"]     { --accent: #8b93ff; }
+:root[data-theme="dark"] [data-topic="climate"]  { --accent: #4ade80; }
+:root[data-theme="dark"] [data-topic="health"]   { --accent: #f472b6; }
+:root[data-theme="dark"] [data-topic="local"]    { --accent: #fb923c; }
+:root[data-theme="dark"] [data-topic="culture"]  { --accent: #e879f9; }
+:root[data-theme="dark"] [data-topic="sports"]   { --accent: #f87171; }
+
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.story {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* --- headline --- */
+
+.hero { margin-bottom: 28px; }
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero :is(h1, h3) {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.dek {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2.6vw, 21px);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* --- scenes --- */
+
+.scene,
+.bottom-line {
+  margin-top: 18px;
+  padding: 22px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+}
+
+.scene-kind {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene :is(h2, h4),
+.bottom-line :is(h2, h4) {
+  margin: 0 0 18px;
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.bottom-line {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.bottom-line :is(h2, h4) {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom-line p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Shared by the chart templates. */
+.chart-unit {
+  margin: -10px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .story { padding-top: 28px; }
+  .scene, .bottom-line { padding: 18px 16px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* --- reactive ---
+   Scenes the reader touches: scratch a foil, wipe across a
+   before-and-after pair, or press and hold to fill a value up.
+   Only the base.css tokens, so the interactions follow the story's topic
+   colour and dark mode. Scratch, wipe and hold are driven by the small
+   inline scripts in template.html.j2. */
+
+.rx {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.rx-label {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  text-align: center;
+}
+
+.rx-reveal,
+.rx-wipe-go,
+.rx-fill {
+  display: block;
+  margin: 14px auto 0;
+  padding: 8px 18px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rx-reveal:hover,
+.rx-wipe-go:hover,
+.rx-fill:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* --- scratch: a foil over the number, rubbed away --- */
+
+.rx-scratch-box {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.rx-value {
+  margin: 0;
+  padding: 18px 12px;
+  color: var(--accent);
+  font-size: clamp(44px, 9vw, 64px);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.rx-foil {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+  transition: opacity 0.6s ease;
+}
+
+.rx-cleared .rx-foil {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rx-no-canvas .rx-foil {
+  display: none;
+}
+
+/* --- wipe: a before value on the left, an after value on the right,
+   split by a draggable divider --- */
+
+.rx-wipe-box {
+  position: relative;
+  min-height: 150px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.rx-wipe-before,
+.rx-wipe-after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 6px;
+  padding: 18px 12px;
+}
+
+.rx-wipe-after {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  clip-path: inset(0 0 0 50%);
+}
+
+.rx-wipe-value {
+  margin: 0;
+  color: var(--accent);
+  font-size: clamp(36px, 8vw, 54px);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.rx-wipe-tag {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.rx-wipe-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  margin-left: -2px;
+  background: var(--accent);
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.rx-wipe-divider:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.rx-wipe-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* --- hold: press and hold and a value fills up to its number --- */
+
+.rx-hold-box {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+}
+
+.rx-hold-box:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.rx-hold-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.rx-readout {
+  position: relative;
+  margin: 0;
+  padding: 18px 12px;
+  color: var(--accent);
+  font-size: clamp(44px, 9vw, 64px);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rx-foil {
+    transition: none;
+  }
+}
+
+</style>
+</head>
+<body data-topic="local">
+<p class="banner" role="note">Fictional sample: this is not real news.</p>
+<main class="story">
+  <header class="hero">
+    <p class="kicker">Local</p>
+    <h1>Willow Creek&#39;s wettest day in 40 years</h1>
+    <p class="dek">84 mm in a single day — the most since the gauge started measuring in 1986.</p>
+    <p class="byline">Willow Creek Gazette (fictional) · <span>November 12, 2026</span></p>
+  </header>
+
+  <section class="scene scene--reactive" style="--i: 0" aria-labelledby="q1">
+    <p class="scene-kind"><span aria-hidden="true">👆</span> Reactive</p>
+    <h2 id="q1">How much rain fell in one day?</h2>
+    <div class="rx rx-scratch">
+  <div class="rx-scratch-box">
+    <p class="rx-value">84 mm</p>
+    <canvas class="rx-foil" role="img" aria-label="Rain in a single day in Willow Creek"></canvas>
+  </div>
+  <p class="rx-label">Rain in a single day in Willow Creek</p>
+  <button type="button" class="rx-reveal">Reveal</button>
+<script>
+(function () {
+  var root = document.currentScript.closest('.rx-scratch');
+  if (!root || root.dataset.rxWired) return;
+  root.dataset.rxWired = '1';
+  var canvas = root.querySelector('.rx-foil');
+  var reveal = root.querySelector('.rx-reveal');
+  function revealAll() {
+    root.classList.add('rx-cleared');
+    root.dataset.cleared = 'true';
+  }
+  reveal.addEventListener('click', revealAll);
+  var ctx = canvas.getContext && canvas.getContext('2d');
+  if (!ctx) { root.classList.add('rx-no-canvas'); return; }
+  var dpr = window.devicePixelRatio || 1;
+  var w = canvas.clientWidth || 320, h = canvas.clientHeight || 120;
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
+  var cs = getComputedStyle(document.documentElement);
+  var line = (cs.getPropertyValue('--line') || '').trim() || '#d8d2c4';
+  var muted = (cs.getPropertyValue('--muted') || '').trim() || '#6b7280';
+  var grad = ctx.createLinearGradient(0, 0, w * dpr, h * dpr);
+  grad.addColorStop(0, line);
+  grad.addColorStop(0.5, muted);
+  grad.addColorStop(1, line);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  var drawing = false, strokes = 0;
+  function pos(e) {
+    var r = canvas.getBoundingClientRect();
+    return [(e.clientX - r.left) * dpr, (e.clientY - r.top) * dpr];
+  }
+  function erase(e) {
+    var p = pos(e);
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(p[0], p[1], 24 * dpr, 0, Math.PI * 2);
+    ctx.fill();
+    strokes += 1;
+    if (strokes % 8 === 0) checkCleared();
+  }
+  function checkCleared() {
+    try {
+      var img = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      var gone = 0, total = 0;
+      for (var i = 3; i < img.length; i += 16) { total += 1; if (img[i] === 0) gone += 1; }
+      if (total && gone / total > 0.5) revealAll();
+    } catch (err) { /* canvas unreadable: leave the foil in place */ }
+  }
+  function down(e) { drawing = true; erase(e); e.preventDefault(); }
+  function move(e) { if (drawing) erase(e); }
+  function up() { drawing = false; checkCleared(); }
+  canvas.addEventListener('pointerdown', down);
+  canvas.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', up);
+  canvas.addEventListener('mousedown', down);
+  canvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', up);
+})();
+</script>
+</div>
+
+  </section>
+  <section class="scene scene--reactive" style="--i: 1" aria-labelledby="q2">
+    <p class="scene-kind"><span aria-hidden="true">👆</span> Reactive</p>
+    <h2 id="q2">How far past the old record did it go?</h2>
+    <div class="rx rx-wipe">
+  <div class="rx-wipe-box">
+    <div class="rx-wipe-before">
+      <p class="rx-wipe-value">61 mm</p>
+      <p class="rx-wipe-tag">Old record</p>
+    </div>
+    <div class="rx-wipe-after">
+      <p class="rx-wipe-value">84 mm</p>
+      <p class="rx-wipe-tag">Today&#39;s total</p>
+    </div>
+    <div class="rx-wipe-divider" role="slider" tabindex="0" aria-label="Willow Creek&#39;s rainfall record" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span class="rx-wipe-handle" aria-hidden="true">&#8596;</span></div>
+  </div>
+  <p class="rx-label">Willow Creek&#39;s rainfall record</p>
+  <button type="button" class="rx-wipe-go">Wipe</button>
+<script>
+(function () {
+  var root = document.currentScript.closest('.rx-wipe');
+  if (!root || root.dataset.rxWired) return;
+  root.dataset.rxWired = '1';
+  var box = root.querySelector('.rx-wipe-box');
+  var after = root.querySelector('.rx-wipe-after');
+  var divider = root.querySelector('.rx-wipe-divider');
+  var go = root.querySelector('.rx-wipe-go');
+  var pos = 50;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setPos(p) {
+    pos = Math.max(0, Math.min(100, p));
+    after.style.clipPath = 'inset(0 0 0 ' + pos + '%)';
+    divider.style.left = pos + '%';
+    divider.setAttribute('aria-valuenow', String(Math.round(pos)));
+  }
+  function fromEvent(e) {
+    var r = box.getBoundingClientRect();
+    if (!r.width) return;
+    setPos((e.clientX - r.left) / r.width * 100);
+  }
+  var dragging = false;
+  divider.addEventListener('pointerdown', function (e) {
+    dragging = true; fromEvent(e); e.preventDefault();
+  });
+  window.addEventListener('pointermove', function (e) { if (dragging) fromEvent(e); });
+  window.addEventListener('pointerup', function () { dragging = false; });
+  divider.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { setPos(pos - 5); e.preventDefault(); }
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { setPos(pos + 5); e.preventDefault(); }
+    else if (e.key === 'Home') { setPos(0); e.preventDefault(); }
+    else if (e.key === 'End') { setPos(100); e.preventDefault(); }
+  });
+  go.addEventListener('click', function () {
+    var end = pos === 0 ? 100 : 0;
+    if (reduced) { setPos(end); return; }
+    var start = pos, t0 = null;
+    function step(t) {
+      if (t0 === null) t0 = t;
+      var k = Math.min(1, (t - t0) / 800);
+      setPos(start + (end - start) * k);
+      if (k < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+  setPos(50);
+})();
+</script>
+</div>
+
+  </section>
+  <section class="scene scene--reactive" style="--i: 2" aria-labelledby="q3">
+    <p class="scene-kind"><span aria-hidden="true">👆</span> Reactive</p>
+    <h2 id="q3">How high did the river rise?</h2>
+    <div class="rx rx-hold">
+  <div class="rx-hold-box" role="button" tabindex="0" aria-label="The Willow River&#39;s rise">
+    <div class="rx-hold-fill"></div>
+    <p class="rx-readout"><span class="rx-hold-value" data-to="2" data-unit=" metres" data-unit-after="1" data-seconds="4">0 metres</span></p>
+  </div>
+  <p class="rx-label">The Willow River&#39;s rise</p>
+  <button type="button" class="rx-fill">Fill</button>
+<script>
+(function () {
+  var root = document.currentScript.closest('.rx-hold');
+  if (!root || root.dataset.rxWired) return;
+  root.dataset.rxWired = '1';
+  var box = root.querySelector('.rx-hold-box');
+  var fill = root.querySelector('.rx-hold-fill');
+  var readout = root.querySelector('.rx-hold-value');
+  var go = root.querySelector('.rx-fill');
+  function decimalsOf(s) {
+    var i = String(s).indexOf('.');
+    return i < 0 ? 0 : String(s).length - i - 1;
+  }
+  var hasFrom = readout.dataset.from !== undefined && readout.dataset.from !== '';
+  var from = hasFrom ? parseFloat(readout.dataset.from) : 0;
+  var to = parseFloat(readout.dataset.to);
+  /* The rate rule: a full hold takes fill_seconds whatever the size, so
+     the per-second rate is the target divided by fill_seconds. A bigger
+     number fills faster in absolute units; a fast-moving number gets the
+     short end of fill_seconds, a slow one the long end. When from_value
+     is given, the fill counts the change between the two article numbers;
+     otherwise it counts from zero up to to_value. */
+  var d = Math.max(decimalsOf(readout.dataset.to), hasFrom ? decimalsOf(readout.dataset.from) : 0);
+  var target = hasFrom ? Math.abs(from - to) : to;
+  target = Math.round(target * Math.pow(10, d)) / Math.pow(10, d);
+  var seconds = parseFloat(readout.dataset.seconds) || 3;
+  var rate = target / seconds;
+  var unit = readout.dataset.unit || '';
+  var after = readout.dataset.unitAfter === '1';
+  var current = 0, raf = null, last = null, auto = false, done = false;
+  function fmt(v, dec) {
+    var s = v.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
+    return after ? s + unit : unit + s;
+  }
+  function draw() {
+    fill.style.width = (target ? current / target * 100 : 0) + '%';
+    readout.textContent = done ? fmt(target, d) : fmt(current, Math.max(1, d));
+  }
+  function step(t) {
+    if (last === null) last = t;
+    var dt = (t - last) / 1000;
+    last = t;
+    current = Math.min(target, current + rate * dt);
+    if (current >= target) { done = true; stop(); }
+    draw();
+    if (!done) raf = requestAnimationFrame(step);
+  }
+  function start() {
+    if (done) { current = 0; done = false; draw(); }
+    if (raf !== null) return;
+    last = null;
+    raf = requestAnimationFrame(step);
+  }
+  function stop() {
+    if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+    last = null;
+  }
+  box.addEventListener('pointerdown', function (e) { auto = false; start(); e.preventDefault(); });
+  window.addEventListener('pointerup', function () { if (!auto) stop(); });
+  box.addEventListener('pointercancel', function () { if (!auto) stop(); });
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      if (!e.repeat) { auto = false; start(); }
+      e.preventDefault();
+    }
+  });
+  box.addEventListener('keyup', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && !auto) stop();
+  });
+  go.addEventListener('click', function () {
+    if (raf !== null && auto) { auto = false; stop(); }
+    else { auto = true; start(); }
+  });
+})();
+</script>
+</div>
+
+  </section>
+
+  <section class="bottom-line" style="--i: 3">
+    <h2>Bottom line</h2>
+    <p>The old record stood for 28 years. The flood wall held, and no homes were flooded.</p>
+  </section>
+
+  <footer class="colophon">
+    <p>Presented by <b>it's news</b>. Every figure and quote in this story was checked against the article.</p>
+  </footer>
+</main>
+</body>
+</html>
