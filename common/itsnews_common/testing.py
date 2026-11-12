@@ -25,7 +25,12 @@ from .schema import validate
 # Jinja resolves data.items to dict.items(), not data["items"].
 DICT_METHODS = {"items", "keys", "values", "get", "pop", "update", "copy", "clear"}
 # Anything that would make the page load from the network.
-_EXTERNAL = re.compile(r"<(script|link|img|iframe)\b|url\((?!#)|@import")
+# "From elsewhere" means a load: a script, stylesheet, image or frame the
+# page fetches, a CSS url() or @import. A bare inline <script> loads
+# nothing — the reactive template's small scripts are inline by design —
+# so only a script with a src counts here. (Network APIs inside inline
+# scripts are the network scan's job, not this regex's.)
+_EXTERNAL = re.compile(r"<(link|img|iframe)\b|<script[^>]*\bsrc\s*=|url\((?!#)|@import")
 
 
 def field_names(schema: dict):
