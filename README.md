@@ -49,6 +49,25 @@ else's images.
 [example feed](meme-rendering/examples/edition.html) ·
 [how it works](meme-rendering/)
 
+### Mix and match: templates, animation and touch in one edition
+
+The approaches combine. An edition is templates by default, and it can
+borrow from the others where a story earns it:
+
+- **A deep story can unfold.** One story in an edition may also carry its
+  [animated explainer](animated-explainer/), embedded in the same page
+  after its template scenes — simple stories stay templates, the long one
+  plays out click by click. At most one animated story per edition.
+- **A number can be felt.** A story with a number worth feeling may use a
+  reactive scene instead of a static one: scratch a foil to reveal it,
+  drag a divider to wipe from before to after, or press and hold to fill
+  it up — the fill runs faster when the number is faster. At most one
+  reactive scene per page, and never the default: only when the story
+  earns it, and never for serious, sad or grave news.
+
+[Reactive example](template-rendering/examples/reactive-rain.html) ·
+[mixed example edition](template-rendering/examples/edition.html)
+
 ## Playful, never made up
 
 The AI agent makes the editorial calls. Plain code keeps it honest.
