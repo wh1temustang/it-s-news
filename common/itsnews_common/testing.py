@@ -28,9 +28,12 @@ DICT_METHODS = {"items", "keys", "values", "get", "pop", "update", "copy", "clea
 # "From elsewhere" means a load: a script, stylesheet, image or frame the
 # page fetches, a CSS url() or @import. A bare inline <script> loads
 # nothing — the reactive template's small scripts are inline by design —
-# so only a script with a src counts here. (Network APIs inside inline
-# scripts are the network scan's job, not this regex's.)
-_EXTERNAL = re.compile(r"<(link|img|iframe)\b|<script[^>]*\bsrc\s*=|url\((?!#)|@import")
+# so only a script with a src counts here. Likewise an iframe with a
+# srcdoc embeds a self-contained page (an edition's animated story) and
+# loads nothing; an iframe with src= does, so only that is flagged.
+# (Network APIs inside inline scripts are the network scan's job, not
+# this regex's.)
+_EXTERNAL = re.compile(r"<(link|img)\b|<script[^>]*\bsrc\s*=|<iframe\b[^>]*\bsrc\s*=|url\((?!#)|@import")
 
 
 def field_names(schema: dict):
