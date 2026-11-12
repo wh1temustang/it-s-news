@@ -52,6 +52,35 @@ class ExampleEditionTests(unittest.TestCase):
         self.assertEqual(html.count(KIT.load_templates()["info-board"].css), 1)
 
 
+class MixedEditionTests(unittest.TestCase):
+    def test_the_example_edition_mixes_templates_and_animation(self):
+        ed = edition.load(MANIFEST)
+        self.assertNotEqual(ed.stories[0].animated, "")
+        self.assertEqual(ed.stories[1].animated, "")
+        self.assertEqual(edition.check(ed), [])
+
+    def test_the_animation_is_embedded_after_the_scenes(self):
+        html = edition.render(edition.load(MANIFEST))
+        self.assertEqual(html.count('<figure class="animated-embed">'), 1)
+        self.assertEqual(html.count("<iframe srcdoc="), 1)
+        self.assertIn('title="Night train to link Vienna and Barcelona"', html)
+        self.assertLess(html.index('id="story-1-q1"'), html.index('<figure class="animated-embed">'))
+        # The embedded page is data, not markup of this page: its ids stay
+        # inside the srcdoc attribute and can't collide with the edition's.
+        ids = re.findall(r'\bid="([^"]+)"', html)
+        self.assertEqual(len(ids), len(set(ids)), ids)
+
+    def test_an_animated_script_that_invents_a_number_fails_the_check(self):
+        a, sb = NIGHT_TRAIN
+        page = ('<script type="application/json" id="explainer">'
+                '{"scenes": [{"kind": "title", "rank": 1, "beats": '
+                '[{"do": "show", "title": "999 passengers"}]}]}</script>')
+        ed = edition.Edition("T", [edition.Section("travel", "Travel",
+                                                   [edition.Story(a, sb, animated=page)])])
+        errors = edition.check(ed)
+        self.assertTrue(any("animated script" in e and "999" in e for e in errors), errors)
+
+
 class CheckTests(unittest.TestCase):
     def test_story_problems_name_the_section_story_and_file(self):
         a, sb = NIGHT_TRAIN

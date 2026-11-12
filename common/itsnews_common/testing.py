@@ -24,8 +24,10 @@ from .schema import validate
 
 # Jinja resolves data.items to dict.items(), not data["items"].
 DICT_METHODS = {"items", "keys", "values", "get", "pop", "update", "copy", "clear"}
-# Anything that would make the page load from the network.
-_EXTERNAL = re.compile(r"<(script|link|img|iframe)\b|url\((?!#)|@import")
+# Anything that would make the page load from the network. An iframe with
+# a srcdoc embeds a self-contained page (an edition's animated story) and
+# loads nothing; an iframe with src= does, so only that is flagged.
+_EXTERNAL = re.compile(r"<(script|link|img)\b|<iframe\b[^>]*\bsrc\s*=|url\((?!#)|@import")
 
 
 def field_names(schema: dict):

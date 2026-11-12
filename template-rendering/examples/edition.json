@@ -1,6 +1,6 @@
 {
   "title": "it's news sample edition",
-  "dek": "Two fictional stories, one page: how an edition groups stories into sections.",
+  "dek": "Two fictional stories, one page: how an edition groups stories into sections — and how a deep story also carries its animated explainer.",
   "date": "March 14, 2026",
   "footer": "That's the whole edition. Both stories are fictional samples.",
   "sections": [
@@ -9,7 +9,11 @@
       "title": "Travel",
       "icon": "🚆",
       "stories": [
-        {"article": "night-train.md", "storyboard": "night-train.storyboard.json"}
+        {
+          "article": "night-train.md",
+          "storyboard": "night-train.storyboard.json",
+          "animated": "night-train.animated.html"
+        }
       ]
     },
     {
@@ -17,7 +21,10 @@
       "title": "Cities",
       "icon": "🏙️",
       "stories": [
-        {"article": "bike-lanes.md", "storyboard": "bike-lanes.storyboard.json"}
+        {
+          "article": "bike-lanes.md",
+          "storyboard": "bike-lanes.storyboard.json"
+        }
       ]
     }
   ]

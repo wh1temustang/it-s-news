@@ -29,6 +29,38 @@ Write a storyboard for each article as above, then list them in a manifest
 storyboard again and writes `output/<manifest>.html`. For a page in another
 language, pass `--labels <file.json>` (see `template_rendering/labels.py`).
 
+### Which stories get an animation
+
+By default an edition is templates throughout. One story may also carry an
+**animated explainer**, embedded in the same page after its template scenes:
+the templates stay the skimmable version, the animation is the deep version.
+The reader never has to choose in advance, and neither do you per story —
+route by these rules unless the user says otherwise:
+
+- **Templates only** for a simple story: one number, one quote, one result,
+  or anything a reader takes in at a glance. Most stories are this.
+- **Add an animation** when a story is long (roughly 500+ words) *and*
+  unfolds: a process or mechanism in steps, a journey, a dated sequence, a
+  build-up with a "but wait" in it — material a reader grasps better one
+  idea at a time than all at once — and it supports 3–5 animated scenes
+  whose every beat the article grounds.
+- **At most one animated story per edition** — the deepest one. An edition
+  is still a digest; five click-throughs would bury it.
+- **Never animate grave news** (deaths, disasters, war, crime, illness):
+  a click-through pace is the wrong register, whatever its length.
+- If a story qualifies but the animated page can't be built or checked,
+  ship the edition templates-only and say so. Never hold the edition for
+  the animation.
+
+To build one: follow [../animated-explainer/AGENTS.md](../animated-explainer/AGENTS.md)
+to make the story's animated page from the example's engine (content goes
+in the script, facts follow the same rules as a storyboard), save it beside
+the article as `<article-stem>.animated.html`, and name it in the story's
+manifest entry as `"animated": "<article-stem>.animated.html"`. The edition
+check then verifies the script's numbers and quotes against the article and
+refuses a page that loads anything from the network, exactly as it checks
+storyboards.
+
 ## Working on the code
 
 - Setup: `python3 -m venv .venv && .venv/bin/pip install -e ../common -e .`.

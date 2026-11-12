@@ -12,8 +12,9 @@ Before working in a folder, read its AGENTS.md.
   unless another approach is named.
 - [animated-explainer/](animated-explainer/AGENTS.md): a prototype that tells
   an article as a few pages of click-through vector animation. It has one
-  hand-built example and no pipeline yet. Use it only when asked for an
-  animated explainer.
+  hand-built example and no pipeline yet. Use it when asked for an animated
+  explainer, or when an edition routes a deep story to it (see
+  template-rendering's AGENTS.md, "Which stories get an animation").
 - [meme-rendering/](meme-rendering/AGENTS.md): an AI agent tells an article
   with Reddit-style meme formats (distracted, stonks, two buttons and more),
   as a post, and code checks the facts and keeps jokes off serious stories.
