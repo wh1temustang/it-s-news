@@ -1,0 +1,259 @@
+{# Scene: an animated, reactive illustrated scene. Two kinds in v1, chosen
+   by data: rain (effect) turns a scale up to the article number; cheat
+   (action) scrubs the outmaneuver beat from the board meeting to the
+   empty chair. A scene uses an effect or an action, not both. The robot
+   is one macro, reused by both. Scripts are small and inline, scoped
+   through document.currentScript, and make no network calls.
+   Affordances over instructions: no scene shows a helper sentence — the
+   slider grip is the only cue, plus one-word buttons. The figure is a
+   picture with a fixed palette, so its colours live in the SVG markup;
+   the control below it follows the page theme. #}
+{% macro robot() %}
+<g class="sc-bob">
+  <rect x="188" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
+  <rect x="204" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
+  <rect x="184" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
+  <rect x="202" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
+  <rect x="180" y="200" width="40" height="42" rx="9" fill="#f5b301"/>
+  <rect x="190" y="212" width="20" height="14" rx="3" fill="#222d3a"/>
+  <circle cx="200" cy="219" r="3" fill="#7fd4ff"/>
+  <line x1="180" y1="212" x2="167" y2="230" stroke="#f5b301" stroke-width="7" stroke-linecap="round"/>
+  <line x1="220" y1="212" x2="231" y2="182" stroke="#f5b301" stroke-width="7" stroke-linecap="round"/>
+  <rect x="184" y="168" width="32" height="30" rx="8" fill="#ffc93c"/>
+  <circle cx="194" cy="182" r="3.5" fill="#222d3a"/>
+  <circle cx="206" cy="182" r="3.5" fill="#222d3a"/>
+  <path d="M192 190 q8 4 16 0" stroke="#222d3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <line x1="200" y1="168" x2="200" y2="156" stroke="#c98a12" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="200" cy="153" r="3.5" fill="#ff6b6b"/>
+</g>
+{% endmacro %}
+{% if data.action is defined and data.action == "cheat" %}
+<div class="sc-scene sc-cheat">
+  <figure class="sc-figure">
+    <svg viewBox="0 0 400 300" role="img" aria-label="{{ data.label }}">
+      <defs>
+        <linearGradient id="scene-room-{{ index }}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#2b313c"/>
+          <stop offset="1" stop-color="#1b1f27"/>
+        </linearGradient>
+      </defs>
+      <rect width="400" height="300" fill="url(#scene-room-{{ index }})"/>
+      <rect x="0" y="270" width="400" height="30" fill="#14171d"/>
+      <rect x="336" y="100" width="56" height="170" rx="6" fill="#3a2c1e" stroke="#5a4632" stroke-width="2"/>
+      <circle cx="348" cy="186" r="4" fill="#c9a86a"/>
+      <g class="sc-member" transform="translate(100,0)">
+        <circle cx="0" cy="152" r="13" fill="#d9c7a7"/>
+        <rect x="-22" y="166" width="44" height="42" rx="10" fill="#2e3d55"/>
+        <path d="M0 168 l6 10 -6 18 -6 -18 Z" fill="#c0392b"/>
+        <g class="sc-card"><rect x="-9" y="126" width="18" height="24" rx="2" fill="#f5f3ee"/></g>
+      </g>
+      <g class="sc-member" transform="translate(180,0)">
+        <circle cx="0" cy="152" r="13" fill="#c7a98a"/>
+        <rect x="-22" y="166" width="44" height="42" rx="10" fill="#3d2e4d"/>
+        <path d="M0 168 l6 10 -6 18 -6 -18 Z" fill="#7a5c2e"/>
+        <g class="sc-card"><rect x="-9" y="126" width="18" height="24" rx="2" fill="#f5f3ee"/></g>
+      </g>
+      <g class="sc-member" transform="translate(260,0)">
+        <circle cx="0" cy="152" r="13" fill="#b8c4a7"/>
+        <rect x="-22" y="166" width="44" height="42" rx="10" fill="#274435"/>
+        <path d="M0 168 l6 10 -6 18 -6 -18 Z" fill="#c0392b"/>
+        <g class="sc-card"><rect x="-9" y="126" width="18" height="24" rx="2" fill="#f5f3ee"/></g>
+      </g>
+      <rect x="24" y="205" width="286" height="16" rx="8" fill="#6b4a2f"/>
+      <rect x="54" y="221" width="10" height="49" fill="#54371f"/>
+      <rect x="270" y="221" width="10" height="49" fill="#54371f"/>
+      <g class="sc-chair">
+        <rect x="30" y="212" width="8" height="58" rx="3" fill="#54371f"/>
+        <rect x="30" y="240" width="52" height="10" rx="4" fill="#6b4a2f"/>
+      </g>
+      <g class="sc-letter" opacity="0">
+        <rect x="100" y="192" width="26" height="16" rx="2" fill="#f5f3ee"/>
+        <line x1="105" y1="197" x2="121" y2="197" stroke="#8a8a8a" stroke-width="1.5"/>
+        <line x1="105" y1="202" x2="121" y2="202" stroke="#8a8a8a" stroke-width="1.5"/>
+      </g>
+      <g class="sc-robot" style="transform:translate(-145px, 6px)">{{ robot() }}</g>
+    </svg>
+    <div class="sc-control">
+      <div class="sc-readout">
+        <span class="sc-value sc-stage" data-stage1="{{ t('scene.cheat.stage1') }}" data-stage2="{{ t('scene.cheat.stage2') }}" data-stage3="{{ t('scene.cheat.stage3') }}">{{ t('scene.cheat.stage1') }}</span>
+        <span class="sc-label">{{ data.label }}</span>
+      </div>
+      <div class="sc-row">
+        <input type="range" class="sc-slider" min="0" max="100" step="5" value="0" aria-label="{{ data.label }}">
+        <button type="button" class="sc-jump">{{ t("scene.end") }}</button>
+      </div>
+    </div>
+  </figure>
+<script>
+(function () {
+  var root = document.currentScript.closest('.sc-cheat');
+  if (!root || root.dataset.scWired) return;
+  root.dataset.scWired = '1';
+  var slider = root.querySelector('.sc-slider');
+  var stage = root.querySelector('.sc-stage');
+  var robot = root.querySelector('.sc-robot');
+  var letter = root.querySelector('.sc-letter');
+  var cards = root.querySelectorAll('.sc-card');
+  var s1 = stage.dataset.stage1, s2 = stage.dataset.stage2, s3 = stage.dataset.stage3;
+  function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
+  function update() {
+    var t = +slider.value / 100;
+    /* The beat: the robot slides from the chair to the door and slips out;
+       the letter crosses the table; the board's vote cards lower, uncast. */
+    var x = -145 + 300 * t;
+    var op = t >= 0.9 ? Math.max(0, 1 - (t - 0.9) / 0.1) : 1;
+    robot.style.transform = 'translate(' + x.toFixed(0) + 'px, 6px)';
+    robot.style.opacity = op.toFixed(2);
+    var lt = clamp((t - 0.3) / 0.25, 0, 1);
+    letter.style.opacity = lt.toFixed(2);
+    letter.style.transform = 'translate(' + (lt * 65).toFixed(0) + 'px, 0)';
+    var ct = clamp((t - 0.5) / 0.3, 0, 1);
+    for (var i = 0; i < cards.length; i++) {
+      cards[i].style.transform = 'rotate(' + (70 * ct).toFixed(0) + 'deg)';
+    }
+    stage.textContent = t < 0.34 ? s1 : t < 0.67 ? s2 : s3;
+  }
+  slider.addEventListener('input', update);
+  slider.addEventListener('keydown', function (e) {
+    var step = +slider.step || 5;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      slider.value = Math.min(100, +slider.value + step); update(); e.preventDefault();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      slider.value = Math.max(0, +slider.value - step); update(); e.preventDefault();
+    }
+  });
+  root.querySelector('.sc-jump').addEventListener('click', function () {
+    slider.value = 100; update(); slider.focus();
+  });
+  update();
+})();
+</script>
+</div>
+{% elif data.effect is defined and data.effect == "rain" %}
+{% set sf = data.start_fraction if data.start_fraction is defined else 0.4 %}
+{% set mf = data.medium_from if data.medium_from is defined else 0.27 %}
+{% set hf = data.heavy_from if data.heavy_from is defined else 0.6 %}
+{% set step = [(data.max_value / 30)|round|int, 1]|max %}
+{% set start = ((data.max_value * sf / step)|round|int) * step %}
+{% set med0 = [[((sf - mf) / 0.4), 0]|max, 1]|min %}
+{% set heavy0 = [[((sf - hf) / 0.4), 0]|max, 1]|min %}
+<div class="sc-scene sc-rain">
+  <figure class="sc-figure" style="--fall:{{ (1.1 - 0.65 * sf)|round(2) }}s" data-medium="{{ mf }}" data-heavy="{{ hf }}">
+    <svg viewBox="0 0 400 300" role="img" aria-label="{{ data.label }}">
+      <defs>
+        <linearGradient id="scene-sky-{{ index }}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1d3247"/>
+          <stop offset=".55" stop-color="#33506b"/>
+          <stop offset="1" stop-color="#24384e"/>
+        </linearGradient>
+      </defs>
+      <rect width="400" height="300" fill="url(#scene-sky-{{ index }})"/>
+      <ellipse cx="90" cy="42" rx="70" ry="16" fill="#22394f"/>
+      <ellipse cx="300" cy="30" rx="84" ry="18" fill="#1d3046"/>
+      <g class="sc-rain-light" stroke="#a9d0f5" stroke-width="2" stroke-linecap="round" opacity="1">
+        <line class="sc-drop" x1="30" y1="10" x2="24" y2="26" style="--m:1.0"/>
+        <line class="sc-drop" x1="80" y1="30" x2="74" y2="46" style="--m:1.3;animation-delay:-.5s"/>
+        <line class="sc-drop" x1="130" y1="0" x2="124" y2="16" style="--m:.9;animation-delay:-.2s"/>
+        <line class="sc-drop" x1="180" y1="22" x2="174" y2="38" style="--m:1.2;animation-delay:-.8s"/>
+        <line class="sc-drop" x1="230" y1="6" x2="224" y2="22" style="--m:1.1;animation-delay:-.4s"/>
+        <line class="sc-drop" x1="280" y1="34" x2="274" y2="50" style="--m:.85;animation-delay:-.7s"/>
+        <line class="sc-drop" x1="330" y1="14" x2="324" y2="30" style="--m:1.25;animation-delay:-.1s"/>
+        <line class="sc-drop" x1="370" y1="40" x2="364" y2="56" style="--m:1.0;animation-delay:-.9s"/>
+        <line class="sc-drop" x1="55" y1="52" x2="49" y2="68" style="--m:1.15;animation-delay:-.6s"/>
+        <line class="sc-drop" x1="355" y1="60" x2="349" y2="76" style="--m:.95;animation-delay:-.3s"/>
+      </g>
+      <g class="sc-rain-med" stroke="#a9d0f5" stroke-width="2" stroke-linecap="round" opacity="{{ med0|round(2) }}">
+        <line class="sc-drop" x1="15" y1="44" x2="9" y2="60" style="--m:1.05;animation-delay:-.2s"/>
+        <line class="sc-drop" x1="105" y1="18" x2="99" y2="34" style="--m:.9;animation-delay:-.6s"/>
+        <line class="sc-drop" x1="155" y1="48" x2="149" y2="64" style="--m:1.2;animation-delay:-.1s"/>
+        <line class="sc-drop" x1="205" y1="12" x2="199" y2="28" style="--m:1.0;animation-delay:-.8s"/>
+        <line class="sc-drop" x1="255" y1="42" x2="249" y2="58" style="--m:1.3;animation-delay:-.4s"/>
+        <line class="sc-drop" x1="305" y1="8" x2="299" y2="24" style="--m:.88;animation-delay:-.7s"/>
+        <line class="sc-drop" x1="345" y1="46" x2="339" y2="62" style="--m:1.1;animation-delay:-.5s"/>
+        <line class="sc-drop" x1="385" y1="20" x2="379" y2="36" style="--m:1.0;animation-delay:-.9s"/>
+        <line class="sc-drop" x1="65" y1="70" x2="59" y2="86" style="--m:1.2;animation-delay:-.3s"/>
+        <line class="sc-drop" x1="285" y1="66" x2="279" y2="82" style="--m:.95;animation-delay:-.6s"/>
+      </g>
+      <g class="sc-rain-heavy" stroke="#a9d0f5" stroke-width="2" stroke-linecap="round" opacity="{{ heavy0|round(2) }}">
+        <line class="sc-drop" x1="45" y1="26" x2="39" y2="42" style="--m:.9;animation-delay:-.4s"/>
+        <line class="sc-drop" x1="95" y1="56" x2="89" y2="72" style="--m:1.15;animation-delay:-.7s"/>
+        <line class="sc-drop" x1="145" y1="20" x2="139" y2="36" style="--m:1.0;animation-delay:-.2s"/>
+        <line class="sc-drop" x1="195" y1="50" x2="189" y2="66" style="--m:1.25;animation-delay:-.8s"/>
+        <line class="sc-drop" x1="245" y1="16" x2="239" y2="32" style="--m:.92;animation-delay:-.5s"/>
+        <line class="sc-drop" x1="295" y1="52" x2="289" y2="68" style="--m:1.1;animation-delay:-.1s"/>
+        <line class="sc-drop" x1="335" y1="28" x2="329" y2="44" style="--m:1.0;animation-delay:-.6s"/>
+        <line class="sc-drop" x1="375" y1="58" x2="369" y2="74" style="--m:1.2;animation-delay:-.9s"/>
+        <line class="sc-drop" x1="120" y1="64" x2="114" y2="80" style="--m:.88;animation-delay:-.3s"/>
+        <line class="sc-drop" x1="315" y1="72" x2="309" y2="88" style="--m:1.05;animation-delay:-.7s"/>
+      </g>
+      <rect x="0" y="270" width="400" height="30" fill="#16283a"/>
+      <ellipse class="sc-puddle" cx="200" cy="272" rx="78" ry="8" fill="#7fb6e8" opacity=".85" style="transform:scaleY({{ (0.35 + 0.9 * sf)|round(2) }})"/>
+      <ellipse class="sc-ripple" cx="160" cy="272" rx="18" ry="4" fill="none" stroke="#a9d0f5" stroke-width="1.5"/>
+      <ellipse class="sc-ripple" cx="248" cy="272" rx="14" ry="3" fill="none" stroke="#a9d0f5" stroke-width="1.5" style="animation-delay:-1.1s"/>
+      <g class="sc-robot" style="transform:rotate({{ (-14 * sf)|round(1) }}deg)">{{ robot() }}</g>
+      <g class="sc-umbrella" style="transform:rotate({{ (-24 * sf)|round(1) }}deg)">
+        <g class="sc-wobble">
+          <line x1="232" y1="182" x2="232" y2="140" stroke="#8a5f0b" stroke-width="3" stroke-linecap="round"/>
+          <path d="M196 142 Q232 106 268 142 Q250 132 232 142 Q214 132 196 142 Z" fill="#e5484d"/>
+          <path d="M232 106 L232 100" stroke="#e5484d" stroke-width="3" stroke-linecap="round"/>
+        </g>
+      </g>
+    </svg>
+    <div class="sc-control">
+      <div class="sc-readout">
+        <span class="sc-value" data-unit="{{ data.unit }}" data-unit-after="{% if data.unit_after is defined and data.unit_after %}1{% else %}0{% endif %}">{% if data.unit_after is defined and data.unit_after %}{{ start }}{{ data.unit }}{% else %}{{ data.unit }}{{ start }}{% endif %}</span>
+        <span class="sc-label">{{ data.label }}</span>
+      </div>
+      <div class="sc-row">
+        <input type="range" class="sc-slider" min="0" max="{{ data.max_value }}" step="{{ step }}" value="{{ start }}" aria-label="{{ data.label }}">
+        <button type="button" class="sc-jump">{{ t("scene.max") }}</button>
+      </div>
+    </div>
+  </figure>
+<script>
+(function () {
+  var root = document.currentScript.closest('.sc-rain');
+  if (!root || root.dataset.scWired) return;
+  root.dataset.scWired = '1';
+  var figure = root.querySelector('.sc-figure');
+  var slider = root.querySelector('.sc-slider');
+  var readout = root.querySelector('.sc-value');
+  var med = root.querySelector('.sc-rain-med');
+  var heavy = root.querySelector('.sc-rain-heavy');
+  var puddle = root.querySelector('.sc-puddle');
+  var robot = root.querySelector('.sc-robot');
+  var umbrella = root.querySelector('.sc-umbrella');
+  var max = +slider.max;
+  var mf = parseFloat(figure.dataset.medium);
+  var hf = parseFloat(figure.dataset.heavy);
+  var unit = readout.dataset.unit || '';
+  var after = readout.dataset.unitAfter === '1';
+  function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
+  function update() {
+    var v = +slider.value;
+    var t = max ? v / max : 0;
+    readout.textContent = after ? v + unit : unit + v;
+    figure.style.setProperty('--fall', (1.1 - 0.65 * t).toFixed(2) + 's');
+    med.style.opacity = clamp((t - mf) / 0.4, 0, 1).toFixed(2);
+    heavy.style.opacity = clamp((t - hf) / 0.4, 0, 1).toFixed(2);
+    puddle.style.transform = 'scaleY(' + (0.35 + 0.9 * t).toFixed(2) + ')';
+    robot.style.transform = 'rotate(' + (-14 * t).toFixed(1) + 'deg)';
+    umbrella.style.transform = 'rotate(' + (-24 * t).toFixed(1) + 'deg)';
+  }
+  slider.addEventListener('input', update);
+  slider.addEventListener('keydown', function (e) {
+    var step = +slider.step || 1;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      slider.value = Math.min(max, +slider.value + step); update(); e.preventDefault();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      slider.value = Math.max(0, +slider.value - step); update(); e.preventDefault();
+    }
+  });
+  root.querySelector('.sc-jump').addEventListener('click', function () {
+    slider.value = max; update(); slider.focus();
+  });
+  update();
+})();
+</script>
+</div>
+{% endif %}
