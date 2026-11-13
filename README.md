@@ -10,8 +10,11 @@ https://github.com/wh1temustang/it-s-news
 It turns the day's news into a visual, single-file page. No setup needed —
 or clone the repo and open any `.html` file in an `examples/` folder.
 
-## Three ways to read the news
+## Four ways to read the news
 
+- **Scene** — an animated, reactive illustration: a robot in the rain you
+  can turn up to the article's number, or acting out the story's beat, so
+  a magnitude or a turn is felt, not just read. [Example](template-rendering/examples/scene-rain.html)
 - **Template rendering** — the whole story on one page: info boards, maps,
   charts, timelines. [Example](template-rendering/examples/night-train.html) ·
   [how it works](template-rendering/)
