@@ -34,6 +34,11 @@ DEFAULTS: dict[str, str] = {
     "reactive.reveal": "Reveal",
     "reactive.wipe_button": "Wipe",
     "reactive.fill": "Fill",
+    "scene.max": "Max",
+    "scene.end": "End",
+    "scene.cheat.stage1": "The board meets",
+    "scene.cheat.stage2": "He slides the letter across",
+    "scene.cheat.stage3": "Gone — before the vote",
 }
 
 
