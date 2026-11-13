@@ -69,6 +69,17 @@ before or after it. Its shape:
      scenes on deaths, disasters, war or suffering, full stop. A reactive
      scene shows no helper sentences: affordances over instructions, the
      gesture must be obvious from the shape alone.
+   - A physical feeling or a magnitude the reader should feel in the scene,
+     not just read — weather they can turn up to the article's number, or
+     a turn they should watch happen (`cheat`: the robot outmaneuvers the
+     board by resigning before they can oust him) → `scene`, at most one
+     per edition. A scene is never the default: use it only when the story
+     earns it — a physical effect the reader can scale with their own
+     hand, or a beat that *is* the story; otherwise prefer a static
+     template or `reactive`. Never for serious, sad or grave news — no
+     scenes on deaths, disasters, war or suffering, full stop. A scene
+     shows no helper sentences: affordances over instructions, the slider
+     must be obvious from the shape alone.
    Use `info-board` and `big-number` for what's left: loose essentials with
    no stronger shape, and the one number that is the news. They are the
    fallback, not the default.
