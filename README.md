@@ -10,34 +10,30 @@ https://github.com/wh1temustang/it-s-news
 It turns the day's news into a visual, single-file page. No setup needed —
 or clone the repo and open any `.html` file in an `examples/` folder.
 
-## Four ways to read the news
-
-- **Scene** — an animated, reactive illustration: the robot pictures the
-  story's beat, so a boring story is worth looking at — turn a number up
-  to the article's figure, or scrub through the turn. [Example](template-rendering/examples/scene-rain.html)
-
 <p align="center">
-  <img src="docs/images/scene.gif" width="400" alt="A robot under an umbrella as the reader drags the rain up: the rain thickens, the puddle swells, the robot leans in — 0 to 210 mm in 36 hours.">
+  <img src="docs/images/edition-scroll.gif" width="360" alt="A morning edition scrolling from top to bottom: headlines, big numbers, timelines, maps, and the robot picturing the news.">
 </p>
-<p align="center"><sub>Drag the rain up to 210 mm — the robot leans in as the puddle rises.</sub></p>
+<p align="center"><sub>One morning's edition, top to bottom.</sub></p>
 
-- **Template rendering** — the whole story on one page: info boards, maps,
-  charts, timelines. [Example](template-rendering/examples/night-train.html) ·
-  [how it works](template-rendering/)
+## Templates
 
-- **Animated explainer** *(prototype)* — one idea per click, a few pages of
-  vector animation. [Example](animated-explainer/examples/night-train.html) ·
-  [design](animated-explainer/)
+| Template | What it answers | Example |
+|---|---|---|
+| `scene` | The robot pictures the beat | [Wrenfield rain](template-rendering/examples/scene-rain.html) |
+| `info-board` | The essentials at a glance | [Night train](template-rendering/examples/night-train.html) |
+| `big-number` | One number is the news | [Bike lanes](template-rendering/examples/bike-lanes.html) |
+| `timeline` | How did we get here? | [Night train](template-rendering/examples/night-train.html) |
+| `map` | Where does it happen? | [Night train](template-rendering/examples/night-train.html) |
+| `bar-chart` | How do values compare? | [Bike lanes](template-rendering/examples/bike-lanes.html) |
+| `line-chart` | How has it changed over time? | [Bike lanes](template-rendering/examples/bike-lanes.html) |
+| `comparison` | How do two sides differ? | [Night train](template-rendering/examples/night-train.html) |
+| `cause-effect` | Why is it happening? | No example yet — see the [kit README](template-rendering/README.md) |
+| `quote` | What did someone say? | [Bike lanes](template-rendering/examples/bike-lanes.html) |
+| `reactive` | What does it feel like to touch? | [Reactive rain](template-rendering/examples/reactive-rain.html) |
 
-- **Meme rendering** — the story as a post, in meme formats readers already
-  know. [Example](meme-rendering/examples/self-checkout.html) ·
-  [how it works](meme-rendering/)
-
-They mix and match: an edition is templates by default, one deep story may
-carry an animated explainer, and a number worth feeling may get a reactive
-scene — scratch to reveal it, wipe from before to after, or press and hold
-to fill it up. [Reactive example](template-rendering/examples/reactive-rain.html) ·
-[mixed example edition](template-rendering/examples/edition.html)
+An edition is templates by default. One deep story may also carry an
+[animated explainer](animated-explainer/examples/night-train.html), and
+[meme rendering](meme-rendering/) tells a story as a post.
 
 ## Playful, never made up
 
