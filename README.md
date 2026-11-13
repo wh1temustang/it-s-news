@@ -12,9 +12,9 @@ or clone the repo and open any `.html` file in an `examples/` folder.
 
 ## Four ways to read the news
 
-- **Scene** — an animated, reactive illustration: a robot in the rain you
-  can turn up to the article's number, or acting out the story's beat, so
-  a magnitude or a turn is felt, not just read. [Example](template-rendering/examples/scene-rain.html)
+- **Scene** — an animated, reactive illustration: the robot pictures the
+  story's beat, so a boring story is worth looking at — turn a number up
+  to the article's figure, or scrub through the turn. [Example](template-rendering/examples/scene-rain.html)
 - **Template rendering** — the whole story on one page: info boards, maps,
   charts, timelines. [Example](template-rendering/examples/night-train.html) ·
   [how it works](template-rendering/)
