@@ -15,12 +15,29 @@ or clone the repo and open any `.html` file in an `examples/` folder.
 - **Template rendering** — the whole story on one page: info boards, maps,
   charts, timelines. [Example](template-rendering/examples/night-train.html) ·
   [how it works](template-rendering/)
+
+<p align="center">
+  <img src="docs/images/template-rendering.png" width="400" alt="A template-rendered page for the night train story: the headline, an info board with the journey time, nights, fares and ticket date, and a map with four numbered stops from Vienna to Barcelona.">
+</p>
+<p align="center"><sub>An info board and a map for the night train story.</sub></p>
+
 - **Animated explainer** *(prototype)* — one idea per click, a few pages of
   vector animation. [Example](animated-explainer/examples/night-train.html) ·
   [design](animated-explainer/)
+
+<p align="center">
+  <img src="docs/images/animated-explainer.gif" width="720" alt="An animated explainer asks &quot;Isn't flying faster?&quot;. The train's 14 h 35 min bar bends onto a 24-hour clock that runs from 7:40 pm to 10:15 am, then the plane's 142 kg of CO2 is measured out in blocks of the train's 18 kg: 142 ÷ 18 ≈ 7.9.">
+</p>
+<p align="center"><sub><i>Isn't flying faster?</i> The explainer answers with the article's own numbers.</sub></p>
+
 - **Meme rendering** — the story as a post, in meme formats readers already
   know. [Example](meme-rendering/examples/self-checkout.html) ·
   [how it works](meme-rendering/)
+
+<p align="center">
+  <img src="docs/images/meme-rendering.png" width="400" alt="A meme-rendered post for a supermarket story: a distracted meme with the chain eyeing staffed tills over its self-checkout machines, three stonks panels for 31%, 4 minutes and 5%, and an expanding brain for the rollout.">
+</p>
+<p align="center"><sub>Distracted, stonks and expanding brain for a supermarket story.</sub></p>
 
 They mix and match: an edition is templates by default, one deep story may
 carry an animated explainer, and a number worth feeling may get a reactive
@@ -39,8 +56,9 @@ to fill it up. [Reactive example](template-rendering/examples/reactive-rain.html
   anything else, and the agent fixes its storyboard until it passes.
 - **One file, no network.** Each page is a single self-contained HTML file,
   in light and dark themes.
-- **Any language.** The page's own words, such as labels and credits, can be
-  replaced with a labels file.
+- **Any language.** The words the page adds itself — headings, labels,
+  credits — live in a labels file. Swap it for another language's file and
+  the same story renders in that language.
 
 ## Render it yourself
 
