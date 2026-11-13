@@ -1,6 +1,6 @@
 # it's news
 
-**News you get in seconds, not minutes.**
+**News that's fun to read.**
 
 The easiest way to try it: paste this link into Muse and ask it for a daily
 news brief — it will find today's news and render it as a visual page.
