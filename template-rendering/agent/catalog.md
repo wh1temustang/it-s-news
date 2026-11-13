@@ -15,6 +15,7 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 | Why is it happening? What does it lead to? | `cause-effect` | 3+ linked steps, each one stated in the article | the links are your own inference |
 | What did someone say that matters? | `quote` | a direct quote from a named speaker | the quote is filler ("We are pleased to announce…") |
 | What does it feel like to touch? | `reactive` | one number or turn the reader should feel: a figure worth uncovering, a before and after to compare, or a value to fill up by holding | the number is small enough to just read, or the turn needs a chart's precision |
+| What does it feel like to be there? | `scene` | a physical feeling or a magnitude the reader should feel in the scene: weather to turn up, or a beat to scrub through — with one grounded number to scale it by, or one turn to act out | the feeling needs a chart's precision, or the news is grave |
 
 If no row fits a question, leave the question out. Fewer, stronger scenes
 beat a full page.
@@ -91,13 +92,32 @@ static template. And never for serious, sad or grave news — no reactive
 scenes on deaths, disasters, war or suffering, full stop: a foil over a
 toll is the wrong tone.
 
+**`scene`**: an animated, reactive illustrated scene — a character in
+weather the reader can turn up, or acting out the story's beat. Two
+kinds in v1: `rain` (effect), where a slider runs a scale from 0 up to
+the article number and the weather, the puddle and the character's lean
+follow it; and `cheat` (action), where a slider scrubs the outmaneuver
+— the board meets, he slides the letter across, he's gone before the
+vote. Give an effect scene `max_value` (the article number), `unit`
+and `label`; give an action scene only `label`. The thresholds that
+shape the rain (`medium_from`, `heavy_from`) and the slider's start
+(`start_fraction`) are fractions of the maximum, not article facts.
+At most one scene per edition — it is the edition's biggest moment.
+Affordances over instructions: a scene shows no helper sentences —
+the slider grip is the only cue, plus one-word buttons. A scene is
+never the default: use one only when the story earns it — weather or
+another physical effect the reader can scale with their own hand, or
+a turn the reader should watch happen. And never for serious, sad or
+grave news — no scenes on deaths, disasters, war or suffering, full
+stop.
+
 ## Ordering
 
 1. Lead with the scene that answers the main question.
 2. Then context: *where* (`map`) and *when* (`timeline`).
 3. Then reaction and consequence: `quote`, `cause-effect`.
 
-When two scenes matter equally, use this order: `big-number`, `info-board`,
+When two scenes matter equally, use this order: `scene`, `big-number`, `info-board`,
 `bar-chart` or `line-chart`, `comparison`, `timeline`, `map`,
 `cause-effect`, `quote`.
 
