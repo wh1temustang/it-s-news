@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>Wrenfield&#39;s wettest day and a half · it's news</title>
+<meta name="description" content="210 mm in 36 hours — the most since the gauge started measuring in 1991.">
+<style>
+/* it's news: page shell and design tokens.
+   Templates style themselves with these tokens only, never raw colours, so
+   light and dark mode come for free. Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --ink: #15171c;
+  --muted: #5b616d;
+  --line: #e4e0d6;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --alt: #b45309;
+  --good: #15803d;
+  --bad: #b91c1c;
+  --pending: #b45309;
+  --neutral: #6b7280;
+  --water: #dce9f2;
+  --land: #ebe6da;
+  --coast: #b8ae98;
+  --border: #c9bfa8;
+  --radius: 18px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+[data-topic="world"]    { --accent: #2563eb; }
+[data-topic="politics"] { --accent: #7c3aed; }
+[data-topic="business"] { --accent: #0f766e; }
+[data-topic="science"]  { --accent: #0e7490; }
+[data-topic="tech"]     { --accent: #4f46e5; }
+[data-topic="climate"]  { --accent: #15803d; }
+[data-topic="health"]   { --accent: #be185d; }
+[data-topic="local"]    { --accent: #c2410c; }
+[data-topic="culture"]  { --accent: #a21caf; }
+[data-topic="sports"]   { --accent: #b91c1c; }
+
+/* Dark mode follows the reader's system, unless the page's host sets
+   data-theme="light" or "dark" on the root element for a reader's own choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --ink: #eef0f4;
+    --muted: #a3a9b5;
+    --line: #2a2e37;
+    --on-accent: #0b0d10;
+    --alt: #fbbf24;
+    --good: #4ade80;
+    --bad: #f87171;
+    --pending: #fbbf24;
+    --neutral: #9ca3af;
+    --water: #142130;
+    --land: #262a32;
+    --coast: #414856;
+    --border: #4a5160;
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) [data-topic="world"]    { --accent: #7aa2ff; }
+  :root:not([data-theme="light"]) [data-topic="politics"] { --accent: #b197fc; }
+  :root:not([data-theme="light"]) [data-topic="business"] { --accent: #2dd4bf; }
+  :root:not([data-theme="light"]) [data-topic="science"]  { --accent: #22d3ee; }
+  :root:not([data-theme="light"]) [data-topic="tech"]     { --accent: #8b93ff; }
+  :root:not([data-theme="light"]) [data-topic="climate"]  { --accent: #4ade80; }
+  :root:not([data-theme="light"]) [data-topic="health"]   { --accent: #f472b6; }
+  :root:not([data-theme="light"]) [data-topic="local"]    { --accent: #fb923c; }
+  :root:not([data-theme="light"]) [data-topic="culture"]  { --accent: #e879f9; }
+  :root:not([data-theme="light"]) [data-topic="sports"]   { --accent: #f87171; }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #181b21;
+  --ink: #eef0f4;
+  --muted: #a3a9b5;
+  --line: #2a2e37;
+  --on-accent: #0b0d10;
+  --alt: #fbbf24;
+  --good: #4ade80;
+  --bad: #f87171;
+  --pending: #fbbf24;
+  --neutral: #9ca3af;
+  --water: #142130;
+  --land: #262a32;
+  --coast: #414856;
+  --border: #4a5160;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] [data-topic="world"]    { --accent: #7aa2ff; }
+:root[data-theme="dark"] [data-topic="politics"] { --accent: #b197fc; }
+:root[data-theme="dark"] [data-topic="business"] { --accent: #2dd4bf; }
+:root[data-theme="dark"] [data-topic="science"]  { --accent: #22d3ee; }
+:root[data-theme="dark"] [data-topic="tech"]     { --accent: #8b93ff; }
+:root[data-theme="dark"] [data-topic="climate"]  { --accent: #4ade80; }
+:root[data-theme="dark"] [data-topic="health"]   { --accent: #f472b6; }
+:root[data-theme="dark"] [data-topic="local"]    { --accent: #fb923c; }
+:root[data-theme="dark"] [data-topic="culture"]  { --accent: #e879f9; }
+:root[data-theme="dark"] [data-topic="sports"]   { --accent: #f87171; }
+
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.story {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* --- headline --- */
+
+.hero { margin-bottom: 28px; }
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero :is(h1, h3) {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.dek {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2.6vw, 21px);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* --- scenes --- */
+
+.scene,
+.bottom-line {
+  margin-top: 18px;
+  padding: 22px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+}
+
+.scene-kind {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene :is(h2, h4),
+.bottom-line :is(h2, h4) {
+  margin: 0 0 18px;
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.bottom-line {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.bottom-line :is(h2, h4) {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom-line p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Shared by the chart templates. */
+.chart-unit {
+  margin: -10px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .story { padding-top: 28px; }
+  .scene, .bottom-line { padding: 18px 16px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- big number --- */
+
+.bn {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 22px 18px;
+}
+
+.bn-item {
+  animation: bn-pop 0.6s cubic-bezier(0.3, 1.3, 0.6, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 110ms + 200ms);
+}
+
+.bn-value {
+  margin: 0;
+  color: var(--accent);
+  font-size: clamp(40px, 8vw, 60px);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.bn-lead .bn-value { font-size: clamp(52px, 11vw, 80px); }
+
+.bn-trend {
+  margin-right: 6px;
+  font-size: 0.45em;
+  vertical-align: 0.35em;
+}
+
+.bn-label {
+  margin: 8px 0 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.bn-context {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+@keyframes bn-pop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: none; }
+}
+/* --- scene ---
+   An animated, reactive illustrated scene: a character in weather the
+   reader can turn up, or acting out the story's beat. The figure is a
+   picture with a fixed palette, so its colours live in the SVG markup;
+   only the control below it uses these tokens, so it follows the page
+   theme and dark mode. The slider is the only cue; the scene shows no
+   helper sentences. */
+
+.sc-scene {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.sc-figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.sc-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --- rain: falling drops, bobbing robot, wobbling umbrella, ripples --- */
+
+.sc-drop {
+  animation: scene-fall var(--fall, .84s) linear infinite;
+  animation-duration: calc(var(--fall, .84s) * var(--m, 1));
+}
+
+.sc-bob {
+  animation: scene-bob 1.6s ease-in-out infinite;
+}
+
+.sc-wobble {
+  animation: scene-wobble 1.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.sc-ripple {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scene-ripple 2.2s ease-out infinite;
+}
+
+.sc-puddle,
+.sc-robot,
+.sc-umbrella,
+.sc-card,
+.sc-letter {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+@keyframes scene-fall {
+  from { transform: translateY(-24px); }
+  to { transform: translateY(300px); }
+}
+
+@keyframes scene-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes scene-wobble {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes scene-ripple {
+  0% { transform: scale(.6); opacity: .7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* --- control: readout, label, slider, one-word button --- */
+
+.sc-control {
+  padding: 14px 16px 18px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.sc-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sc-value {
+  color: var(--accent);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.sc-value.sc-stage {
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.sc-label {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sc-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sc-slider {
+  flex: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 10px;
+  border-radius: 5px;
+  outline-offset: 4px;
+  background: linear-gradient(90deg, var(--water), var(--accent));
+  cursor: grab;
+}
+
+.sc-slider:active {
+  cursor: grabbing;
+}
+
+.sc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  cursor: grab;
+}
+
+.sc-slider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  cursor: grab;
+}
+
+.sc-jump {
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sc-jump:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-drop,
+  .sc-bob,
+  .sc-wobble,
+  .sc-ripple {
+    animation: none;
+  }
+}
+
+</style>
+</head>
+<body data-topic="local">
+<p class="banner" role="note">Fictional sample: this is not real news.</p>
+<main class="story">
+  <header class="hero">
+    <p class="kicker">Local</p>
+    <h1>Wrenfield&#39;s wettest day and a half</h1>
+    <p class="dek">210 mm in 36 hours — the most since the gauge started measuring in 1991.</p>
+    <p class="byline">Wrenfield Gazette (fictional) · <span>November 12, 2026</span></p>
+  </header>
+
+  <section class="scene scene--scene" style="--i: 0" aria-labelledby="q1">
+    <p class="scene-kind"><span aria-hidden="true">🤖</span> Scene</p>
+    <h2 id="q1">How heavy was the rain?</h2>
+    <div class="sc-scene sc-rain">
+  <figure class="sc-figure" style="--fall:0.84s" data-medium="0.27" data-heavy="0.6">
+    <svg viewBox="0 0 400 300" role="img" aria-label="Rainfall in 36 hours">
+      <defs>
+        <linearGradient id="scene-sky-0" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1d3247"/>
+          <stop offset=".55" stop-color="#33506b"/>
+          <stop offset="1" stop-color="#24384e"/>
+        </linearGradient>
+      </defs>
+      <rect width="400" height="300" fill="url(#scene-sky-0)"/>
+      <ellipse cx="90" cy="42" rx="70" ry="16" fill="#22394f"/>
+      <ellipse cx="300" cy="30" rx="84" ry="18" fill="#1d3046"/>
+      <g class="sc-rain-light" stroke="#a9d0f5" stroke-width="2" stroke-linecap="round" opacity="1">
+        <line class="sc-drop" x1="30" y1="10" x2="24" y2="26" style="--m:1.0"/>
+        <line class="sc-drop" x1="80" y1="30" x2="74" y2="46" style="--m:1.3;animation-delay:-.5s"/>
+        <line class="sc-drop" x1="130" y1="0" x2="124" y2="16" style="--m:.9;animation-delay:-.2s"/>
+        <line class="sc-drop" x1="180" y1="22" x2="174" y2="38" style="--m:1.2;animation-delay:-.8s"/>
+        <line class="sc-drop" x1="230" y1="6" x2="224" y2="22" style="--m:1.1;animation-delay:-.4s"/>
+        <line class="sc-drop" x1="280" y1="34" x2="274" y2="50" style="--m:.85;animation-delay:-.7s"/>
+        <line class="sc-drop" x1="330" y1="14" x2="324" y2="30" style="--m:1.25;animation-delay:-.1s"/>
+        <line class="sc-drop" x1="370" y1="40" x2="364" y2="56" style="--m:1.0;animation-delay:-.9s"/>
+        <line class="sc-drop" x1="55" y1="52" x2="49" y2="68" style="--m:1.15;animation-delay:-.6s"/>
+        <line class="sc-drop" x1="355" y1="60" x2="349" y2="76" style="--m:.95;animation-delay:-.3s"/>
+      </g>
+      <g class="sc-rain-med" stroke="#a9d0f5" stroke-width="2" stroke-linecap="round" opacity="0.33">
+        <line class="sc-drop" x1="15" y1="44" x2="9" y2="60" style="--m:1.05;animation-delay:-.2s"/>
+        <line class="sc-drop" x1="105" y1="18" x2="99" y2="34" style="--m:.9;animation-delay:-.6s"/>
+        <line class="sc-drop" x1="155" y1="48" x2="149" y2="64" style="--m:1.2;animation-delay:-.1s"/>
+        <line class="sc-drop" x1="205" y1="12" x2="199" y2="28" style="--m:1.0;animation-delay:-.8s"/>
+        <line class="sc-drop" x1="255" y1="42" x2="249" y2="58" style="--m:1.3;animation-delay:-.4s"/>
+        <line class="sc-drop" x1="305" y1="8" x2="299" y2="24" style="--m:.88;animation-delay:-.7s"/>
+        <line class="sc-drop" x1="345" y1="46" x2="339" y2="62" style="--m:1.1;animation-delay:-.5s"/>
+        <line class="sc-drop" x1="385" y1="20" x2="379" y2="36" style="--m:1.0;animation-delay:-.9s"/>
+        <line class="sc-drop" x1="65" y1="70" x2="59" y2="86" style="--m:1.2;animation-delay:-.3s"/>
+        <line class="sc-drop" x1="285" y1="66" x2="279" y2="82" style="--m:.95;animation-delay:-.6s"/>
+      </g>
+      <g class="sc-rain-heavy" stroke="#a9d0f5" stroke-width="2" stroke-linecap="round" opacity="0">
+        <line class="sc-drop" x1="45" y1="26" x2="39" y2="42" style="--m:.9;animation-delay:-.4s"/>
+        <line class="sc-drop" x1="95" y1="56" x2="89" y2="72" style="--m:1.15;animation-delay:-.7s"/>
+        <line class="sc-drop" x1="145" y1="20" x2="139" y2="36" style="--m:1.0;animation-delay:-.2s"/>
+        <line class="sc-drop" x1="195" y1="50" x2="189" y2="66" style="--m:1.25;animation-delay:-.8s"/>
+        <line class="sc-drop" x1="245" y1="16" x2="239" y2="32" style="--m:.92;animation-delay:-.5s"/>
+        <line class="sc-drop" x1="295" y1="52" x2="289" y2="68" style="--m:1.1;animation-delay:-.1s"/>
+        <line class="sc-drop" x1="335" y1="28" x2="329" y2="44" style="--m:1.0;animation-delay:-.6s"/>
+        <line class="sc-drop" x1="375" y1="58" x2="369" y2="74" style="--m:1.2;animation-delay:-.9s"/>
+        <line class="sc-drop" x1="120" y1="64" x2="114" y2="80" style="--m:.88;animation-delay:-.3s"/>
+        <line class="sc-drop" x1="315" y1="72" x2="309" y2="88" style="--m:1.05;animation-delay:-.7s"/>
+      </g>
+      <rect x="0" y="270" width="400" height="30" fill="#16283a"/>
+      <ellipse class="sc-puddle" cx="200" cy="272" rx="78" ry="8" fill="#7fb6e8" opacity=".85" style="transform:scaleY(0.71)"/>
+      <ellipse class="sc-ripple" cx="160" cy="272" rx="18" ry="4" fill="none" stroke="#a9d0f5" stroke-width="1.5"/>
+      <ellipse class="sc-ripple" cx="248" cy="272" rx="14" ry="3" fill="none" stroke="#a9d0f5" stroke-width="1.5" style="animation-delay:-1.1s"/>
+      <g class="sc-robot" style="transform:rotate(-5.6deg)"><g class="sc-bob">
+  <rect x="188" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
+  <rect x="204" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
+  <rect x="184" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
+  <rect x="202" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
+  <rect x="180" y="200" width="40" height="42" rx="9" fill="#f5b301"/>
+  <rect x="190" y="212" width="20" height="14" rx="3" fill="#222d3a"/>
+  <circle cx="200" cy="219" r="3" fill="#7fd4ff"/>
+  <line x1="180" y1="212" x2="167" y2="230" stroke="#f5b301" stroke-width="7" stroke-linecap="round"/>
+  <line x1="220" y1="212" x2="231" y2="182" stroke="#f5b301" stroke-width="7" stroke-linecap="round"/>
+  <rect x="184" y="168" width="32" height="30" rx="8" fill="#ffc93c"/>
+  <circle cx="194" cy="182" r="3.5" fill="#222d3a"/>
+  <circle cx="206" cy="182" r="3.5" fill="#222d3a"/>
+  <path d="M192 190 q8 4 16 0" stroke="#222d3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <line x1="200" y1="168" x2="200" y2="156" stroke="#c98a12" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="200" cy="153" r="3.5" fill="#ff6b6b"/>
+</g>
+</g>
+      <g class="sc-umbrella" style="transform:rotate(-9.6deg)">
+        <g class="sc-wobble">
+          <line x1="232" y1="182" x2="232" y2="140" stroke="#8a5f0b" stroke-width="3" stroke-linecap="round"/>
+          <path d="M196 142 Q232 106 268 142 Q250 132 232 142 Q214 132 196 142 Z" fill="#e5484d"/>
+          <path d="M232 106 L232 100" stroke="#e5484d" stroke-width="3" stroke-linecap="round"/>
+        </g>
+      </g>
+    </svg>
+    <div class="sc-control">
+      <div class="sc-readout">
+        <span class="sc-value" data-unit=" mm" data-unit-after="1">84 mm</span>
+        <span class="sc-label">Rainfall in 36 hours</span>
+      </div>
+      <div class="sc-row">
+        <input type="range" class="sc-slider" min="0" max="210" step="7" value="84" aria-label="Rainfall in 36 hours">
+        <button type="button" class="sc-jump">Max</button>
+      </div>
+    </div>
+  </figure>
+<script>
+(function () {
+  var root = document.currentScript.closest('.sc-rain');
+  if (!root || root.dataset.scWired) return;
+  root.dataset.scWired = '1';
+  var figure = root.querySelector('.sc-figure');
+  var slider = root.querySelector('.sc-slider');
+  var readout = root.querySelector('.sc-value');
+  var med = root.querySelector('.sc-rain-med');
+  var heavy = root.querySelector('.sc-rain-heavy');
+  var puddle = root.querySelector('.sc-puddle');
+  var robot = root.querySelector('.sc-robot');
+  var umbrella = root.querySelector('.sc-umbrella');
+  var max = +slider.max;
+  var mf = parseFloat(figure.dataset.medium);
+  var hf = parseFloat(figure.dataset.heavy);
+  var unit = readout.dataset.unit || '';
+  var after = readout.dataset.unitAfter === '1';
+  function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
+  function update() {
+    var v = +slider.value;
+    var t = max ? v / max : 0;
+    readout.textContent = after ? v + unit : unit + v;
+    figure.style.setProperty('--fall', (1.1 - 0.65 * t).toFixed(2) + 's');
+    med.style.opacity = clamp((t - mf) / 0.4, 0, 1).toFixed(2);
+    heavy.style.opacity = clamp((t - hf) / 0.4, 0, 1).toFixed(2);
+    puddle.style.transform = 'scaleY(' + (0.35 + 0.9 * t).toFixed(2) + ')';
+    robot.style.transform = 'rotate(' + (-14 * t).toFixed(1) + 'deg)';
+    umbrella.style.transform = 'rotate(' + (-24 * t).toFixed(1) + 'deg)';
+  }
+  slider.addEventListener('input', update);
+  slider.addEventListener('keydown', function (e) {
+    var step = +slider.step || 1;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      slider.value = Math.min(max, +slider.value + step); update(); e.preventDefault();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      slider.value = Math.max(0, +slider.value - step); update(); e.preventDefault();
+    }
+  });
+  root.querySelector('.sc-jump').addEventListener('click', function () {
+    slider.value = max; update(); slider.focus();
+  });
+  update();
+})();
+</script>
+</div>
+
+  </section>
+  <section class="scene scene--big-number" style="--i: 1" aria-labelledby="q2">
+    <p class="scene-kind"><span aria-hidden="true">🔢</span> Big number</p>
+    <h2 id="q2">How far past the old record did it go?</h2>
+    <div class="bn">
+  <div class="bn-item bn-lead" style="--j: 0">
+    <p class="bn-value">210 mm</p>
+    <p class="bn-label">Rain in 36 hours</p>
+  </div>
+  <div class="bn-item" style="--j: 1">
+    <p class="bn-value">160 mm</p>
+    <p class="bn-label">Old record, set in 2011</p>
+  </div>
+  <div class="bn-item" style="--j: 2">
+    <p class="bn-value">3 metres</p>
+    <p class="bn-label">Wren River rise</p>
+  </div>
+</div>
+
+  </section>
+
+  <section class="bottom-line" style="--i: 2">
+    <h2>Bottom line</h2>
+    <p>The old record stood for 15 years. The flood wall held, and no homes were flooded.</p>
+  </section>
+
+  <footer class="colophon">
+    <p>Presented by <b>it's news</b>. Every figure and quote in this story was checked against the article.</p>
+  </footer>
+</main>
+</body>
+</html>
