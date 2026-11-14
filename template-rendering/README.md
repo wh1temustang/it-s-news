@@ -10,7 +10,9 @@ the page.
  article.md ──► AI agent ──► storyboard.json ──► check ──► render ──► page.html
 ```
 
-- **Templates:** timeline, info board, map, big number, bar chart, line
+- **Templates:** scene first — an animated, reactive illustration, a
+  character in weather the reader can turn up or acting out the story's
+  beat — then timeline, info board, map, big number, bar chart, line
   chart, comparison, cause and effect, and quote. Plus reactive scenes —
   scratch, wipe and hold — for a number the reader should feel rather
   than read.

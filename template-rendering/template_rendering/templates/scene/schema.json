@@ -1,0 +1,503 @@
+{
+  "additionalProperties": false,
+  "description": "An animated, reactive illustrated scene: the robot pictures the story's beat, so a boring story is worth looking at. The storyboard stages any beat with simple shapes — the template provides the robot, the backdrop, the animation wiring and the slider — and the reader scrubs the beat or turns a scale up to the article number. The scene is general: there is no fixed list of beats. Shapes are layout, not facts, so their geometry is x-ungrounded; only the label, stage lines, shape text and the scale number are checked against the article.",
+  "properties": {
+    "backdrop": {
+      "default": "none",
+      "description": "The full-bleed background the template draws: a stormy sky or a dark room. 'none' leaves the page surface showing.",
+      "enum": [
+        "none",
+        "room",
+        "sky"
+      ],
+      "type": "string"
+    },
+    "character": {
+      "description": "Which character stands in the scene. The template draws the robot; include a robot shape to place it and move it, or it renders last, on top.",
+      "enum": [
+        "robot"
+      ],
+      "type": "string"
+    },
+    "label": {
+      "description": "What the scene is about, in a few words: \"Rainfall in 36 hours\" or \"He resigned before they could oust him\". Any number in it must appear in the article.",
+      "maxLength": 60,
+      "minLength": 1,
+      "type": "string"
+    },
+    "scale": {
+      "additionalProperties": false,
+      "description": "When the scene turns a number up: the slider runs from 0 to the article number and the readout shows it live. Leave it out for a beat the reader scrubs through instead.",
+      "properties": {
+        "max_value": {
+          "description": "The article number the slider tops out at: the rainfall in millimetres, the rate in percent. It must appear in the article.",
+          "type": "number"
+        },
+        "start_fraction": {
+          "default": 0.4,
+          "description": "Where the slider starts, as a fraction of the maximum. A design choice, not a fact from the article, so the checker does not verify it.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number",
+          "x-ungrounded": true
+        },
+        "unit": {
+          "description": "The unit shown with the value: \" mm\" or \"%\".",
+          "maxLength": 8,
+          "minLength": 1,
+          "type": "string"
+        },
+        "unit_after": {
+          "description": "True when the unit goes after the number (\"210 mm\"), false when it goes before (\"$210\").",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "max_value",
+        "unit"
+      ],
+      "type": "object"
+    },
+    "shapes": {
+      "description": "The scene itself, as simple shapes in a 400 by 300 viewBox, drawn in order — later shapes sit on top. Geometry is layout, not fact: coordinates, colours and moves are x-ungrounded and the checker does not verify them. Only shape text is checked, like any other words on the page. A shape has either 'anim' (a looping ambient motion) or 'moves' (keyframes the slider drives), not both. Author every shape in its state at t=0; the slider moves it from there.",
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "anchor": {
+            "description": "Text alignment for a text shape.",
+            "enum": [
+              "end",
+              "middle",
+              "start"
+            ],
+            "type": "string",
+            "x-ungrounded": true
+          },
+          "anim": {
+            "description": "A looping ambient motion: bob (up and down), wobble (a small rock), fall (drops falling, with speed), ripple (a ring growing and fading).",
+            "enum": [
+              "bob",
+              "fall",
+              "ripple",
+              "wobble"
+            ],
+            "type": "string",
+            "x-ungrounded": true
+          },
+          "children": {
+            "description": "Shapes inside a group, drawn in order. A group moves as one: give the group 'moves' and its children ride along. Children are leaf shapes only — no groups inside groups, no robot inside a group.",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "anchor": {
+                  "enum": [
+                    "end",
+                    "middle",
+                    "start"
+                  ],
+                  "type": "string",
+                  "x-ungrounded": true
+                },
+                "anim": {
+                  "enum": [
+                    "bob",
+                    "fall",
+                    "ripple",
+                    "wobble"
+                  ],
+                  "type": "string",
+                  "x-ungrounded": true
+                },
+                "cx": {
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "cy": {
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "d": {
+                  "maxLength": 400,
+                  "minLength": 1,
+                  "pattern": "^[MmLlHhVvCcQqSsTtZzAa0-9.,\\s-]+$",
+                  "type": "string",
+                  "x-ungrounded": true
+                },
+                "delay": {
+                  "description": "Start offset in seconds for a looping animation, 0 or negative: staggers drops and ripples so they do not all move in step.",
+                  "maximum": 0,
+                  "minimum": -2,
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "fill": {
+                  "maxLength": 7,
+                  "pattern": "^(#[0-9a-fA-F]{6}|none)$",
+                  "type": "string",
+                  "x-ungrounded": true,
+                  "description": "Fill colour as a six-digit hex colour, or \"none\"."
+                },
+                "font_size": {
+                  "maximum": 48,
+                  "minimum": 8,
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "height": {
+                  "minimum": 0,
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "kind": {
+                  "enum": [
+                    "circle",
+                    "ellipse",
+                    "line",
+                    "path",
+                    "rect",
+                    "text"
+                  ],
+                  "type": "string"
+                },
+                "moves": {
+                  "description": "Keyframes the slider drives, in order of t: at each t, the shape sits at the given offset from where it is drawn, rotated, scaled and faded. The template fills in anything a keyframe leaves out from the one before it, starting from no offset, no rotation, full size and full opacity. Two to five keyframes; t runs 0 to 1.",
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "opacity": {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "rotate": {
+                        "type": "number"
+                      },
+                      "sx": {
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "sy": {
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "t": {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "t"
+                    ],
+                    "type": "object"
+                  },
+                  "maxItems": 5,
+                  "minItems": 2,
+                  "type": "array",
+                  "x-ungrounded": true
+                },
+                "opacity": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "r": {
+                  "minimum": 0,
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "rx": {
+                  "minimum": 0,
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "ry": {
+                  "minimum": 0,
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "speed": {
+                  "maximum": 2,
+                  "minimum": 0.5,
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "stroke": {
+                  "maxLength": 7,
+                  "pattern": "^(#[0-9a-fA-F]{6}|none)$",
+                  "type": "string",
+                  "x-ungrounded": true,
+                  "description": "Stroke colour as a six-digit hex colour, or \"none\"."
+                },
+                "stroke_width": {
+                  "maximum": 10,
+                  "minimum": 0,
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "text": {
+                  "maxLength": 24,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "width": {
+                  "minimum": 0,
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "x": {
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "x1": {
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "x2": {
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "y": {
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "y1": {
+                  "type": "number",
+                  "x-ungrounded": true
+                },
+                "y2": {
+                  "type": "number",
+                  "x-ungrounded": true
+                }
+              },
+              "required": [
+                "kind"
+              ],
+              "type": "object"
+            },
+            "maxItems": 12,
+            "minItems": 1,
+            "type": "array"
+          },
+          "cx": {
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "cy": {
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "d": {
+            "description": "Path data for a path shape: M, L, H, V, C, Q, S, T, Z, A and numbers only.",
+            "maxLength": 400,
+            "minLength": 1,
+            "pattern": "^[MmLlHhVvCcQqSsTtZzAa0-9.,\\s-]+$",
+            "type": "string",
+            "x-ungrounded": true
+          },
+          "delay": {
+            "description": "Start offset in seconds for a looping animation, 0 or negative: staggers drops and ripples so they do not all move in step.",
+            "maximum": 0,
+            "minimum": -2,
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "fill": {
+            "description": "Fill colour as a six-digit hex colour, or \"none\".",
+            "maxLength": 7,
+            "pattern": "^(#[0-9a-fA-F]{6}|none)$",
+            "type": "string",
+            "x-ungrounded": true
+          },
+          "font_size": {
+            "maximum": 48,
+            "minimum": 8,
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "height": {
+            "minimum": 0,
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "kind": {
+            "description": "rect, circle, ellipse, line, path, text, group (shapes that move as one) or robot (the template's character, placed with x and y).",
+            "enum": [
+              "circle",
+              "ellipse",
+              "group",
+              "line",
+              "path",
+              "rect",
+              "robot",
+              "text"
+            ],
+            "type": "string"
+          },
+          "moves": {
+            "description": "Keyframes the slider drives, in order of t: at each t, the shape sits at the given offset from where it is drawn, rotated, scaled and faded. The template fills in anything a keyframe leaves out from the one before it, starting from no offset, no rotation, full size and full opacity. Two to five keyframes; t runs 0 to 1.",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "opacity": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "rotate": {
+                  "type": "number"
+                },
+                "sx": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "sy": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "t": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "t"
+              ],
+              "type": "object"
+            },
+            "maxItems": 5,
+            "minItems": 2,
+            "type": "array",
+            "x-ungrounded": true
+          },
+          "opacity": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "r": {
+            "minimum": 0,
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "rx": {
+            "minimum": 0,
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "ry": {
+            "minimum": 0,
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "speed": {
+            "description": "Fall speed multiplier for a falling shape: 1 is the standard drop, higher is faster rain.",
+            "maximum": 2,
+            "minimum": 0.5,
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "stroke": {
+            "description": "Stroke colour as a six-digit hex colour, or \"none\".",
+            "maxLength": 7,
+            "pattern": "^(#[0-9a-fA-F]{6}|none)$",
+            "type": "string",
+            "x-ungrounded": true
+          },
+          "stroke_width": {
+            "maximum": 10,
+            "minimum": 0,
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "text": {
+            "description": "Words drawn on the scene, for a text shape. They are checked like any other words: any number in them must appear in the article.",
+            "maxLength": 24,
+            "minLength": 1,
+            "type": "string"
+          },
+          "width": {
+            "minimum": 0,
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "x": {
+            "description": "Left edge (rect, text), placement offset (robot) or group origin (group).",
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "x1": {
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "x2": {
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "y": {
+            "description": "Top edge (rect, text), placement offset (robot) or group origin (group).",
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "y1": {
+            "type": "number",
+            "x-ungrounded": true
+          },
+          "y2": {
+            "type": "number",
+            "x-ungrounded": true
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "type": "object"
+      },
+      "maxItems": 24,
+      "type": "array"
+    },
+    "stages": {
+      "description": "The lines the reader reads as they scrub a beat: two to four short lines, shown in turn as the slider moves from 0 to 1. Leave them out for a scale scene, where the readout is the number instead.",
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "line": {
+            "description": "One stage of the beat, in a few words. Any number in it must appear in the article.",
+            "maxLength": 40,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "line"
+        ],
+        "type": "object"
+      },
+      "maxItems": 4,
+      "minItems": 2,
+      "type": "array"
+    }
+  },
+  "required": [
+    "character",
+    "label"
+  ],
+  "title": "Scene",
+  "type": "object",
+  "x-icon": "🤖"
+}

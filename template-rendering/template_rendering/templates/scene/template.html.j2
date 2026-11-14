@@ -1,0 +1,196 @@
+{# Scene: a general animated, reactive illustrated scene. The storyboard
+   stages any beat with simple shapes — the template provides the robot,
+   the backdrop, the animation wiring and the slider — and the reader
+   scrubs the beat or turns a scale up to the article number. There is no
+   fixed list of beats: rain is shapes with a scale, a resignation is
+   shapes with stages, and the next story's beat is shapes the agent
+   draws for it. A shape has either `anim` (a looping ambient motion)
+   or `moves` (keyframes the slider drives), not both — the template
+   renders `moves` and drops `anim` when both are given. Scripts are
+   small and inline, scoped through document.currentScript, and make no
+   network calls. Affordances over instructions: no scene shows a helper
+   sentence — the slider grip is the only cue, plus one-word buttons.
+   The figure is a picture with a fixed palette, so its colours live in
+   the SVG markup; the control below it follows the page theme. #}
+{% macro robot() %}
+<g class="sc-bob">
+  <rect x="188" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
+  <rect x="204" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
+  <rect x="184" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
+  <rect x="202" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
+  <rect x="180" y="200" width="40" height="42" rx="9" fill="#f5b301"/>
+  <rect x="190" y="212" width="20" height="14" rx="3" fill="#222d3a"/>
+  <circle cx="200" cy="219" r="3" fill="#7fd4ff"/>
+  <line x1="180" y1="212" x2="167" y2="230" stroke="#f5b301" stroke-width="7" stroke-linecap="round"/>
+  <line x1="220" y1="212" x2="231" y2="182" stroke="#f5b301" stroke-width="7" stroke-linecap="round"/>
+  <rect x="184" y="168" width="32" height="30" rx="8" fill="#ffc93c"/>
+  <circle cx="194" cy="182" r="3.5" fill="#222d3a"/>
+  <circle cx="206" cy="182" r="3.5" fill="#222d3a"/>
+  <path d="M192 190 q8 4 16 0" stroke="#222d3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <line x1="200" y1="168" x2="200" y2="156" stroke="#c98a12" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="200" cy="153" r="3.5" fill="#ff6b6b"/>
+</g>
+{% endmacro %}
+{% macro shape_attrs(s) %}
+  {%- if s.fill is defined %} fill="{{ s.fill }}"{% endif %}
+  {%- if s.stroke is defined %} stroke="{{ s.stroke }}"{% endif %}
+  {%- if s.stroke_width is defined %} stroke-width="{{ s.stroke_width }}"{% endif %}
+  {%- if s.opacity is defined %} opacity="{{ s.opacity }}"{% endif %}
+{%- endmacro %}
+{% macro anim_attrs(s) %}
+  {%- if s.moves is defined %} class="sc-anim" data-moves='{{ s.moves | tojson }}'
+  {%- elif s.anim is defined %} class="sc-{{ s.anim }}"{% if s.anim == 'fall' or s.delay is defined %} style="{% if s.anim == 'fall' %}--m:{{ s.speed if s.speed is defined else 1 }};{% endif %}{% if s.delay is defined %}animation-delay:{{ s.delay }}s;{% endif %}"{% endif %}
+  {%- endif %}
+{%- endmacro %}
+{% macro render_shape(s) %}
+  {%- if s.kind == 'group' %}
+  <g{% if s.x is defined or s.y is defined %} data-bx="{{ s.x if s.x is defined else 0 }}" data-by="{{ s.y if s.y is defined else 0 }}" style="transform:translate({{ s.x if s.x is defined else 0 }}px, {{ s.y if s.y is defined else 0 }}px)"{% endif %}{% if s.moves is defined %} class="sc-anim" data-moves='{{ s.moves | tojson }}'{% endif %}{{ shape_attrs(s) }}>
+    {%- for c in s.children %}{{ render_shape(c) }}{% endfor %}
+  </g>
+  {%- elif s.kind == 'robot' %}
+  <g class="sc-anim" data-bx="{{ s.x if s.x is defined else 0 }}" data-by="{{ s.y if s.y is defined else 0 }}"{% if s.moves is defined %} data-moves='{{ s.moves | tojson }}'{% endif %} style="transform:translate({{ s.x if s.x is defined else 0 }}px, {{ s.y if s.y is defined else 0 }}px)">
+    {{ robot() }}
+  </g>
+  {%- elif s.kind == 'rect' %}
+  <rect x="{{ s.x }}" y="{{ s.y }}" width="{{ s.width }}" height="{{ s.height }}"{% if s.rx is defined %} rx="{{ s.rx }}"{% endif %}{% if s.ry is defined %} ry="{{ s.ry }}"{% endif %}{{ shape_attrs(s) }}{{ anim_attrs(s) }}/>
+  {%- elif s.kind == 'circle' %}
+  <circle cx="{{ s.cx }}" cy="{{ s.cy }}" r="{{ s.r }}"{{ shape_attrs(s) }}{{ anim_attrs(s) }}/>
+  {%- elif s.kind == 'ellipse' %}
+  <ellipse cx="{{ s.cx }}" cy="{{ s.cy }}" rx="{{ s.rx }}" ry="{{ s.ry }}"{{ shape_attrs(s) }}{{ anim_attrs(s) }}/>
+  {%- elif s.kind == 'line' %}
+  <line x1="{{ s.x1 }}" y1="{{ s.y1 }}" x2="{{ s.x2 }}" y2="{{ s.y2 }}"{% if s.stroke is defined %} stroke="{{ s.stroke }}"{% endif %}{% if s.stroke_width is defined %} stroke-width="{{ s.stroke_width }}"{% endif %}{% if s.opacity is defined %} opacity="{{ s.opacity }}"{% endif %}{{ anim_attrs(s) }} stroke-linecap="round"/>
+  {%- elif s.kind == 'path' %}
+  <path d="{{ s.d }}"{{ shape_attrs(s) }}{{ anim_attrs(s) }}/>
+  {%- elif s.kind == 'text' %}
+  <text x="{{ s.x }}" y="{{ s.y }}"{% if s.font_size is defined %} font-size="{{ s.font_size }}"{% endif %}{% if s.anchor is defined %} text-anchor="{{ s.anchor }}"{% endif %}{{ shape_attrs(s) }}{{ anim_attrs(s) }}>{{ s.text }}</text>
+  {%- endif %}
+{%- endmacro %}
+{% set has_scale = data.scale is defined %}
+{% set has_stages = data.stages is defined %}
+{% set sf = data.scale.start_fraction if has_scale and data.scale.start_fraction is defined else 0.4 %}
+{% set maxv = data.scale.max_value if has_scale else 100 %}
+{% set step = (maxv / 30) if has_scale else 5 %}
+{% set start = (((maxv * sf / step)|round|int) * step) if has_scale else 0 %}
+{% set has_robot = (data.shapes is defined and (data.shapes | selectattr('kind', 'equalto', 'robot') | list | length > 0)) %}
+{% set stage0 = ([((sf if has_scale else 0) * (data.stages | length))|int, (data.stages | length) - 1]|min) if has_stages else 0 %}
+<div class="sc-scene">
+  <figure class="sc-figure">
+    <svg viewBox="0 0 400 300" role="img" aria-label="{{ data.label }}">
+      <defs>
+        <linearGradient id="scene-sky-{{ index }}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1d3247"/>
+          <stop offset=".55" stop-color="#33506b"/>
+          <stop offset="1" stop-color="#24384e"/>
+        </linearGradient>
+        <linearGradient id="scene-room-{{ index }}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#2b313c"/>
+          <stop offset="1" stop-color="#1b1f27"/>
+        </linearGradient>
+      </defs>
+      {% if data.backdrop is defined and data.backdrop == 'sky' %}
+      <rect width="400" height="300" fill="url(#scene-sky-{{ index }})"/>
+      {% elif data.backdrop is defined and data.backdrop == 'room' %}
+      <rect width="400" height="300" fill="url(#scene-room-{{ index }})"/>
+      <rect x="0" y="270" width="400" height="30" fill="#14171d"/>
+      {% endif %}
+      {% if data.shapes is defined %}
+        {%- for s in data.shapes %}{{ render_shape(s) }}{% endfor %}
+      {% endif %}
+      {% if not has_robot %}
+      <g class="sc-anim" data-bx="0" data-by="0" style="transform:translate(0px, 0px)">
+        {{ robot() }}
+      </g>
+      {% endif %}
+    </svg>
+    <div class="sc-control">
+      <div class="sc-readout">
+        {% if has_scale %}
+        <span class="sc-value" data-unit="{{ data.scale.unit }}" data-unit-after="{% if data.scale.unit_after is defined and data.scale.unit_after %}1{% else %}0{% endif %}" data-max="{{ maxv }}">{% if data.scale.unit_after is defined and data.scale.unit_after %}{{ start }}{{ data.scale.unit }}{% else %}{{ data.scale.unit }}{{ start }}{% endif %}</span>
+        {% endif %}
+        {% if has_stages %}
+        <span class="sc-value sc-stage" data-stages='{{ data.stages | map(attribute='line') | list | tojson }}'>{{ data.stages[stage0].line }}</span>
+        {% endif %}
+        <span class="sc-label">{{ data.label }}</span>
+      </div>
+      <div class="sc-row">
+        <input type="range" class="sc-slider" min="0" max="{{ maxv }}" step="{{ step }}" value="{{ start }}" aria-label="{{ data.label }}">
+        <button type="button" class="sc-jump">{% if has_scale %}{{ t("scene.max") }}{% else %}{{ t("scene.end") }}{% endif %}</button>
+      </div>
+    </div>
+  </figure>
+<script>
+(function () {
+  var root = document.currentScript.closest('.sc-scene');
+  if (!root || root.dataset.scWired) return;
+  root.dataset.scWired = '1';
+  var figure = root.querySelector('.sc-figure');
+  var slider = root.querySelector('.sc-slider');
+  var readout = root.querySelector('.sc-value');
+  var stageEl = root.querySelector('.sc-stage');
+  var stages = stageEl ? JSON.parse(stageEl.dataset.stages) : null;
+  var max = +slider.max;
+  var unit = readout && readout.dataset.unit ? readout.dataset.unit : '';
+  var after = readout && readout.dataset.unitAfter === '1';
+  var def = {x: 0, y: 0, rotate: 0, sx: 1, sy: 1, opacity: 1};
+  function norm(moves) {
+    var out = [], cur = {x: def.x, y: def.y, rotate: def.rotate, sx: def.sx, sy: def.sy, opacity: def.opacity};
+    moves.slice().sort(function (a, b) { return a.t - b.t; }).forEach(function (kf) {
+      var n = {x: cur.x, y: cur.y, rotate: cur.rotate, sx: cur.sx, sy: cur.sy, opacity: cur.opacity, t: kf.t};
+      ['x', 'y', 'rotate', 'sx', 'sy', 'opacity'].forEach(function (k) { if (kf[k] !== undefined) n[k] = kf[k]; });
+      out.push(n); cur = n;
+    });
+    return out;
+  }
+  function at(moves, t) {
+    var lo = moves[0], hi = moves[moves.length - 1];
+    if (t <= lo.t) return lo;
+    if (t >= hi.t) return hi;
+    for (var i = 0; i < moves.length - 1; i++) {
+      if (t >= moves[i].t && t <= moves[i + 1].t) { lo = moves[i]; hi = moves[i + 1]; break; }
+    }
+    var f = hi.t === lo.t ? 0 : (t - lo.t) / (hi.t - lo.t);
+    var o = {t: t};
+    ['x', 'y', 'rotate', 'sx', 'sy', 'opacity'].forEach(function (k) {
+      o[k] = lo[k] + (hi[k] - lo[k]) * f;
+    });
+    return o;
+  }
+  function fmt(v) { return String(Number(v.toFixed(2))); }
+  var animated = [];
+  root.querySelectorAll('[data-moves]').forEach(function (el) {
+    animated.push({el: el, moves: norm(JSON.parse(el.dataset.moves)),
+      bx: parseFloat(el.dataset.bx || '0'), by: parseFloat(el.dataset.by || '0')});
+  });
+  function update() {
+    var v = +slider.value;
+    var t = max ? v / max : 0;
+    if (readout && readout.dataset.max !== undefined) {
+      readout.textContent = after ? fmt(v) + unit : unit + fmt(v);
+    }
+    if (stages) {
+      var k = Math.min(stages.length - 1, Math.floor(t * stages.length));
+      stageEl.textContent = stages[k];
+    }
+    figure.style.setProperty('--fall', (1.1 - 0.65 * t).toFixed(2) + 's');
+    animated.forEach(function (a) {
+      var s = at(a.moves, t);
+      a.el.style.transform = 'translate(' + (a.bx + s.x).toFixed(1) + 'px, ' + (a.by + s.y).toFixed(1) + 'px) rotate(' + s.rotate.toFixed(1) + 'deg) scale(' + s.sx.toFixed(3) + ', ' + s.sy.toFixed(3) + ')';
+      a.el.style.opacity = s.opacity.toFixed(2);
+    });
+  }
+  slider.addEventListener('input', update);
+  slider.addEventListener('keydown', function (e) {
+    var st = +slider.step || 1;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      slider.value = Math.min(max, +slider.value + st); update(); e.preventDefault();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      slider.value = Math.max(0, +slider.value - st); update(); e.preventDefault();
+    }
+  });
+  root.querySelector('.sc-jump').addEventListener('click', function () {
+    slider.value = max; update(); slider.focus();
+  });
+  update();
+})();
+</script>
+</div>

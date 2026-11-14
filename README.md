@@ -10,45 +10,32 @@ https://github.com/wh1temustang/it-s-news
 It turns the day's news into a visual, single-file page. No setup needed —
 or clone the repo and open any `.html` file in an `examples/` folder.
 
-## Three ways to read the news
-
-- **Template rendering** — the whole story on one page: info boards, maps,
-  charts, timelines. [Example](template-rendering/examples/night-train.html) ·
-  [how it works](template-rendering/)
-
 <p align="center">
-  <img src="docs/images/template-rendering.png" width="400" alt="A template-rendered page for the night train story: the headline, an info board with the journey time, nights, fares and ticket date, and a map with four numbered stops from Vienna to Barcelona.">
+  <img src="docs/images/edition-top.png" width="280" alt="The top of a fictional morning edition: masthead, sections, and the first story's headline.">
+  <img src="docs/images/edition-scene.png" width="280" alt="The robot picturing a snowfall: dragging the snow up to 42 cm as the drift grows.">
+  <img src="docs/images/edition-more.png" width="280" alt="The end of the edition: a quote, the bottom line, and the footer.">
 </p>
-<p align="center"><sub>An info board and a map for the night train story.</sub></p>
+<p align="center"><sub>A fictional English edition — <a href="template-rendering/examples/english-edition.html">read the whole page</a>.</sub></p>
 
-- **Animated explainer** *(prototype)* — one idea per click, a few pages of
-  vector animation. [Example](animated-explainer/examples/night-train.html) ·
-  [design](animated-explainer/)
+## Templates
 
-<p align="center">
-  <img src="docs/images/animated-explainer.gif" width="720" alt="An animated explainer asks &quot;Isn't flying faster?&quot;. The train's 14 h 35 min bar bends onto a 24-hour clock that runs from 7:40 pm to 10:15 am, then the plane's 142 kg of CO2 is measured out in blocks of the train's 18 kg: 142 ÷ 18 ≈ 7.9.">
-</p>
-<p align="center"><sub><i>Isn't flying faster?</i> The explainer answers with the article's own numbers.</sub></p>
+| Template | What it answers | Example |
+|---|---|---|
+| `scene` | The robot pictures the beat | [Wrenfield rain](template-rendering/examples/scene-rain.html) |
+| `info-board` | The essentials at a glance | [Night train](template-rendering/examples/night-train.html) |
+| `big-number` | One number is the news | [Bike lanes](template-rendering/examples/bike-lanes.html) |
+| `timeline` | How did we get here? | [Night train](template-rendering/examples/night-train.html) |
+| `map` | Where does it happen? | [Night train](template-rendering/examples/night-train.html) |
+| `bar-chart` | How do values compare? | [Bike lanes](template-rendering/examples/bike-lanes.html) |
+| `line-chart` | How has it changed over time? | [Bike lanes](template-rendering/examples/bike-lanes.html) |
+| `comparison` | How do two sides differ? | [Night train](template-rendering/examples/night-train.html) |
+| `cause-effect` | Why is it happening? | No example yet — see the [kit README](template-rendering/README.md) |
+| `quote` | What did someone say? | [Bike lanes](template-rendering/examples/bike-lanes.html) |
+| `reactive` | What does it feel like to touch? | [Reactive rain](template-rendering/examples/reactive-rain.html) |
 
-- **Meme rendering** — the story as a post, in meme formats readers already
-  know. [Example](meme-rendering/examples/self-checkout.html) ·
-  [how it works](meme-rendering/)
-
-<p align="center">
-  <img src="docs/images/meme-rendering.png" width="400" alt="A meme-rendered post for a supermarket story: a distracted meme with the chain eyeing staffed tills over its self-checkout machines, three stonks panels for 31%, 4 minutes and 5%, and an expanding brain for the rollout.">
-</p>
-<p align="center"><sub>Distracted, stonks and expanding brain for a supermarket story.</sub></p>
-
-They mix and match: an edition is templates by default, one deep story may
-carry an animated explainer, and a number worth feeling may get a reactive
-scene — scratch to reveal it, wipe from before to after, or press and hold
-to fill it up. [Reactive example](template-rendering/examples/reactive-rain.html) ·
-[mixed example edition](template-rendering/examples/edition.html)
-
-<p align="center">
-  <img src="docs/images/reactive.gif" width="480" alt="A reactive scene in action: a foil is rubbed away to reveal 84 mm, a divider wipes from the old 61 mm record to 84 mm, and holding fills the river's rise to 2 metres.">
-</p>
-<p align="center"><sub>Scratch, wipe and hold for the Willow Creek rain story.</sub></p>
+An edition is templates by default. One deep story may also carry an
+[animated explainer](animated-explainer/examples/night-train.html), and
+[meme rendering](meme-rendering/) tells a story as a post.
 
 ## Playful, never made up
 

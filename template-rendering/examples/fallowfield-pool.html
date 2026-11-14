@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>Council votes 7-2 to keep the pool open · it's news</title>
+<meta name="description" content="Council votes 7-2 to keep the Riverside Pool open through the winter.">
+<style>
+/* it's news: page shell and design tokens.
+   Templates style themselves with these tokens only, never raw colours, so
+   light and dark mode come for free. Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --ink: #15171c;
+  --muted: #5b616d;
+  --line: #e4e0d6;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --alt: #b45309;
+  --good: #15803d;
+  --bad: #b91c1c;
+  --pending: #b45309;
+  --neutral: #6b7280;
+  --water: #dce9f2;
+  --land: #ebe6da;
+  --coast: #b8ae98;
+  --border: #c9bfa8;
+  --radius: 18px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+[data-topic="world"]    { --accent: #2563eb; }
+[data-topic="politics"] { --accent: #7c3aed; }
+[data-topic="business"] { --accent: #0f766e; }
+[data-topic="science"]  { --accent: #0e7490; }
+[data-topic="tech"]     { --accent: #4f46e5; }
+[data-topic="climate"]  { --accent: #15803d; }
+[data-topic="health"]   { --accent: #be185d; }
+[data-topic="local"]    { --accent: #c2410c; }
+[data-topic="culture"]  { --accent: #a21caf; }
+[data-topic="sports"]   { --accent: #b91c1c; }
+
+/* Dark mode follows the reader's system, unless the page's host sets
+   data-theme="light" or "dark" on the root element for a reader's own choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --ink: #eef0f4;
+    --muted: #a3a9b5;
+    --line: #2a2e37;
+    --on-accent: #0b0d10;
+    --alt: #fbbf24;
+    --good: #4ade80;
+    --bad: #f87171;
+    --pending: #fbbf24;
+    --neutral: #9ca3af;
+    --water: #142130;
+    --land: #262a32;
+    --coast: #414856;
+    --border: #4a5160;
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) [data-topic="world"]    { --accent: #7aa2ff; }
+  :root:not([data-theme="light"]) [data-topic="politics"] { --accent: #b197fc; }
+  :root:not([data-theme="light"]) [data-topic="business"] { --accent: #2dd4bf; }
+  :root:not([data-theme="light"]) [data-topic="science"]  { --accent: #22d3ee; }
+  :root:not([data-theme="light"]) [data-topic="tech"]     { --accent: #8b93ff; }
+  :root:not([data-theme="light"]) [data-topic="climate"]  { --accent: #4ade80; }
+  :root:not([data-theme="light"]) [data-topic="health"]   { --accent: #f472b6; }
+  :root:not([data-theme="light"]) [data-topic="local"]    { --accent: #fb923c; }
+  :root:not([data-theme="light"]) [data-topic="culture"]  { --accent: #e879f9; }
+  :root:not([data-theme="light"]) [data-topic="sports"]   { --accent: #f87171; }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #181b21;
+  --ink: #eef0f4;
+  --muted: #a3a9b5;
+  --line: #2a2e37;
+  --on-accent: #0b0d10;
+  --alt: #fbbf24;
+  --good: #4ade80;
+  --bad: #f87171;
+  --pending: #fbbf24;
+  --neutral: #9ca3af;
+  --water: #142130;
+  --land: #262a32;
+  --coast: #414856;
+  --border: #4a5160;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] [data-topic="world"]    { --accent: #7aa2ff; }
+:root[data-theme="dark"] [data-topic="politics"] { --accent: #b197fc; }
+:root[data-theme="dark"] [data-topic="business"] { --accent: #2dd4bf; }
+:root[data-theme="dark"] [data-topic="science"]  { --accent: #22d3ee; }
+:root[data-theme="dark"] [data-topic="tech"]     { --accent: #8b93ff; }
+:root[data-theme="dark"] [data-topic="climate"]  { --accent: #4ade80; }
+:root[data-theme="dark"] [data-topic="health"]   { --accent: #f472b6; }
+:root[data-theme="dark"] [data-topic="local"]    { --accent: #fb923c; }
+:root[data-theme="dark"] [data-topic="culture"]  { --accent: #e879f9; }
+:root[data-theme="dark"] [data-topic="sports"]   { --accent: #f87171; }
+
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.story {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* --- headline --- */
+
+.hero { margin-bottom: 28px; }
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero :is(h1, h3) {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.dek {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2.6vw, 21px);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* --- scenes --- */
+
+.scene,
+.bottom-line {
+  margin-top: 18px;
+  padding: 22px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+}
+
+.scene-kind {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene :is(h2, h4),
+.bottom-line :is(h2, h4) {
+  margin: 0 0 18px;
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.bottom-line {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.bottom-line :is(h2, h4) {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom-line p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Shared by the chart templates. */
+.chart-unit {
+  margin: -10px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .story { padding-top: 28px; }
+  .scene, .bottom-line { padding: 18px 16px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- info board --- */
+
+.ib {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ib-tile {
+  --tone: var(--accent);
+  padding: 14px 14px 16px;
+  border-top: 4px solid var(--tone);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tone) 8%, var(--surface));
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
+}
+
+.ib-tile[data-tone="good"]    { --tone: var(--good); }
+.ib-tile[data-tone="bad"]     { --tone: var(--bad); }
+.ib-tile[data-tone="pending"] { --tone: var(--pending); }
+.ib-tile[data-tone="neutral"] { --tone: var(--neutral); }
+
+.ib-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ib-value {
+  margin: 4px 0 0;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ib-tile:not([data-tone="none"]) .ib-value { color: var(--tone); }
+
+.ib-note {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+/* --- quote --- */
+
+.qt {
+  position: relative;
+  margin: 0;
+  padding: 6px 0 0 54px;
+}
+
+.qt::before {
+  content: "\201C";
+  position: absolute;
+  left: -4px;
+  top: -18px;
+  color: var(--accent);
+  font: 900 96px/1 var(--serif);
+}
+
+.qt-text {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.qt-by {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  margin-top: 14px;
+  font-size: 15px;
+}
+
+.qt-by span { color: var(--muted); }
+
+/* --- timeline --- */
+
+.tl { margin: 0; padding: 0; list-style: none; }
+
+.tl-item {
+  position: relative;
+  padding: 0 0 20px 32px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 80ms + 200ms);
+}
+
+.tl-item:last-child { padding-bottom: 0; }
+
+/* The rail runs from each dot down to the next one. */
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 20px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--accent);
+  opacity: 0.35;
+}
+
+.tl-item:last-child::before { display: none; }
+
+.tl-item:has(+ .tl-next)::before {
+  background: repeating-linear-gradient(to bottom, var(--muted) 0 4px, transparent 4px 8px);
+  opacity: 0.7;
+}
+
+.tl-dot {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tl-now .tl-dot {
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+  animation: tl-pulse 2.2s ease-out infinite;
+}
+
+.tl-next .tl-dot {
+  border-style: dashed;
+  border-color: var(--muted);
+  background: var(--surface);
+}
+
+.tl-when {
+  margin: 0;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tl-what {
+  margin: 2px 0 0;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.tl-now .tl-what { font-size: 19px; font-weight: 700; }
+.tl-next .tl-when,
+.tl-next .tl-what { color: var(--muted); }
+
+.tl-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 11px;
+  vertical-align: 1px;
+}
+
+.tl-next .tl-tag {
+  border: 1px solid var(--muted);
+  background: transparent;
+  color: var(--muted);
+}
+
+@keyframes tl-pulse {
+  70%  { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+
+</style>
+</head>
+<body data-topic="local">
+<p class="banner" role="note">Fictional sample: this is not real news.</p>
+<main class="story">
+  <header class="hero">
+    <p class="kicker">Local</p>
+    <h1>Council votes 7-2 to keep the pool open</h1>
+    <p class="dek">Council votes 7-2 to keep the Riverside Pool open through the winter.</p>
+    <p class="byline">Fallowfield Gazette (fictional) · <span>November 13, 2026</span></p>
+  </header>
+
+  <section class="scene scene--info-board" style="--i: 0" aria-labelledby="q1">
+    <p class="scene-kind"><span aria-hidden="true">📋</span> Info board</p>
+    <h2 id="q1">What did the council decide?</h2>
+    <ul class="ib">
+  <li class="ib-tile" data-tone="good" style="--j: 0">
+    <p class="ib-label">Council vote</p>
+    <p class="ib-value">7-2</p>
+  </li>
+  <li class="ib-tile" data-tone="neutral" style="--j: 1">
+    <p class="ib-label">Winter opening cost</p>
+    <p class="ib-value">$48,000</p>
+    <p class="ib-note">Trial winter opening</p>
+  </li>
+  <li class="ib-tile" data-tone="neutral" style="--j: 2">
+    <p class="ib-label">Petition signatures</p>
+    <p class="ib-value">1,240</p>
+  </li>
+  <li class="ib-tile" data-tone="neutral" style="--j: 3">
+    <p class="ib-label">Winter season</p>
+    <p class="ib-value">November to March</p>
+  </li>
+</ul>
+
+  </section>
+  <section class="scene scene--timeline" style="--i: 1" aria-labelledby="q2">
+    <p class="scene-kind"><span aria-hidden="true">🕒</span> Timeline</p>
+    <h2 id="q2">How did we get here?</h2>
+    <ol class="tl">
+  <li class="tl-item tl-past" style="--j: 0">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">March</p>
+    <p class="tl-what">Council proposes closing the pool for the winter</p>
+  </li>
+  <li class="tl-item tl-past" style="--j: 1">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">June</p>
+    <p class="tl-what">Residents hand in a petition with 1,240 signatures</p>
+  </li>
+  <li class="tl-item tl-past" style="--j: 2">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">September</p>
+    <p class="tl-what">Trial winter opening costed at $48,000</p>
+  </li>
+  <li class="tl-item tl-now" style="--j: 3">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">Thursday <span class="tl-tag">Now</span></p>
+    <p class="tl-what">Council votes 7-2 to keep the pool open</p>
+  </li>
+  <li class="tl-item tl-next" style="--j: 4">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">November 1 <span class="tl-tag">Ahead</span></p>
+    <p class="tl-what">Pool opens for the winter season</p>
+  </li>
+</ol>
+
+  </section>
+  <section class="scene scene--quote" style="--i: 2" aria-labelledby="q3">
+    <p class="scene-kind"><span aria-hidden="true">💬</span> Quote</p>
+    <h2 id="q3">Why keep it open?</h2>
+    <blockquote class="qt">
+  <p class="qt-text">The pool is where the town learns to swim. Closing it for four months every year was the wrong saving.</p>
+  <footer class="qt-by">
+    <b>Councillor Tom Adeyemi</b>
+    <span>Town councillor</span>
+  </footer>
+</blockquote>
+
+  </section>
+
+  <section class="bottom-line" style="--i: 3">
+    <h2>Bottom line</h2>
+    <p>The pool opens for the winter season on November 1.</p>
+  </section>
+
+  <footer class="colophon">
+    <p>Presented by <b>it's news</b>. Every figure and quote in this story was checked against the article.</p>
+  </footer>
+</main>
+</body>
+</html>

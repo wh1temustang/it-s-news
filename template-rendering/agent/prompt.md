@@ -69,6 +69,16 @@ before or after it. Its shape:
      scenes on deaths, disasters, war or suffering, full stop. A reactive
      scene shows no helper sentences: affordances over instructions, the
      gesture must be obvious from the shape alone.
+   - A beat the robot can picture — weather to turn up to the article's
+     number, or a turn to scrub through → `scene`. Use a scene for any
+     non-grave story where the robot can picture the beat; a boring story
+     especially deserves one. There is no fixed list of beats: stage
+     whatever the story needs with simple shapes, a scale when a number
+     is being felt, stages when a turn is being scrubbed. Never for
+     serious, sad or grave news — no scenes on deaths, disasters, war
+     or suffering, full stop. A scene shows no helper sentences:
+     affordances over instructions, the slider must be obvious from
+     the shape alone.
    Use `info-board` and `big-number` for what's left: loose essentials with
    no stronger shape, and the one number that is the news. They are the
    fallback, not the default.

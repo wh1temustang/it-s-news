@@ -1,0 +1,178 @@
+/* --- scene ---
+   An animated, reactive illustrated scene: a character in weather the
+   reader can turn up, or acting out the story's beat. The figure is a
+   picture with a fixed palette, so its colours live in the SVG markup;
+   only the control below it uses these tokens, so it follows the page
+   theme and dark mode. The slider is the only cue; the scene shows no
+   helper sentences. */
+
+.sc-scene {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.sc-figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.sc-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --- rain: falling drops, bobbing robot, wobbling umbrella, ripples --- */
+
+.sc-drop {
+  animation: scene-fall var(--fall, .84s) linear infinite;
+  animation-duration: calc(var(--fall, .84s) * var(--m, 1));
+}
+
+.sc-bob {
+  animation: scene-bob 1.6s ease-in-out infinite;
+}
+
+.sc-wobble {
+  animation: scene-wobble 1.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.sc-ripple {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scene-ripple 2.2s ease-out infinite;
+}
+
+/* --- generic: keyframed elements the slider drives --- */
+
+.sc-anim {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+@keyframes scene-fall {
+  from { transform: translateY(-24px); }
+  to { transform: translateY(300px); }
+}
+
+@keyframes scene-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes scene-wobble {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes scene-ripple {
+  0% { transform: scale(.6); opacity: .7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* --- control: readout, label, slider, one-word button --- */
+
+.sc-control {
+  padding: 14px 16px 18px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.sc-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sc-value {
+  color: var(--accent);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.sc-value.sc-stage {
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.sc-label {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sc-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sc-slider {
+  flex: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 10px;
+  border-radius: 5px;
+  outline-offset: 4px;
+  background: linear-gradient(90deg, var(--water), var(--accent));
+  cursor: grab;
+}
+
+.sc-slider:active {
+  cursor: grabbing;
+}
+
+.sc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  cursor: grab;
+}
+
+.sc-slider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  cursor: grab;
+}
+
+.sc-jump {
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sc-jump:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-drop,
+  .sc-bob,
+  .sc-wobble,
+  .sc-ripple {
+    animation: none;
+  }
+  .sc-anim {
+    transition: none;
+  }
+}

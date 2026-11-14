@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>A morning in Fallowfield</title>
+<meta name="description" content="Three fictional stories, one page: a snowfall, a pool vote and a record loaf. Every number is made up for this sample.">
+<style>
+/* it's news: page shell and design tokens.
+   Templates style themselves with these tokens only, never raw colours, so
+   light and dark mode come for free. Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --ink: #15171c;
+  --muted: #5b616d;
+  --line: #e4e0d6;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --alt: #b45309;
+  --good: #15803d;
+  --bad: #b91c1c;
+  --pending: #b45309;
+  --neutral: #6b7280;
+  --water: #dce9f2;
+  --land: #ebe6da;
+  --coast: #b8ae98;
+  --border: #c9bfa8;
+  --radius: 18px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+[data-topic="world"]    { --accent: #2563eb; }
+[data-topic="politics"] { --accent: #7c3aed; }
+[data-topic="business"] { --accent: #0f766e; }
+[data-topic="science"]  { --accent: #0e7490; }
+[data-topic="tech"]     { --accent: #4f46e5; }
+[data-topic="climate"]  { --accent: #15803d; }
+[data-topic="health"]   { --accent: #be185d; }
+[data-topic="local"]    { --accent: #c2410c; }
+[data-topic="culture"]  { --accent: #a21caf; }
+[data-topic="sports"]   { --accent: #b91c1c; }
+
+/* Dark mode follows the reader's system, unless the page's host sets
+   data-theme="light" or "dark" on the root element for a reader's own choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --ink: #eef0f4;
+    --muted: #a3a9b5;
+    --line: #2a2e37;
+    --on-accent: #0b0d10;
+    --alt: #fbbf24;
+    --good: #4ade80;
+    --bad: #f87171;
+    --pending: #fbbf24;
+    --neutral: #9ca3af;
+    --water: #142130;
+    --land: #262a32;
+    --coast: #414856;
+    --border: #4a5160;
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) [data-topic="world"]    { --accent: #7aa2ff; }
+  :root:not([data-theme="light"]) [data-topic="politics"] { --accent: #b197fc; }
+  :root:not([data-theme="light"]) [data-topic="business"] { --accent: #2dd4bf; }
+  :root:not([data-theme="light"]) [data-topic="science"]  { --accent: #22d3ee; }
+  :root:not([data-theme="light"]) [data-topic="tech"]     { --accent: #8b93ff; }
+  :root:not([data-theme="light"]) [data-topic="climate"]  { --accent: #4ade80; }
+  :root:not([data-theme="light"]) [data-topic="health"]   { --accent: #f472b6; }
+  :root:not([data-theme="light"]) [data-topic="local"]    { --accent: #fb923c; }
+  :root:not([data-theme="light"]) [data-topic="culture"]  { --accent: #e879f9; }
+  :root:not([data-theme="light"]) [data-topic="sports"]   { --accent: #f87171; }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #181b21;
+  --ink: #eef0f4;
+  --muted: #a3a9b5;
+  --line: #2a2e37;
+  --on-accent: #0b0d10;
+  --alt: #fbbf24;
+  --good: #4ade80;
+  --bad: #f87171;
+  --pending: #fbbf24;
+  --neutral: #9ca3af;
+  --water: #142130;
+  --land: #262a32;
+  --coast: #414856;
+  --border: #4a5160;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] [data-topic="world"]    { --accent: #7aa2ff; }
+:root[data-theme="dark"] [data-topic="politics"] { --accent: #b197fc; }
+:root[data-theme="dark"] [data-topic="business"] { --accent: #2dd4bf; }
+:root[data-theme="dark"] [data-topic="science"]  { --accent: #22d3ee; }
+:root[data-theme="dark"] [data-topic="tech"]     { --accent: #8b93ff; }
+:root[data-theme="dark"] [data-topic="climate"]  { --accent: #4ade80; }
+:root[data-theme="dark"] [data-topic="health"]   { --accent: #f472b6; }
+:root[data-theme="dark"] [data-topic="local"]    { --accent: #fb923c; }
+:root[data-theme="dark"] [data-topic="culture"]  { --accent: #e879f9; }
+:root[data-theme="dark"] [data-topic="sports"]   { --accent: #f87171; }
+
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.story {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* --- headline --- */
+
+.hero { margin-bottom: 28px; }
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero :is(h1, h3) {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.dek {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2.6vw, 21px);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* --- scenes --- */
+
+.scene,
+.bottom-line {
+  margin-top: 18px;
+  padding: 22px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+}
+
+.scene-kind {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene :is(h2, h4),
+.bottom-line :is(h2, h4) {
+  margin: 0 0 18px;
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.bottom-line {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.bottom-line :is(h2, h4) {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom-line p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Shared by the chart templates. */
+.chart-unit {
+  margin: -10px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .story { padding-top: 28px; }
+  .scene, .bottom-line { padding: 18px 16px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* it's news: an edition, several stories on one page.
+   Inlined after base.css, and only into editions. Tokens only, no raw
+   colours, so dark mode keeps working. */
+
+.masthead,
+.toc ul,
+.edition,
+.edition-page > .colophon {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.masthead { padding-top: 40px; padding-bottom: 14px; }
+
+.masthead h1 {
+  margin: 0;
+  font-size: clamp(32px, 7vw, 54px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+/* --- section links, pinned while scrolling --- */
+
+.toc {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.toc ul {
+  display: flex;
+  gap: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-width: none;
+}
+
+.toc a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.toc a:hover,
+.toc a:focus-visible { border-color: var(--ink); }
+
+.toc-n {
+  min-width: 1.6em;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--line);
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* --- sections and stories --- */
+
+.edition { padding-bottom: 24px; }
+
+.edition-section,
+.story-card { scroll-margin-top: 64px; }
+
+.section-title {
+  margin: 36px 0 0;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.story-card { padding: 28px 0 4px; }
+
+.story-card + .story-card {
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.story-card .banner {
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.story-card .hero { margin-bottom: 20px; }
+
+.story-card .hero h3 { font-size: clamp(25px, 4.8vw, 36px); }
+
+/* --- an embedded animated explainer, after a deep story's scenes --- */
+
+/* The animation is a screen, not a paragraph: it breaks out of the text
+   column to the device screen's width and takes most of its height, so
+   the stage is big enough to watch and tap comfortably. On a narrow
+   screen the frame runs nearly full-screen, which is also what switches
+   the explainer's own layout to its portrait stage. */
+
+.animated-embed {
+  margin: 24px 0 8px;
+  width: min(1120px, calc(100vw - 32px));
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.animated-embed figcaption {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.animated-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 85vh;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+@media (max-width: 760px) {
+  .animated-embed iframe {
+    aspect-ratio: auto;
+    height: 92vh;
+    max-height: none;
+  }
+}
+
+.edition-page > .colophon { padding-bottom: 64px; }
+
+.edition-footer {
+  color: var(--ink);
+  font-size: 15px;
+}
+
+/* --- big number --- */
+
+.bn {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 22px 18px;
+}
+
+.bn-item {
+  animation: bn-pop 0.6s cubic-bezier(0.3, 1.3, 0.6, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 110ms + 200ms);
+}
+
+.bn-value {
+  margin: 0;
+  color: var(--accent);
+  font-size: clamp(40px, 8vw, 60px);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.bn-lead .bn-value { font-size: clamp(52px, 11vw, 80px); }
+
+.bn-trend {
+  margin-right: 6px;
+  font-size: 0.45em;
+  vertical-align: 0.35em;
+}
+
+.bn-label {
+  margin: 8px 0 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.bn-context {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+@keyframes bn-pop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- info board --- */
+
+.ib {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ib-tile {
+  --tone: var(--accent);
+  padding: 14px 14px 16px;
+  border-top: 4px solid var(--tone);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tone) 8%, var(--surface));
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
+}
+
+.ib-tile[data-tone="good"]    { --tone: var(--good); }
+.ib-tile[data-tone="bad"]     { --tone: var(--bad); }
+.ib-tile[data-tone="pending"] { --tone: var(--pending); }
+.ib-tile[data-tone="neutral"] { --tone: var(--neutral); }
+
+.ib-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ib-value {
+  margin: 4px 0 0;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ib-tile:not([data-tone="none"]) .ib-value { color: var(--tone); }
+
+.ib-note {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+/* --- line chart --- */
+
+.lc { margin: 0; color: var(--accent); }
+.lc svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.lc-base {
+  stroke: var(--line);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.lc-area { animation: rise 0.8s both; animation-delay: calc(var(--i, 0) * 90ms + 700ms); }
+
+.lc-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* pathLength="1" makes a dash of 1 the whole line, for the draw-in. */
+  stroke-dasharray: 1;
+  animation: lc-draw 1.1s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 250ms);
+}
+
+.lc-dot { fill: var(--surface); stroke: currentColor; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.lc-dot--key { fill: currentColor; }
+
+.lc-label {
+  fill: var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.lc-tick { fill: var(--muted); font-size: 13px; }
+
+/* SVG text scales with the chart, so give it bigger units on small screens. */
+@media (max-width: 520px) {
+  .lc-line { stroke-width: 6; }
+  .lc-label { font-size: 24px; }
+  .lc-tick { font-size: 21px; }
+}
+
+@keyframes lc-draw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* --- quote --- */
+
+.qt {
+  position: relative;
+  margin: 0;
+  padding: 6px 0 0 54px;
+}
+
+.qt::before {
+  content: "\201C";
+  position: absolute;
+  left: -4px;
+  top: -18px;
+  color: var(--accent);
+  font: 900 96px/1 var(--serif);
+}
+
+.qt-text {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.qt-by {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  margin-top: 14px;
+  font-size: 15px;
+}
+
+.qt-by span { color: var(--muted); }
+/* --- scene ---
+   An animated, reactive illustrated scene: a character in weather the
+   reader can turn up, or acting out the story's beat. The figure is a
+   picture with a fixed palette, so its colours live in the SVG markup;
+   only the control below it uses these tokens, so it follows the page
+   theme and dark mode. The slider is the only cue; the scene shows no
+   helper sentences. */
+
+.sc-scene {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.sc-figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.sc-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --- rain: falling drops, bobbing robot, wobbling umbrella, ripples --- */
+
+.sc-drop {
+  animation: scene-fall var(--fall, .84s) linear infinite;
+  animation-duration: calc(var(--fall, .84s) * var(--m, 1));
+}
+
+.sc-bob {
+  animation: scene-bob 1.6s ease-in-out infinite;
+}
+
+.sc-wobble {
+  animation: scene-wobble 1.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.sc-ripple {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scene-ripple 2.2s ease-out infinite;
+}
+
+/* --- generic: keyframed elements the slider drives --- */
+
+.sc-anim {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+@keyframes scene-fall {
+  from { transform: translateY(-24px); }
+  to { transform: translateY(300px); }
+}
+
+@keyframes scene-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes scene-wobble {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes scene-ripple {
+  0% { transform: scale(.6); opacity: .7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* --- control: readout, label, slider, one-word button --- */
+
+.sc-control {
+  padding: 14px 16px 18px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.sc-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sc-value {
+  color: var(--accent);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.sc-value.sc-stage {
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.sc-label {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sc-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sc-slider {
+  flex: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 10px;
+  border-radius: 5px;
+  outline-offset: 4px;
+  background: linear-gradient(90deg, var(--water), var(--accent));
+  cursor: grab;
+}
+
+.sc-slider:active {
+  cursor: grabbing;
+}
+
+.sc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  cursor: grab;
+}
+
+.sc-slider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  cursor: grab;
+}
+
+.sc-jump {
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sc-jump:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-drop,
+  .sc-bob,
+  .sc-wobble,
+  .sc-ripple {
+    animation: none;
+  }
+  .sc-anim {
+    transition: none;
+  }
+}
+
+/* --- timeline --- */
+
+.tl { margin: 0; padding: 0; list-style: none; }
+
+.tl-item {
+  position: relative;
+  padding: 0 0 20px 32px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 80ms + 200ms);
+}
+
+.tl-item:last-child { padding-bottom: 0; }
+
+/* The rail runs from each dot down to the next one. */
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 20px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--accent);
+  opacity: 0.35;
+}
+
+.tl-item:last-child::before { display: none; }
+
+.tl-item:has(+ .tl-next)::before {
+  background: repeating-linear-gradient(to bottom, var(--muted) 0 4px, transparent 4px 8px);
+  opacity: 0.7;
+}
+
+.tl-dot {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tl-now .tl-dot {
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
+  animation: tl-pulse 2.2s ease-out infinite;
+}
+
+.tl-next .tl-dot {
+  border-style: dashed;
+  border-color: var(--muted);
+  background: var(--surface);
+}
+
+.tl-when {
+  margin: 0;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tl-what {
+  margin: 2px 0 0;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.tl-now .tl-what { font-size: 19px; font-weight: 700; }
+.tl-next .tl-when,
+.tl-next .tl-what { color: var(--muted); }
+
+.tl-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 11px;
+  vertical-align: 1px;
+}
+
+.tl-next .tl-tag {
+  border: 1px solid var(--muted);
+  background: transparent;
+  color: var(--muted);
+}
+
+@keyframes tl-pulse {
+  70%  { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+
+</style>
+</head>
+<body>
+<div class="edition-page" lang="en">
+<header class="masthead">
+  <h1>A morning in Fallowfield</h1>
+  <p class="dek">Three fictional stories, one page: a snowfall, a pool vote and a record loaf. Every number is made up for this sample.</p>
+  <p class="byline">November 13, 2026</p>
+</header>
+<nav class="toc" aria-label="Sections">
+  <ul>
+    <li><a href="#local"><span aria-hidden="true">🏘️</span> Local <span class="toc-n">2</span></a></li>
+    <li><a href="#food"><span aria-hidden="true">🍞</span> Food <span class="toc-n">1</span></a></li>
+  </ul>
+</nav>
+<main class="edition">
+<section class="edition-section" id="local" aria-labelledby="local-title">
+  <h2 class="section-title" id="local-title"><span aria-hidden="true">🏘️</span> Local</h2>
+<article class="story-card" id="story-1" data-topic="local">
+  <p class="banner" role="note">Fictional sample: this is not real news.</p>
+  <header class="hero">
+    <p class="kicker">Local</p>
+    <h3>Fallowfield&#39;s deepest day of snow</h3>
+    <p class="dek">42 cm in 24 hours — the most in a single day since records began in 1988.</p>
+    <p class="byline">Fallowfield Gazette (fictional) · <span>November 13, 2026</span></p>
+  </header>
+
+  <section class="scene scene--scene" style="--i: 0" aria-labelledby="story-1-q1">
+    <p class="scene-kind"><span aria-hidden="true">🤖</span> Scene</p>
+    <h4 id="story-1-q1">How deep was the snow?</h4>
+    <div class="sc-scene">
+  <figure class="sc-figure">
+    <svg viewBox="0 0 400 300" role="img" aria-label="Snowfall in 24 hours">
+      <defs>
+        <linearGradient id="scene-sky-0" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1d3247"/>
+          <stop offset=".55" stop-color="#33506b"/>
+          <stop offset="1" stop-color="#24384e"/>
+        </linearGradient>
+        <linearGradient id="scene-room-0" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#2b313c"/>
+          <stop offset="1" stop-color="#1b1f27"/>
+        </linearGradient>
+      </defs>
+      <rect width="400" height="300" fill="url(#scene-sky-0)"/>
+  <ellipse cx="90" cy="42" rx="70" ry="16" fill="#22394f"/>  <ellipse cx="300" cy="30" rx="84" ry="18" fill="#1d3046"/>  <g>  <circle cx="30" cy="10" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:0s;"/>  <circle cx="80" cy="30" r="3" fill="#ffffff" class="sc-fall" style="--m:1.3;animation-delay:-0.5s;"/>  <circle cx="130" cy="0" r="3" fill="#ffffff" class="sc-fall" style="--m:0.9;animation-delay:-0.2s;"/>  <circle cx="180" cy="22" r="3" fill="#ffffff" class="sc-fall" style="--m:1.2;animation-delay:-0.8s;"/>  <circle cx="230" cy="6" r="3" fill="#ffffff" class="sc-fall" style="--m:1.1;animation-delay:-0.4s;"/>  <circle cx="280" cy="34" r="3" fill="#ffffff" class="sc-fall" style="--m:0.85;animation-delay:-0.7s;"/>  <circle cx="330" cy="14" r="3" fill="#ffffff" class="sc-fall" style="--m:1.25;animation-delay:-0.1s;"/>  <circle cx="370" cy="40" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.9s;"/>  <circle cx="55" cy="52" r="3" fill="#ffffff" class="sc-fall" style="--m:1.15;animation-delay:-0.6s;"/>  <circle cx="355" cy="60" r="3" fill="#ffffff" class="sc-fall" style="--m:0.95;animation-delay:-0.3s;"/>  </g>  <g class="sc-anim" data-moves='[{"opacity": 0, "t": 0.27}, {"opacity": 1, "t": 0.67}]' opacity="0">  <circle cx="15" cy="44" r="3" fill="#ffffff" class="sc-fall" style="--m:1.05;animation-delay:-0.2s;"/>  <circle cx="105" cy="18" r="3" fill="#ffffff" class="sc-fall" style="--m:0.9;animation-delay:-0.6s;"/>  <circle cx="155" cy="48" r="3" fill="#ffffff" class="sc-fall" style="--m:1.2;animation-delay:-0.1s;"/>  <circle cx="205" cy="12" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.8s;"/>  <circle cx="255" cy="42" r="3" fill="#ffffff" class="sc-fall" style="--m:1.3;animation-delay:-0.4s;"/>  <circle cx="305" cy="8" r="3" fill="#ffffff" class="sc-fall" style="--m:0.88;animation-delay:-0.7s;"/>  <circle cx="345" cy="46" r="3" fill="#ffffff" class="sc-fall" style="--m:1.1;animation-delay:-0.5s;"/>  <circle cx="65" cy="70" r="3" fill="#ffffff" class="sc-fall" style="--m:1.2;animation-delay:-0.3s;"/>  </g>  <g class="sc-anim" data-moves='[{"opacity": 0, "t": 0.6}, {"opacity": 1, "t": 1}]' opacity="0">  <circle cx="45" cy="26" r="3" fill="#ffffff" class="sc-fall" style="--m:0.9;animation-delay:-0.4s;"/>  <circle cx="95" cy="56" r="3" fill="#ffffff" class="sc-fall" style="--m:1.15;animation-delay:-0.7s;"/>  <circle cx="145" cy="20" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.2s;"/>  <circle cx="195" cy="50" r="3" fill="#ffffff" class="sc-fall" style="--m:1.25;animation-delay:-0.8s;"/>  <circle cx="245" cy="16" r="3" fill="#ffffff" class="sc-fall" style="--m:0.92;animation-delay:-0.5s;"/>  <circle cx="295" cy="52" r="3" fill="#ffffff" class="sc-fall" style="--m:1.1;animation-delay:-0.1s;"/>  <circle cx="335" cy="28" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.6s;"/>  <circle cx="120" cy="64" r="3" fill="#ffffff" class="sc-fall" style="--m:0.88;animation-delay:-0.3s;"/>  </g>  <rect x="0" y="270" width="400" height="30" fill="#16283a"/>  <ellipse cx="200" cy="272" rx="78" ry="8" fill="#dbe9f5" opacity="0.85" class="sc-anim" data-moves='[{"sy": 0.35, "t": 0}, {"sy": 1.25, "t": 1}]'/>  <ellipse cx="160" cy="272" rx="18" ry="4" fill="none" stroke="#ffffff" stroke-width="1.5" class="sc-ripple"/>  <ellipse cx="248" cy="272" rx="14" ry="3" fill="none" stroke="#ffffff" stroke-width="1.5" class="sc-ripple" style="animation-delay:-1.1s;"/>  <g class="sc-anim" data-bx="0" data-by="0" data-moves='[{"rotate": 0, "t": 0}, {"rotate": -12, "t": 1}]' style="transform:translate(0px, 0px)">
+    <g class="sc-bob">
+  <rect x="188" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
+  <rect x="204" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
+  <rect x="184" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
+  <rect x="202" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
+  <rect x="180" y="200" width="40" height="42" rx="9" fill="#f5b301"/>
+  <rect x="190" y="212" width="20" height="14" rx="3" fill="#222d3a"/>
+  <circle cx="200" cy="219" r="3" fill="#7fd4ff"/>
+  <line x1="180" y1="212" x2="167" y2="230" stroke="#f5b301" stroke-width="7" stroke-linecap="round"/>
+  <line x1="220" y1="212" x2="231" y2="182" stroke="#f5b301" stroke-width="7" stroke-linecap="round"/>
+  <rect x="184" y="168" width="32" height="30" rx="8" fill="#ffc93c"/>
+  <circle cx="194" cy="182" r="3.5" fill="#222d3a"/>
+  <circle cx="206" cy="182" r="3.5" fill="#222d3a"/>
+  <path d="M192 190 q8 4 16 0" stroke="#222d3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <line x1="200" y1="168" x2="200" y2="156" stroke="#c98a12" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="200" cy="153" r="3.5" fill="#ff6b6b"/>
+</g>
+
+  </g>  <g class="sc-anim" data-moves='[{"rotate": 0, "t": 0}, {"rotate": -12, "t": 1}]'>  <line x1="252" y1="205" x2="282" y2="262" stroke="#8a5f0b" stroke-width="3" stroke-linecap="round"/>  <path d="M274 258 L292 258 L288 272 L278 272 Z" fill="#9aa7b5"/>  </g>    </svg>
+    <div class="sc-control">
+      <div class="sc-readout">
+        <span class="sc-value" data-unit=" cm" data-unit-after="1" data-max="42">16.799999999999997 cm</span>
+        <span class="sc-label">Snowfall in 24 hours</span>
+      </div>
+      <div class="sc-row">
+        <input type="range" class="sc-slider" min="0" max="42" step="1.4" value="16.799999999999997" aria-label="Snowfall in 24 hours">
+        <button type="button" class="sc-jump">Max</button>
+      </div>
+    </div>
+  </figure>
+<script>
+(function () {
+  var root = document.currentScript.closest('.sc-scene');
+  if (!root || root.dataset.scWired) return;
+  root.dataset.scWired = '1';
+  var figure = root.querySelector('.sc-figure');
+  var slider = root.querySelector('.sc-slider');
+  var readout = root.querySelector('.sc-value');
+  var stageEl = root.querySelector('.sc-stage');
+  var stages = stageEl ? JSON.parse(stageEl.dataset.stages) : null;
+  var max = +slider.max;
+  var unit = readout && readout.dataset.unit ? readout.dataset.unit : '';
+  var after = readout && readout.dataset.unitAfter === '1';
+  var def = {x: 0, y: 0, rotate: 0, sx: 1, sy: 1, opacity: 1};
+  function norm(moves) {
+    var out = [], cur = {x: def.x, y: def.y, rotate: def.rotate, sx: def.sx, sy: def.sy, opacity: def.opacity};
+    moves.slice().sort(function (a, b) { return a.t - b.t; }).forEach(function (kf) {
+      var n = {x: cur.x, y: cur.y, rotate: cur.rotate, sx: cur.sx, sy: cur.sy, opacity: cur.opacity, t: kf.t};
+      ['x', 'y', 'rotate', 'sx', 'sy', 'opacity'].forEach(function (k) { if (kf[k] !== undefined) n[k] = kf[k]; });
+      out.push(n); cur = n;
+    });
+    return out;
+  }
+  function at(moves, t) {
+    var lo = moves[0], hi = moves[moves.length - 1];
+    if (t <= lo.t) return lo;
+    if (t >= hi.t) return hi;
+    for (var i = 0; i < moves.length - 1; i++) {
+      if (t >= moves[i].t && t <= moves[i + 1].t) { lo = moves[i]; hi = moves[i + 1]; break; }
+    }
+    var f = hi.t === lo.t ? 0 : (t - lo.t) / (hi.t - lo.t);
+    var o = {t: t};
+    ['x', 'y', 'rotate', 'sx', 'sy', 'opacity'].forEach(function (k) {
+      o[k] = lo[k] + (hi[k] - lo[k]) * f;
+    });
+    return o;
+  }
+  function fmt(v) { return String(Number(v.toFixed(2))); }
+  var animated = [];
+  root.querySelectorAll('[data-moves]').forEach(function (el) {
+    animated.push({el: el, moves: norm(JSON.parse(el.dataset.moves)),
+      bx: parseFloat(el.dataset.bx || '0'), by: parseFloat(el.dataset.by || '0')});
+  });
+  function update() {
+    var v = +slider.value;
+    var t = max ? v / max : 0;
+    if (readout && readout.dataset.max !== undefined) {
+      readout.textContent = after ? fmt(v) + unit : unit + fmt(v);
+    }
+    if (stages) {
+      var k = Math.min(stages.length - 1, Math.floor(t * stages.length));
+      stageEl.textContent = stages[k];
+    }
+    figure.style.setProperty('--fall', (1.1 - 0.65 * t).toFixed(2) + 's');
+    animated.forEach(function (a) {
+      var s = at(a.moves, t);
+      a.el.style.transform = 'translate(' + (a.bx + s.x).toFixed(1) + 'px, ' + (a.by + s.y).toFixed(1) + 'px) rotate(' + s.rotate.toFixed(1) + 'deg) scale(' + s.sx.toFixed(3) + ', ' + s.sy.toFixed(3) + ')';
+      a.el.style.opacity = s.opacity.toFixed(2);
+    });
+  }
+  slider.addEventListener('input', update);
+  slider.addEventListener('keydown', function (e) {
+    var st = +slider.step || 1;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      slider.value = Math.min(max, +slider.value + st); update(); e.preventDefault();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      slider.value = Math.max(0, +slider.value - st); update(); e.preventDefault();
+    }
+  });
+  root.querySelector('.sc-jump').addEventListener('click', function () {
+    slider.value = max; update(); slider.focus();
+  });
+  update();
+})();
+</script>
+</div>
+
+  </section>
+  <section class="scene scene--big-number" style="--i: 1" aria-labelledby="story-1-q2">
+    <p class="scene-kind"><span aria-hidden="true">🔢</span> Big number</p>
+    <h4 id="story-1-q2">How far past the old record did it go?</h4>
+    <div class="bn">
+  <div class="bn-item bn-lead" style="--j: 0">
+    <p class="bn-value">42 cm</p>
+    <p class="bn-label">Snow in 24 hours</p>
+    <p class="bn-context">Most in a single day since 1988</p>
+  </div>
+  <div class="bn-item" style="--j: 1">
+    <p class="bn-value">31 cm</p>
+    <p class="bn-label">Previous record</p>
+    <p class="bn-context">Old record, set in 2009</p>
+  </div>
+</div>
+
+  </section>
+
+  <section class="bottom-line" style="--i: 2">
+    <h4>Bottom line</h4>
+    <p>The old record stood for 17 years. The ploughs cleared the main road by noon, and no schools closed.</p>
+  </section>
+
+</article>
+<article class="story-card" id="story-2" data-topic="local">
+  <p class="banner" role="note">Fictional sample: this is not real news.</p>
+  <header class="hero">
+    <p class="kicker">Local</p>
+    <h3>Council votes 7-2 to keep the pool open</h3>
+    <p class="dek">Council votes 7-2 to keep the Riverside Pool open through the winter.</p>
+    <p class="byline">Fallowfield Gazette (fictional) · <span>November 13, 2026</span></p>
+  </header>
+
+  <section class="scene scene--info-board" style="--i: 0" aria-labelledby="story-2-q1">
+    <p class="scene-kind"><span aria-hidden="true">📋</span> Info board</p>
+    <h4 id="story-2-q1">What did the council decide?</h4>
+    <ul class="ib">
+  <li class="ib-tile" data-tone="good" style="--j: 0">
+    <p class="ib-label">Council vote</p>
+    <p class="ib-value">7-2</p>
+  </li>
+  <li class="ib-tile" data-tone="neutral" style="--j: 1">
+    <p class="ib-label">Winter opening cost</p>
+    <p class="ib-value">$48,000</p>
+    <p class="ib-note">Trial winter opening</p>
+  </li>
+  <li class="ib-tile" data-tone="neutral" style="--j: 2">
+    <p class="ib-label">Petition signatures</p>
+    <p class="ib-value">1,240</p>
+  </li>
+  <li class="ib-tile" data-tone="neutral" style="--j: 3">
+    <p class="ib-label">Winter season</p>
+    <p class="ib-value">November to March</p>
+  </li>
+</ul>
+
+  </section>
+  <section class="scene scene--timeline" style="--i: 1" aria-labelledby="story-2-q2">
+    <p class="scene-kind"><span aria-hidden="true">🕒</span> Timeline</p>
+    <h4 id="story-2-q2">How did we get here?</h4>
+    <ol class="tl">
+  <li class="tl-item tl-past" style="--j: 0">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">March</p>
+    <p class="tl-what">Council proposes closing the pool for the winter</p>
+  </li>
+  <li class="tl-item tl-past" style="--j: 1">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">June</p>
+    <p class="tl-what">Residents hand in a petition with 1,240 signatures</p>
+  </li>
+  <li class="tl-item tl-past" style="--j: 2">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">September</p>
+    <p class="tl-what">Trial winter opening costed at $48,000</p>
+  </li>
+  <li class="tl-item tl-now" style="--j: 3">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">Thursday <span class="tl-tag">Now</span></p>
+    <p class="tl-what">Council votes 7-2 to keep the pool open</p>
+  </li>
+  <li class="tl-item tl-next" style="--j: 4">
+    <span class="tl-dot" aria-hidden="true"></span>
+    <p class="tl-when">November 1 <span class="tl-tag">Ahead</span></p>
+    <p class="tl-what">Pool opens for the winter season</p>
+  </li>
+</ol>
+
+  </section>
+  <section class="scene scene--quote" style="--i: 2" aria-labelledby="story-2-q3">
+    <p class="scene-kind"><span aria-hidden="true">💬</span> Quote</p>
+    <h4 id="story-2-q3">Why keep it open?</h4>
+    <blockquote class="qt">
+  <p class="qt-text">The pool is where the town learns to swim. Closing it for four months every year was the wrong saving.</p>
+  <footer class="qt-by">
+    <b>Councillor Tom Adeyemi</b>
+    <span>Town councillor</span>
+  </footer>
+</blockquote>
+
+  </section>
+
+  <section class="bottom-line" style="--i: 3">
+    <h4>Bottom line</h4>
+    <p>The pool opens for the winter season on November 1.</p>
+  </section>
+
+</article>
+</section>
+<section class="edition-section" id="food" aria-labelledby="food-title">
+  <h2 class="section-title" id="food-title"><span aria-hidden="true">🍞</span> Food</h2>
+<article class="story-card" id="story-3" data-topic="local">
+  <p class="banner" role="note">Fictional sample: this is not real news.</p>
+  <header class="hero">
+    <p class="kicker">Local</p>
+    <h3>A record loaf at the Fallowfield bake-off</h3>
+    <p class="dek">320 visitors, 58 loaves, and a winning loaf of 4.6 kg.</p>
+    <p class="byline">Fallowfield Gazette (fictional) · <span>November 13, 2026</span></p>
+  </header>
+
+  <section class="scene scene--big-number" style="--i: 0" aria-labelledby="story-3-q1">
+    <p class="scene-kind"><span aria-hidden="true">🔢</span> Big number</p>
+    <h4 id="story-3-q1">How big was the bake-off?</h4>
+    <div class="bn">
+  <div class="bn-item bn-lead" style="--j: 0">
+    <p class="bn-value">4.6 kg</p>
+    <p class="bn-label">Winning loaf</p>
+  </div>
+  <div class="bn-item" style="--j: 1">
+    <p class="bn-value">320</p>
+    <p class="bn-label">Visitors on Saturday</p>
+  </div>
+</div>
+
+  </section>
+  <section class="scene scene--line-chart" style="--i: 1" aria-labelledby="story-3-q2">
+    <p class="scene-kind"><span aria-hidden="true">📈</span> Line chart</p>
+    <h4 id="story-3-q2">Is the bake-off growing?</h4>
+    <p class="chart-unit">Loaves entered</p>
+<figure class="lc">
+  <svg viewBox="0 0 600 280" role="img" aria-label="2024: 34; 2025: 41; 2026: 58">
+    <defs>
+      <linearGradient id="lc-fill-6" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="currentColor" stop-opacity="0.28"/>
+        <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <line class="lc-base" x1="24" x2="576" y1="244" y2="244"/>
+    <path class="lc-area" d="M24.0 186.7 L300.0 149.6 L576.0 59.5 L576.0 244 L24.0 244 Z" fill="url(#lc-fill-6)"/>
+    <path class="lc-line" d="M24.0 186.7 L300.0 149.6 L576.0 59.5" pathLength="1"/>
+    <circle class="lc-dot lc-dot--key" cx="24.0" cy="186.7" r="5.5"/>
+    <text class="lc-label" x="24.0" y="212.7" text-anchor="start">34</text>
+    <circle class="lc-dot" cx="300.0" cy="149.6" r="3.5"/>
+    <circle class="lc-dot lc-dot--key" cx="576.0" cy="59.5" r="5.5"/>
+    <text class="lc-label" x="576.0" y="45.5" text-anchor="end">58</text>
+    <text class="lc-tick" x="24.0" y="270" text-anchor="start">2024</text>
+    <text class="lc-tick" x="300.0" y="270" text-anchor="middle">2025</text>
+    <text class="lc-tick" x="576.0" y="270" text-anchor="end">2026</text>
+  </svg>
+</figure>
+<p class="note">Loaves entered each year</p>
+
+  </section>
+  <section class="scene scene--quote" style="--i: 2" aria-labelledby="story-3-q3">
+    <p class="scene-kind"><span aria-hidden="true">💬</span> Quote</p>
+    <h4 id="story-3-q3">What is the secret?</h4>
+    <blockquote class="qt">
+  <p class="qt-text">I kneaded it for an hour. The secret is a slow rise.</p>
+  <footer class="qt-by">
+    <b>Priya Raman</b>
+    <span>Winning baker</span>
+  </footer>
+</blockquote>
+
+  </section>
+
+  <section class="bottom-line" style="--i: 3">
+    <h4>Bottom line</h4>
+    <p>This year&#39;s event raised $1,150 for the town library.</p>
+  </section>
+
+</article>
+</section>
+</main>
+<footer class="colophon">
+  <p class="edition-footer">That&#39;s the whole edition. Every story is fictional.</p>
+  <p>Presented by <b>it's news</b>. Every figure and quote in these stories was checked against their articles.</p>
+</footer>
+</div>
+</body>
+</html>
