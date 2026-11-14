@@ -11,9 +11,11 @@ It turns the day's news into a visual, single-file page. No setup needed —
 or clone the repo and open any `.html` file in an `examples/` folder.
 
 <p align="center">
-  <img src="docs/images/edition-scroll.gif" width="360" alt="A morning edition scrolling from top to bottom: headlines, big numbers, timelines, maps, and the robot picturing the news.">
+  <img src="docs/images/edition-top.png" width="280" alt="The top of a fictional morning edition: masthead, sections, and the first story's headline.">
+  <img src="docs/images/edition-scene.png" width="280" alt="The robot picturing a snowfall: dragging the snow up to 42 cm as the drift grows.">
+  <img src="docs/images/edition-more.png" width="280" alt="The end of the edition: a quote, the bottom line, and the footer.">
 </p>
-<p align="center"><sub>One morning's edition, top to bottom.</sub></p>
+<p align="center"><sub>A fictional English edition — <a href="template-rendering/examples/english-edition.html">read the whole page</a>.</sub></p>
 
 ## Templates
 
