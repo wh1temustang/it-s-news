@@ -57,9 +57,7 @@ python3 -m venv .venv && .venv/bin/pip install -e ../common -e .
 ```
 
 See each approach's README for details, or ask a coding agent working in
-this repo to "present this article". The
-[daily-edition](daily-edition/) skill renders a whole morning edition from
-your newsletters.
+this repo to "present this article".
 
 Everything here is public — never commit credentials or personal data. Got
 another way to make news quick to take in? Add an approach, following
