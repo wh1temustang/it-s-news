@@ -1,6 +1,6 @@
 {
   "additionalProperties": false,
-  "description": "An animated, reactive illustrated scene: the robot pictures the story's beat, when the beat is worth picturing. The agent draws the scene itself — its own SVG elements and flow, with shapes — and the template provides the robot, the stage and the slider: the reader scrubs the beat or turns a scale up to the article number. The scene is general: there is no fixed list of beats. Shapes are layout, not facts, so their geometry is x-ungrounded; only the label, stage lines, shape text and the scale number are checked against the article.",
+  "description": "An animated, reactive illustrated scene: the robot pictures the story's beat, when the beat is worth picturing. The agent draws the scene itself — its own SVG elements and flow, with shapes — and the template provides the robot, the stage and the slider. The scene chooses how it progresses: the reader drags the slider, the scene plays itself, or a tap advances it a stage at a time. The scene is general: there is no fixed list of beats. Shapes are layout, not facts, so their geometry is x-ungrounded; only the label, stage lines, shape text and the scale number are checked against the article.",
   "properties": {
     "backdrop": {
       "default": "none",
@@ -24,6 +24,17 @@
       "maxLength": 60,
       "minLength": 1,
       "type": "string"
+    },
+    "progression": {
+      "default": "slider",
+      "description": "How the scene moves: \"slider\" — the reader drags the slider; \"autoplay\" — the scene plays itself from the slider's start position to the end, pausing the moment the reader touches it, and off under reduced motion; \"tap\" — tapping the figure advances one stage at a time, stages scenes only (a scene with no stages and \"tap\" falls back to the slider). A design choice, not a fact from the article, so the checker does not verify it.",
+      "enum": [
+        "autoplay",
+        "slider",
+        "tap"
+      ],
+      "type": "string",
+      "x-ungrounded": true
     },
     "scale": {
       "additionalProperties": false,

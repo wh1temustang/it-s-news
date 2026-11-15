@@ -25,6 +25,17 @@
   height: auto;
 }
 
+/* --- tap progression: the figure is the control, so it reads as one --- */
+
+.sc-scene[data-progression="tap"] svg {
+  cursor: pointer;
+}
+
+.sc-scene[data-progression="tap"] svg:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
 /* --- ambient motion: falling drops, streaming packets, pulsing alarms,
    bobbing robot, wobbling shapes, ripples --- */
 

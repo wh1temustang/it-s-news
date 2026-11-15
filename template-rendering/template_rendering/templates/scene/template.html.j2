@@ -1,7 +1,9 @@
 {# Scene: a general animated, reactive illustrated scene. The agent
    draws the scene itself — its own SVG elements and flow, with shapes —
-   and the template provides the robot, the stage and the slider: the
-   reader scrubs the beat or turns a scale up to the article number.
+   and the template provides the robot, the stage and the slider. The
+   scene chooses how it progresses: the reader drags the slider, the
+   scene plays itself on autoplay, or a tap advances it a stage at a
+   time — the slider stays visible as the progress bar in every mode.
    There is no fixed list of beats: rain is shapes with a scale, a
    resignation is shapes with stages, a router flooding another router
    is shapes with a stream, and the next story's beat is shapes the
@@ -92,9 +94,12 @@
 {% set start = (((maxv * sf / step)|round|int) * step) if has_scale else 0 %}
 {% set has_robot = (data.shapes is defined and (data.shapes | selectattr('kind', 'equalto', 'robot') | list | length > 0)) %}
 {% set stage0 = ([((sf if has_scale else 0) * (data.stages | length))|int, (data.stages | length) - 1]|min) if has_stages else 0 %}
-<div class="sc-scene">
+{% set progression = data.progression if data.progression is defined else 'slider' %}
+{% set effective = 'slider' if progression == 'tap' and not has_stages else progression %}
+{% set sweep = ((data.stages | length) * 3000) if has_stages else 10000 %}
+<div class="sc-scene"{% if effective != 'slider' %} data-progression="{{ effective }}"{% endif %}>
   <figure class="sc-figure">
-    <svg viewBox="0 0 400 300" role="img" aria-label="{{ data.label }}">
+    <svg viewBox="0 0 400 300"{% if effective == 'tap' %} tabindex="0" role="button" aria-label="{{ data.label }} — {{ t("scene.tap") }}"{% else %} role="img" aria-label="{{ data.label }}"{% endif %}>
       <defs>
         <linearGradient id="scene-sky-{{ index }}" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stop-color="#1d3247"/>
@@ -182,8 +187,11 @@
       hasFill: moves.some(function (k) { return k.fill !== undefined; }),
       bx: parseFloat(el.dataset.bx || '0'), by: parseFloat(el.dataset.by || '0')});
   });
-  function update() {
-    var v = +slider.value;
+  function update(v) {
+    // v is the slider position in slider units; when the caller leaves it
+    // out, read the slider. Autoplay passes its own raw position, so the
+    // scene follows it exactly even if the thumb snaps to the step.
+    v = (v === undefined) ? +slider.value : v;
     var t = max ? v / max : 0;
     if (readout && readout.dataset.max !== undefined) {
       readout.textContent = after ? fmt(v) + unit : unit + fmt(v);
@@ -216,6 +224,65 @@
     slider.value = max; update(); slider.focus();
   });
   update();
+  {% if effective == 'autoplay' %}
+  // Autoplay: a timer advances the slider on its own, from where it
+  // starts to the end, paced to the stages (or ten seconds for a scale
+  // scene). It pauses the moment the reader touches the scene or the
+  // slider, and never starts under reduced motion. It starts when the
+  // scene scrolls into view, so a reader who arrives late still sees
+  // the whole sweep.
+  var autoTimer = null;
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function stopAuto() {
+    if (autoTimer !== null) { clearInterval(autoTimer); autoTimer = null; }
+  }
+  function startAuto() {
+    if (reducedMotion || autoTimer !== null) return;
+    var rate = max / {{ sweep }};
+    var pos = +slider.value;
+    var last = Date.now();
+    autoTimer = setInterval(function () {
+      var now = Date.now();
+      pos = Math.min(max, pos + rate * (now - last));
+      last = now;
+      slider.value = pos;
+      update(pos);
+      if (pos >= max) stopAuto();
+    }, 50);
+  }
+  figure.addEventListener('pointerdown', stopAuto);
+  slider.addEventListener('pointerdown', stopAuto);
+  slider.addEventListener('keydown', stopAuto);
+  slider.addEventListener('input', stopAuto);
+  root.querySelector('.sc-jump').addEventListener('click', stopAuto);
+  if ('IntersectionObserver' in window) {
+    var seen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { startAuto(); seen.disconnect(); }
+      });
+    });
+    seen.observe(root);
+  } else {
+    startAuto();
+  }
+  {% elif effective == 'tap' %}
+  // Tap: tapping the figure jumps to the next stage boundary; after the
+  // last stage it wraps back to the start, so the beat replays. The
+  // slider follows as the progress bar, and the figure is focusable so
+  // Enter or Space advances it too.
+  var svg = root.querySelector('svg');
+  function nextStage() {
+    var n = stages.length;
+    var t = max ? (+slider.value) / max : 0;
+    var k = Math.floor(t * n);
+    slider.value = (k + 1 >= n) ? 0 : ((k + 1) / n) * max;
+    update();
+  }
+  svg.addEventListener('click', nextStage);
+  svg.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { nextStage(); e.preventDefault(); }
+  });
+  {% endif %}
 })();
 </script>
 </div>
