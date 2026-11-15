@@ -80,10 +80,16 @@ before or after it. Its shape:
      worse than none, and a scene is never owed just to fill coverage.
      There is no fixed list of beats: stage whatever the story needs
      with simple shapes, a scale when a number is being felt, stages
-     when a turn is being scrubbed. Never for serious, sad or grave
-     news — no scenes on deaths, disasters, war or suffering, full
-     stop. A scene shows no helper sentences: affordances over
-     instructions, the slider must be obvious from the shape alone.
+     when a turn is being scrubbed. A scene may be complicated: stage
+     the mechanism, not just the number — the actors and the flow
+     between them. One router flooding another with packets is a scene:
+     two routers, a stream of packets between them, the victim wobbling
+     under the load. Use `stream` for flows between actors, and raise
+     the cast as the mechanism needs it (up to 40 shapes). Never for
+     serious, sad or grave news — no scenes on deaths, disasters, war
+     or suffering, full stop. A scene shows no helper sentences:
+     affordances over instructions, the slider must be obvious from
+     the shape alone.
    Use `info-board` and `big-number` for what's left: loose essentials with
    no stronger shape, and the one number that is the news. They are the
    fallback, not the default.

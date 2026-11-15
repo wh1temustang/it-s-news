@@ -96,8 +96,11 @@ toll is the wrong tone.
 the story's beat, when the beat is worth picturing. There is no fixed
 list of beats: the storyboard stages any beat with simple shapes (rect,
 circle, ellipse, line, path, text, groups), and the template provides the
-robot, the backdrop, the animation wiring and the slider. Give a scale
-scene `scale` (the article number, its unit, and where the slider starts)
+robot, the backdrop, the animation wiring and the slider. A scene may be
+complicated: stage the mechanism — the actors and the flow between them.
+Use `stream` for a flow between actors (packets from one router to
+another), and raise the cast as the mechanism needs it; the shape budget
+is 40. Give a scale scene `scale` (the article number, its unit, and where the slider starts)
 so the reader turns the number up with their own hand; give a beat scene
 `stages` (two to four short lines) so the reader scrubs the turn. Shapes
 are layout, not facts: their geometry is not checked against the article,
