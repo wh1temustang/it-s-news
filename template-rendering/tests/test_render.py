@@ -79,6 +79,58 @@ class StoryboardTests(unittest.TestCase):
         self.assertTrue(any("already answers this question" in e for e in errors), errors)
 
 
+class SceneTests(unittest.TestCase):
+    def article(self):
+        return article.parse("---\nsource: Test\n---\nBody\n")
+
+    def board(self, data):
+        return {"headline": {"title": "T", "dek": "D", "topic": "world"},
+                "scenes": [{"template": "scene", "question": "What happens?",
+                            "data": data}]}
+
+    def render(self, data):
+        return render_page(self.board(data), self.article())
+
+    def test_stream_shape_emits_class_speed_and_delay(self):
+        html = self.render({"character": "robot", "label": "Test", "shapes": [
+            {"kind": "circle", "cx": 50, "cy": 50, "r": 3, "fill": "#7fd4ff",
+             "anim": "stream", "speed": 1.5, "delay": -0.5}]})
+        self.assertIn('class="sc-stream"', html)
+        self.assertIn("--m:1.5;", html)
+        self.assertIn("animation-delay:-0.5s;", html)
+
+    def test_group_anim_rides_on_an_inner_group(self):
+        # The animation must not replace the group's placement transform:
+        # it rides on an inner group while the outer group keeps the
+        # translate, so a wobbling router stays where it was drawn.
+        html = self.render({"character": "robot", "label": "Test", "shapes": [
+            {"kind": "group", "x": 310, "y": 110, "anim": "wobble",
+             "children": [{"kind": "rect", "x": 0, "y": 0, "width": 10,
+                           "height": 10, "fill": "#2b313c"}]}]})
+        self.assertIn('<g class="sc-wobble">', html)
+        self.assertIn("transform:translate(310px, 110px)", html)
+
+    def test_group_moves_wins_over_anim(self):
+        html = self.render({"character": "robot", "label": "Test", "shapes": [
+            {"kind": "group", "x": 10, "y": 10, "anim": "wobble",
+             "moves": [{"t": 0}, {"t": 1, "x": 20}],
+             "children": [{"kind": "rect", "x": 0, "y": 0, "width": 10,
+                           "height": 10, "fill": "#2b313c"}]}]})
+        self.assertIn("data-moves", html)
+        self.assertNotIn('<g class="sc-wobble">', html)
+
+    def test_shape_budget_is_40(self):
+        def board(n):
+            shapes = [{"kind": "circle", "cx": i, "cy": 10, "r": 2,
+                       "fill": "#7fd4ff"} for i in range(n)]
+            return self.board({"character": "robot", "label": "Test",
+                               "shapes": shapes})
+        a = self.article()
+        self.assertEqual(storyboard.check(board(40), a), [])
+        errors = storyboard.check(board(41), a)
+        self.assertTrue(any("the limit is 40" in e for e in errors), errors)
+
+
 class CliTests(unittest.TestCase):
     def run_cli(self, *args: str) -> tuple[int, str, str]:
         out, err = io.StringIO(), io.StringIO()
