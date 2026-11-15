@@ -15,7 +15,7 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 | Why is it happening? What does it lead to? | `cause-effect` | 3+ linked steps, each one stated in the article | the links are your own inference |
 | What did someone say that matters? | `quote` | a direct quote from a named speaker | the quote is filler ("We are pleased to announce…") |
 | What does it feel like to touch? | `reactive` | one number or turn the reader should feel: a figure worth uncovering, a before and after to compare, or a value to fill up by holding | the number is small enough to just read, or the turn needs a chart's precision |
-| What does it feel like to be there? | `scene` | a beat the robot can picture — weather to turn up to a grounded number, or a turn to scrub through | the news is grave, or the story has no beat the robot can act out |
+| What does it feel like to be there? | `scene` | a beat the robot can picture — weather to turn up to a grounded number, or a turn to scrub through | the news is grave, the story has no beat the robot can act out, or the beat is too dull to be worth staging |
 
 If no row fits a question, leave the question out. Fewer, stronger scenes
 beat a full page.
@@ -93,7 +93,7 @@ scenes on deaths, disasters, war or suffering, full stop: a foil over a
 toll is the wrong tone.
 
 **`scene`**: an animated, reactive illustrated scene — the robot pictures
-the story's beat, so a boring story is worth looking at. There is no fixed
+the story's beat, when the beat is worth picturing. There is no fixed
 list of beats: the storyboard stages any beat with simple shapes (rect,
 circle, ellipse, line, path, text, groups), and the template provides the
 robot, the backdrop, the animation wiring and the slider. Give a scale
@@ -103,12 +103,13 @@ so the reader turns the number up with their own hand; give a beat scene
 are layout, not facts: their geometry is not checked against the article,
 but any words drawn on the scene are, like any other words. A shape has
 either `anim` (a looping ambient motion) or `moves` (keyframes the slider
-drives), not both; author every shape in its state at t=0. Use a scene
-for any non-grave story where the robot can picture the beat — a boring
-story especially deserves one. The only exclusion is grave news: no scenes
-on deaths, disasters, war or suffering, full stop. Affordances over
-instructions: a scene shows no helper sentences — the slider grip is the
-only cue, plus one-word buttons.
+drives), not both; author every shape in its state at t=0. Use a scene only
+when the beat is genuinely interesting to stage. If no interesting beat
+comes to mind, leave the story without a scene — a dull scene is worse
+than none, and a scene is never owed just to fill coverage. The only
+exclusion is grave news: no scenes on deaths, disasters, war or
+suffering, full stop. Affordances over instructions: a scene shows no
+helper sentences — the slider grip is the only cue, plus one-word buttons.
 
 ## Ordering
 

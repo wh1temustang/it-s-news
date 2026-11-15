@@ -35,7 +35,10 @@ before or after it. Its shape:
 
 1. **Read the whole article.** For yourself, sum it up in one sentence: who
    did what, and why it matters. Don't output this sentence. Every scene you
-   pick should serve it.
+   pick should serve it. One scene, one story: a scene never mixes facts
+   from two different news items, even when they share a section — if the
+   article bundles several unrelated items, each scene renders one item's
+   facts only.
 2. **List the reader's questions.** For example: What happened? Where? How
    did we get here, and what's next? How big is it? Compared with what? Why
    is it happening? What does it mean for me? Who said what?
@@ -70,15 +73,17 @@ before or after it. Its shape:
      scene shows no helper sentences: affordances over instructions, the
      gesture must be obvious from the shape alone.
    - A beat the robot can picture — weather to turn up to the article's
-     number, or a turn to scrub through → `scene`. Use a scene for any
-     non-grave story where the robot can picture the beat; a boring story
-     especially deserves one. There is no fixed list of beats: stage
-     whatever the story needs with simple shapes, a scale when a number
-     is being felt, stages when a turn is being scrubbed. Never for
-     serious, sad or grave news — no scenes on deaths, disasters, war
-     or suffering, full stop. A scene shows no helper sentences:
-     affordances over instructions, the slider must be obvious from
-     the shape alone.
+     number, or a turn to scrub through → `scene`. Use a scene only when
+     the beat is genuinely interesting to stage: a turn, a number or a
+     picture the reader would enjoy playing with. If no interesting beat
+     comes to mind, leave the story without a scene — a dull scene is
+     worse than none, and a scene is never owed just to fill coverage.
+     There is no fixed list of beats: stage whatever the story needs
+     with simple shapes, a scale when a number is being felt, stages
+     when a turn is being scrubbed. Never for serious, sad or grave
+     news — no scenes on deaths, disasters, war or suffering, full
+     stop. A scene shows no helper sentences: affordances over
+     instructions, the slider must be obvious from the shape alone.
    Use `info-board` and `big-number` for what's left: loose essentials with
    no stronger shape, and the one number that is the news. They are the
    fallback, not the default.
