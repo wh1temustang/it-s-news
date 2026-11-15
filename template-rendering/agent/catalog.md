@@ -106,7 +106,13 @@ loops and follows the slider. The robot is the template's character:
 place it with a robot shape and direct it with `moves`. Give a scale
 scene `scale` (the article number, its unit, and where the slider starts)
 so the reader turns the number up with their own hand; give a beat scene
-`stages` (two to four short lines) so the reader scrubs the turn. Shapes
+`stages` (two to four short lines) so the reader scrubs the turn. Pick the
+progression too: `slider` (the default) when the reader should drive;
+`autoplay` when the mechanism builds itself — the scene plays from the
+slider's start to the end, pausing on any touch, and stays still under
+reduced motion; `tap` when the beat is a turn with distinct steps, so
+tapping the figure steps through the stages. Tap is stages-only and falls
+back to the slider on a scale scene. Shapes
 are layout, not facts: their geometry is not checked against the article,
 but any words drawn on the scene are, like any other words. Author every
 shape in its state at t=0. Use a scene only when the beat is genuinely
@@ -114,8 +120,9 @@ interesting to stage. If no interesting beat comes to mind, leave the
 story without a scene — a dull scene is worse than none, and a scene is
 never owed just to fill coverage. The only exclusion is grave news: no
 scenes on deaths, disasters, war or suffering, full stop. Affordances
-over instructions: a scene shows no helper sentences — the slider grip
-is the only cue, plus one-word buttons.
+over instructions: a scene shows no helper sentences — the control is
+the only cue, the slider grip or, when the scene advances on tap, the
+figure itself, plus one-word buttons.
 
 ## Ordering
 

@@ -91,9 +91,17 @@ before or after it. Its shape:
      the slider. The robot is the template's character: place it with
      a robot shape and direct it with `moves`. Give the scene a scale
      when a number is being felt, stages when a turn is being scrubbed.
+     Pick how the scene progresses: `slider` by default, the reader
+     drags; `autoplay` when the mechanism builds itself — a flood
+     rising, a queue filling — so the scene plays from the slider's
+     start to the end and pauses the moment the reader touches it;
+     `tap` when the beat is a turn with distinct steps — a resignation
+     in three moves — so tapping the figure steps through the stages.
+     Tap is stages-only: a scene with no stages and `tap` falls back
+     to the slider. Autoplay is off under reduced motion.
      Never for serious, sad or grave news — no scenes on deaths,
      disasters, war or suffering, full stop. A scene shows no helper
-     sentences: affordances over instructions, the slider must be
+     sentences: affordances over instructions, the control must be
      obvious from the shape alone.
    Use `info-board` and `big-number` for what's left: loose essentials with
    no stronger shape, and the one number that is the news. They are the
