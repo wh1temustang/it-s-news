@@ -6,7 +6,10 @@
    shapes with stages, and the next story's beat is shapes the agent
    draws for it. A shape has either `anim` (a looping ambient motion)
    or `moves` (keyframes the slider drives), not both — the template
-   renders `moves` and drops `anim` when both are given. Scripts are
+   renders `moves` and drops `anim` when both are given. A group with
+   `anim` loops the motion for all its children: the animation rides on
+   an inner group, so the outer placement transform survives (a CSS
+   animation would replace it). Scripts are
    small and inline, scoped through document.currentScript, and make no
    network calls. Affordances over instructions: no scene shows a helper
    sentence — the slider grip is the only cue, plus one-word buttons.
@@ -39,13 +42,15 @@
 {%- endmacro %}
 {% macro anim_attrs(s) %}
   {%- if s.moves is defined %} class="sc-anim" data-moves='{{ s.moves | tojson }}'
-  {%- elif s.anim is defined %} class="sc-{{ s.anim }}"{% if s.anim == 'fall' or s.delay is defined %} style="{% if s.anim == 'fall' %}--m:{{ s.speed if s.speed is defined else 1 }};{% endif %}{% if s.delay is defined %}animation-delay:{{ s.delay }}s;{% endif %}"{% endif %}
+  {%- elif s.anim is defined %} class="sc-{{ s.anim }}"{% if s.anim in ('fall', 'stream') or s.delay is defined %} style="{% if s.anim in ('fall', 'stream') %}--m:{{ s.speed if s.speed is defined else 1 }};{% endif %}{% if s.delay is defined %}animation-delay:{{ s.delay }}s;{% endif %}"{% endif %}
   {%- endif %}
 {%- endmacro %}
 {% macro render_shape(s) %}
   {%- if s.kind == 'group' %}
   <g{% if s.x is defined or s.y is defined %} data-bx="{{ s.x if s.x is defined else 0 }}" data-by="{{ s.y if s.y is defined else 0 }}" style="transform:translate({{ s.x if s.x is defined else 0 }}px, {{ s.y if s.y is defined else 0 }}px)"{% endif %}{% if s.moves is defined %} class="sc-anim" data-moves='{{ s.moves | tojson }}'{% endif %}{{ shape_attrs(s) }}>
-    {%- for c in s.children %}{{ render_shape(c) }}{% endfor %}
+    {%- if s.anim is defined and s.moves is not defined %}<g{{ anim_attrs(s) }}>{%- for c in s.children %}{{ render_shape(c) }}{% endfor %}</g>
+    {%- else %}{%- for c in s.children %}{{ render_shape(c) }}{% endfor %}
+    {%- endif %}
   </g>
   {%- elif s.kind == 'robot' %}
   <g class="sc-anim" data-bx="{{ s.x if s.x is defined else 0 }}" data-by="{{ s.y if s.y is defined else 0 }}"{% if s.moves is defined %} data-moves='{{ s.moves | tojson }}'{% endif %} style="transform:translate({{ s.x if s.x is defined else 0 }}px, {{ s.y if s.y is defined else 0 }}px)">
@@ -172,6 +177,7 @@
       stageEl.textContent = stages[k];
     }
     figure.style.setProperty('--fall', (1.1 - 0.65 * t).toFixed(2) + 's');
+    figure.style.setProperty('--stream', (1.6 - 0.9 * t).toFixed(2) + 's');
     animated.forEach(function (a) {
       var s = at(a.moves, t);
       a.el.style.transform = 'translate(' + (a.bx + s.x).toFixed(1) + 'px, ' + (a.by + s.y).toFixed(1) + 'px) rotate(' + s.rotate.toFixed(1) + 'deg) scale(' + s.sx.toFixed(3) + ', ' + s.sy.toFixed(3) + ')';

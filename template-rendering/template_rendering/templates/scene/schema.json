@@ -1,6 +1,6 @@
 {
   "additionalProperties": false,
-  "description": "An animated, reactive illustrated scene: the robot pictures the story's beat, so a boring story is worth looking at. The storyboard stages any beat with simple shapes — the template provides the robot, the backdrop, the animation wiring and the slider — and the reader scrubs the beat or turns a scale up to the article number. The scene is general: there is no fixed list of beats. Shapes are layout, not facts, so their geometry is x-ungrounded; only the label, stage lines, shape text and the scale number are checked against the article.",
+  "description": "An animated, reactive illustrated scene: the robot pictures the story's beat, when the beat is worth picturing. The storyboard stages any beat with simple shapes — the template provides the robot, the backdrop, the animation wiring and the slider — and the reader scrubs the beat or turns a scale up to the article number. The scene is general: there is no fixed list of beats. Shapes are layout, not facts, so their geometry is x-ungrounded; only the label, stage lines, shape text and the scale number are checked against the article.",
   "properties": {
     "backdrop": {
       "default": "none",
@@ -74,18 +74,19 @@
             "x-ungrounded": true
           },
           "anim": {
-            "description": "A looping ambient motion: bob (up and down), wobble (a small rock), fall (drops falling, with speed), ripple (a ring growing and fading).",
+            "description": "A looping ambient motion: bob (up and down), wobble (a small rock), fall (drops falling, with speed), ripple (a ring growing and fading), stream (packets flowing left to right, with speed).",
             "enum": [
               "bob",
               "fall",
               "ripple",
+              "stream",
               "wobble"
             ],
             "type": "string",
             "x-ungrounded": true
           },
           "children": {
-            "description": "Shapes inside a group, drawn in order. A group moves as one: give the group 'moves' and its children ride along. Children are leaf shapes only — no groups inside groups, no robot inside a group.",
+            "description": "Shapes inside a group, drawn in order. A group moves as one: give the group 'moves' and its children ride along, or give it 'anim' and the whole group loops the motion (moves wins when both are given). Children are leaf shapes only — no groups inside groups, no robot inside a group.",
             "items": {
               "additionalProperties": false,
               "properties": {
@@ -103,6 +104,7 @@
                     "bob",
                     "fall",
                     "ripple",
+                    "stream",
                     "wobble"
                   ],
                   "type": "string",
@@ -406,7 +408,7 @@
             "x-ungrounded": true
           },
           "speed": {
-            "description": "Fall speed multiplier for a falling shape: 1 is the standard drop, higher is faster rain.",
+            "description": "Speed multiplier for a falling or streaming shape: 1 is standard, higher is faster.",
             "maximum": 2,
             "minimum": 0.5,
             "type": "number",
@@ -468,7 +470,7 @@
         ],
         "type": "object"
       },
-      "maxItems": 24,
+      "maxItems": 40,
       "type": "array"
     },
     "stages": {
