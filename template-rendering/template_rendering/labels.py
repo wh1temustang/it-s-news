@@ -36,6 +36,7 @@ DEFAULTS: dict[str, str] = {
     "reactive.fill": "Fill",
     "scene.max": "Max",
     "scene.end": "End",
+    "scene.tap": "Tap to advance",
 }
 
 
