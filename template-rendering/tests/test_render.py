@@ -79,6 +79,85 @@ class StoryboardTests(unittest.TestCase):
         self.assertTrue(any("already answers this question" in e for e in errors), errors)
 
 
+class SceneTests(unittest.TestCase):
+    def article(self):
+        return article.parse("---\nsource: Test\n---\nBody\n")
+
+    def board(self, data):
+        return {"headline": {"title": "T", "dek": "D", "topic": "world"},
+                "scenes": [{"template": "scene", "question": "What happens?",
+                            "data": data}]}
+
+    def render(self, data):
+        return render_page(self.board(data), self.article())
+
+    def test_stream_shape_emits_class_speed_and_delay(self):
+        html = self.render({"character": "robot", "label": "Test", "shapes": [
+            {"kind": "circle", "cx": 50, "cy": 50, "r": 3, "fill": "#7fd4ff",
+             "anim": "stream", "speed": 1.5, "delay": -0.5}]})
+        self.assertIn('class="sc-stream"', html)
+        self.assertIn("--m:1.5;", html)
+        self.assertIn("animation-delay:-0.5s;", html)
+        self.assertIn("figure.style.setProperty('--stream'", html)
+
+    def test_pulse_shape_emits_class(self):
+        html = self.render({"character": "robot", "label": "Test", "shapes": [
+            {"kind": "circle", "cx": 50, "cy": 50, "r": 3, "fill": "#ff6b6b",
+             "anim": "pulse"}]})
+        self.assertIn('class="sc-pulse"', html)
+
+    def test_anim_and_moves_compose_on_one_shape(self):
+        # The looping motion and the slider keyframes must not fight: the
+        # stream rides on a wrapper around the shape, the keyframes on the
+        # shape itself, so both survive in the output.
+        html = self.render({"character": "robot", "label": "Test", "shapes": [
+            {"kind": "circle", "cx": 50, "cy": 50, "r": 3, "fill": "#7fd4ff",
+             "anim": "stream", "speed": 1.2, "delay": -0.3,
+             "moves": [{"t": 0, "y": 0}, {"t": 0.5, "y": 10}, {"t": 1, "y": 0}]}]})
+        self.assertIn('<g class="sc-stream"', html)
+        self.assertIn("data-moves=", html)
+        self.assertIn('"y": 10', html)
+
+    def test_fill_keyframe_rides_in_data_moves_and_is_not_grounded(self):
+        # A light that turns red as the slider rises: the fill lives in the
+        # keyframes, the script applies it, and the checker never asks the
+        # article for a colour — the board passes with no red in the text.
+        data = {"character": "robot", "label": "Test", "shapes": [
+            {"kind": "circle", "cx": 50, "cy": 50, "r": 3, "fill": "#7fd4ff",
+             "moves": [{"t": 0}, {"t": 0.5, "fill": "#ff6b6b"}]}]}
+        self.assertEqual(storyboard.check(self.board(data), self.article()), [])
+        html = self.render(data)
+        self.assertIn('"fill": "#ff6b6b"', html)
+        self.assertIn("a.el.style.fill", html)
+
+    def test_no_shape_cap(self):
+        shapes = [{"kind": "circle", "cx": i, "cy": 10, "r": 2,
+                   "fill": "#7fd4ff"} for i in range(60)]
+        self.assertEqual(
+            storyboard.check(self.board({"character": "robot", "label": "Test",
+                                         "shapes": shapes}), self.article()), [])
+
+    def test_group_anim_rides_on_an_inner_group(self):
+        # The animation must not replace the group's placement transform:
+        # it rides on an inner group while the outer group keeps the
+        # translate, so a wobbling router stays where it was drawn.
+        html = self.render({"character": "robot", "label": "Test", "shapes": [
+            {"kind": "group", "x": 310, "y": 110, "anim": "wobble",
+             "children": [{"kind": "rect", "x": 0, "y": 0, "width": 10,
+                           "height": 10, "fill": "#2b313c"}]}]})
+        self.assertIn('<g class="sc-wobble">', html)
+        self.assertIn("transform:translate(310px, 110px)", html)
+
+    def test_group_anim_and_moves_compose(self):
+        html = self.render({"character": "robot", "label": "Test", "shapes": [
+            {"kind": "group", "x": 10, "y": 10, "anim": "wobble",
+             "moves": [{"t": 0}, {"t": 1, "x": 20}],
+             "children": [{"kind": "rect", "x": 0, "y": 0, "width": 10,
+                           "height": 10, "fill": "#2b313c"}]}]})
+        self.assertIn("data-moves", html)
+        self.assertIn('<g class="sc-wobble">', html)
+
+
 class CliTests(unittest.TestCase):
     def run_cli(self, *args: str) -> tuple[int, str, str]:
         out, err = io.StringIO(), io.StringIO()
