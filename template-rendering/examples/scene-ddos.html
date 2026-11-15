@@ -355,6 +355,17 @@ a { color: var(--accent); }
   height: auto;
 }
 
+/* --- tap progression: the figure is the control, so it reads as one --- */
+
+.sc-scene[data-progression="tap"] svg {
+  cursor: pointer;
+}
+
+.sc-scene[data-progression="tap"] svg:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
 /* --- ambient motion: falling drops, streaming packets, pulsing alarms,
    bobbing robot, wobbling shapes, ripples --- */
 
@@ -546,7 +557,7 @@ a { color: var(--accent); }
   <section class="scene scene--scene" style="--i: 0" aria-labelledby="q1">
     <p class="scene-kind"><span aria-hidden="true">🤖</span> Scene</p>
     <h2 id="q1">What is flooding the town hall router?</h2>
-    <div class="sc-scene">
+    <div class="sc-scene" data-progression="autoplay">
   <figure class="sc-figure">
     <svg viewBox="0 0 400 300" role="img" aria-label="600 attempts a second">
       <defs>
@@ -582,11 +593,11 @@ a { color: var(--accent); }
   </g>    </svg>
     <div class="sc-control">
       <div class="sc-readout">
-        <span class="sc-value" data-unit="/s" data-unit-after="1" data-max="600">240.0/s</span>
+        <span class="sc-value" data-unit="/s" data-unit-after="1" data-max="600">0.0/s</span>
         <span class="sc-label">600 attempts a second</span>
       </div>
       <div class="sc-row">
-        <input type="range" class="sc-slider" min="0" max="600" step="20.0" value="240.0" aria-label="600 attempts a second">
+        <input type="range" class="sc-slider" min="0" max="600" step="20.0" value="0.0" aria-label="600 attempts a second">
         <button type="button" class="sc-jump">Max</button>
       </div>
     </div>
@@ -636,8 +647,11 @@ a { color: var(--accent); }
       hasFill: moves.some(function (k) { return k.fill !== undefined; }),
       bx: parseFloat(el.dataset.bx || '0'), by: parseFloat(el.dataset.by || '0')});
   });
-  function update() {
-    var v = +slider.value;
+  function update(v) {
+    // v is the slider position in slider units; when the caller leaves it
+    // out, read the slider. Autoplay passes its own raw position, so the
+    // scene follows it exactly even if the thumb snaps to the step.
+    v = (v === undefined) ? +slider.value : v;
     var t = max ? v / max : 0;
     if (readout && readout.dataset.max !== undefined) {
       readout.textContent = after ? fmt(v) + unit : unit + fmt(v);
@@ -670,6 +684,46 @@ a { color: var(--accent); }
     slider.value = max; update(); slider.focus();
   });
   update();
+  // Autoplay: a timer advances the slider on its own, from where it
+  // starts to the end, paced to the stages (or ten seconds for a scale
+  // scene). It pauses the moment the reader touches the scene or the
+  // slider, and never starts under reduced motion. It starts when the
+  // scene scrolls into view, so a reader who arrives late still sees
+  // the whole sweep.
+  var autoTimer = null;
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function stopAuto() {
+    if (autoTimer !== null) { clearInterval(autoTimer); autoTimer = null; }
+  }
+  function startAuto() {
+    if (reducedMotion || autoTimer !== null) return;
+    var rate = max / 10000;
+    var pos = +slider.value;
+    var last = Date.now();
+    autoTimer = setInterval(function () {
+      var now = Date.now();
+      pos = Math.min(max, pos + rate * (now - last));
+      last = now;
+      slider.value = pos;
+      update(pos);
+      if (pos >= max) stopAuto();
+    }, 50);
+  }
+  figure.addEventListener('pointerdown', stopAuto);
+  slider.addEventListener('pointerdown', stopAuto);
+  slider.addEventListener('keydown', stopAuto);
+  slider.addEventListener('input', stopAuto);
+  root.querySelector('.sc-jump').addEventListener('click', stopAuto);
+  if ('IntersectionObserver' in window) {
+    var seen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { startAuto(); seen.disconnect(); }
+      });
+    });
+    seen.observe(root);
+  } else {
+    startAuto();
+  }
 })();
 </script>
 </div>

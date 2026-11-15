@@ -351,6 +351,17 @@ a { color: var(--accent); }
   height: auto;
 }
 
+/* --- tap progression: the figure is the control, so it reads as one --- */
+
+.sc-scene[data-progression="tap"] svg {
+  cursor: pointer;
+}
+
+.sc-scene[data-progression="tap"] svg:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
 /* --- ambient motion: falling drops, streaming packets, pulsing alarms,
    bobbing robot, wobbling shapes, ripples --- */
 
@@ -631,8 +642,11 @@ a { color: var(--accent); }
       hasFill: moves.some(function (k) { return k.fill !== undefined; }),
       bx: parseFloat(el.dataset.bx || '0'), by: parseFloat(el.dataset.by || '0')});
   });
-  function update() {
-    var v = +slider.value;
+  function update(v) {
+    // v is the slider position in slider units; when the caller leaves it
+    // out, read the slider. Autoplay passes its own raw position, so the
+    // scene follows it exactly even if the thumb snaps to the step.
+    v = (v === undefined) ? +slider.value : v;
     var t = max ? v / max : 0;
     if (readout && readout.dataset.max !== undefined) {
       readout.textContent = after ? fmt(v) + unit : unit + fmt(v);
