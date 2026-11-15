@@ -351,11 +351,17 @@ a { color: var(--accent); }
   height: auto;
 }
 
-/* --- rain: falling drops, bobbing robot, wobbling umbrella, ripples --- */
+/* --- ambient motion: falling drops, streaming packets, bobbing robot,
+   wobbling shapes, ripples --- */
 
-.sc-drop {
+.sc-fall {
   animation: scene-fall var(--fall, .84s) linear infinite;
-  animation-duration: calc(var(--fall, .84s) * var(--m, 1));
+  animation-duration: calc(var(--fall, .84s) / var(--m, 1));
+}
+
+.sc-stream {
+  animation: scene-stream var(--stream, 1.6s) linear infinite;
+  animation-duration: calc(var(--stream, 1.6s) / var(--m, 1));
 }
 
 .sc-bob {
@@ -385,6 +391,11 @@ a { color: var(--accent); }
 @keyframes scene-fall {
   from { transform: translateY(-24px); }
   to { transform: translateY(300px); }
+}
+
+@keyframes scene-stream {
+  from { transform: translateX(-40px); }
+  to { transform: translateX(360px); }
 }
 
 @keyframes scene-bob {
@@ -492,7 +503,8 @@ a { color: var(--accent); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sc-drop,
+  .sc-fall,
+  .sc-stream,
   .sc-bob,
   .sc-wobble,
   .sc-ripple {
@@ -618,6 +630,7 @@ a { color: var(--accent); }
       stageEl.textContent = stages[k];
     }
     figure.style.setProperty('--fall', (1.1 - 0.65 * t).toFixed(2) + 's');
+    figure.style.setProperty('--stream', (1.6 - 0.9 * t).toFixed(2) + 's');
     animated.forEach(function (a) {
       var s = at(a.moves, t);
       a.el.style.transform = 'translate(' + (a.bx + s.x).toFixed(1) + 'px, ' + (a.by + s.y).toFixed(1) + 'px) rotate(' + s.rotate.toFixed(1) + 'deg) scale(' + s.sx.toFixed(3) + ', ' + s.sy.toFixed(3) + ')';
