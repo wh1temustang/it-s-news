@@ -1,0 +1,118 @@
+{# Game: a mini-game the reader plays. Two kinds, chosen by data.kind:
+   guess-number asks for one article number on a slider, and quiz asks
+   one question with three or four options. Each kind has a small inline
+   script, scoped to its own game through document.currentScript. No
+   network calls. Affordances over instructions: no game shows a helper
+   sentence — the slider and the buttons are the only cues, plus
+   one-word buttons for keyboard users. The quiz has no reset: once
+   answered it stays answered. The guess-number game lets the reader
+   try again. #}
+{% if data.kind == "guess-number" %}
+{% set lo = data.min if data.min is defined else 0 %}
+{% set span = data.max - lo %}
+{% set step = data.step if data.step is defined else ([0.1, (span / 60) | round(1)] | max) %}
+{% set start = lo + span * (data.start_fraction if data.start_fraction is defined else 0.5) %}
+{% set start_int = start | int %}
+{% set start_value = start_int if start == start_int else start %}
+<div class="gm" data-kind="guess-number" data-answer="{{ data.answer }}" data-unit="{{ data.unit }}" data-unit-after="{% if data.unit_after is defined and data.unit_after %}1{% else %}0{% endif %}" data-msg-exact="{{ t("game.exact") }}" data-msg-near-over="{{ t("game.near_over") }}" data-msg-near-under="{{ t("game.near_under") }}" data-msg-far-over="{{ t("game.far_over") }}" data-msg-far-under="{{ t("game.far_under") }}">
+  <div class="gm-box">
+    <p class="gm-readout"><span class="gm-guess-value" aria-live="polite">—</span> <span class="gm-guess-label">{{ t("game.guess") }}</span></p>
+    <div class="gm-row">
+      <input type="range" class="gm-slider" min="{{ lo }}" max="{{ data.max }}" step="{{ step }}" value="{{ start_value }}" aria-label="{{ data.label }}">
+      <button type="button" class="gm-reveal" data-reveal="{{ t("game.reveal") }}" data-retry="{{ t("game.retry") }}">{{ t("game.reveal") }}</button>
+    </div>
+    <p class="gm-result" aria-live="polite" hidden></p>
+  </div>
+  <p class="gm-label">{{ data.label }}</p>
+<script>
+(function () {
+  var root = document.currentScript.closest('[data-kind="guess-number"]');
+  if (!root || root.dataset.gmWired) return;
+  root.dataset.gmWired = '1';
+  var slider = root.querySelector('.gm-slider');
+  var guess = root.querySelector('.gm-guess-value');
+  var btn = root.querySelector('.gm-reveal');
+  var res = root.querySelector('.gm-result');
+  var ANSWER = parseFloat(root.dataset.answer);
+  var unit = root.dataset.unit || '';
+  var after = root.dataset.unitAfter === '1';
+  var dec = (root.dataset.answer.split('.')[1] || '').length;
+  /* Close means within 5% of the answer: a near miss, not a far one. */
+  var near = Math.abs(ANSWER) * 0.05;
+  function fmt(v) {
+    var s = v.toFixed(dec);
+    return after ? s + unit : unit + s;
+  }
+  function showGuess() { guess.textContent = fmt(parseFloat(slider.value)); }
+  slider.addEventListener('input', function () { if (!slider.disabled) showGuess(); });
+  btn.addEventListener('click', function () {
+    if (slider.disabled) {
+      slider.disabled = false;
+      res.hidden = true;
+      res.textContent = '';
+      res.className = 'gm-result';
+      btn.textContent = btn.dataset.reveal;
+      showGuess();
+      slider.focus();
+      return;
+    }
+    var g = parseFloat(slider.value);
+    var d = g - ANSWER;
+    var tpl;
+    if (Math.abs(d) < 1e-9) { tpl = root.dataset.msgExact; }
+    else if (Math.abs(d) <= near) { tpl = d > 0 ? root.dataset.msgNearOver : root.dataset.msgNearUnder; }
+    else { tpl = d > 0 ? root.dataset.msgFarOver : root.dataset.msgFarUnder; }
+    res.textContent = tpl.replace('{answer}', fmt(ANSWER)).replace('{diff}', fmt(Math.abs(d)));
+    res.className = Math.abs(d) < 1e-9 ? 'gm-result gm-good' : 'gm-result';
+    res.hidden = false;
+    slider.disabled = true;
+    btn.textContent = btn.dataset.retry;
+  });
+  showGuess();
+})();
+</script>
+</div>
+{% elif data.kind == "quiz" %}
+<div class="gm" data-kind="quiz" data-correct="{{ data.correct | join(',') }}" data-msg-right="{{ t("game.quiz_right") }}" data-msg-wrong="{{ t("game.quiz_wrong") }}"{% if data.reveal is defined %} data-reveal="{{ data.reveal }}"{% endif %}>
+  <div class="gm-box">
+    <div class="gm-row gm-options" role="group" aria-label="{{ data.label }}">
+      {% for v in data.options %}<button type="button" class="gm-opt" data-v="{{ v }}">{% if data.unit_after is defined and data.unit_after %}{{ v }}{{ data.unit }}{% else %}{{ data.unit }}{{ v }}{% endif %}</button>{% endfor %}
+    </div>
+    <p class="gm-result" aria-live="polite" hidden></p>
+  </div>
+  <p class="gm-label">{{ data.label }}</p>
+<script>
+(function () {
+  var root = document.currentScript.closest('[data-kind="quiz"]');
+  if (!root || root.dataset.gmWired) return;
+  root.dataset.gmWired = '1';
+  var opts = root.querySelectorAll('.gm-opt');
+  var res = root.querySelector('.gm-result');
+  var correct = (root.dataset.correct || '').split(',').filter(Boolean);
+  function eachOpt(fn) { Array.prototype.forEach.call(opts, fn); }
+  eachOpt(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-v');
+      eachOpt(function (o) { o.disabled = true; });
+      /* Every right answer lights up: a question may have more than one. */
+      eachOpt(function (o) {
+        if (correct.indexOf(o.getAttribute('data-v')) !== -1) o.classList.add('gm-right');
+      });
+      var msg;
+      if (correct.indexOf(v) !== -1) {
+        msg = root.dataset.msgRight;
+        res.className = 'gm-result gm-good';
+      } else {
+        b.classList.add('gm-wrong');
+        msg = root.dataset.msgWrong.replace('{pick}', b.textContent.trim());
+        res.className = 'gm-result';
+      }
+      if (root.dataset.reveal) msg += ' ' + root.dataset.reveal;
+      res.textContent = msg;
+      res.hidden = false;
+    });
+  });
+})();
+</script>
+</div>
+{% endif %}
