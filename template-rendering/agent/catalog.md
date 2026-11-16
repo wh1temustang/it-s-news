@@ -15,7 +15,7 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 | Why is it happening? What does it lead to? | `cause-effect` | 3+ linked steps, each one stated in the article | the links are your own inference |
 | What did someone say that matters? | `quote` | a direct quote from a named speaker | the quote is filler ("We are pleased to announce…") |
 | What does it feel like to touch? | `reactive` | one number or turn the reader should feel: a figure worth uncovering, a before and after to compare, or a value to fill up by holding | the number is small enough to just read, or the turn needs a chart's precision |
-| What does it feel like to be there? | `scene` | a beat the robot can picture — weather to turn up to a grounded number, or a turn to scrub through | the news is grave, the story has no beat the robot can act out, or the beat is too dull to be worth staging |
+| What is the answer — can I guess it first? | `game` | a number or fact worth guessing: a total, a price, a count | the news is grave, or the story has no number or fact worth guessing |
 
 If no row fits a question, leave the question out. Fewer, stronger scenes
 beat a full page.
@@ -92,37 +92,32 @@ static template. And never for serious, sad or grave news — no reactive
 scenes on deaths, disasters, war or suffering, full stop: a foil over a
 toll is the wrong tone.
 
-**`scene`**: an animated, reactive illustrated scene — the robot pictures
-the story's beat, when the beat is worth picturing. There is no fixed
-list of beats: you draw the scene yourself, with any SVG the beat needs
-(`path` for custom forms, groups for actors that move as one — no shape
-cap), and the template provides the robot, the backdrop, the animation
-wiring and the slider. Stage the mechanism, not just the number: the
-actors and the flow between them. Use `stream` for a flow between actors
-(packets from one router to another), `pulse` for an alarm light, `fill`
-keyframes for a state that changes with the slider (a light turning red
-as the flood rises), and `anim` together with `moves` when a shape both
-loops and follows the slider. The robot is the template's character:
-place it with a robot shape and direct it with `moves`. Give a scale
-scene `scale` (the article number, its unit, and where the slider starts)
-so the reader turns the number up with their own hand; give a beat scene
-`stages` (two to four short lines) so the reader scrubs the turn. Pick the
-progression too: `slider` (the default) when the reader should drive;
-`autoplay` when the mechanism builds itself — the scene plays from the
-slider's start to the end, pausing on any touch, and stays still under
-reduced motion; `tap` when the beat is a turn with distinct steps, so
-tapping the figure steps through the stages. Tap is stages-only and falls
-back to the slider on a scale scene. Shapes
-are layout, not facts: their geometry is not checked against the article,
-but any words drawn on the scene are, like any other words. Author every
-shape in its state at t=0. Use a scene only when the beat is genuinely
-interesting to stage. If no interesting beat comes to mind, leave the
-story without a scene — a dull scene is worse than none, and a scene is
-never owed just to fill coverage. The only exclusion is grave news: no
-scenes on deaths, disasters, war or suffering, full stop. Affordances
-over instructions: a scene shows no helper sentences — the control is
-the only cue, the slider grip or, when the scene advances on tap, the
-figure itself, plus one-word buttons.
+**`game`**: a mini-game the reader plays, for the number or fact worth
+guessing before reading it. Two kinds: `guess-number` gives the reader
+a slider and one reveal button — they guess the article's number, then
+the page states the answer and how close the guess was (exact, within
+5% for a near miss, or far, with the difference), and they may try
+again; `quiz` gives three or four options to pick from, and a question
+may have more than one right answer — a price range has two ends — so
+`correct` is a list and a right pick lights up every right answer. A
+wrong option is a guess, not a fact: it must not appear in the article,
+and it must be a near miss — within twice the nearest right answer (and
+at least half of it) — so $85 is a fair distractor for a $70–78 range,
+but $200 is not. A game is where the answer is first revealed: the
+headline, the dek, the game's question and its label must not state any
+of the answers — write them so the answer stays hidden until the
+reveal, and let the big number or board after the game be the payoff.
+The quiz has no reset: once answered it stays answered. The answers in
+`answer` and `correct` are article numbers and are checked against it;
+the slider's `min`, `max` and `step`, and the quiz's wrong options, are
+design choices and are not checked as facts — the distractor rule above
+is what keeps them honest. Use a game only when the story has a number
+or fact worth guessing. If none comes to mind, leave the story without
+a game — a dull game is worse than none, and a game is never owed just
+to fill coverage. At most one game per page. The only exclusion is grave
+news: no games on deaths, disasters, war or suffering, full stop.
+Affordances over instructions: a game shows no helper sentences — the
+slider and the buttons are the only cues, plus one-word buttons.
 
 ## Ordering
 
@@ -130,7 +125,7 @@ figure itself, plus one-word buttons.
 2. Then context: *where* (`map`) and *when* (`timeline`).
 3. Then reaction and consequence: `quote`, `cause-effect`.
 
-When two scenes matter equally, use this order: `scene`, `big-number`, `info-board`,
+When two scenes matter equally, use this order: `game`, `big-number`, `info-board`,
 `bar-chart` or `line-chart`, `comparison`, `timeline`, `map`,
 `cause-effect`, `quote`.
 

@@ -34,9 +34,16 @@ DEFAULTS: dict[str, str] = {
     "reactive.reveal": "Reveal",
     "reactive.wipe_button": "Wipe",
     "reactive.fill": "Fill",
-    "scene.max": "Max",
-    "scene.end": "End",
-    "scene.tap": "Tap to advance",
+    "game.exact": "Exact! The answer is {answer}.",
+    "game.far_over": "The answer is {answer} — {diff} over.",
+    "game.far_under": "The answer is {answer} — {diff} under.",
+    "game.guess": "Your guess?",
+    "game.near_over": "Close! The answer is {answer} — {diff} over.",
+    "game.near_under": "Close! The answer is {answer} — {diff} under.",
+    "game.quiz_right": "Correct!",
+    "game.quiz_wrong": "Not {pick}.",
+    "game.reveal": "Reveal",
+    "game.retry": "Try again",
 }
 
 

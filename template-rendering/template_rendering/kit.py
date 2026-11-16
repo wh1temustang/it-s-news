@@ -9,9 +9,9 @@ from pathlib import Path
 
 from itsnews_common.kit import Kit
 
-from . import visuals
+from . import rules, visuals
 from .labels import Labels
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 
-KIT = Kit("template_rendering", PACKAGE_DIR, labels=Labels, prepare=visuals.prepare)
+KIT = Kit("template_rendering", PACKAGE_DIR, labels=Labels, prepare=visuals.prepare, rules=rules.check)

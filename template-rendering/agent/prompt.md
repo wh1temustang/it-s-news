@@ -72,37 +72,29 @@ before or after it. Its shape:
      scenes on deaths, disasters, war or suffering, full stop. A reactive
      scene shows no helper sentences: affordances over instructions, the
      gesture must be obvious from the shape alone.
-   - A beat the robot can picture — weather to turn up to the article's
-     number, a turn to scrub through, or a mechanism to stage → `scene`.
-     Use a scene only when the beat is genuinely interesting to stage: a
-     turn, a number or a picture the reader would enjoy playing with. If
-     no interesting beat comes to mind, leave the story without a scene —
-     a dull scene is worse than none, and a scene is never owed just to
-     fill coverage. You draw the scene yourself: any SVG you need, with
-     `path` for custom forms and groups for actors that move as one —
-     there is no shape cap and no fixed list of beats. Stage the
-     mechanism, not just the number: the actors and the flow between
-     them — one router flooding another with packets is a scene: two
-     routers, a stream of packets between them, the victim wobbling
-     under the load, its lights turning red as the flood rises. Use
-     `stream` for flows between actors, `pulse` for an alarm light,
-     `fill` keyframes for a state that changes with the slider, and
-     `anim` together with `moves` when a shape both loops and follows
-     the slider. The robot is the template's character: place it with
-     a robot shape and direct it with `moves`. Give the scene a scale
-     when a number is being felt, stages when a turn is being scrubbed.
-     Pick how the scene progresses: `slider` by default, the reader
-     drags; `autoplay` when the mechanism builds itself — a flood
-     rising, a queue filling — so the scene plays from the slider's
-     start to the end and pauses the moment the reader touches it;
-     `tap` when the beat is a turn with distinct steps — a resignation
-     in three moves — so tapping the figure steps through the stages.
-     Tap is stages-only: a scene with no stages and `tap` falls back
-     to the slider. Autoplay is off under reduced motion.
-     Never for serious, sad or grave news — no scenes on deaths,
-     disasters, war or suffering, full stop. A scene shows no helper
-     sentences: affordances over instructions, the control must be
-     obvious from the shape alone.
+   - A number or fact the reader could guess before reading it — a
+     snowfall total, a price, a vote count → `game`. Pick the kind by
+     what the reader does: `guess-number` gives the reader a slider
+     and one reveal button: they guess the article's number, then the
+     page states the answer and how close the guess was (exact, close,
+     or far, with the difference), and they may try again; `quiz`
+     gives three or four options to pick from, and a question may have
+     more than one right answer — a price range has two ends — so
+     `correct` is a list, and a right pick lights up every right
+     answer. A wrong option is a guess, not a fact: it must not appear
+     in the article, and it must be a near miss — within twice the
+     nearest right answer (and at least half of it) — so $85 is a fair
+     distractor for a $70–78 range, but $200 is not. A game is where
+     the answer is first revealed: the headline, the dek, the game's
+     question and its label must not state any of the answers — write
+     them so the answer stays hidden until the reveal, and let the big
+     number or board after the game be the payoff. The quiz has no
+     reset: once answered it stays answered. Use a game only when the
+     story has a number or fact worth guessing; never for serious, sad
+     or grave news — no games on deaths, disasters, war or suffering,
+     full stop; at most one game per page. A game shows no helper
+     sentences: affordances over instructions, the slider and the
+     buttons must be obvious from the shape alone.
    Use `info-board` and `big-number` for what's left: loose essentials with
    no stronger shape, and the one number that is the news. They are the
    fallback, not the default.

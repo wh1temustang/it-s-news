@@ -79,169 +79,154 @@ class StoryboardTests(unittest.TestCase):
         self.assertTrue(any("already answers this question" in e for e in errors), errors)
 
 
-class SceneTests(unittest.TestCase):
-    def article(self):
-        return article.parse("---\nsource: Test\n---\nBody\n")
+class GameTests(unittest.TestCase):
+    def article(self, body=None):
+        if body is None:
+            body = ("Fallowfield saw 42 cm of snow in 24 hours. "
+                    "The old record was 31 cm.")
+        return article.parse(f"---\nsource: Test\n---\n{body}\n")
 
-    def board(self, data):
-        return {"headline": {"title": "T", "dek": "D", "topic": "world"},
-                "scenes": [{"template": "scene", "question": "What happens?",
+    def board(self, data, title="T", dek="D", question="What happens?"):
+        return {"headline": {"title": title, "dek": dek, "topic": "world"},
+                "scenes": [{"template": "game", "question": question,
                             "data": data}]}
 
-    def render(self, data):
-        return render_page(self.board(data), self.article())
+    def render(self, data, body=None):
+        return render_page(self.board(data), self.article(body))
 
-    def test_stream_shape_emits_class_speed_and_delay(self):
-        html = self.render({"character": "robot", "label": "Test", "shapes": [
-            {"kind": "circle", "cx": 50, "cy": 50, "r": 3, "fill": "#7fd4ff",
-             "anim": "stream", "speed": 1.5, "delay": -0.5}]})
-        self.assertIn('class="sc-stream"', html)
-        self.assertIn("--m:1.5;", html)
-        self.assertIn("animation-delay:-0.5s;", html)
-        self.assertIn("figure.style.setProperty('--stream'", html)
+    def guess(self, **over):
+        data = {"kind": "guess-number", "label": "Snow in 24 hours",
+                "unit": " cm", "unit_after": True,
+                "answer": 42, "min": 0, "max": 60}
+        data.update(over)
+        return data
 
-    def test_pulse_shape_emits_class(self):
-        html = self.render({"character": "robot", "label": "Test", "shapes": [
-            {"kind": "circle", "cx": 50, "cy": 50, "r": 3, "fill": "#ff6b6b",
-             "anim": "pulse"}]})
-        self.assertIn('class="sc-pulse"', html)
+    def quiz(self, **over):
+        data = {"kind": "quiz", "label": "The IPO price", "unit": "$",
+                "unit_after": False,
+                "options": [70, 78, 85], "correct": [70, 78]}
+        data.update(over)
+        return data
 
-    def test_anim_and_moves_compose_on_one_shape(self):
-        # The looping motion and the slider keyframes must not fight: the
-        # stream rides on a wrapper around the shape, the keyframes on the
-        # shape itself, so both survive in the output.
-        html = self.render({"character": "robot", "label": "Test", "shapes": [
-            {"kind": "circle", "cx": 50, "cy": 50, "r": 3, "fill": "#7fd4ff",
-             "anim": "stream", "speed": 1.2, "delay": -0.3,
-             "moves": [{"t": 0, "y": 0}, {"t": 0.5, "y": 10}, {"t": 1, "y": 0}]}]})
-        self.assertIn('<g class="sc-stream"', html)
-        self.assertIn("data-moves=", html)
-        self.assertIn('"y": 10', html)
+    def test_guess_number_renders_slider_reveal_and_retry(self):
+        html = self.render(self.guess())
+        self.assertIn('type="range"', html)
+        self.assertIn('data-answer="42"', html)
+        self.assertIn('data-msg-exact="Exact! The answer is {answer}."', html)
+        self.assertIn(">Reveal<", html)
+        self.assertIn('data-retry="Try again"', html)
 
-    def test_fill_keyframe_rides_in_data_moves_and_is_not_grounded(self):
-        # A light that turns red as the slider rises: the fill lives in the
-        # keyframes, the script applies it, and the checker never asks the
-        # article for a colour — the board passes with no red in the text.
-        data = {"character": "robot", "label": "Test", "shapes": [
-            {"kind": "circle", "cx": 50, "cy": 50, "r": 3, "fill": "#7fd4ff",
-             "moves": [{"t": 0}, {"t": 0.5, "fill": "#ff6b6b"}]}]}
-        self.assertEqual(storyboard.check(self.board(data), self.article()), [])
-        html = self.render(data)
-        self.assertIn('"fill": "#ff6b6b"', html)
-        self.assertIn("a.el.style.fill", html)
+    def test_guess_number_wiring_states_answer_and_closeness(self):
+        # The reveal states the answer and how close the guess was: exact,
+        # near (within 5% of the answer), or far, with the difference.
+        # Then the slider locks and the button becomes a retry.
+        html = self.render(self.guess())
+        self.assertIn("Math.abs(ANSWER) * 0.05", html)
+        self.assertIn("msgNearOver", html)
+        self.assertIn("msgFarUnder", html)
+        self.assertIn("slider.disabled = true", html)
+        self.assertIn("btn.textContent = btn.dataset.retry", html)
 
-    def test_no_shape_cap(self):
-        shapes = [{"kind": "circle", "cx": i, "cy": 10, "r": 2,
-                   "fill": "#7fd4ff"} for i in range(60)]
-        self.assertEqual(
-            storyboard.check(self.board({"character": "robot", "label": "Test",
-                                         "shapes": shapes}), self.article()), [])
+    def test_quiz_renders_options_and_no_reset_button(self):
+        # Three option buttons and nothing else clickable: once answered
+        # the quiz stays answered, so no reset or replay button exists.
+        html = self.render(self.quiz())
+        self.assertEqual(html.count("<button"), 3)
+        self.assertIn('data-correct="70,78"', html)
+        self.assertIn('data-v="85"', html)
+        self.assertNotIn("Try again", html)
+        self.assertNotIn("Play again", html)
+        self.assertNotIn('class="gm-reveal"', html)
 
-    def test_group_anim_rides_on_an_inner_group(self):
-        # The animation must not replace the group's placement transform:
-        # it rides on an inner group while the outer group keeps the
-        # translate, so a wobbling router stays where it was drawn.
-        html = self.render({"character": "robot", "label": "Test", "shapes": [
-            {"kind": "group", "x": 310, "y": 110, "anim": "wobble",
-             "children": [{"kind": "rect", "x": 0, "y": 0, "width": 10,
-                           "height": 10, "fill": "#2b313c"}]}]})
-        self.assertIn('<g class="sc-wobble">', html)
-        self.assertIn("transform:translate(310px, 110px)", html)
+    def test_quiz_wiring_marks_every_right_answer(self):
+        # A question may have more than one right answer: a right pick
+        # lights up every right option, a wrong pick marks itself red.
+        html = self.render(self.quiz())
+        self.assertIn("o.classList.add('gm-right')", html)
+        self.assertIn("b.classList.add('gm-wrong')", html)
+        self.assertIn("correct.indexOf", html)
 
-    def test_group_anim_and_moves_compose(self):
-        html = self.render({"character": "robot", "label": "Test", "shapes": [
-            {"kind": "group", "x": 10, "y": 10, "anim": "wobble",
-             "moves": [{"t": 0}, {"t": 1, "x": 20}],
-             "children": [{"kind": "rect", "x": 0, "y": 0, "width": 10,
-                           "height": 10, "fill": "#2b313c"}]}]})
-        self.assertIn("data-moves", html)
-        self.assertIn('<g class="sc-wobble">', html)
+    def test_anthropic_case_passes_the_checker(self):
+        # The article states only the $70-78 range, so $70 and $78 are
+        # both right answers and $85 is a distractor the article never
+        # states — close enough to be a plausible guess.
+        art = self.article("Anthropic priced its IPO at $70 to $78 a "
+                           "share, pricing on Wednesday.")
+        self.assertEqual(storyboard.check(self.board(self.quiz()), art), [])
 
-    def test_progression_defaults_to_slider(self):
-        # No progression in the storyboard: a plain slider scene, with
-        # none of the autoplay or tap wiring in the output.
-        html = self.render({"character": "robot", "label": "Test", "shapes": [
-            {"kind": "circle", "cx": 50, "cy": 50, "r": 3, "fill": "#7fd4ff"}]})
-        # The scene div carries no progression attribute: the CSS rules
-        # mention data-progression, so assert on the div itself.
-        self.assertIn('<div class="sc-scene">', html)
-        self.assertNotIn('<div class="sc-scene" data-progression', html)
-        self.assertNotIn("setInterval", html)
-        self.assertNotIn("nextStage", html)
-        self.assertNotIn('tabindex="0"', html)
-        schema = KIT.load_templates()["scene"].schema
-        self.assertEqual(schema["properties"]["progression"]["default"], "slider")
-        self.assertTrue(schema["properties"]["progression"]["x-ungrounded"])
+    def test_distractor_in_the_article_fails(self):
+        # A wrong option the article states is not a guess — it is a
+        # fact the reader was told, so it cannot be the wrong answer.
+        art = self.article("Anthropic priced its IPO at $70 to $78 a "
+                           "share. Rivals had hoped for $85.")
+        errors = storyboard.check(self.board(self.quiz()), art)
+        self.assertTrue(any("85 is in the article" in e for e in errors),
+                        errors)
 
-    def test_schema_accepts_progression_values_and_rejects_others(self):
-        for mode in ("slider", "autoplay", "tap"):
-            self.assertEqual(storyboard.check(self.board(
-                {"character": "robot", "label": "Test", "progression": mode}),
-                self.article()), [])
-        bad = self.board({"character": "robot", "label": "Test",
-                          "progression": "spin"})
-        self.assertTrue(storyboard.check(bad, self.article()))
+    def test_distractor_too_far_fails(self):
+        art = self.article("Anthropic priced its IPO at $70 to $78 a share.")
+        errors = storyboard.check(
+            self.board(self.quiz(options=[70, 78, 200])), art)
+        self.assertTrue(any("200 is too far" in e for e in errors), errors)
 
-    def test_autoplay_emits_timer_wiring_and_ten_second_scale_sweep(self):
-        # A scale scene with no stages: the full sweep takes ten seconds.
-        html = self.render({"character": "robot", "label": "Test",
-                            "progression": "autoplay",
-                            "scale": {"max_value": 600, "unit": "/s",
-                                      "unit_after": True},
-                            "shapes": [
-                                {"kind": "circle", "cx": 50, "cy": 50, "r": 3,
-                                 "fill": "#7fd4ff"}]})
-        self.assertIn('<div class="sc-scene" data-progression="autoplay">', html)
-        self.assertIn("var rate = max / 10000;", html)
-        self.assertIn("setInterval", html)
-        self.assertIn("clearInterval", html)
-        self.assertIn("matchMedia('(prefers-reduced-motion: reduce)')", html)
-        self.assertIn("IntersectionObserver", html)
-        self.assertIn("stopAuto", html)
-        self.assertIn("pointerdown", html)
-        self.assertNotIn("nextStage", html)
+    def test_correct_must_be_among_the_options(self):
+        art = self.article("Anthropic priced its IPO at $70 to $78 a share.")
+        errors = storyboard.check(
+            self.board(self.quiz(options=[70, 85, 90], correct=[70, 78])),
+            art)
+        self.assertTrue(any("must also be an option" in e for e in errors),
+                        errors)
 
-    def test_autoplay_paces_three_seconds_per_stage(self):
-        html = self.render({"character": "robot", "label": "Test",
-                            "progression": "autoplay",
-                            "stages": [{"line": "One"}, {"line": "Two"},
-                                       {"line": "Three"}],
-                            "shapes": [
-                                {"kind": "circle", "cx": 50, "cy": 50, "r": 3,
-                                 "fill": "#7fd4ff"}]})
-        self.assertIn('<div class="sc-scene" data-progression="autoplay">', html)
-        self.assertIn("var rate = max / 9000;", html)
+    def test_correct_must_be_in_the_article(self):
+        # The right answers are facts, so the grounding check applies to
+        # them even though the options as a whole are exempt.
+        art = self.article("Anthropic priced its IPO at $70 to $78 a share.")
+        errors = storyboard.check(
+            self.board(self.quiz(options=[70, 78, 99], correct=[70, 99])),
+            art)
+        self.assertTrue(any("99" in e for e in errors), errors)
 
-    def test_tap_emits_handler_and_keyboard_support(self):
-        html = self.render({"character": "robot", "label": "Test",
-                            "progression": "tap",
-                            "stages": [{"line": "One"}, {"line": "Two"}],
-                            "shapes": [
-                                {"kind": "circle", "cx": 50, "cy": 50, "r": 3,
-                                 "fill": "#7fd4ff"}]})
-        self.assertIn('<div class="sc-scene" data-progression="tap">', html)
-        self.assertIn("nextStage", html)
-        self.assertIn('tabindex="0"', html)
-        self.assertIn('role="button"', html)
-        self.assertIn("Tap to advance", html)
-        self.assertIn("e.key === 'Enter'", html)
-        self.assertNotIn("setInterval", html)
+    def test_guess_number_answer_must_be_in_the_article(self):
+        errors = storyboard.check(self.board(self.guess(answer=50)),
+                                  self.article())
+        self.assertTrue(any("50" in e for e in errors), errors)
 
-    def test_tap_without_stages_falls_back_to_slider(self):
-        # Tap has no step to advance to on a scale scene: the scene is a
-        # plain slider scene, and the storyboard still checks clean.
-        data = {"character": "robot", "label": "Test", "progression": "tap",
-                "scale": {"max_value": 600, "unit": "/s", "unit_after": True},
-                "shapes": [
-                    {"kind": "circle", "cx": 50, "cy": 50, "r": 3,
-                     "fill": "#7fd4ff"}]}
-        art = article.parse("---\nsource: Test\n---\n600 attempts a second\n")
-        self.assertEqual(storyboard.check(self.board(data), art), [])
-        html = self.render(data)
-        self.assertNotIn('<div class="sc-scene" data-progression', html)
-        self.assertNotIn("nextStage", html)
-        self.assertNotIn("setInterval", html)
-        self.assertNotIn('tabindex="0"', html)
+    def test_guess_number_range_must_bracket_the_answer(self):
+        errors = storyboard.check(self.board(self.guess(max=30)),
+                                  self.article())
+        self.assertTrue(any("outside the slider's range" in e for e in errors),
+                        errors)
+
+    def test_guess_number_needs_answer_and_max(self):
+        data = self.guess()
+        del data["answer"], data["max"]
+        errors = storyboard.check(self.board(data), self.article())
+        self.assertTrue(any("answer: missing" in e for e in errors), errors)
+        self.assertTrue(any("max: missing" in e for e in errors), errors)
+
+    def test_quiz_needs_options_and_correct(self):
+        data = self.quiz()
+        del data["options"], data["correct"]
+        errors = storyboard.check(self.board(data), self.article())
+        self.assertTrue(any("options: missing" in e for e in errors), errors)
+        self.assertTrue(any("correct: missing" in e for e in errors), errors)
+
+    def test_spoiler_headline_fails(self):
+        # The game is where the answer is first revealed: the headline
+        # must not state it.
+        errors = storyboard.check(
+            self.board(self.guess(), title="Fallowfield gets 42 cm"),
+            self.article())
+        self.assertTrue(any("states the game's answer (42)" in e
+                            for e in errors), errors)
+
+    def test_two_games_on_one_page_fail(self):
+        board = self.board(self.guess())
+        board["scenes"].append({"template": "game",
+                                "question": "What else?",
+                                "data": self.quiz()})
+        errors = storyboard.check(board, self.article())
+        self.assertTrue(any("a second game" in e for e in errors), errors)
 
 
 class CliTests(unittest.TestCase):

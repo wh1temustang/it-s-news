@@ -10,12 +10,10 @@ the page.
  article.md ──► AI agent ──► storyboard.json ──► check ──► render ──► page.html
 ```
 
-- **Templates:** scene first — an animated, reactive illustration the
-  agent draws itself, its own elements and flow, with the template's
-  robot as the main character: a character in weather the reader can
-  turn up, acting out the story's beat, or staging a mechanism — the
-  actors and the flow between them — then timeline, info board, map, big
-  number, bar chart, line chart, comparison, cause and effect, and quote.
+- **Templates:** game first — a mini-game the reader plays: guess the
+  article's number on a slider, or pick the right answer from a few
+  options — then timeline, info board, map, big number, bar chart,
+  line chart, comparison, cause and effect, and quote.
   Plus reactive scenes — scratch, wipe and hold — for a number the reader
   should feel rather than read.
 - **The agent** answers one question per scene ("Where does it run?", "What
@@ -31,8 +29,10 @@ the page.
   edition may also carry its [animated explainer](../animated-explainer/),
   embedded in the same page after its template scenes — simple stories
   stay templates, the long one unfolds. A story may also use a reactive
-  scene (scratch, wipe or hold) where a number is worth feeling; at most
-  one per page, and never for grave news. The example edition does this:
+  scene (scratch, wipe or hold) where a number is worth feeling, or a
+  game (guess the number, or pick the right answer) where a number or
+  fact is worth guessing; at most one of either per page, and never for
+  grave news. The example edition does this:
   the night train story is told both ways.
 - **Any language:** the page's own words (labels, credits, the footer) come
   in English and can be replaced with a labels file.
