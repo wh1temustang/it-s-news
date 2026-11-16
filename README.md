@@ -12,7 +12,6 @@ or clone the repo and open any `.html` file in an `examples/` folder.
 
 <p align="center">
   <img src="docs/images/edition-top.png" width="280" alt="The top of a fictional morning edition: masthead, sections, and the first story's headline.">
-  <img src="docs/images/edition-scene.png" width="280" alt="The robot picturing a snowfall: dragging the snow up to 42 cm as the drift grows.">
   <img src="docs/images/edition-more.png" width="280" alt="The end of the edition: a quote, the bottom line, and the footer.">
 </p>
 <p align="center"><sub>A fictional English edition — <a href="template-rendering/examples/english-edition.html">read the whole page</a>.</sub></p>
@@ -21,7 +20,7 @@ or clone the repo and open any `.html` file in an `examples/` folder.
 
 | Template | What it answers | Example |
 |---|---|---|
-| `scene` | The robot pictures the beat | [Wrenfield rain](template-rendering/examples/scene-rain.html) |
+| `game` | Guess the number, or pick the right answer | [Fallowfield snow](template-rendering/examples/fallowfield-snow.html) |
 | `info-board` | The essentials at a glance | [Night train](template-rendering/examples/night-train.html) |
 | `big-number` | One number is the news | [Bike lanes](template-rendering/examples/bike-lanes.html) |
 | `timeline` | How did we get here? | [Night train](template-rendering/examples/night-train.html) |
