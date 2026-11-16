@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>A router that would not stop talking · it's news</title>
+<meta name="description" content="600 attempts a second from the library to the town hall — and a queue that never drained.">
+<style>
+/* it's news: page shell and design tokens.
+   Templates style themselves with these tokens only, never raw colours, so
+   light and dark mode come for free. Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --ink: #15171c;
+  --muted: #5b616d;
+  --line: #e4e0d6;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --alt: #b45309;
+  --good: #15803d;
+  --bad: #b91c1c;
+  --pending: #b45309;
+  --neutral: #6b7280;
+  --water: #dce9f2;
+  --land: #ebe6da;
+  --coast: #b8ae98;
+  --border: #c9bfa8;
+  --radius: 18px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+[data-topic="world"]    { --accent: #2563eb; }
+[data-topic="politics"] { --accent: #7c3aed; }
+[data-topic="business"] { --accent: #0f766e; }
+[data-topic="science"]  { --accent: #0e7490; }
+[data-topic="tech"]     { --accent: #4f46e5; }
+[data-topic="climate"]  { --accent: #15803d; }
+[data-topic="health"]   { --accent: #be185d; }
+[data-topic="local"]    { --accent: #c2410c; }
+[data-topic="culture"]  { --accent: #a21caf; }
+[data-topic="sports"]   { --accent: #b91c1c; }
+
+/* Dark mode follows the reader's system, unless the page's host sets
+   data-theme="light" or "dark" on the root element for a reader's own choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --ink: #eef0f4;
+    --muted: #a3a9b5;
+    --line: #2a2e37;
+    --on-accent: #0b0d10;
+    --alt: #fbbf24;
+    --good: #4ade80;
+    --bad: #f87171;
+    --pending: #fbbf24;
+    --neutral: #9ca3af;
+    --water: #142130;
+    --land: #262a32;
+    --coast: #414856;
+    --border: #4a5160;
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) [data-topic="world"]    { --accent: #7aa2ff; }
+  :root:not([data-theme="light"]) [data-topic="politics"] { --accent: #b197fc; }
+  :root:not([data-theme="light"]) [data-topic="business"] { --accent: #2dd4bf; }
+  :root:not([data-theme="light"]) [data-topic="science"]  { --accent: #22d3ee; }
+  :root:not([data-theme="light"]) [data-topic="tech"]     { --accent: #8b93ff; }
+  :root:not([data-theme="light"]) [data-topic="climate"]  { --accent: #4ade80; }
+  :root:not([data-theme="light"]) [data-topic="health"]   { --accent: #f472b6; }
+  :root:not([data-theme="light"]) [data-topic="local"]    { --accent: #fb923c; }
+  :root:not([data-theme="light"]) [data-topic="culture"]  { --accent: #e879f9; }
+  :root:not([data-theme="light"]) [data-topic="sports"]   { --accent: #f87171; }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #181b21;
+  --ink: #eef0f4;
+  --muted: #a3a9b5;
+  --line: #2a2e37;
+  --on-accent: #0b0d10;
+  --alt: #fbbf24;
+  --good: #4ade80;
+  --bad: #f87171;
+  --pending: #fbbf24;
+  --neutral: #9ca3af;
+  --water: #142130;
+  --land: #262a32;
+  --coast: #414856;
+  --border: #4a5160;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] [data-topic="world"]    { --accent: #7aa2ff; }
+:root[data-theme="dark"] [data-topic="politics"] { --accent: #b197fc; }
+:root[data-theme="dark"] [data-topic="business"] { --accent: #2dd4bf; }
+:root[data-theme="dark"] [data-topic="science"]  { --accent: #22d3ee; }
+:root[data-theme="dark"] [data-topic="tech"]     { --accent: #8b93ff; }
+:root[data-theme="dark"] [data-topic="climate"]  { --accent: #4ade80; }
+:root[data-theme="dark"] [data-topic="health"]   { --accent: #f472b6; }
+:root[data-theme="dark"] [data-topic="local"]    { --accent: #fb923c; }
+:root[data-theme="dark"] [data-topic="culture"]  { --accent: #e879f9; }
+:root[data-theme="dark"] [data-topic="sports"]   { --accent: #f87171; }
+
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.story {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* --- headline --- */
+
+.hero { margin-bottom: 28px; }
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero :is(h1, h3) {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.dek {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2.6vw, 21px);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* --- scenes --- */
+
+.scene,
+.bottom-line {
+  margin-top: 18px;
+  padding: 22px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+}
+
+.scene-kind {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene :is(h2, h4),
+.bottom-line :is(h2, h4) {
+  margin: 0 0 18px;
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.bottom-line {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.bottom-line :is(h2, h4) {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom-line p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Shared by the chart templates. */
+.chart-unit {
+  margin: -10px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .story { padding-top: 28px; }
+  .scene, .bottom-line { padding: 18px 16px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- info board --- */
+
+.ib {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ib-tile {
+  --tone: var(--accent);
+  padding: 14px 14px 16px;
+  border-top: 4px solid var(--tone);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tone) 8%, var(--surface));
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
+}
+
+.ib-tile[data-tone="good"]    { --tone: var(--good); }
+.ib-tile[data-tone="bad"]     { --tone: var(--bad); }
+.ib-tile[data-tone="pending"] { --tone: var(--pending); }
+.ib-tile[data-tone="neutral"] { --tone: var(--neutral); }
+
+.ib-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ib-value {
+  margin: 4px 0 0;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ib-tile:not([data-tone="none"]) .ib-value { color: var(--tone); }
+
+.ib-note {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+/* --- scene ---
+   An animated, reactive illustrated scene: a character in weather the
+   reader can turn up, or acting out the story's beat. The figure is a
+   picture with a fixed palette, so its colours live in the SVG markup;
+   only the control below it uses these tokens, so it follows the page
+   theme and dark mode. The slider is the only cue; the scene shows no
+   helper sentences. */
+
+.sc-scene {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.sc-figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.sc-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --- tap progression: the figure is the control, so it reads as one --- */
+
+.sc-scene[data-progression="tap"] svg {
+  cursor: pointer;
+}
+
+.sc-scene[data-progression="tap"] svg:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+/* --- ambient motion: falling drops, streaming packets, pulsing alarms,
+   bobbing robot, wobbling shapes, ripples --- */
+
+.sc-fall {
+  animation: scene-fall var(--fall, .84s) linear infinite;
+  animation-duration: calc(var(--fall, .84s) / var(--m, 1));
+}
+
+.sc-stream {
+  animation: scene-stream var(--stream, 1.6s) linear infinite;
+  animation-duration: calc(var(--stream, 1.6s) / var(--m, 1));
+}
+
+.sc-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scene-pulse 1.4s ease-in-out infinite;
+}
+
+.sc-bob {
+  animation: scene-bob 1.6s ease-in-out infinite;
+}
+
+.sc-wobble {
+  animation: scene-wobble 1.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.sc-ripple {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scene-ripple 2.2s ease-out infinite;
+}
+
+/* --- generic: keyframed elements the slider drives --- */
+
+.sc-anim {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+@keyframes scene-fall {
+  from { transform: translateY(-24px); }
+  to { transform: translateY(300px); }
+}
+
+@keyframes scene-stream {
+  from { transform: translateX(-40px); }
+  to { transform: translateX(360px); }
+}
+
+@keyframes scene-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: .45; }
+}
+
+@keyframes scene-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes scene-wobble {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes scene-ripple {
+  0% { transform: scale(.6); opacity: .7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* --- control: readout, label, slider, one-word button --- */
+
+.sc-control {
+  padding: 14px 16px 18px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.sc-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sc-value {
+  color: var(--accent);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.sc-value.sc-stage {
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.sc-label {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sc-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sc-slider {
+  flex: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 10px;
+  border-radius: 5px;
+  outline-offset: 4px;
+  background: linear-gradient(90deg, var(--water), var(--accent));
+  cursor: grab;
+}
+
+.sc-slider:active {
+  cursor: grabbing;
+}
+
+.sc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  cursor: grab;
+}
+
+.sc-slider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--accent);
+  cursor: grab;
+}
+
+.sc-jump {
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sc-jump:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-fall,
+  .sc-stream,
+  .sc-pulse,
+  .sc-bob,
+  .sc-wobble,
+  .sc-ripple {
+    animation: none;
+  }
+  .sc-anim {
+    transition: none;
+  }
+}
+
+</style>
+</head>
+<body data-topic="local">
+<p class="banner" role="note">Fictional sample: this is not real news.</p>
+<main class="story">
+  <header class="hero">
+    <p class="kicker">Local</p>
+    <h1>A router that would not stop talking</h1>
+    <p class="dek">600 attempts a second from the library to the town hall — and a queue that never drained.</p>
+    <p class="byline">Wrenfield Gazette (fictional) · <span>November 13, 2026</span></p>
+  </header>
+
+  <section class="scene scene--scene" style="--i: 0" aria-labelledby="q1">
+    <p class="scene-kind"><span aria-hidden="true">🤖</span> Scene</p>
+    <h2 id="q1">What is flooding the town hall router?</h2>
+    <div class="sc-scene" data-progression="autoplay">
+  <figure class="sc-figure">
+    <svg viewBox="0 0 400 300" role="img" aria-label="600 attempts a second">
+      <defs>
+        <linearGradient id="scene-sky-0" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1d3247"/>
+          <stop offset=".55" stop-color="#33506b"/>
+          <stop offset="1" stop-color="#24384e"/>
+        </linearGradient>
+        <linearGradient id="scene-room-0" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#2b313c"/>
+          <stop offset="1" stop-color="#1b1f27"/>
+        </linearGradient>
+      </defs>
+      <rect width="400" height="300" fill="url(#scene-room-0)"/>
+      <rect x="0" y="270" width="400" height="30" fill="#14171d"/>
+  <g data-bx="20" data-by="110" style="transform:translate(20px, 110px)">    <rect x="0" y="0" width="64" height="40" rx="4" fill="#2b313c" stroke="#4a5568" stroke-width="1"/>    <circle cx="12" cy="12" r="3" fill="#ff6b6b" class="sc-pulse"/>    <circle cx="24" cy="12" r="3" fill="#ffb020"/>    <circle cx="36" cy="12" r="3" fill="#7fd4ff"/>    <line x1="56" y1="0" x2="64" y2="-14" stroke="#4a5568" stroke-width="2" stroke-linecap="round"/>    <text x="32" y="58" font-size="12" text-anchor="middle" fill="#a9d0f5">Library</text>  </g>  <g data-bx="310" data-by="110" style="transform:translate(310px, 110px)"><g class="sc-wobble">    <rect x="0" y="0" width="64" height="40" rx="4" fill="#2b313c" stroke="#4a5568" stroke-width="1"/>    <circle cx="12" cy="12" r="3" fill="#7fd4ff" class="sc-anim" data-moves='[{"t": 0}, {"fill": "#ff6b6b", "t": 0.2}]'/>    <circle cx="24" cy="12" r="3" fill="#7fd4ff" class="sc-anim" data-moves='[{"t": 0}, {"fill": "#ff6b6b", "t": 0.45}]'/>    <circle cx="36" cy="12" r="3" fill="#7fd4ff" class="sc-anim" data-moves='[{"t": 0}, {"fill": "#ff6b6b", "t": 0.7}]'/>    <text x="32" y="58" font-size="12" text-anchor="middle" fill="#a9d0f5">Town hall</text></g>  </g>    <circle cx="96" cy="124" r="3.5" fill="#7fd4ff" class="sc-stream" style="--m:1.0;animation-delay:0s;"/>    <circle cx="104" cy="130" r="3.5" fill="#7fd4ff" class="sc-stream" style="--m:1.3;animation-delay:-0.4s;"/>    <circle cx="100" cy="136" r="3.5" fill="#7fd4ff" class="sc-stream" style="--m:0.8;animation-delay:-0.9s;"/>  <g class="sc-stream" style="--m:1.5;animation-delay:-0.2s;">  <circle cx="110" cy="126" r="3.5" fill="#7fd4ff" class="sc-anim" data-moves='[{"t": 0, "y": 0}, {"t": 0.5, "y": 10}, {"t": 1, "y": 0}]'/></g>    <circle cx="108" cy="134" r="3.5" fill="#7fd4ff" class="sc-stream" style="--m:1.1;animation-delay:-1.3s;"/>    <circle cx="114" cy="122" r="3.5" fill="#7fd4ff" class="sc-stream" style="--m:0.9;animation-delay:-0.7s;"/>    <circle cx="118" cy="132" r="3.5" fill="#7fd4ff" class="sc-stream" style="--m:1.4;animation-delay:-1.7s;"/>    <circle cx="102" cy="140" r="3.5" fill="#7fd4ff" class="sc-stream" style="--m:1.2;animation-delay:-0.5s;"/>    <rect x="310" y="158" width="64" height="16" fill="none" stroke="#4a5568" stroke-width="1"/>    <rect x="312" y="162" width="8" height="8" fill="#2b313c" class="sc-anim" data-moves='[{"t": 0}, {"fill": "#ff6b6b", "t": 0.15}]'/>    <rect x="322" y="162" width="8" height="8" fill="#2b313c" class="sc-anim" data-moves='[{"t": 0}, {"fill": "#ff6b6b", "t": 0.3}]'/>    <rect x="332" y="162" width="8" height="8" fill="#2b313c" class="sc-anim" data-moves='[{"t": 0}, {"fill": "#ff6b6b", "t": 0.45}]'/>    <rect x="342" y="162" width="8" height="8" fill="#2b313c" class="sc-anim" data-moves='[{"t": 0}, {"fill": "#ff6b6b", "t": 0.6}]'/>    <rect x="352" y="162" width="8" height="8" fill="#2b313c" class="sc-anim" data-moves='[{"t": 0}, {"fill": "#ff6b6b", "t": 0.75}]'/>    <rect x="362" y="162" width="8" height="8" fill="#2b313c" class="sc-anim" data-moves='[{"t": 0}, {"fill": "#ff6b6b", "t": 0.9}]'/>  <g class="sc-anim" data-bx="-40" data-by="5" data-moves='[{"t": 0, "x": 0}, {"t": 0.5, "x": 14}, {"t": 1, "x": 0}]' style="transform:translate(-40px, 5px)"><g class="sc-bob">
+  <rect x="188" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
+  <rect x="204" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
+  <rect x="184" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
+  <rect x="202" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
+  <rect x="180" y="200" width="40" height="42" rx="9" fill="#f5b301"/>
+  <rect x="190" y="212" width="20" height="14" rx="3" fill="#222d3a"/>
+  <circle cx="200" cy="219" r="3" fill="#7fd4ff"/>
+  <line x1="180" y1="212" x2="167" y2="230" stroke="#f5b301" stroke-width="7" stroke-linecap="round"/>
+  <line x1="220" y1="212" x2="231" y2="182" stroke="#f5b301" stroke-width="7" stroke-linecap="round"/>
+  <rect x="184" y="168" width="32" height="30" rx="8" fill="#ffc93c"/>
+  <circle cx="194" cy="182" r="3.5" fill="#222d3a"/>
+  <circle cx="206" cy="182" r="3.5" fill="#222d3a"/>
+  <path d="M192 190 q8 4 16 0" stroke="#222d3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <line x1="200" y1="168" x2="200" y2="156" stroke="#c98a12" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="200" cy="153" r="3.5" fill="#ff6b6b"/>
+</g>
+  </g>    </svg>
+    <div class="sc-control">
+      <div class="sc-readout">
+        <span class="sc-value" data-unit="/s" data-unit-after="1" data-max="600">0.0/s</span>
+        <span class="sc-label">600 attempts a second</span>
+      </div>
+      <div class="sc-row">
+        <input type="range" class="sc-slider" min="0" max="600" step="20.0" value="0.0" aria-label="600 attempts a second">
+        <button type="button" class="sc-jump">Max</button>
+      </div>
+    </div>
+  </figure>
+<script>
+(function () {
+  var root = document.currentScript.closest('.sc-scene');
+  if (!root || root.dataset.scWired) return;
+  root.dataset.scWired = '1';
+  var figure = root.querySelector('.sc-figure');
+  var slider = root.querySelector('.sc-slider');
+  var readout = root.querySelector('.sc-value');
+  var stageEl = root.querySelector('.sc-stage');
+  var stages = stageEl ? JSON.parse(stageEl.dataset.stages) : null;
+  var max = +slider.max;
+  var unit = readout && readout.dataset.unit ? readout.dataset.unit : '';
+  var after = readout && readout.dataset.unitAfter === '1';
+  var def = {x: 0, y: 0, rotate: 0, sx: 1, sy: 1, opacity: 1, fill: undefined};
+  function norm(moves) {
+    var out = [], cur = {x: def.x, y: def.y, rotate: def.rotate, sx: def.sx, sy: def.sy, opacity: def.opacity, fill: def.fill};
+    moves.slice().sort(function (a, b) { return a.t - b.t; }).forEach(function (kf) {
+      var n = {x: cur.x, y: cur.y, rotate: cur.rotate, sx: cur.sx, sy: cur.sy, opacity: cur.opacity, fill: cur.fill, t: kf.t};
+      ['x', 'y', 'rotate', 'sx', 'sy', 'opacity', 'fill'].forEach(function (k) { if (kf[k] !== undefined) n[k] = kf[k]; });
+      out.push(n); cur = n;
+    });
+    return out;
+  }
+  function at(moves, t) {
+    var lo = moves[0], hi = moves[moves.length - 1];
+    if (t <= lo.t) return lo;
+    if (t >= hi.t) return hi;
+    for (var i = 0; i < moves.length - 1; i++) {
+      if (t >= moves[i].t && t <= moves[i + 1].t) { lo = moves[i]; hi = moves[i + 1]; break; }
+    }
+    var f = hi.t === lo.t ? 0 : (t - lo.t) / (hi.t - lo.t);
+    var o = {t: t, fill: lo.fill};
+    ['x', 'y', 'rotate', 'sx', 'sy', 'opacity'].forEach(function (k) {
+      o[k] = lo[k] + (hi[k] - lo[k]) * f;
+    });
+    return o;
+  }
+  function fmt(v) { return String(Number(v.toFixed(2))); }
+  var animated = [];
+  root.querySelectorAll('[data-moves]').forEach(function (el) {
+    var moves = norm(JSON.parse(el.dataset.moves));
+    animated.push({el: el, moves: moves,
+      hasFill: moves.some(function (k) { return k.fill !== undefined; }),
+      bx: parseFloat(el.dataset.bx || '0'), by: parseFloat(el.dataset.by || '0')});
+  });
+  function update(v) {
+    // v is the slider position in slider units; when the caller leaves it
+    // out, read the slider. Autoplay passes its own raw position, so the
+    // scene follows it exactly even if the thumb snaps to the step.
+    v = (v === undefined) ? +slider.value : v;
+    var t = max ? v / max : 0;
+    if (readout && readout.dataset.max !== undefined) {
+      readout.textContent = after ? fmt(v) + unit : unit + fmt(v);
+    }
+    if (stages) {
+      var k = Math.min(stages.length - 1, Math.floor(t * stages.length));
+      stageEl.textContent = stages[k];
+    }
+    figure.style.setProperty('--fall', (1.1 - 0.65 * t).toFixed(2) + 's');
+    figure.style.setProperty('--stream', (1.6 - 0.9 * t).toFixed(2) + 's');
+    animated.forEach(function (a) {
+      var s = at(a.moves, t);
+      a.el.style.transform = 'translate(' + (a.bx + s.x).toFixed(1) + 'px, ' + (a.by + s.y).toFixed(1) + 'px) rotate(' + s.rotate.toFixed(1) + 'deg) scale(' + s.sx.toFixed(3) + ', ' + s.sy.toFixed(3) + ')';
+      a.el.style.opacity = s.opacity.toFixed(2);
+      if (a.hasFill) {
+        a.el.style.fill = s.fill !== undefined ? s.fill : '';
+      }
+    });
+  }
+  slider.addEventListener('input', update);
+  slider.addEventListener('keydown', function (e) {
+    var st = +slider.step || 1;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      slider.value = Math.min(max, +slider.value + st); update(); e.preventDefault();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      slider.value = Math.max(0, +slider.value - st); update(); e.preventDefault();
+    }
+  });
+  root.querySelector('.sc-jump').addEventListener('click', function () {
+    slider.value = max; update(); slider.focus();
+  });
+  update();
+  // Autoplay: a timer advances the slider on its own, from where it
+  // starts to the end, paced to the stages (or ten seconds for a scale
+  // scene). It pauses the moment the reader touches the scene or the
+  // slider, and never starts under reduced motion. It starts when the
+  // scene scrolls into view, so a reader who arrives late still sees
+  // the whole sweep.
+  var autoTimer = null;
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function stopAuto() {
+    if (autoTimer !== null) { clearInterval(autoTimer); autoTimer = null; }
+  }
+  function startAuto() {
+    if (reducedMotion || autoTimer !== null) return;
+    var rate = max / 10000;
+    var pos = +slider.value;
+    var last = Date.now();
+    autoTimer = setInterval(function () {
+      var now = Date.now();
+      pos = Math.min(max, pos + rate * (now - last));
+      last = now;
+      slider.value = pos;
+      update(pos);
+      if (pos >= max) stopAuto();
+    }, 50);
+  }
+  figure.addEventListener('pointerdown', stopAuto);
+  slider.addEventListener('pointerdown', stopAuto);
+  slider.addEventListener('keydown', stopAuto);
+  slider.addEventListener('input', stopAuto);
+  root.querySelector('.sc-jump').addEventListener('click', stopAuto);
+  if ('IntersectionObserver' in window) {
+    var seen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { startAuto(); seen.disconnect(); }
+      });
+    });
+    seen.observe(root);
+  } else {
+    startAuto();
+  }
+})();
+</script>
+</div>
+
+  </section>
+  <section class="scene scene--info-board" style="--i: 1" aria-labelledby="q2">
+    <p class="scene-kind"><span aria-hidden="true">📋</span> Info board</p>
+    <h2 id="q2">How bad was the flood?</h2>
+    <ul class="ib">
+  <li class="ib-tile" data-tone="none" style="--j: 0">
+    <p class="ib-label">Attempts a second</p>
+    <p class="ib-value">600</p>
+  </li>
+  <li class="ib-tile" data-tone="none" style="--j: 1">
+    <p class="ib-label">Requests in the queue</p>
+    <p class="ib-value">48</p>
+  </li>
+  <li class="ib-tile" data-tone="none" style="--j: 2">
+    <p class="ib-label">Seconds to clear</p>
+    <p class="ib-value">20</p>
+  </li>
+</ul>
+
+  </section>
+
+  <section class="bottom-line" style="--i: 2">
+    <h2>Bottom line</h2>
+    <p>The library replaced the faulty router; no town records were lost.</p>
+  </section>
+
+  <footer class="colophon">
+    <p>Presented by <b>it's news</b>. Every figure and quote in this story was checked against the article.</p>
+  </footer>
+</main>
+</body>
+</html>

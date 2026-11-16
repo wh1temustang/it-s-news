@@ -645,11 +645,34 @@ a { color: var(--accent); }
   height: auto;
 }
 
-/* --- rain: falling drops, bobbing robot, wobbling umbrella, ripples --- */
+/* --- tap progression: the figure is the control, so it reads as one --- */
 
-.sc-drop {
+.sc-scene[data-progression="tap"] svg {
+  cursor: pointer;
+}
+
+.sc-scene[data-progression="tap"] svg:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+/* --- ambient motion: falling drops, streaming packets, pulsing alarms,
+   bobbing robot, wobbling shapes, ripples --- */
+
+.sc-fall {
   animation: scene-fall var(--fall, .84s) linear infinite;
-  animation-duration: calc(var(--fall, .84s) * var(--m, 1));
+  animation-duration: calc(var(--fall, .84s) / var(--m, 1));
+}
+
+.sc-stream {
+  animation: scene-stream var(--stream, 1.6s) linear infinite;
+  animation-duration: calc(var(--stream, 1.6s) / var(--m, 1));
+}
+
+.sc-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scene-pulse 1.4s ease-in-out infinite;
 }
 
 .sc-bob {
@@ -679,6 +702,16 @@ a { color: var(--accent); }
 @keyframes scene-fall {
   from { transform: translateY(-24px); }
   to { transform: translateY(300px); }
+}
+
+@keyframes scene-stream {
+  from { transform: translateX(-40px); }
+  to { transform: translateX(360px); }
+}
+
+@keyframes scene-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: .45; }
 }
 
 @keyframes scene-bob {
@@ -786,7 +819,9 @@ a { color: var(--accent); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sc-drop,
+  .sc-fall,
+  .sc-stream,
+  .sc-pulse,
   .sc-bob,
   .sc-wobble,
   .sc-ripple {
@@ -937,8 +972,7 @@ a { color: var(--accent); }
         </linearGradient>
       </defs>
       <rect width="400" height="300" fill="url(#scene-sky-0)"/>
-  <ellipse cx="90" cy="42" rx="70" ry="16" fill="#22394f"/>  <ellipse cx="300" cy="30" rx="84" ry="18" fill="#1d3046"/>  <g>  <circle cx="30" cy="10" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:0s;"/>  <circle cx="80" cy="30" r="3" fill="#ffffff" class="sc-fall" style="--m:1.3;animation-delay:-0.5s;"/>  <circle cx="130" cy="0" r="3" fill="#ffffff" class="sc-fall" style="--m:0.9;animation-delay:-0.2s;"/>  <circle cx="180" cy="22" r="3" fill="#ffffff" class="sc-fall" style="--m:1.2;animation-delay:-0.8s;"/>  <circle cx="230" cy="6" r="3" fill="#ffffff" class="sc-fall" style="--m:1.1;animation-delay:-0.4s;"/>  <circle cx="280" cy="34" r="3" fill="#ffffff" class="sc-fall" style="--m:0.85;animation-delay:-0.7s;"/>  <circle cx="330" cy="14" r="3" fill="#ffffff" class="sc-fall" style="--m:1.25;animation-delay:-0.1s;"/>  <circle cx="370" cy="40" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.9s;"/>  <circle cx="55" cy="52" r="3" fill="#ffffff" class="sc-fall" style="--m:1.15;animation-delay:-0.6s;"/>  <circle cx="355" cy="60" r="3" fill="#ffffff" class="sc-fall" style="--m:0.95;animation-delay:-0.3s;"/>  </g>  <g class="sc-anim" data-moves='[{"opacity": 0, "t": 0.27}, {"opacity": 1, "t": 0.67}]' opacity="0">  <circle cx="15" cy="44" r="3" fill="#ffffff" class="sc-fall" style="--m:1.05;animation-delay:-0.2s;"/>  <circle cx="105" cy="18" r="3" fill="#ffffff" class="sc-fall" style="--m:0.9;animation-delay:-0.6s;"/>  <circle cx="155" cy="48" r="3" fill="#ffffff" class="sc-fall" style="--m:1.2;animation-delay:-0.1s;"/>  <circle cx="205" cy="12" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.8s;"/>  <circle cx="255" cy="42" r="3" fill="#ffffff" class="sc-fall" style="--m:1.3;animation-delay:-0.4s;"/>  <circle cx="305" cy="8" r="3" fill="#ffffff" class="sc-fall" style="--m:0.88;animation-delay:-0.7s;"/>  <circle cx="345" cy="46" r="3" fill="#ffffff" class="sc-fall" style="--m:1.1;animation-delay:-0.5s;"/>  <circle cx="65" cy="70" r="3" fill="#ffffff" class="sc-fall" style="--m:1.2;animation-delay:-0.3s;"/>  </g>  <g class="sc-anim" data-moves='[{"opacity": 0, "t": 0.6}, {"opacity": 1, "t": 1}]' opacity="0">  <circle cx="45" cy="26" r="3" fill="#ffffff" class="sc-fall" style="--m:0.9;animation-delay:-0.4s;"/>  <circle cx="95" cy="56" r="3" fill="#ffffff" class="sc-fall" style="--m:1.15;animation-delay:-0.7s;"/>  <circle cx="145" cy="20" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.2s;"/>  <circle cx="195" cy="50" r="3" fill="#ffffff" class="sc-fall" style="--m:1.25;animation-delay:-0.8s;"/>  <circle cx="245" cy="16" r="3" fill="#ffffff" class="sc-fall" style="--m:0.92;animation-delay:-0.5s;"/>  <circle cx="295" cy="52" r="3" fill="#ffffff" class="sc-fall" style="--m:1.1;animation-delay:-0.1s;"/>  <circle cx="335" cy="28" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.6s;"/>  <circle cx="120" cy="64" r="3" fill="#ffffff" class="sc-fall" style="--m:0.88;animation-delay:-0.3s;"/>  </g>  <rect x="0" y="270" width="400" height="30" fill="#16283a"/>  <ellipse cx="200" cy="272" rx="78" ry="8" fill="#dbe9f5" opacity="0.85" class="sc-anim" data-moves='[{"sy": 0.35, "t": 0}, {"sy": 1.25, "t": 1}]'/>  <ellipse cx="160" cy="272" rx="18" ry="4" fill="none" stroke="#ffffff" stroke-width="1.5" class="sc-ripple"/>  <ellipse cx="248" cy="272" rx="14" ry="3" fill="none" stroke="#ffffff" stroke-width="1.5" class="sc-ripple" style="animation-delay:-1.1s;"/>  <g class="sc-anim" data-bx="0" data-by="0" data-moves='[{"rotate": 0, "t": 0}, {"rotate": -12, "t": 1}]' style="transform:translate(0px, 0px)">
-    <g class="sc-bob">
+    <ellipse cx="90" cy="42" rx="70" ry="16" fill="#22394f"/>    <ellipse cx="300" cy="30" rx="84" ry="18" fill="#1d3046"/>  <g>    <circle cx="30" cy="10" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:0s;"/>    <circle cx="80" cy="30" r="3" fill="#ffffff" class="sc-fall" style="--m:1.3;animation-delay:-0.5s;"/>    <circle cx="130" cy="0" r="3" fill="#ffffff" class="sc-fall" style="--m:0.9;animation-delay:-0.2s;"/>    <circle cx="180" cy="22" r="3" fill="#ffffff" class="sc-fall" style="--m:1.2;animation-delay:-0.8s;"/>    <circle cx="230" cy="6" r="3" fill="#ffffff" class="sc-fall" style="--m:1.1;animation-delay:-0.4s;"/>    <circle cx="280" cy="34" r="3" fill="#ffffff" class="sc-fall" style="--m:0.85;animation-delay:-0.7s;"/>    <circle cx="330" cy="14" r="3" fill="#ffffff" class="sc-fall" style="--m:1.25;animation-delay:-0.1s;"/>    <circle cx="370" cy="40" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.9s;"/>    <circle cx="55" cy="52" r="3" fill="#ffffff" class="sc-fall" style="--m:1.15;animation-delay:-0.6s;"/>    <circle cx="355" cy="60" r="3" fill="#ffffff" class="sc-fall" style="--m:0.95;animation-delay:-0.3s;"/>  </g>  <g class="sc-anim" data-moves='[{"opacity": 0, "t": 0.27}, {"opacity": 1, "t": 0.67}]' opacity="0">    <circle cx="15" cy="44" r="3" fill="#ffffff" class="sc-fall" style="--m:1.05;animation-delay:-0.2s;"/>    <circle cx="105" cy="18" r="3" fill="#ffffff" class="sc-fall" style="--m:0.9;animation-delay:-0.6s;"/>    <circle cx="155" cy="48" r="3" fill="#ffffff" class="sc-fall" style="--m:1.2;animation-delay:-0.1s;"/>    <circle cx="205" cy="12" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.8s;"/>    <circle cx="255" cy="42" r="3" fill="#ffffff" class="sc-fall" style="--m:1.3;animation-delay:-0.4s;"/>    <circle cx="305" cy="8" r="3" fill="#ffffff" class="sc-fall" style="--m:0.88;animation-delay:-0.7s;"/>    <circle cx="345" cy="46" r="3" fill="#ffffff" class="sc-fall" style="--m:1.1;animation-delay:-0.5s;"/>    <circle cx="65" cy="70" r="3" fill="#ffffff" class="sc-fall" style="--m:1.2;animation-delay:-0.3s;"/>  </g>  <g class="sc-anim" data-moves='[{"opacity": 0, "t": 0.6}, {"opacity": 1, "t": 1}]' opacity="0">    <circle cx="45" cy="26" r="3" fill="#ffffff" class="sc-fall" style="--m:0.9;animation-delay:-0.4s;"/>    <circle cx="95" cy="56" r="3" fill="#ffffff" class="sc-fall" style="--m:1.15;animation-delay:-0.7s;"/>    <circle cx="145" cy="20" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.2s;"/>    <circle cx="195" cy="50" r="3" fill="#ffffff" class="sc-fall" style="--m:1.25;animation-delay:-0.8s;"/>    <circle cx="245" cy="16" r="3" fill="#ffffff" class="sc-fall" style="--m:0.92;animation-delay:-0.5s;"/>    <circle cx="295" cy="52" r="3" fill="#ffffff" class="sc-fall" style="--m:1.1;animation-delay:-0.1s;"/>    <circle cx="335" cy="28" r="3" fill="#ffffff" class="sc-fall" style="--m:1.0;animation-delay:-0.6s;"/>    <circle cx="120" cy="64" r="3" fill="#ffffff" class="sc-fall" style="--m:0.88;animation-delay:-0.3s;"/>  </g>    <rect x="0" y="270" width="400" height="30" fill="#16283a"/>    <ellipse cx="200" cy="272" rx="78" ry="8" fill="#dbe9f5" opacity="0.85" class="sc-anim" data-moves='[{"sy": 0.35, "t": 0}, {"sy": 1.25, "t": 1}]'/>    <ellipse cx="160" cy="272" rx="18" ry="4" fill="none" stroke="#ffffff" stroke-width="1.5" class="sc-ripple"/>    <ellipse cx="248" cy="272" rx="14" ry="3" fill="none" stroke="#ffffff" stroke-width="1.5" class="sc-ripple" style="animation-delay:-1.1s;"/>  <g class="sc-anim" data-bx="0" data-by="0" data-moves='[{"rotate": 0, "t": 0}, {"rotate": -12, "t": 1}]' style="transform:translate(0px, 0px)"><g class="sc-bob">
   <rect x="188" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
   <rect x="204" y="238" width="8" height="24" rx="3" fill="#c98a12"/>
   <rect x="184" y="258" width="14" height="6" rx="3" fill="#8a5f0b"/>
@@ -955,8 +989,7 @@ a { color: var(--accent); }
   <line x1="200" y1="168" x2="200" y2="156" stroke="#c98a12" stroke-width="3" stroke-linecap="round"/>
   <circle cx="200" cy="153" r="3.5" fill="#ff6b6b"/>
 </g>
-
-  </g>  <g class="sc-anim" data-moves='[{"rotate": 0, "t": 0}, {"rotate": -12, "t": 1}]'>  <line x1="252" y1="205" x2="282" y2="262" stroke="#8a5f0b" stroke-width="3" stroke-linecap="round"/>  <path d="M274 258 L292 258 L288 272 L278 272 Z" fill="#9aa7b5"/>  </g>    </svg>
+  </g>  <g class="sc-anim" data-moves='[{"rotate": 0, "t": 0}, {"rotate": -12, "t": 1}]'>    <line x1="252" y1="205" x2="282" y2="262" stroke="#8a5f0b" stroke-width="3" stroke-linecap="round"/>    <path d="M274 258 L292 258 L288 272 L278 272 Z" fill="#9aa7b5"/>  </g>    </svg>
     <div class="sc-control">
       <div class="sc-readout">
         <span class="sc-value" data-unit=" cm" data-unit-after="1" data-max="42">16.799999999999997 cm</span>
@@ -981,12 +1014,12 @@ a { color: var(--accent); }
   var max = +slider.max;
   var unit = readout && readout.dataset.unit ? readout.dataset.unit : '';
   var after = readout && readout.dataset.unitAfter === '1';
-  var def = {x: 0, y: 0, rotate: 0, sx: 1, sy: 1, opacity: 1};
+  var def = {x: 0, y: 0, rotate: 0, sx: 1, sy: 1, opacity: 1, fill: undefined};
   function norm(moves) {
-    var out = [], cur = {x: def.x, y: def.y, rotate: def.rotate, sx: def.sx, sy: def.sy, opacity: def.opacity};
+    var out = [], cur = {x: def.x, y: def.y, rotate: def.rotate, sx: def.sx, sy: def.sy, opacity: def.opacity, fill: def.fill};
     moves.slice().sort(function (a, b) { return a.t - b.t; }).forEach(function (kf) {
-      var n = {x: cur.x, y: cur.y, rotate: cur.rotate, sx: cur.sx, sy: cur.sy, opacity: cur.opacity, t: kf.t};
-      ['x', 'y', 'rotate', 'sx', 'sy', 'opacity'].forEach(function (k) { if (kf[k] !== undefined) n[k] = kf[k]; });
+      var n = {x: cur.x, y: cur.y, rotate: cur.rotate, sx: cur.sx, sy: cur.sy, opacity: cur.opacity, fill: cur.fill, t: kf.t};
+      ['x', 'y', 'rotate', 'sx', 'sy', 'opacity', 'fill'].forEach(function (k) { if (kf[k] !== undefined) n[k] = kf[k]; });
       out.push(n); cur = n;
     });
     return out;
@@ -999,7 +1032,7 @@ a { color: var(--accent); }
       if (t >= moves[i].t && t <= moves[i + 1].t) { lo = moves[i]; hi = moves[i + 1]; break; }
     }
     var f = hi.t === lo.t ? 0 : (t - lo.t) / (hi.t - lo.t);
-    var o = {t: t};
+    var o = {t: t, fill: lo.fill};
     ['x', 'y', 'rotate', 'sx', 'sy', 'opacity'].forEach(function (k) {
       o[k] = lo[k] + (hi[k] - lo[k]) * f;
     });
@@ -1008,11 +1041,16 @@ a { color: var(--accent); }
   function fmt(v) { return String(Number(v.toFixed(2))); }
   var animated = [];
   root.querySelectorAll('[data-moves]').forEach(function (el) {
-    animated.push({el: el, moves: norm(JSON.parse(el.dataset.moves)),
+    var moves = norm(JSON.parse(el.dataset.moves));
+    animated.push({el: el, moves: moves,
+      hasFill: moves.some(function (k) { return k.fill !== undefined; }),
       bx: parseFloat(el.dataset.bx || '0'), by: parseFloat(el.dataset.by || '0')});
   });
-  function update() {
-    var v = +slider.value;
+  function update(v) {
+    // v is the slider position in slider units; when the caller leaves it
+    // out, read the slider. Autoplay passes its own raw position, so the
+    // scene follows it exactly even if the thumb snaps to the step.
+    v = (v === undefined) ? +slider.value : v;
     var t = max ? v / max : 0;
     if (readout && readout.dataset.max !== undefined) {
       readout.textContent = after ? fmt(v) + unit : unit + fmt(v);
@@ -1022,10 +1060,14 @@ a { color: var(--accent); }
       stageEl.textContent = stages[k];
     }
     figure.style.setProperty('--fall', (1.1 - 0.65 * t).toFixed(2) + 's');
+    figure.style.setProperty('--stream', (1.6 - 0.9 * t).toFixed(2) + 's');
     animated.forEach(function (a) {
       var s = at(a.moves, t);
       a.el.style.transform = 'translate(' + (a.bx + s.x).toFixed(1) + 'px, ' + (a.by + s.y).toFixed(1) + 'px) rotate(' + s.rotate.toFixed(1) + 'deg) scale(' + s.sx.toFixed(3) + ', ' + s.sy.toFixed(3) + ')';
       a.el.style.opacity = s.opacity.toFixed(2);
+      if (a.hasFill) {
+        a.el.style.fill = s.fill !== undefined ? s.fill : '';
+      }
     });
   }
   slider.addEventListener('input', update);

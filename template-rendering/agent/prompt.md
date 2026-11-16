@@ -73,17 +73,36 @@ before or after it. Its shape:
      scene shows no helper sentences: affordances over instructions, the
      gesture must be obvious from the shape alone.
    - A beat the robot can picture — weather to turn up to the article's
-     number, or a turn to scrub through → `scene`. Use a scene only when
-     the beat is genuinely interesting to stage: a turn, a number or a
-     picture the reader would enjoy playing with. If no interesting beat
-     comes to mind, leave the story without a scene — a dull scene is
-     worse than none, and a scene is never owed just to fill coverage.
-     There is no fixed list of beats: stage whatever the story needs
-     with simple shapes, a scale when a number is being felt, stages
-     when a turn is being scrubbed. Never for serious, sad or grave
-     news — no scenes on deaths, disasters, war or suffering, full
-     stop. A scene shows no helper sentences: affordances over
-     instructions, the slider must be obvious from the shape alone.
+     number, a turn to scrub through, or a mechanism to stage → `scene`.
+     Use a scene only when the beat is genuinely interesting to stage: a
+     turn, a number or a picture the reader would enjoy playing with. If
+     no interesting beat comes to mind, leave the story without a scene —
+     a dull scene is worse than none, and a scene is never owed just to
+     fill coverage. You draw the scene yourself: any SVG you need, with
+     `path` for custom forms and groups for actors that move as one —
+     there is no shape cap and no fixed list of beats. Stage the
+     mechanism, not just the number: the actors and the flow between
+     them — one router flooding another with packets is a scene: two
+     routers, a stream of packets between them, the victim wobbling
+     under the load, its lights turning red as the flood rises. Use
+     `stream` for flows between actors, `pulse` for an alarm light,
+     `fill` keyframes for a state that changes with the slider, and
+     `anim` together with `moves` when a shape both loops and follows
+     the slider. The robot is the template's character: place it with
+     a robot shape and direct it with `moves`. Give the scene a scale
+     when a number is being felt, stages when a turn is being scrubbed.
+     Pick how the scene progresses: `slider` by default, the reader
+     drags; `autoplay` when the mechanism builds itself — a flood
+     rising, a queue filling — so the scene plays from the slider's
+     start to the end and pauses the moment the reader touches it;
+     `tap` when the beat is a turn with distinct steps — a resignation
+     in three moves — so tapping the figure steps through the stages.
+     Tap is stages-only: a scene with no stages and `tap` falls back
+     to the slider. Autoplay is off under reduced motion.
+     Never for serious, sad or grave news — no scenes on deaths,
+     disasters, war or suffering, full stop. A scene shows no helper
+     sentences: affordances over instructions, the control must be
+     obvious from the shape alone.
    Use `info-board` and `big-number` for what's left: loose essentials with
    no stronger shape, and the one number that is the news. They are the
    fallback, not the default.

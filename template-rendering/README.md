@@ -10,12 +10,14 @@ the page.
  article.md ──► AI agent ──► storyboard.json ──► check ──► render ──► page.html
 ```
 
-- **Templates:** scene first — an animated, reactive illustration, a
-  character in weather the reader can turn up or acting out the story's
-  beat — then timeline, info board, map, big number, bar chart, line
-  chart, comparison, cause and effect, and quote. Plus reactive scenes —
-  scratch, wipe and hold — for a number the reader should feel rather
-  than read.
+- **Templates:** scene first — an animated, reactive illustration the
+  agent draws itself, its own elements and flow, with the template's
+  robot as the main character: a character in weather the reader can
+  turn up, acting out the story's beat, or staging a mechanism — the
+  actors and the flow between them — then timeline, info board, map, big
+  number, bar chart, line chart, comparison, cause and effect, and quote.
+  Plus reactive scenes — scratch, wipe and hold — for a number the reader
+  should feel rather than read.
 - **The agent** answers one question per scene ("Where does it run?", "What
   happens next?") and picks the template that answers it fastest. It follows
   [agent/prompt.md](agent/prompt.md) and [agent/catalog.md](agent/catalog.md).

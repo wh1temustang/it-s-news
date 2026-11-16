@@ -25,11 +25,34 @@
   height: auto;
 }
 
-/* --- rain: falling drops, bobbing robot, wobbling umbrella, ripples --- */
+/* --- tap progression: the figure is the control, so it reads as one --- */
 
-.sc-drop {
+.sc-scene[data-progression="tap"] svg {
+  cursor: pointer;
+}
+
+.sc-scene[data-progression="tap"] svg:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+/* --- ambient motion: falling drops, streaming packets, pulsing alarms,
+   bobbing robot, wobbling shapes, ripples --- */
+
+.sc-fall {
   animation: scene-fall var(--fall, .84s) linear infinite;
-  animation-duration: calc(var(--fall, .84s) * var(--m, 1));
+  animation-duration: calc(var(--fall, .84s) / var(--m, 1));
+}
+
+.sc-stream {
+  animation: scene-stream var(--stream, 1.6s) linear infinite;
+  animation-duration: calc(var(--stream, 1.6s) / var(--m, 1));
+}
+
+.sc-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scene-pulse 1.4s ease-in-out infinite;
 }
 
 .sc-bob {
@@ -59,6 +82,16 @@
 @keyframes scene-fall {
   from { transform: translateY(-24px); }
   to { transform: translateY(300px); }
+}
+
+@keyframes scene-stream {
+  from { transform: translateX(-40px); }
+  to { transform: translateX(360px); }
+}
+
+@keyframes scene-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: .45; }
 }
 
 @keyframes scene-bob {
@@ -166,7 +199,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sc-drop,
+  .sc-fall,
+  .sc-stream,
+  .sc-pulse,
   .sc-bob,
   .sc-wobble,
   .sc-ripple {

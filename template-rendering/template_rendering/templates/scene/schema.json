@@ -1,6 +1,6 @@
 {
   "additionalProperties": false,
-  "description": "An animated, reactive illustrated scene: the robot pictures the story's beat, so a boring story is worth looking at. The storyboard stages any beat with simple shapes — the template provides the robot, the backdrop, the animation wiring and the slider — and the reader scrubs the beat or turns a scale up to the article number. The scene is general: there is no fixed list of beats. Shapes are layout, not facts, so their geometry is x-ungrounded; only the label, stage lines, shape text and the scale number are checked against the article.",
+  "description": "An animated, reactive illustrated scene: the robot pictures the story's beat, when the beat is worth picturing. The agent draws the scene itself — its own SVG elements and flow, with shapes — and the template provides the robot, the stage and the slider. The scene chooses how it progresses: the reader drags the slider, the scene plays itself, or a tap advances it a stage at a time. The scene is general: there is no fixed list of beats. Shapes are layout, not facts, so their geometry is x-ungrounded; only the label, stage lines, shape text and the scale number are checked against the article.",
   "properties": {
     "backdrop": {
       "default": "none",
@@ -24,6 +24,17 @@
       "maxLength": 60,
       "minLength": 1,
       "type": "string"
+    },
+    "progression": {
+      "default": "slider",
+      "description": "How the scene moves: \"slider\" — the reader drags the slider; \"autoplay\" — the scene plays itself from the slider's start position to the end, pausing the moment the reader touches it, and off under reduced motion; \"tap\" — tapping the figure advances one stage at a time, stages scenes only (a scene with no stages and \"tap\" falls back to the slider). A design choice, not a fact from the article, so the checker does not verify it.",
+      "enum": [
+        "autoplay",
+        "slider",
+        "tap"
+      ],
+      "type": "string",
+      "x-ungrounded": true
     },
     "scale": {
       "additionalProperties": false,
@@ -59,7 +70,7 @@
       "type": "object"
     },
     "shapes": {
-      "description": "The scene itself, as simple shapes in a 400 by 300 viewBox, drawn in order — later shapes sit on top. Geometry is layout, not fact: coordinates, colours and moves are x-ungrounded and the checker does not verify them. Only shape text is checked, like any other words on the page. A shape has either 'anim' (a looping ambient motion) or 'moves' (keyframes the slider drives), not both. Author every shape in its state at t=0; the slider moves it from there.",
+      "description": "The scene itself, as simple shapes in a 400 by 300 viewBox, drawn in order — later shapes sit on top. The agent draws whatever the beat needs: use `path` for custom forms, groups for actors that move as one. There is no shape cap. Geometry is layout, not fact: coordinates, colours and moves are x-ungrounded and the checker does not verify them. Only shape text is checked, like any other words on the page. A shape may carry both `anim` (a looping ambient motion) and `moves` (keyframes the slider drives): moves ride on the shape itself and the looping motion on a separate wrapper, so they compose. Author every shape in its state at t=0; the slider moves it from there.",
       "items": {
         "additionalProperties": false,
         "properties": {
@@ -74,18 +85,20 @@
             "x-ungrounded": true
           },
           "anim": {
-            "description": "A looping ambient motion: bob (up and down), wobble (a small rock), fall (drops falling, with speed), ripple (a ring growing and fading).",
+            "description": "A looping ambient motion: bob (up and down), wobble (a small rock), fall (drops falling, with speed), ripple (a ring growing and fading), stream (packets flowing left to right, with speed), pulse (an alarm light breathing).",
             "enum": [
               "bob",
               "fall",
+              "pulse",
               "ripple",
+              "stream",
               "wobble"
             ],
             "type": "string",
             "x-ungrounded": true
           },
           "children": {
-            "description": "Shapes inside a group, drawn in order. A group moves as one: give the group 'moves' and its children ride along. Children are leaf shapes only — no groups inside groups, no robot inside a group.",
+            "description": "Shapes inside a group, drawn in order. A group moves as one: give the group 'moves' and its children ride along; give it 'anim' and the whole group loops the motion — and a group may carry both, moves on the group itself and the looping motion on a wrapper inside it. Children are leaf shapes only — no groups inside groups, no robot inside a group.",
             "items": {
               "additionalProperties": false,
               "properties": {
@@ -102,7 +115,9 @@
                   "enum": [
                     "bob",
                     "fall",
+                    "pulse",
                     "ripple",
+                    "stream",
                     "wobble"
                   ],
                   "type": "string",
@@ -160,10 +175,17 @@
                   "type": "string"
                 },
                 "moves": {
-                  "description": "Keyframes the slider drives, in order of t: at each t, the shape sits at the given offset from where it is drawn, rotated, scaled and faded. The template fills in anything a keyframe leaves out from the one before it, starting from no offset, no rotation, full size and full opacity. Two to five keyframes; t runs 0 to 1.",
+                  "description": "Keyframes the slider drives, in order of t: at each t, the shape sits at the given offset from where it is drawn, rotated, scaled and faded — and, when a keyframe gives `fill`, recoloured. The template fills in anything a keyframe leaves out from the one before it, starting from no offset, no rotation, full size, full opacity and the shape's own fill; fill switches discretely, taking the latest keyframe at or before the slider position. Two to five keyframes; t runs 0 to 1. A shape may carry both `anim` and `moves`: the slider keyframes ride on the shape itself and the looping motion on a separate wrapper, so they compose instead of fighting.",
                   "items": {
                     "additionalProperties": false,
                     "properties": {
+                      "fill": {
+                        "description": "Fill colour at this keyframe: the slider switches the shape's fill to it. Discrete — the latest keyframe at or before the slider position wins; a keyframe that leaves fill out keeps the previous colour. A state change, not a fact: colours are never checked.",
+                        "maxLength": 7,
+                        "pattern": "^(#[0-9a-fA-F]{6}|none)$",
+                        "type": "string",
+                        "x-ungrounded": true
+                      },
                       "opacity": {
                         "maximum": 1,
                         "minimum": 0,
@@ -342,10 +364,17 @@
             "type": "string"
           },
           "moves": {
-            "description": "Keyframes the slider drives, in order of t: at each t, the shape sits at the given offset from where it is drawn, rotated, scaled and faded. The template fills in anything a keyframe leaves out from the one before it, starting from no offset, no rotation, full size and full opacity. Two to five keyframes; t runs 0 to 1.",
+            "description": "Keyframes the slider drives, in order of t: at each t, the shape sits at the given offset from where it is drawn, rotated, scaled and faded — and, when a keyframe gives `fill`, recoloured. The template fills in anything a keyframe leaves out from the one before it, starting from no offset, no rotation, full size, full opacity and the shape's own fill; fill switches discretely, taking the latest keyframe at or before the slider position. Two to five keyframes; t runs 0 to 1. A shape may carry both `anim` and `moves`: the slider keyframes ride on the shape itself and the looping motion on a separate wrapper, so they compose instead of fighting.",
             "items": {
               "additionalProperties": false,
               "properties": {
+                "fill": {
+                  "description": "Fill colour at this keyframe: the slider switches the shape's fill to it. Discrete — the latest keyframe at or before the slider position wins; a keyframe that leaves fill out keeps the previous colour. A state change, not a fact: colours are never checked.",
+                  "maxLength": 7,
+                  "pattern": "^(#[0-9a-fA-F]{6}|none)$",
+                  "type": "string",
+                  "x-ungrounded": true
+                },
                 "opacity": {
                   "maximum": 1,
                   "minimum": 0,
@@ -406,7 +435,7 @@
             "x-ungrounded": true
           },
           "speed": {
-            "description": "Fall speed multiplier for a falling shape: 1 is the standard drop, higher is faster rain.",
+            "description": "Speed multiplier for a falling or streaming shape: 1 is standard, higher is faster.",
             "maximum": 2,
             "minimum": 0.5,
             "type": "number",
@@ -468,7 +497,6 @@
         ],
         "type": "object"
       },
-      "maxItems": 24,
       "type": "array"
     },
     "stages": {
