@@ -28,7 +28,7 @@ Write a storyboard for each article as above, then list them in a manifest
 `python -m template_rendering edition <manifest.json>`. One article is one
 news event. Never merge distinct news items into a single article to hit a
 story count, and never let one visual element render facts from two
-different items: a timeline, chart, big-number or scene draws on its own
+different items: a timeline, chart, big-number or game draws on its own
 article only. Group items only when they are facets of the same event —
 one story developing, not several stories sharing a section. It checks every
 storyboard again and writes `output/<manifest>.html`. For a page in another
