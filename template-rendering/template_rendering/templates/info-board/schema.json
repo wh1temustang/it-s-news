@@ -20,13 +20,13 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 24,
-            "description": "What the tile is about: \"Cost\", \"Opens\", \"Airport\"."
+            "description": "What the tile is about: \"Cost\", \"Opens\", \"Airport\". The label carries the topic, and may hold the fuller phrase the value shortens — \"Morgan Stanley: data-centre revenue\" as the label, \"Down ~10%\" as the value."
           },
           "value": {
             "type": "string",
             "minLength": 1,
             "maxLength": 32,
-            "description": "The fact itself, as short as possible: \"$48 million\", \"Closed\"."
+            "description": "The fact itself, as short as possible: \"$48 million\", \"Closed\". The value is the punch — a number, a word, a few words — never a sentence. At most 6 Chinese characters: Chinese has no word boundaries, so a longer Chinese value wraps mid-phrase on a phone. Put the sentence in the label or the note."
           },
           "note": {
             "type": "string",
