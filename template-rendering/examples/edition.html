@@ -660,10 +660,12 @@ a { color: var(--accent); }
 .ib-label {
   margin: 0;
   color: var(--muted);
-  font-size: 12px;
+  /* 14px, no uppercase, no letter-spacing: the label is the tile's
+     topic and must read at a glance. Uppercase and letter-spacing do
+     nothing for Chinese characters except spread them apart, and at
+     12px the topic was too small to read on a phone. */
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .ib-value {
