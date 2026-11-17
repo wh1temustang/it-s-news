@@ -1,8 +1,9 @@
-"""Checks that only make sense for the game template.
+"""Checks that only make sense for the game and info-board templates.
 
 The shared checker (itsnews_common.storyboard) grounds every number
-against the article. Games need three checks of their own, because the
-generic walk cannot see across fields:
+against the article. Games and info boards need checks of their own,
+because the generic walk cannot see across fields or measure how text
+renders:
 
 - Distractors. A quiz's wrong options are guesses, not facts, so the
   schema marks `options` x-ungrounded and this module enforces the
@@ -15,6 +16,10 @@ generic walk cannot see across fields:
   any of the game's answers.
 - One game per page. A second game on the same page is a second test
   the reader didn't ask for.
+- Info-board values. A tile's value is the punch, not a sentence:
+  Chinese has no word boundaries, so a long Chinese value wraps
+  mid-phrase on a phone at 23px bold. A value may hold at most six
+  Chinese characters — the sentence belongs in the label or the note.
 
 The kind-conditional requirements also live here — the shared schema
 validator has no if/then, so "answer is required for guess-number" and
@@ -22,6 +27,8 @@ validator has no if/then, so "answer is required for guess-number" and
 messages that name the missing field.
 """
 from __future__ import annotations
+
+import unicodedata
 
 from itsnews_common import grounding
 from itsnews_common.article import Article
@@ -31,6 +38,25 @@ from itsnews_common.catalog import Template
 # on either side: close enough to be a plausible guess, far enough from
 # nothing the article says.
 NEAR_MISS_FACTOR = 2.0
+
+# An info-board value may hold at most this many Chinese characters.
+# At 23px bold, a half-width phone tile fits about six of them on one
+# line; a longer Chinese value wraps mid-phrase ("數據中心收 / 入下調
+# 約一 / 成"). Latin text wraps at word boundaries, so it needs no cap.
+MAX_CJK_IN_TILE_VALUE = 6
+
+
+def _cjk_count(text) -> int:
+    """How many wide (Chinese/Japanese/Korean) characters a string has.
+
+    Only east-asian-width \"W\" counts: fullwidth punctuation (\"F\", such
+    as ，) is wide too, but it is not a Chinese character, and the rule
+    is stated in Chinese characters so the count must match the words.
+    """
+    if not isinstance(text, str):
+        return 0
+    return sum(1 for ch in text
+               if unicodedata.east_asian_width(ch) == "W")
 
 
 def _numbers(text) -> set[float]:
@@ -199,13 +225,43 @@ def _spoiler_errors(storyboard: dict, games: list[tuple[int, dict]]) -> list[str
     return errors
 
 
+def _info_board_errors(storyboard: dict) -> list[str]:
+    """A tile's value is the punch, not a sentence."""
+    errors: list[str] = []
+    scenes = storyboard.get("scenes")
+    if not isinstance(scenes, list):
+        return errors
+    for i, scene in enumerate(scenes):
+        if not (isinstance(scene, dict) and scene.get("template") == "info-board"
+                and isinstance(scene.get("data"), dict)):
+            continue
+        tiles = scene["data"].get("tiles")
+        if not isinstance(tiles, list):
+            continue
+        for j, tile in enumerate(tiles):
+            if not isinstance(tile, dict):
+                continue
+            value = tile.get("value")
+            n = _cjk_count(value)
+            if n > MAX_CJK_IN_TILE_VALUE:
+                errors.append(
+                    f"$.scenes[{i}].data.tiles[{j}].value: {value!r} has "
+                    f"{n} Chinese characters — at 23px bold it wraps "
+                    "mid-phrase on a phone. Keep the value to the punch "
+                    "(at most 6 Chinese characters: a number, a word, a "
+                    "few words) and put the sentence in the label or the "
+                    "note."
+                )
+    return errors
+
+
 def check(storyboard: dict, article: Article,
           templates: dict[str, Template]) -> list[str]:
-    """The game rules, run after the shared shape and grounding checks."""
+    """The game and info-board rules, run after the shared shape and grounding checks."""
+    errors: list[str] = _info_board_errors(storyboard)
     games = _game_scenes(storyboard)
     if not games:
-        return []
-    errors: list[str] = []
+        return errors
     if len(games) > 1:
         errors.append(
             f"$.scenes[{games[1][0]}].template: a second game on the same "
