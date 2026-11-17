@@ -40,7 +40,10 @@
   /* Close means within 5% of the answer: a near miss, not a far one. */
   var near = Math.abs(ANSWER) * 0.05;
   function fmt(v) {
-    var s = v.toFixed(dec);
+    /* Thousands separators, like the big number shows: 1,087, not 1087. */
+    var parts = v.toFixed(dec).split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    var s = parts.join('.');
     return after ? s + unit : unit + s;
   }
   function showGuess() { guess.textContent = fmt(parseFloat(slider.value)); }
@@ -76,7 +79,7 @@
 <div class="gm" data-kind="quiz" data-correct="{{ data.correct | join(',') }}" data-msg-right="{{ t("game.quiz_right") }}" data-msg-wrong="{{ t("game.quiz_wrong") }}"{% if data.reveal is defined %} data-reveal="{{ data.reveal }}"{% endif %}>
   <div class="gm-box">
     <div class="gm-row gm-options" role="group" aria-label="{{ data.label }}">
-      {% for v in data.options %}<button type="button" class="gm-opt" data-v="{{ v }}">{% if data.unit_after is defined and data.unit_after %}{{ v }}{{ data.unit }}{% else %}{{ data.unit }}{{ v }}{% endif %}</button>{% endfor %}
+      {% for v in data.options %}<button type="button" class="gm-opt" data-v="{{ v }}">{% if data.unit_after is defined and data.unit_after %}{{ "{:,}".format(v) }}{{ data.unit }}{% else %}{{ data.unit }}{{ "{:,}".format(v) }}{% endif %}</button>{% endfor %}
     </div>
     <p class="gm-result" aria-live="polite" hidden></p>
   </div>

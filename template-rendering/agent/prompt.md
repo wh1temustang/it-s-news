@@ -89,7 +89,12 @@ before or after it. Its shape:
      question and its label must not state any of the answers — write
      them so the answer stays hidden until the reveal, and let the big
      number or board after the game be the payoff. The quiz has no
-     reset: once answered it stays answered. Use a game only when the
+     reset: once answered it stays answered. Set `unit_after`
+     explicitly on every game: true when the unit goes after the
+     number — Chinese units (億美元, 萬億美元, 億加元, 萬噸, 厘米),
+     so "1,087億美元" — and false when it goes before — "$", so
+     "$78". A game without it fails the check, because a missing flag
+     renders the unit in the wrong place. Use a game only when the
      story has a number or fact worth guessing; never for serious, sad
      or grave news — no games on deaths, disasters, war or suffering,
      full stop; at most one game per page. A game shows no helper
@@ -149,6 +154,12 @@ before or after it. Its shape:
   Shorten the wording, never the facts.
 - Use plain words and the active voice. Tile values and timeline entries are
   fragments, not sentences.
+- An info-board value is the punch — a number, a word, a few words (at most
+  6 Chinese characters) — and the label carries the topic, holding the fuller
+  phrase when the value shortens it. Before: label "摩根士丹利預測" / value
+  "數據中心收入下調約一成" (11 Chinese characters, wraps mid-phrase on a
+  phone). After: label "摩根士丹利：數據中心收入" / value "下調約一成"
+  (5 characters, one line). Extra context goes in `note`.
 - Show each fact once. Repeating it is fine only when it does different work
   in each place, such as a headline number that a chart then puts in context.
 

@@ -23,7 +23,13 @@ beat a full page.
 ## Notes per template
 
 **`info-board`**: the default "at a glance" scene. Values are fragments
-("$48 million", "Closed"), never sentences. Use `tone` only for things that
+("$48 million", "Closed"), never sentences. The value is the punch — a
+number, a word, a few words (at most 6 Chinese characters; Chinese has no
+word boundaries, so a longer Chinese value wraps mid-phrase on a phone).
+The label carries the topic and may hold the fuller phrase the value
+shortens: label "摩根士丹利：數據中心收入" / value "下調約一成", not
+label "摩根士丹利預測" / value "數據中心收入下調約一成". Extra context
+goes in `note`. Use `tone` only for things that
 have a state (a road, a vote, a service): `good` for open, passed or
 restored; `bad` for closed, rejected or halted; `pending` for under review,
 awaited or in progress; `neutral` for anything else. The value must also say
@@ -107,7 +113,11 @@ but $200 is not. A game is where the answer is first revealed: the
 headline, the dek, the game's question and its label must not state any
 of the answers — write them so the answer stays hidden until the
 reveal, and let the big number or board after the game be the payoff.
-The quiz has no reset: once answered it stays answered. The answers in
+The quiz has no reset: once answered it stays answered. Set `unit_after`
+explicitly on every game: true when the unit goes after the number —
+Chinese units (億美元, 萬億美元, 億加元, 萬噸, 厘米), so "1,087億美元" —
+false when it goes before — "$", so "$78". A game without it fails the
+check. The answers in
 `answer` and `correct` are article numbers and are checked against it;
 the slider's `min`, `max` and `step`, and the quiz's wrong options, are
 design choices and are not checked as facts — the distractor rule above
