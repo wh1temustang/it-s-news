@@ -1,0 +1,59 @@
+
+/* --- flow --- */
+
+.fl { margin: 0; padding: 0; list-style: none; }
+
+.fl-step {
+  position: relative;
+  padding: 0 0 20px 44px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 80ms + 200ms);
+}
+
+.fl-step:last-child { padding-bottom: 0; }
+
+/* The rail runs from each number down to the next one, so the stages
+   read as one chain, not a pile of tiles. */
+.fl-step::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 32px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--accent);
+  opacity: 0.35;
+}
+
+.fl-step:last-child::before { display: none; }
+
+.fl-num {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 30px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.fl-title {
+  margin: 0;
+  padding-top: 4px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.fl-text {
+  margin: 2px 0 0;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--muted);
+}

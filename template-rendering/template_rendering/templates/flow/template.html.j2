@@ -1,0 +1,9 @@
+<ol class="fl">
+{% for step in data.steps %}
+  <li class="fl-step" style="--j: {{ loop.index0 }}">
+    <span class="fl-num" aria-hidden="true">{{ loop.index }}</span>
+    <p class="fl-title">{{ step.title }}</p>
+    <p class="fl-text">{{ step.text }}</p>
+  </li>
+{% endfor %}
+</ol>
