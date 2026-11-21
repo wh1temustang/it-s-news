@@ -49,7 +49,7 @@ class ExampleEditionTests(unittest.TestCase):
         html = edition.render(self.edition)
         self.assertIn('class="story-card" id="story-1" data-topic="world"', html)
         self.assertIn('class="story-card" id="story-2" data-topic="local"', html)
-        self.assertEqual(html.count(KIT.load_templates()["info-board"].css), 1)
+        self.assertEqual(html.count(KIT.load_templates()["list"].css), 1)
 
 
 class MixedEditionTests(unittest.TestCase):
@@ -84,8 +84,9 @@ class MixedEditionTests(unittest.TestCase):
 class CheckTests(unittest.TestCase):
     def test_story_problems_name_the_section_story_and_file(self):
         a, sb = NIGHT_TRAIN
-        bad = {**sb, "scenes": [{"template": "big-number", "question": "Q",
-                                 "data": {"numbers": [{"value": "999", "label": "x"}]}}]}
+        bad = {**sb, "scenes": [{"template": "list", "question": "Q",
+                                 "data": {"rows": [{"label": "Price", "value": "€49"},
+                                                  {"label": "x", "value": "999"}]}}]}
         ed = edition.Edition("T", [edition.Section("travel", "Travel", [edition.Story(a, bad)])])
         errors = edition.check(ed)
         self.assertEqual(len(errors), 1, errors)

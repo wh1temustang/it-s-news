@@ -228,8 +228,8 @@ class GameTests(unittest.TestCase):
         html = self.render(self.guess(unit="$", unit_after=False))
         self.assertIn('data-unit-after="0"', html)
 
-    def test_big_numbers_get_thousands_separators(self):
-        # The result reads "1,087億美元", like the big number shows —
+    def test_large_numbers_get_thousands_separators(self):
+        # The result reads "1,087億美元", like the scale after it shows —
         # not "1087億美元".
         html = self.render(self.quiz(options=[900, 1087, 1200],
                                      correct=[1087], unit="億美元",
@@ -271,60 +271,6 @@ class GameTests(unittest.TestCase):
         self.assertTrue(any("a second game" in e for e in errors), errors)
 
 
-class InfoBoardTests(unittest.TestCase):
-    def article(self, body=None):
-        if body is None:
-            body = ("Nvidia's data-centre revenue forecast was cut by about "
-                    "10%, Morgan Stanley said. The share price fell by about "
-                    "a quarter in a month.")
-        return article.parse(f"---\nsource: Test\n---\n{body}\n")
-
-    def board(self, tiles, question="What else?"):
-        if len(tiles) < 2:
-            tiles = tiles + [{"label": "Other", "value": "Closed"}]
-        return {"headline": {"title": "T", "dek": "D", "topic": "tech"},
-                "scenes": [{"template": "info-board", "question": question,
-                            "data": {"tiles": tiles}}]}
-
-    def test_long_chinese_value_fails(self):
-        # Today's Nvidia board: "數據中心收入下調約一成" is 11 Chinese
-        # characters, and at 23px bold it wrapped mid-phrase on a phone
-        # ("數據中心收 / 入下調約一 / 成").
-        tiles = [{"label": "摩根士丹利預測", "value": "數據中心收入下調約一成"}]
-        errors = storyboard.check(self.board(tiles), self.article())
-        self.assertTrue(any("11 Chinese characters" in e for e in errors),
-                        errors)
-
-    def test_short_chinese_value_passes(self):
-        # The same fact as the punch — 5 Chinese characters, one line —
-        # with the sentence carried by the label.
-        tiles = [{"label": "摩根士丹利：數據中心收入", "value": "下調約一成"}]
-        self.assertEqual(storyboard.check(self.board(tiles), self.article()),
-                         [])
-
-    def test_english_values_still_pass(self):
-        # English wraps at word boundaries, so it needs no cap: the
-        # repo's own examples ("November to March") must keep passing.
-        tiles = [{"label": "Winter season", "value": "November to March"}]
-        self.assertEqual(storyboard.check(self.board(tiles), self.article()),
-                         [])
-
-    def test_label_is_big_enough_to_read(self):
-        # The label was 12px uppercase letter-spaced muted grey — too
-        # small to read as a topic on a phone. It is 14px now, and the
-        # uppercase and letter-spacing are gone: they do nothing for
-        # Chinese characters except spread them apart.
-        css = (PACKAGE_DIR / "templates" / "info-board"
-               / "style.css").read_text(encoding="utf-8")
-        label = css.split(".ib-label")[1].split("}")[0]
-        # Strip the comment: the test is about the rules, not the words
-        # explaining them.
-        label = re.sub(r"/\*.*?\*/", "", label, flags=re.S)
-        self.assertIn("font-size: 14px", label)
-        self.assertNotIn("text-transform", label)
-        self.assertNotIn("letter-spacing", label)
-
-
 class CliTests(unittest.TestCase):
     def run_cli(self, *args: str) -> tuple[int, str, str]:
         out, err = io.StringIO(), io.StringIO()
@@ -357,8 +303,8 @@ class CliTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             bad = Path(tmp) / "bad.json"
             bad.write_text('{"headline": {"title": "t", "dek": "d", "topic": "world"},'
-                           ' "scenes": [{"template": "big-number", "question": "Q",'
-                           ' "data": {"numbers": [{"value": "999", "label": "x"}]}}]}')
+                           ' "scenes": [{"template": "list", "question": "Q",'
+                           ' "data": {"rows": [{"label": "x", "value": "999"}]}}]}')
             target = Path(tmp) / "page.html"
             code, _, err = self.run_cli("render", str(md), str(bad), "-o", str(target))
             self.assertEqual(code, 1)

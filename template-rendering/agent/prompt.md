@@ -51,7 +51,7 @@ before or after it. Its shape:
    events or deadlines, places that matter, direct quotes, two sides
    answering the same points, chains of cause and effect. Each shape has a
    template that shows it fastest, and a storyboard that turns every shape
-   into info boards and big numbers is under-using the kit. In particular:
+   into lists is under-using the kit. In particular:
    - 2+ values in the same unit at the same time (an actual against a
      forecast, rivals, this year against last) → `bar-chart`, not a board.
    - 3+ values of one measure at different times → `line-chart`.
@@ -63,8 +63,8 @@ before or after it. Its shape:
    - A stated chain of 3+ linked steps → `cause-effect`.
    - A quote that carries the story → `quote`.
    - A headline number with reference points the article states — a
-     previous value, a threshold, a target → `scale`, not a bare big
-     number. The axis shows where the number stands; give `min`/`max`
+     previous value, a threshold, a target → `scale`, not a row in the
+     list. The axis shows where the number stands; give `min`/`max`
      only when the article's range needs framing, otherwise the axis
      fits the value and the marks.
    - Ordered stages of a process with no dates — how something works,
@@ -72,9 +72,12 @@ before or after it. Its shape:
      the stages have dates, `cause-effect` when the article states each
      step causing the next.
    - A total with named parts in the same unit — where the money goes,
-     what a deal is made of → `breakdown`, not a board. The parts are
+     what a deal is made of → `breakdown`, not a list. The parts are
      shares of the one total; use `bar-chart` when the values are peers
      being compared, not parts of a whole.
+   - Loose essentials with no stronger shape — a few short facts that
+     belong together, in reading order → `list`. A lone number with no
+     reference point is one row here, never a scene of its own.
    - A number or turn the reader should feel rather than read (a fall from
      a peak, a total worth uncovering, a before and after to compare) → `reactive`,
      at most one scene per page. Reactive is never the default: use it only
@@ -100,8 +103,8 @@ before or after it. Its shape:
      distractor for a $70–78 range, but $200 is not. A game is where
      the answer is first revealed: the headline, the dek, the game's
      question and its label must not state any of the answers — write
-     them so the answer stays hidden until the reveal, and let the big
-     number or board after the game be the payoff. The quiz has no
+     them so the answer stays hidden until the reveal, and let the scale
+     or list after the game be the payoff. The quiz has no
      reset: once answered it stays answered. Set `unit_after`
      explicitly on every game: true when the unit goes after the
      number — Chinese units (億美元, 萬億美元, 億加元, 萬噸, 厘米),
@@ -113,16 +116,14 @@ before or after it. Its shape:
      full stop; at most one game per page. A game shows no helper
      sentences: affordances over instructions, the slider and the
      buttons must be obvious from the shape alone.
-   Use `info-board` and `big-number` for what's left: loose essentials with
-   no stronger shape, and the one number that is the news. They are the
-   fallback, not the default. Prefer `scale`, `flow` and `breakdown`
-   whenever their shape fits — a big number only when the article gives
-   no reference point at all, an info board only for loose essentials
-   with no stronger shape.
+   Use `list` for what's left: loose essentials with no stronger shape,
+   in reading order — and a lone number with no reference point is one
+   row in the list, never a scene of its own. The list is the fallback,
+   not the default. Prefer `scale`, `flow` and `breakdown` whenever
+   their shape fits.
 5. **Match each question to one template** with the catalog table. If two
    templates fit, pick the one that shows the answer faster — and prefer
-   the more specific template from the inventory above over a board or a
-   big number.
+   the more specific template from the inventory above over a list.
 5. **Choose and order the scenes.** Two to four is typical, five at most,
    and one is fine for a short item. The first scene answers the question
    your one-sentence summary raises. No two scenes may answer the same
@@ -168,21 +169,17 @@ before or after it. Its shape:
   the rest of the storyboard should read the same way.
 - The schemas' character limits are the word budget, and part of the design.
   Shorten the wording, never the facts.
-- Use plain words and the active voice. Tile values and timeline entries are
+- Use plain words and the active voice. List values and timeline entries are
   fragments, not sentences.
-- An info-board value is the punch — a number, a word, a few words (at most
-  6 Chinese characters) — and the label carries the topic, holding the fuller
-  phrase when the value shortens it. Before: label "摩根士丹利預測" / value
-  "數據中心收入下調約一成" (11 Chinese characters, wraps mid-phrase on a
-  phone). After: label "摩根士丹利：數據中心收入" / value "下調約一成"
-  (5 characters, one line). Extra context goes in `note`.
+- A list value is the punch — a number, a word, a few words — and the label
+  carries the topic, holding the fuller phrase when the value shortens it.
+  Extra context goes in `note`.
 - Show each fact once. Repeating it is fine only when it does different work
   in each place, such as a headline number that a chart then puts in context.
 
 ### Neutral presentation
 
-- Show, don't judge. An info board's `tone` marks a state (open, closed,
-  pending), never your opinion of a fact.
+- Show, don't judge — never colour a fact with your opinion of it.
 - A comparison gives both sides the same treatment.
 - Attribute claims the way the article does ("police say", "the company
   estimates").
@@ -190,7 +187,7 @@ before or after it. Its shape:
 ### Articles that don't fit
 
 Opinion pieces, interviews and short briefs often have little structure to
-show. Use what fits, often a quote or an info board, and don't force charts
+show. Use what fits, often a quote or a list, and don't force charts
 or maps.
 
 ## Self-check before answering
@@ -199,7 +196,7 @@ or maps.
 - Every data shape in the inventory got the most specific template that
   fits it; no chartable set, dated sequence, place, pair of sides, chain,
   number with reference points, process, or total with parts was
-  flattened into a board or a big number.
+  flattened into a list.
 - The first scene answers the most important question.
 - Every number shown appears in the article, written the same way.
 - Every quote matches the article word for word.

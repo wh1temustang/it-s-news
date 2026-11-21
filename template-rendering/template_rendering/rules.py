@@ -1,9 +1,9 @@
 """Checks that only make sense for particular templates.
 
 The shared checker (itsnews_common.storyboard) grounds every number
-against the article. Games, info boards, scales and breakdowns need
-checks of their own, because the generic walk cannot see across fields
-or measure how text renders:
+against the article. Games, scales and breakdowns need checks of their
+own, because the generic walk cannot see across fields or measure how
+text renders:
 
 - Distractors. A quiz's wrong options are guesses, not facts, so the
   schema marks `options` x-ungrounded and this module enforces the
@@ -16,10 +16,6 @@ or measure how text renders:
   any of the game's answers.
 - One game per page. A second game on the same page is a second test
   the reader didn't ask for.
-- Info-board values. A tile's value is the punch, not a sentence:
-  Chinese has no word boundaries, so a long Chinese value wraps
-  mid-phrase on a phone at 23px bold. A value may hold at most six
-  Chinese characters — the sentence belongs in the label or the note.
 - Scale bounds. A scale's min and max are display choices, so the
   shared checker does not ground them — but an axis that does not hold
   its own value and marks draws the value off the end. Explicit bounds
@@ -35,8 +31,6 @@ messages that name the missing field.
 """
 from __future__ import annotations
 
-import unicodedata
-
 from itsnews_common import grounding
 from itsnews_common.article import Article
 from itsnews_common.catalog import Template
@@ -45,25 +39,6 @@ from itsnews_common.catalog import Template
 # on either side: close enough to be a plausible guess, far enough from
 # nothing the article says.
 NEAR_MISS_FACTOR = 2.0
-
-# An info-board value may hold at most this many Chinese characters.
-# At 23px bold, a half-width phone tile fits about six of them on one
-# line; a longer Chinese value wraps mid-phrase ("數據中心收 / 入下調
-# 約一 / 成"). Latin text wraps at word boundaries, so it needs no cap.
-MAX_CJK_IN_TILE_VALUE = 6
-
-
-def _cjk_count(text) -> int:
-    """How many wide (Chinese/Japanese/Korean) characters a string has.
-
-    Only east-asian-width \"W\" counts: fullwidth punctuation (\"F\", such
-    as ，) is wide too, but it is not a Chinese character, and the rule
-    is stated in Chinese characters so the count must match the words.
-    """
-    if not isinstance(text, str):
-        return 0
-    return sum(1 for ch in text
-               if unicodedata.east_asian_width(ch) == "W")
 
 
 def _numbers(text) -> set[float]:
@@ -227,37 +202,7 @@ def _spoiler_errors(storyboard: dict, games: list[tuple[int, dict]]) -> list[str
                     "the reader gets to play. A game is where the answer is "
                     "first revealed — write the headline, dek, question and "
                     "label so the answer stays hidden until the reveal, and "
-                    "let the big number or board after the game be the payoff."
-                )
-    return errors
-
-
-def _info_board_errors(storyboard: dict) -> list[str]:
-    """A tile's value is the punch, not a sentence."""
-    errors: list[str] = []
-    scenes = storyboard.get("scenes")
-    if not isinstance(scenes, list):
-        return errors
-    for i, scene in enumerate(scenes):
-        if not (isinstance(scene, dict) and scene.get("template") == "info-board"
-                and isinstance(scene.get("data"), dict)):
-            continue
-        tiles = scene["data"].get("tiles")
-        if not isinstance(tiles, list):
-            continue
-        for j, tile in enumerate(tiles):
-            if not isinstance(tile, dict):
-                continue
-            value = tile.get("value")
-            n = _cjk_count(value)
-            if n > MAX_CJK_IN_TILE_VALUE:
-                errors.append(
-                    f"$.scenes[{i}].data.tiles[{j}].value: {value!r} has "
-                    f"{n} Chinese characters — at 23px bold it wraps "
-                    "mid-phrase on a phone. Keep the value to the punch "
-                    "(at most 6 Chinese characters: a number, a word, a "
-                    "few words) and put the sentence in the label or the "
-                    "note."
+                    "let the scale or list after the game be the payoff."
                 )
     return errors
 
@@ -342,8 +287,8 @@ def _breakdown_errors(storyboard: dict) -> list[str]:
 
 def check(storyboard: dict, article: Article,
           templates: dict[str, Template]) -> list[str]:
-    """The game, info-board, scale and breakdown rules, run after the shared shape and grounding checks."""
-    errors: list[str] = _info_board_errors(storyboard)
+    """The game, scale and breakdown rules, run after the shared shape and grounding checks."""
+    errors: list[str] = []
     errors += _scale_errors(storyboard)
     errors += _breakdown_errors(storyboard)
     games = _game_scenes(storyboard)

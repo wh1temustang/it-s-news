@@ -5,43 +5,31 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 
 | Reader question | Template | Needs from the article | Skip when |
 |---|---|---|---|
-| What are the essentials? Where does each part stand? | `info-board` | 2+ short facts: cost, date, size, status… | the tiles would only restate the headline |
-| Is one number the news? | `big-number` | 1–3 numbers that are headline-worthy on their own | there are 4+ numbers to show (use `info-board` or `bar-chart`) |
 | How did we get here? What's next? | `timeline` | 2+ dated events, 3–5 is best | there is only one date, or the order of events is unclear |
 | Where does it happen? | `map` | a specific place that matters to the story | the place is only a dateline or a company's headquarters |
 | How do these compare in size? | `bar-chart` | 2+ values in the same unit, for the same time | the values use different units or come from different times |
-| How has it changed over time? | `line-chart` | 3+ values of one measure at different times | the article gives only a start and an end (use `big-number` with `context`) |
+| How has it changed over time? | `line-chart` | 3+ values of one measure at different times | the article gives only a start and an end (use `list` for the two values) |
 | How do two sides differ? | `comparison` | two sides answering the same 2+ points | the sides don't answer the same questions |
 | Why is it happening? What does it lead to? | `cause-effect` | 3+ linked steps, each one stated in the article | the links are your own inference |
 | What did someone say that matters? | `quote` | a direct quote from a named speaker | the quote is filler ("We are pleased to announce…") |
 | What does it feel like to touch? | `reactive` | one number or turn the reader should feel: a figure worth uncovering, a before and after to compare, or a value to fill up by holding | the number is small enough to just read, or the turn needs a chart's precision |
 | What is the answer — can I guess it first? | `game` | a number or fact worth guessing: a total, a price, a count | the news is grave, or the story has no number or fact worth guessing |
-| Where does this number stand? | `scale` | one headline number plus 1–4 reference points from the article: a previous value, a threshold, a target | the article gives no reference point (use `big-number`) |
+| Where does this number stand? | `scale` | one headline number plus 1–4 reference points from the article: a previous value, a threshold, a target | the article gives no reference point (the number goes in the `list` as one row) |
 | How does it work, step by step? | `flow` | 3–5 ordered stages of a process, with no dates | the stages have dates (use `timeline`) or the article states each step causing the next (use `cause-effect`) |
 | What's in it? Where does it go? | `breakdown` | one total plus 2–6 named parts, all in the same unit | the parts aren't shares of one total (use `bar-chart`) |
+| What are the essentials, in order? | `list` | 2+ short facts: cost, date, size, status… | the rows would only restate the headline |
 
 If no row fits a question, leave the question out. Fewer, stronger scenes
 beat a full page.
 
 ## Notes per template
 
-**`info-board`**: the default "at a glance" scene. Values are fragments
-("$48 million", "Closed"), never sentences. The value is the punch — a
-number, a word, a few words (at most 6 Chinese characters; Chinese has no
-word boundaries, so a longer Chinese value wraps mid-phrase on a phone).
-The label carries the topic and may hold the fuller phrase the value
-shortens: label "摩根士丹利：數據中心收入" / value "下調約一成", not
-label "摩根士丹利預測" / value "數據中心收入下調約一成". Extra context
-goes in `note`. Use `tone` only for things that
-have a state (a road, a vote, a service): `good` for open, passed or
-restored; `bad` for closed, rejected or halted; `pending` for under review,
-awaited or in progress; `neutral` for anything else. The value must also say
-the state in words, because colour alone doesn't reach every reader.
-
-**`big-number`**: for when the number *is* the headline: a death toll, an
-interest rate, a price, a vote count. The first number gets the largest
-type. Use `context` for the comparison the article gives ("up from 2.9%"),
-and `trend` only when the article says the number rose or fell.
+**`list`**: the fallback for loose essentials — the same facts a board
+used to tile, shown as full-width rows in reading order, most important
+first. The value is the punch — a number, a word, a few words — and the
+label carries the topic, holding the fuller phrase when the value
+shortens it. Extra context goes in `note`. Rows read top to bottom, so
+the order means something: lead with the fact the story turns on.
 
 **`timeline`**: oldest first. Mark the news itself `now` and anything
 scheduled or expected `next`. Use the article's own dates ("Thursday",
@@ -115,7 +103,7 @@ at least half of it) — so $85 is a fair distractor for a $70–78 range,
 but $200 is not. A game is where the answer is first revealed: the
 headline, the dek, the game's question and its label must not state any
 of the answers — write them so the answer stays hidden until the
-reveal, and let the big number or board after the game be the payoff.
+reveal, and let the scale or list after the game be the payoff.
 The quiz has no reset: once answered it stays answered. Set `unit_after`
 explicitly on every game: true when the unit goes after the number —
 Chinese units (億美元, 萬億美元, 億加元, 萬噸, 厘米), so "1,087億美元" —
@@ -132,14 +120,15 @@ news: no games on deaths, disasters, war or suffering, full stop.
 Affordances over instructions: a game shows no helper sentences — the
 slider and the buttons are the only cues, plus one-word buttons.
 
-**`scale`**: the upgrade of a bare big number — one figure on an axis
-with the reference points the article states, so the reader sees where
-it stands instead of just what it is. The value and every mark are
-article numbers; `min` and `max` are display choices, not facts — leave
-them out and the axis fits the value and the marks. Pick marks the
-reader can tell apart: a previous value, a threshold, a target. When
-two marks sit close together their labels crowd, so pick the ones that
-read apart.
+**`scale`**: one figure on an axis with the reference points the article
+states, so the reader sees where it stands instead of just what it is.
+A number earns a scale only when the article gives it reference points —
+without them it is one row in the `list`, never a scene of its own. The
+value and every mark are article numbers; `min` and `max` are display
+choices, not facts — leave them out and the axis fits the value and the
+marks. Pick marks the reader can tell apart: a previous value, a
+threshold, a target. When two marks sit close together their labels
+crowd, so pick the ones that read apart.
 
 **`flow`**: a process in order, with no dates. Use it for how something
 works, how it unfolds, what happens next — a procedure, a mechanism, a
@@ -147,7 +136,7 @@ run of stages. Each step is one short phrase from the article, titled
 with the stage's name. When the stages have dates, that is a `timeline`;
 when the article states each step causing the next, that is a
 `cause-effect`; when the steps are only loosely related facts, that is
-an `info-board`.
+a `list`.
 
 **`breakdown`**: one total with its named parts — where the money goes,
 what a deal is made of. The parts are shares of the one total, largest
@@ -163,7 +152,7 @@ so the parts need not sum exactly to the total.
 3. Then reaction and consequence: `quote`, `cause-effect`.
 
 When two scenes matter equally, use this order: `game`, `scale`, `flow`,
-`breakdown`, `big-number`, `info-board`,
+`breakdown`, `list`,
 `bar-chart` or `line-chart`, `comparison`, `timeline`, `map`,
 `cause-effect`, `quote`.
 
@@ -173,13 +162,13 @@ These are starting points, not rules.
 
 | Story | Scenes |
 |---|---|
-| Disaster or accident | `big-number` (the toll) + `map` + `timeline` |
+| Disaster or accident | `list` (the toll) + `map` + `timeline` |
 | Policy decision | `breakdown` + `cause-effect` + `quote` |
 | Economic data release | `scale` + `line-chart` |
 | Process or mechanism | `flow` + `quote` |
 | Election result | `bar-chart` + `map` |
-| Company deal or results | `big-number` + `info-board` + `quote` |
+| Company deal or results | `scale` + `list` + `quote` |
 | Conflict or negotiation | `timeline` + `map` + `comparison` |
-| New transport link | `info-board` + `map` + `comparison` |
-| Science finding | `info-board` + `cause-effect` + `quote` |
-| Local pilot or trial | `big-number` + `bar-chart` + `quote` |
+| New transport link | `list` + `map` + `comparison` |
+| Science finding | `list` + `cause-effect` + `quote` |
+| Local pilot or trial | `scale` + `bar-chart` + `quote` |

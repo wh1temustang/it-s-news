@@ -1,0 +1,11 @@
+<ul class="lst">
+{% for row in data.rows %}
+  <li class="lst-row" style="--j: {{ loop.index0 }}">
+    <span class="lst-label">{{ row.label }}</span>
+    <span class="lst-value">{{ row.value }}</span>
+    {% if row.note is defined %}
+    <span class="lst-note">{{ row.note }}</span>
+    {% endif %}
+  </li>
+{% endfor %}
+</ul>

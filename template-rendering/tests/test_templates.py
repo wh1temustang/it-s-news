@@ -20,7 +20,7 @@ class KitTests(testing.KitTests, unittest.TestCase):
     kit = KIT
 
     def test_the_templates_the_user_asked_for_exist(self):
-        for name in ("timeline", "info-board", "map"):
+        for name in ("timeline", "list", "map"):
             self.assertIn(name, TEMPLATES)
 
     def test_map_coordinates_are_general_knowledge_and_quotes_are_verbatim(self):

@@ -1,0 +1,48 @@
+
+/* --- list --- */
+
+/* One fact per line, in reading order: the label on the left, the punch
+   on the right, the note underneath. Full width, so a value has room
+   and nothing wraps mid-phrase in a half-width tile. */
+.lst {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lst-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
+}
+
+.lst-row:last-child { border-bottom: none; }
+
+.lst-label {
+  flex: 1 1 auto;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lst-value {
+  flex: 0 0 auto;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.lst-note {
+  flex: 1 1 100%;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
