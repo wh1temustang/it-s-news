@@ -132,7 +132,11 @@ before or after it. Its shape:
    reader would ask it, and becomes the scene's heading. Each `why` is one
    sentence on why this template fits; reviewers read it, readers don't.
 7. **Write the headline:** a plain `title`, a one-sentence `dek`, and the
-   closest `topic`.
+   closest `topic`. The headline names the topic in plain words — no
+   numbers. The numbers live in the scenes below (the list, the scale,
+   the game), never in the headline, and the dek doesn't restate them
+   either. With the list carrying the facts, the headline can stay
+   simple: it just says what the story is about.
 8. **Add a `bottom_line` only if it tells the reader something the scenes
    don't**, usually what changes for them. Otherwise leave it out.
 9. **Run the self-check below, then answer.**
@@ -198,6 +202,8 @@ or maps.
   number with reference points, process, or total with parts was
   flattened into a list.
 - The first scene answers the most important question.
+- The headline and dek carry no numbers — the numbers are in the scenes
+  below.
 - Every number shown appears in the article, written the same way.
 - Every quote matches the article word for word.
 - Every required field is present, no field is over its limit, and there are

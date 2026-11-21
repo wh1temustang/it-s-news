@@ -30,6 +30,10 @@ first. The value is the punch — a number, a word, a few words — and the
 label carries the topic, holding the fuller phrase when the value
 shortens it. Extra context goes in `note`. Rows read top to bottom, so
 the order means something: lead with the fact the story turns on.
+With the list carrying the facts, the headline can stay simple: it
+names the topic in plain words, no numbers — the numbers live in the
+list, the scale or the game below, and the dek doesn't restate them
+either.
 
 **`timeline`**: oldest first. Mark the news itself `now` and anything
 scheduled or expected `next`. Use the article's own dates ("Thursday",
