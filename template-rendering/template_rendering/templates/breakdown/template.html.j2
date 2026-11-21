@@ -1,0 +1,13 @@
+{% if data.unit is defined %}
+<p class="chart-unit">{{ data.unit }}</p>
+{% endif %}
+<p class="bd-total"><span class="bd-total-value">{{ data.total_display }}</span> <span class="bd-total-label">{{ data.total.label }}</span></p>
+<ul class="bd">
+{% for row in data.rows %}
+  <li class="bd-row" style="--w: {{ row.pct }}%; --j: {{ loop.index0 }}">
+    <span class="bd-label">{{ row.name }}</span>
+    <span class="bd-value">{{ row.display }}</span>
+    <span class="bd-track" aria-hidden="true"><span class="bd-bar"></span></span>
+  </li>
+{% endfor %}
+</ul>
