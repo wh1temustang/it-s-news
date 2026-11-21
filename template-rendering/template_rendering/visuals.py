@@ -83,6 +83,65 @@ def line_chart(data: dict) -> dict:
             "left": left, "right": right}
 
 
+def scale(data: dict) -> dict:
+    """Place one number on an axis with its reference marks.
+
+    The axis ends are display choices: use min/max when given, otherwise
+    fit the value and the marks with room at both ends. Mark labels are
+    centred on their ticks, clamped so a label near either end stays on
+    the page — the tick keeps the exact position, only the label shifts.
+    """
+    value = data["value"]
+    marks = data.get("marks") or []
+    points = [value, *[m["value"] for m in marks]]
+    lo = data.get("min")
+    hi = data.get("max")
+    if lo is None or hi is None:
+        span = max(points) - min(points)
+        pad = span * 0.15 if span > 0 else max(abs(value), 1) * 0.15
+        if lo is None:
+            lo = min(points) - pad
+        if hi is None:
+            hi = max(points) + pad
+    if hi <= lo:
+        hi = lo + 1
+
+    def pct(v: float) -> float:
+        return round((v - lo) / (hi - lo) * 100, 2)
+
+    return {**data,
+            "lo_display": format_number(lo),
+            "hi_display": format_number(hi),
+            "value_pct": pct(value),
+            "value_display": format_number(value),
+            "marks": [{**m,
+                       "pct": pct(m["value"]),
+                       "label_pct": min(max(pct(m["value"]), 18), 82),
+                       "display": format_number(m["value"])}
+                      for m in marks]}
+
+
+def breakdown(data: dict) -> dict:
+    """Size each part against the stated total.
+
+    The parts are shares of the total, so a part's bar is its fraction
+    of it — never of the largest part. Articles round figures, so no
+    check here that the parts sum exactly to the total.
+    """
+    total = data["total"]["value"]
+    rows = [
+        {
+            "name": part["name"],
+            "display": format_number(part["value"]),
+            "pct": round(part["value"] / total * 100, 2) if total else 0,
+        }
+        for part in data["parts"]
+    ]
+    return {**data,
+            "total_display": format_number(total),
+            "rows": rows}
+
+
 def map_view(data: dict) -> dict:
     places = [(p["lat"], p["lng"]) for p in data["places"]]
     return {**data, **geo.draw(places, data.get("scope"))}
@@ -98,6 +157,8 @@ PREPARE: dict[str, Callable[[dict], dict]] = {
     "line-chart": line_chart,
     "map": map_view,
     "quote": quote,
+    "scale": scale,
+    "breakdown": breakdown,
 }
 
 
