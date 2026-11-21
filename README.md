@@ -21,8 +21,10 @@ or clone the repo and open any `.html` file in an `examples/` folder.
 | Template | What it answers | Example |
 |---|---|---|
 | `game` | Guess the number, or pick the right answer | [Fallowfield snow](template-rendering/examples/fallowfield-snow.html) |
-| `info-board` | The essentials at a glance | [Night train](template-rendering/examples/night-train.html) |
-| `big-number` | One number is the news | [Bike lanes](template-rendering/examples/bike-lanes.html) |
+| `scale` | Where does this number stand? | [Fallowfield river](template-rendering/examples/fallowfield-river.html) |
+| `flow` | How does it work, step by step? | [Fallowfield warning](template-rendering/examples/fallowfield-warning.html) |
+| `breakdown` | What's in it? | [Fallowfield festival](template-rendering/examples/fallowfield-festival.html) |
+| `list` | The essentials, in order | [Fallowfield pool](template-rendering/examples/fallowfield-pool.html) |
 | `timeline` | How did we get here? | [Night train](template-rendering/examples/night-train.html) |
 | `map` | Where does it happen? | [Night train](template-rendering/examples/night-train.html) |
 | `bar-chart` | How do values compare? | [Bike lanes](template-rendering/examples/bike-lanes.html) |
