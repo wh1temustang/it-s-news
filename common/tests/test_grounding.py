@@ -25,7 +25,7 @@ TEXT = {"type": "string"}
 # Grounding reads only each template's schema; these mirror the shapes the
 # approaches use: free text, chart values, general knowledge, quotes.
 TEMPLATES = {
-    "info-board": SimpleNamespace(schema={"properties": {"tiles": {"items": {"properties": {
+    "list": SimpleNamespace(schema={"properties": {"rows": {"items": {"properties": {
         "label": TEXT, "value": TEXT}}}}}),
     "bar-chart": SimpleNamespace(schema={"properties": {"bars": {"items": {"properties": {
         "label": TEXT, "value": {"type": "number"}}}}}}),
@@ -44,9 +44,9 @@ def board(*values: str) -> dict:
     return {
         "headline": {"title": "t", "dek": "d", "topic": "local"},
         "scenes": [{
-            "template": "info-board",
+            "template": "list",
             "question": "What happened?",
-            "data": {"tiles": [{"label": "L", "value": v} for v in values]},
+            "data": {"rows": [{"label": "L", "value": v} for v in values]},
         }],
     }
 
@@ -69,7 +69,7 @@ class NumberTests(unittest.TestCase):
     def test_invented_number_is_reported(self):
         errors = check(board("Up 183%"))
         self.assertEqual(len(errors), 1)
-        self.assertIn("$.scenes[0].data.tiles[0].value: the number 183", errors[0])
+        self.assertIn("$.scenes[0].data.rows[0].value: the number 183", errors[0])
 
     def test_digits_inside_urls_do_not_ground_anything(self):
         self.assertEqual(len(check(board("777 riders"))), 1)
