@@ -62,6 +62,19 @@ before or after it. Its shape:
    - Two sides answering the same 2+ points → `comparison`.
    - A stated chain of 3+ linked steps → `cause-effect`.
    - A quote that carries the story → `quote`.
+   - A headline number with reference points the article states — a
+     previous value, a threshold, a target → `scale`, not a bare big
+     number. The axis shows where the number stands; give `min`/`max`
+     only when the article's range needs framing, otherwise the axis
+     fits the value and the marks.
+   - Ordered stages of a process with no dates — how something works,
+     how it unfolds, what happens next → `flow`. Use `timeline` when
+     the stages have dates, `cause-effect` when the article states each
+     step causing the next.
+   - A total with named parts in the same unit — where the money goes,
+     what a deal is made of → `breakdown`, not a board. The parts are
+     shares of the one total; use `bar-chart` when the values are peers
+     being compared, not parts of a whole.
    - A number or turn the reader should feel rather than read (a fall from
      a peak, a total worth uncovering, a before and after to compare) → `reactive`,
      at most one scene per page. Reactive is never the default: use it only
@@ -102,7 +115,10 @@ before or after it. Its shape:
      buttons must be obvious from the shape alone.
    Use `info-board` and `big-number` for what's left: loose essentials with
    no stronger shape, and the one number that is the news. They are the
-   fallback, not the default.
+   fallback, not the default. Prefer `scale`, `flow` and `breakdown`
+   whenever their shape fits — a big number only when the article gives
+   no reference point at all, an info board only for loose essentials
+   with no stronger shape.
 5. **Match each question to one template** with the catalog table. If two
    templates fit, pick the one that shows the answer faster — and prefer
    the more specific template from the inventory above over a board or a
@@ -181,8 +197,9 @@ or maps.
 
 - Each scene answers a different question, worded the way a reader would ask it.
 - Every data shape in the inventory got the most specific template that
-  fits it; no chartable set, dated sequence, place, pair of sides or chain
-  was flattened into a board or a big number.
+  fits it; no chartable set, dated sequence, place, pair of sides, chain,
+  number with reference points, process, or total with parts was
+  flattened into a board or a big number.
 - The first scene answers the most important question.
 - Every number shown appears in the article, written the same way.
 - Every quote matches the article word for word.
