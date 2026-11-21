@@ -6,15 +6,31 @@
   },
   "scenes": [
     {
-      "template": "info-board",
+      "template": "list",
       "question": "What did council decide?",
       "why": "The decision and what it commits the city to are the news; the tiles state them without a paragraph.",
       "data": {
-        "tiles": [
-          {"label": "Decision", "value": "Lanes stay", "note": "Council vote, 7-4", "tone": "good"},
-          {"label": "Length", "value": "6.5 km", "note": "Harbour Street and Main Avenue"},
-          {"label": "Cost to finish", "value": "$4.1 million", "note": "Concrete curbs replace plastic posts"},
-          {"label": "Works", "value": "2027 to 2028", "note": "Starting in March 2027"}
+        "rows": [
+          {
+            "label": "Decision",
+            "value": "Lanes stay",
+            "note": "Council vote, 7-4"
+          },
+          {
+            "label": "Length",
+            "value": "6.5 km",
+            "note": "Harbour Street and Main Avenue"
+          },
+          {
+            "label": "Cost to finish",
+            "value": "$4.1 million",
+            "note": "Concrete curbs replace plastic posts"
+          },
+          {
+            "label": "Works",
+            "value": "2027 to 2028",
+            "note": "Starting in March 2027"
+          }
         ]
       }
     },
@@ -25,22 +41,42 @@
       "data": {
         "unit": "Bike trips per day",
         "points": [
-          {"x": "Before", "y": 1200},
-          {"x": "Spring 2025", "y": 2100},
-          {"x": "Autumn 2025", "y": 2800},
-          {"x": "Spring 2026", "y": 3400}
+          {
+            "x": "Before",
+            "y": 1200
+          },
+          {
+            "x": "Spring 2025",
+            "y": 2100
+          },
+          {
+            "x": "Autumn 2025",
+            "y": 2800
+          },
+          {
+            "x": "Spring 2026",
+            "y": 3400
+          }
         ],
         "note": "Before: the month before the pilot. Then: city counters."
       }
     },
     {
-      "template": "big-number",
+      "template": "list",
       "question": "What else changed on the street?",
       "why": "Two before-and-after numbers carry the safety gain and the cost to drivers.",
       "data": {
-        "numbers": [
-          {"value": "17", "label": "Injury collisions during the 18-month pilot", "context": "down from 31 in the 18 months before", "trend": "down"},
-          {"value": "11 min", "label": "Rush-hour drive along Main Avenue", "context": "up from 9 minutes", "trend": "up"}
+        "rows": [
+          {
+            "label": "Injury collisions",
+            "value": "17",
+            "note": "Down from 31 in the 18 months before the pilot"
+          },
+          {
+            "label": "Rush-hour drive",
+            "value": "11 min",
+            "note": "Along Main Avenue, up from 9 minutes"
+          }
         ]
       }
     },
@@ -51,9 +87,21 @@
       "data": {
         "unit": "Change in card spending",
         "bars": [
-          {"label": "Shops on the corridor", "value": 6, "display": "+6%"},
-          {"label": "Whole city", "value": 4, "display": "+4%"},
-          {"label": "Restaurants on the corridor", "value": -3, "display": "-3%"}
+          {
+            "label": "Shops on the corridor",
+            "value": 6,
+            "display": "+6%"
+          },
+          {
+            "label": "Whole city",
+            "value": 4,
+            "display": "+4%"
+          },
+          {
+            "label": "Restaurants on the corridor",
+            "value": -3,
+            "display": "-3%"
+          }
         ],
         "note": "Compared with the same period before the pilot"
       }

@@ -432,55 +432,6 @@ a { color: var(--accent); }
   color: var(--ink);
   font-size: 15px;
 }
-
-/* --- big number --- */
-
-.bn {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 22px 18px;
-}
-
-.bn-item {
-  animation: bn-pop 0.6s cubic-bezier(0.3, 1.3, 0.6, 1) both;
-  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 110ms + 200ms);
-}
-
-.bn-value {
-  margin: 0;
-  color: var(--accent);
-  font-size: clamp(40px, 8vw, 60px);
-  font-weight: 850;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
-}
-
-.bn-lead .bn-value { font-size: clamp(52px, 11vw, 80px); }
-
-.bn-trend {
-  margin-right: 6px;
-  font-size: 0.45em;
-  vertical-align: 0.35em;
-}
-
-.bn-label {
-  margin: 8px 0 0;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.bn-context {
-  margin: 4px 0 0;
-  color: var(--muted);
-  font-size: 15px;
-}
-
-@keyframes bn-pop {
-  from { opacity: 0; transform: scale(0.85); }
-  to   { opacity: 1; transform: none; }
-}
 /* --- game ---
    Mini-games the reader plays: guess the article's number on a slider,
    or pick the right answer from a few options. Only the base.css
@@ -654,59 +605,6 @@ a { color: var(--accent); }
   outline-offset: 2px;
 }
 
-/* --- info board --- */
-
-.ib {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.ib-tile {
-  --tone: var(--accent);
-  padding: 14px 14px 16px;
-  border-top: 4px solid var(--tone);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--tone) 8%, var(--surface));
-  animation: rise 0.5s both;
-  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
-}
-
-.ib-tile[data-tone="good"]    { --tone: var(--good); }
-.ib-tile[data-tone="bad"]     { --tone: var(--bad); }
-.ib-tile[data-tone="pending"] { --tone: var(--pending); }
-.ib-tile[data-tone="neutral"] { --tone: var(--neutral); }
-
-.ib-label {
-  margin: 0;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.ib-value {
-  margin: 4px 0 0;
-  font-size: 23px;
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-}
-
-.ib-tile:not([data-tone="none"]) .ib-value { color: var(--tone); }
-
-.ib-note {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.35;
-}
-
 /* --- line chart --- */
 
 .lc { margin: 0; color: var(--accent); }
@@ -756,6 +654,54 @@ a { color: var(--accent); }
   to   { stroke-dashoffset: 0; }
 }
 
+/* --- list --- */
+
+/* One fact per line, in reading order: the label on the left, the punch
+   on the right, the note underneath. Full width, so a value has room
+   and nothing wraps mid-phrase in a half-width tile. */
+.lst {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lst-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
+}
+
+.lst-row:last-child { border-bottom: none; }
+
+.lst-label {
+  flex: 1 1 auto;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lst-value {
+  flex: 0 0 auto;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.lst-note {
+  flex: 1 1 100%;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
 /* --- quote --- */
 
 .qt {
@@ -790,6 +736,105 @@ a { color: var(--accent); }
 }
 
 .qt-by span { color: var(--muted); }
+
+/* --- scale --- */
+
+.scl-value {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 80ms + 200ms);
+}
+
+.scl-label {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.scl-axis {
+  position: relative;
+  height: 112px;
+  margin-top: 14px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 80ms + 280ms);
+}
+
+.scl-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 26px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+/* A mark is a short tick crossing the track. */
+.scl-tick {
+  position: absolute;
+  top: 20px;
+  width: 2px;
+  height: 16px;
+  margin-left: -1px;
+  background: var(--muted);
+}
+
+/* The value sits on the track as a ring, so it reads against the marks. */
+.scl-pointer {
+  position: absolute;
+  top: 20px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  background: var(--surface);
+  box-sizing: border-box;
+}
+
+.scl-marks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Mark labels sit below the track, centred on their tick. The position
+   is clamped in visuals.py so a label near either end stays on the page. */
+.scl-mark {
+  position: absolute;
+  top: 48px;
+  width: 100px;
+  margin-left: -50px;
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: center;
+  color: var(--muted);
+}
+
+.scl-mark-value {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.scl-ends {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
 
 /* --- timeline --- */
 
@@ -942,7 +987,10 @@ a { color: var(--accent); }
   /* Close means within 5% of the answer: a near miss, not a far one. */
   var near = Math.abs(ANSWER) * 0.05;
   function fmt(v) {
-    var s = v.toFixed(dec);
+    /* Thousands separators, like the big number shows: 1,087, not 1087. */
+    var parts = v.toFixed(dec).split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    var s = parts.join('.');
     return after ? s + unit : unit + s;
   }
   function showGuess() { guess.textContent = fmt(parseFloat(slider.value)); }
@@ -976,20 +1024,19 @@ a { color: var(--accent); }
 </div>
 
   </section>
-  <section class="scene scene--big-number" style="--i: 1" aria-labelledby="story-1-q2">
-    <p class="scene-kind"><span aria-hidden="true">🔢</span> Big number</p>
+  <section class="scene scene--scale" style="--i: 1" aria-labelledby="story-1-q2">
+    <p class="scene-kind"><span aria-hidden="true">📏</span> Scale</p>
     <h4 id="story-1-q2">How far past the old record did it go?</h4>
-    <div class="bn">
-  <div class="bn-item bn-lead" style="--j: 0">
-    <p class="bn-value">42 cm</p>
-    <p class="bn-label">Snow in 24 hours</p>
-    <p class="bn-context">Most in a single day since 1988</p>
-  </div>
-  <div class="bn-item" style="--j: 1">
-    <p class="bn-value">31 cm</p>
-    <p class="bn-label">Previous record</p>
-    <p class="bn-context">Old record, set in 2009</p>
-  </div>
+    <p class="chart-unit">cm</p>
+<p class="scl-value">42 <span class="scl-label">Snow in 24 hours</span></p>
+<div class="scl-axis">
+  <span class="scl-track" aria-hidden="true"></span>
+  <span class="scl-tick" style="left: 11.54%;" aria-hidden="true"></span>
+  <span class="scl-pointer" style="left: 88.46%;" aria-hidden="true"></span>
+  <ul class="scl-marks">
+    <li class="scl-mark" style="left: 18%;"><span class="scl-mark-value">31</span> Previous record, 2009</li>
+  </ul>
+  <p class="scl-ends" aria-hidden="true"><span>29.35</span><span>43.65</span></p>
 </div>
 
   </section>
@@ -1009,26 +1056,26 @@ a { color: var(--accent); }
     <p class="byline">Fallowfield Gazette (fictional) · <span>November 13, 2026</span></p>
   </header>
 
-  <section class="scene scene--info-board" style="--i: 0" aria-labelledby="story-2-q1">
-    <p class="scene-kind"><span aria-hidden="true">📋</span> Info board</p>
+  <section class="scene scene--list" style="--i: 0" aria-labelledby="story-2-q1">
+    <p class="scene-kind"><span aria-hidden="true">📝</span> List</p>
     <h4 id="story-2-q1">What did the council decide?</h4>
-    <ul class="ib">
-  <li class="ib-tile" data-tone="good" style="--j: 0">
-    <p class="ib-label">Council vote</p>
-    <p class="ib-value">7-2</p>
+    <ul class="lst">
+  <li class="lst-row" style="--j: 0">
+    <span class="lst-label">Council vote</span>
+    <span class="lst-value">7-2</span>
   </li>
-  <li class="ib-tile" data-tone="neutral" style="--j: 1">
-    <p class="ib-label">Winter opening cost</p>
-    <p class="ib-value">$48,000</p>
-    <p class="ib-note">Trial winter opening</p>
+  <li class="lst-row" style="--j: 1">
+    <span class="lst-label">Winter opening cost</span>
+    <span class="lst-value">$48,000</span>
+    <span class="lst-note">Trial winter opening</span>
   </li>
-  <li class="ib-tile" data-tone="neutral" style="--j: 2">
-    <p class="ib-label">Petition signatures</p>
-    <p class="ib-value">1,240</p>
+  <li class="lst-row" style="--j: 2">
+    <span class="lst-label">Petition signatures</span>
+    <span class="lst-value">1,240</span>
   </li>
-  <li class="ib-tile" data-tone="neutral" style="--j: 3">
-    <p class="ib-label">Winter season</p>
-    <p class="ib-value">November to March</p>
+  <li class="lst-row" style="--j: 3">
+    <span class="lst-label">Winter season</span>
+    <span class="lst-value">November to March</span>
   </li>
 </ul>
 
@@ -1096,19 +1143,19 @@ a { color: var(--accent); }
     <p class="byline">Fallowfield Gazette (fictional) · <span>November 13, 2026</span></p>
   </header>
 
-  <section class="scene scene--big-number" style="--i: 0" aria-labelledby="story-3-q1">
-    <p class="scene-kind"><span aria-hidden="true">🔢</span> Big number</p>
+  <section class="scene scene--list" style="--i: 0" aria-labelledby="story-3-q1">
+    <p class="scene-kind"><span aria-hidden="true">📝</span> List</p>
     <h4 id="story-3-q1">How big was the bake-off?</h4>
-    <div class="bn">
-  <div class="bn-item bn-lead" style="--j: 0">
-    <p class="bn-value">4.6 kg</p>
-    <p class="bn-label">Winning loaf</p>
-  </div>
-  <div class="bn-item" style="--j: 1">
-    <p class="bn-value">320</p>
-    <p class="bn-label">Visitors on Saturday</p>
-  </div>
-</div>
+    <ul class="lst">
+  <li class="lst-row" style="--j: 0">
+    <span class="lst-label">Winning loaf</span>
+    <span class="lst-value">4.6 kg</span>
+  </li>
+  <li class="lst-row" style="--j: 1">
+    <span class="lst-label">Visitors on Saturday</span>
+    <span class="lst-value">320</span>
+  </li>
+</ul>
 
   </section>
   <section class="scene scene--line-chart" style="--i: 1" aria-labelledby="story-3-q2">

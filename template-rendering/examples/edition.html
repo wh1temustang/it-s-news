@@ -512,55 +512,6 @@ a { color: var(--accent); }
   to   { transform: scaleX(1); }
 }
 
-/* --- big number --- */
-
-.bn {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 22px 18px;
-}
-
-.bn-item {
-  animation: bn-pop 0.6s cubic-bezier(0.3, 1.3, 0.6, 1) both;
-  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 110ms + 200ms);
-}
-
-.bn-value {
-  margin: 0;
-  color: var(--accent);
-  font-size: clamp(40px, 8vw, 60px);
-  font-weight: 850;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
-}
-
-.bn-lead .bn-value { font-size: clamp(52px, 11vw, 80px); }
-
-.bn-trend {
-  margin-right: 6px;
-  font-size: 0.45em;
-  vertical-align: 0.35em;
-}
-
-.bn-label {
-  margin: 8px 0 0;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.bn-context {
-  margin: 4px 0 0;
-  color: var(--muted);
-  font-size: 15px;
-}
-
-@keyframes bn-pop {
-  from { opacity: 0; transform: scale(0.85); }
-  to   { opacity: 1; transform: none; }
-}
-
 /* --- comparison --- */
 
 .cmp-head,
@@ -631,61 +582,6 @@ a { color: var(--accent); }
 .cmp-cell--l { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
 .cmp-cell--r { background: color-mix(in srgb, var(--alt) 12%, var(--surface)); }
 
-/* --- info board --- */
-
-.ib {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.ib-tile {
-  --tone: var(--accent);
-  padding: 14px 14px 16px;
-  border-top: 4px solid var(--tone);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--tone) 8%, var(--surface));
-  animation: rise 0.5s both;
-  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
-}
-
-.ib-tile[data-tone="good"]    { --tone: var(--good); }
-.ib-tile[data-tone="bad"]     { --tone: var(--bad); }
-.ib-tile[data-tone="pending"] { --tone: var(--pending); }
-.ib-tile[data-tone="neutral"] { --tone: var(--neutral); }
-
-.ib-label {
-  margin: 0;
-  color: var(--muted);
-  /* 14px, no uppercase, no letter-spacing: the label is the tile's
-     topic and must read at a glance. Uppercase and letter-spacing do
-     nothing for Chinese characters except spread them apart, and at
-     12px the topic was too small to read on a phone. */
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.ib-value {
-  margin: 4px 0 0;
-  font-size: 23px;
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-}
-
-.ib-tile:not([data-tone="none"]) .ib-value { color: var(--tone); }
-
-.ib-note {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.35;
-}
-
 /* --- line chart --- */
 
 .lc { margin: 0; color: var(--accent); }
@@ -733,6 +629,54 @@ a { color: var(--accent); }
 @keyframes lc-draw {
   from { stroke-dashoffset: 1; }
   to   { stroke-dashoffset: 0; }
+}
+
+/* --- list --- */
+
+/* One fact per line, in reading order: the label on the left, the punch
+   on the right, the note underneath. Full width, so a value has room
+   and nothing wraps mid-phrase in a half-width tile. */
+.lst {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lst-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
+}
+
+.lst-row:last-child { border-bottom: none; }
+
+.lst-label {
+  flex: 1 1 auto;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lst-value {
+  flex: 0 0 auto;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.lst-note {
+  flex: 1 1 100%;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
 }
 
 /* --- map --- */
@@ -1011,28 +955,28 @@ a { color: var(--accent); }
     <p class="byline">it&#39;s news sample desk · <span>2026-03-14</span></p>
   </header>
 
-  <section class="scene scene--info-board" style="--i: 0" aria-labelledby="story-1-q1">
-    <p class="scene-kind"><span aria-hidden="true">📋</span> Info board</p>
+  <section class="scene scene--list" style="--i: 0" aria-labelledby="story-1-q1">
+    <p class="scene-kind"><span aria-hidden="true">📝</span> List</p>
     <h4 id="story-1-q1">What&#39;s the trip like?</h4>
-    <ul class="ib">
-  <li class="ib-tile" data-tone="none" style="--j: 0">
-    <p class="ib-label">Journey</p>
-    <p class="ib-value">14 h 35 min</p>
-    <p class="ib-note">Leaves 7:40 pm, arrives 10:15 am</p>
+    <ul class="lst">
+  <li class="lst-row" style="--j: 0">
+    <span class="lst-label">Journey</span>
+    <span class="lst-value">14 h 35 min</span>
+    <span class="lst-note">Leaves 7:40 pm, arrives 10:15 am</span>
   </li>
-  <li class="ib-tile" data-tone="none" style="--j: 1">
-    <p class="ib-label">Runs</p>
-    <p class="ib-value">3 nights a week</p>
-    <p class="ib-note">From April 9</p>
+  <li class="lst-row" style="--j: 1">
+    <span class="lst-label">Runs</span>
+    <span class="lst-value">3 nights a week</span>
+    <span class="lst-note">From April 9</span>
   </li>
-  <li class="ib-tile" data-tone="none" style="--j: 2">
-    <p class="ib-label">Fares</p>
-    <p class="ib-value">From €49</p>
-    <p class="ib-note">€89 couchette bed, €259 private cabin for two</p>
+  <li class="lst-row" style="--j: 2">
+    <span class="lst-label">Fares</span>
+    <span class="lst-value">From €49</span>
+    <span class="lst-note">€89 couchette bed, €259 private cabin for two</span>
   </li>
-  <li class="ib-tile" data-tone="none" style="--j: 3">
-    <p class="ib-label">Tickets</p>
-    <p class="ib-value">On sale March 20</p>
+  <li class="lst-row" style="--j: 3">
+    <span class="lst-label">Tickets</span>
+    <span class="lst-value">On sale March 20</span>
   </li>
 </ul>
 
@@ -2828,29 +2772,29 @@ go(m ? Number(m[1]) - 1 : 0);
     <p class="byline">it&#39;s news sample desk · <span>2026-05-07</span></p>
   </header>
 
-  <section class="scene scene--info-board" style="--i: 0" aria-labelledby="story-2-q1">
-    <p class="scene-kind"><span aria-hidden="true">📋</span> Info board</p>
+  <section class="scene scene--list" style="--i: 0" aria-labelledby="story-2-q1">
+    <p class="scene-kind"><span aria-hidden="true">📝</span> List</p>
     <h4 id="story-2-q1">What did council decide?</h4>
-    <ul class="ib">
-  <li class="ib-tile" data-tone="good" style="--j: 0">
-    <p class="ib-label">Decision</p>
-    <p class="ib-value">Lanes stay</p>
-    <p class="ib-note">Council vote, 7-4</p>
+    <ul class="lst">
+  <li class="lst-row" style="--j: 0">
+    <span class="lst-label">Decision</span>
+    <span class="lst-value">Lanes stay</span>
+    <span class="lst-note">Council vote, 7-4</span>
   </li>
-  <li class="ib-tile" data-tone="none" style="--j: 1">
-    <p class="ib-label">Length</p>
-    <p class="ib-value">6.5 km</p>
-    <p class="ib-note">Harbour Street and Main Avenue</p>
+  <li class="lst-row" style="--j: 1">
+    <span class="lst-label">Length</span>
+    <span class="lst-value">6.5 km</span>
+    <span class="lst-note">Harbour Street and Main Avenue</span>
   </li>
-  <li class="ib-tile" data-tone="none" style="--j: 2">
-    <p class="ib-label">Cost to finish</p>
-    <p class="ib-value">$4.1 million</p>
-    <p class="ib-note">Concrete curbs replace plastic posts</p>
+  <li class="lst-row" style="--j: 2">
+    <span class="lst-label">Cost to finish</span>
+    <span class="lst-value">$4.1 million</span>
+    <span class="lst-note">Concrete curbs replace plastic posts</span>
   </li>
-  <li class="ib-tile" data-tone="none" style="--j: 3">
-    <p class="ib-label">Works</p>
-    <p class="ib-value">2027 to 2028</p>
-    <p class="ib-note">Starting in March 2027</p>
+  <li class="lst-row" style="--j: 3">
+    <span class="lst-label">Works</span>
+    <span class="lst-value">2027 to 2028</span>
+    <span class="lst-note">Starting in March 2027</span>
   </li>
 </ul>
 
@@ -2885,21 +2829,21 @@ go(m ? Number(m[1]) - 1 : 0);
 <p class="note">Before: the month before the pilot. Then: city counters.</p>
 
   </section>
-  <section class="scene scene--big-number" style="--i: 2" aria-labelledby="story-2-q3">
-    <p class="scene-kind"><span aria-hidden="true">🔢</span> Big number</p>
+  <section class="scene scene--list" style="--i: 2" aria-labelledby="story-2-q3">
+    <p class="scene-kind"><span aria-hidden="true">📝</span> List</p>
     <h4 id="story-2-q3">What else changed on the street?</h4>
-    <div class="bn">
-  <div class="bn-item bn-lead" style="--j: 0">
-    <p class="bn-value"><span class="bn-trend" aria-hidden="true">▼</span><span class="sr-only">down to </span>17</p>
-    <p class="bn-label">Injury collisions during the 18-month pilot</p>
-    <p class="bn-context">down from 31 in the 18 months before</p>
-  </div>
-  <div class="bn-item" style="--j: 1">
-    <p class="bn-value"><span class="bn-trend" aria-hidden="true">▲</span><span class="sr-only">up to </span>11 min</p>
-    <p class="bn-label">Rush-hour drive along Main Avenue</p>
-    <p class="bn-context">up from 9 minutes</p>
-  </div>
-</div>
+    <ul class="lst">
+  <li class="lst-row" style="--j: 0">
+    <span class="lst-label">Injury collisions</span>
+    <span class="lst-value">17</span>
+    <span class="lst-note">Down from 31 in the 18 months before the pilot</span>
+  </li>
+  <li class="lst-row" style="--j: 1">
+    <span class="lst-label">Rush-hour drive</span>
+    <span class="lst-value">11 min</span>
+    <span class="lst-note">Along Main Avenue, up from 9 minutes</span>
+  </li>
+</ul>
 
   </section>
   <section class="scene scene--bar-chart" style="--i: 3" aria-labelledby="story-2-q4">

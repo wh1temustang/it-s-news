@@ -276,56 +276,49 @@ a { color: var(--accent); }
   }
 }
 
-/* --- info board --- */
+/* --- list --- */
 
-.ib {
+/* One fact per line, in reading order: the label on the left, the punch
+   on the right, the note underneath. Full width, so a value has room
+   and nothing wraps mid-phrase in a half-width tile. */
+.lst {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.ib-tile {
-  --tone: var(--accent);
-  padding: 14px 14px 16px;
-  border-top: 4px solid var(--tone);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--tone) 8%, var(--surface));
+.lst-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
   animation: rise 0.5s both;
   animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
 }
 
-.ib-tile[data-tone="good"]    { --tone: var(--good); }
-.ib-tile[data-tone="bad"]     { --tone: var(--bad); }
-.ib-tile[data-tone="pending"] { --tone: var(--pending); }
-.ib-tile[data-tone="neutral"] { --tone: var(--neutral); }
+.lst-row:last-child { border-bottom: none; }
 
-.ib-label {
-  margin: 0;
+.lst-label {
+  flex: 1 1 auto;
   color: var(--muted);
-  /* 14px, no uppercase, no letter-spacing: the label is the tile's
-     topic and must read at a glance. Uppercase and letter-spacing do
-     nothing for Chinese characters except spread them apart, and at
-     12px the topic was too small to read on a phone. */
   font-size: 14px;
   font-weight: 700;
 }
 
-.ib-value {
-  margin: 4px 0 0;
-  font-size: 23px;
+.lst-value {
+  flex: 0 0 auto;
+  font-size: 19px;
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.01em;
   font-variant-numeric: tabular-nums;
 }
 
-.ib-tile:not([data-tone="none"]) .ib-value { color: var(--tone); }
-
-.ib-note {
-  margin: 6px 0 0;
+.lst-note {
+  flex: 1 1 100%;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.35;
@@ -473,26 +466,26 @@ a { color: var(--accent); }
     <p class="byline">Fallowfield Gazette (fictional) · <span>November 13, 2026</span></p>
   </header>
 
-  <section class="scene scene--info-board" style="--i: 0" aria-labelledby="q1">
-    <p class="scene-kind"><span aria-hidden="true">📋</span> Info board</p>
+  <section class="scene scene--list" style="--i: 0" aria-labelledby="q1">
+    <p class="scene-kind"><span aria-hidden="true">📝</span> List</p>
     <h2 id="q1">What did the council decide?</h2>
-    <ul class="ib">
-  <li class="ib-tile" data-tone="good" style="--j: 0">
-    <p class="ib-label">Council vote</p>
-    <p class="ib-value">7-2</p>
+    <ul class="lst">
+  <li class="lst-row" style="--j: 0">
+    <span class="lst-label">Council vote</span>
+    <span class="lst-value">7-2</span>
   </li>
-  <li class="ib-tile" data-tone="neutral" style="--j: 1">
-    <p class="ib-label">Winter opening cost</p>
-    <p class="ib-value">$48,000</p>
-    <p class="ib-note">Trial winter opening</p>
+  <li class="lst-row" style="--j: 1">
+    <span class="lst-label">Winter opening cost</span>
+    <span class="lst-value">$48,000</span>
+    <span class="lst-note">Trial winter opening</span>
   </li>
-  <li class="ib-tile" data-tone="neutral" style="--j: 2">
-    <p class="ib-label">Petition signatures</p>
-    <p class="ib-value">1,240</p>
+  <li class="lst-row" style="--j: 2">
+    <span class="lst-label">Petition signatures</span>
+    <span class="lst-value">1,240</span>
   </li>
-  <li class="ib-tile" data-tone="neutral" style="--j: 3">
-    <p class="ib-label">Winter season</p>
-    <p class="ib-value">November to March</p>
+  <li class="lst-row" style="--j: 3">
+    <span class="lst-label">Winter season</span>
+    <span class="lst-value">November to March</span>
   </li>
 </ul>
 
