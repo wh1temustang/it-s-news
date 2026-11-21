@@ -1,9 +1,9 @@
-"""Checks that only make sense for the game and info-board templates.
+"""Checks that only make sense for particular templates.
 
 The shared checker (itsnews_common.storyboard) grounds every number
-against the article. Games and info boards need checks of their own,
-because the generic walk cannot see across fields or measure how text
-renders:
+against the article. Games, info boards, scales and breakdowns need
+checks of their own, because the generic walk cannot see across fields
+or measure how text renders:
 
 - Distractors. A quiz's wrong options are guesses, not facts, so the
   schema marks `options` x-ungrounded and this module enforces the
@@ -20,6 +20,13 @@ renders:
   Chinese has no word boundaries, so a long Chinese value wraps
   mid-phrase on a phone at 23px bold. A value may hold at most six
   Chinese characters — the sentence belongs in the label or the note.
+- Scale bounds. A scale's min and max are display choices, so the
+  shared checker does not ground them — but an axis that does not hold
+  its own value and marks draws the value off the end. Explicit bounds
+  must bracket the value and every mark.
+- Breakdown totals. A breakdown's parts are shares of its total, so
+  the total has to be above 0 and no part below 0, or the bars have
+  nothing to be a fraction of.
 
 The kind-conditional requirements also live here — the shared schema
 validator has no if/then, so "answer is required for guess-number" and
@@ -255,10 +262,90 @@ def _info_board_errors(storyboard: dict) -> list[str]:
     return errors
 
 
+def _scale_errors(storyboard: dict) -> list[str]:
+    """Explicit axis ends must hold the value and every mark."""
+    errors: list[str] = []
+    scenes = storyboard.get("scenes")
+    if not isinstance(scenes, list):
+        return errors
+    for i, scene in enumerate(scenes):
+        if not (isinstance(scene, dict) and scene.get("template") == "scale"
+                and isinstance(scene.get("data"), dict)):
+            continue
+        data = scene["data"]
+        path = f"$.scenes[{i}].data"
+        lo, hi = data.get("min"), data.get("max")
+        if _is_number(lo) and _is_number(hi) and not _value(lo) < _value(hi):
+            errors.append(
+                f"{path}.max: {hi} is not above the axis floor {lo}. "
+                "The right end of the axis must be above the left end, "
+                "or leave both out and the axis fits the value and the marks."
+            )
+            continue
+        points = []
+        if _is_number(data.get("value")):
+            points.append(("value", _value(data["value"])))
+        marks = data.get("marks")
+        if isinstance(marks, list):
+            for j, mark in enumerate(marks):
+                if isinstance(mark, dict) and _is_number(mark.get("value")):
+                    points.append((f"marks[{j}]", _value(mark["value"])))
+        for name, point in points:
+            if _is_number(lo) and point < _value(lo):
+                errors.append(
+                    f"{path}.{name}: {point:g} is below the axis floor "
+                    f"{lo}. Widen min to hold it, or leave min out and "
+                    "the axis fits the value and the marks."
+                )
+            if _is_number(hi) and point > _value(hi):
+                errors.append(
+                    f"{path}.{name}: {point:g} is above the axis ceiling "
+                    f"{hi}. Widen max to hold it, or leave max out and "
+                    "the axis fits the value and the marks."
+                )
+    return errors
+
+
+def _breakdown_errors(storyboard: dict) -> list[str]:
+    """A breakdown's parts are shares of its total."""
+    errors: list[str] = []
+    scenes = storyboard.get("scenes")
+    if not isinstance(scenes, list):
+        return errors
+    for i, scene in enumerate(scenes):
+        if not (isinstance(scene, dict) and scene.get("template") == "breakdown"
+                and isinstance(scene.get("data"), dict)):
+            continue
+        data = scene["data"]
+        path = f"$.scenes[{i}].data"
+        total = data.get("total")
+        if isinstance(total, dict) and _is_number(total.get("value")):
+            if not _value(total["value"]) > 0:
+                errors.append(
+                    f"{path}.total.value: {total['value']} is not above 0. "
+                    "A breakdown's parts are shares of its total, so the "
+                    "total has to be above 0, or the bars have nothing to "
+                    "be a fraction of."
+                )
+        parts = data.get("parts")
+        if isinstance(parts, list):
+            for j, part in enumerate(parts):
+                if (isinstance(part, dict) and _is_number(part.get("value"))
+                        and _value(part["value"]) < 0):
+                    errors.append(
+                        f"{path}.parts[{j}].value: {part['value']} is below 0. "
+                        "A part of a total cannot be negative — give the "
+                        "part's size as the article states it."
+                    )
+    return errors
+
+
 def check(storyboard: dict, article: Article,
           templates: dict[str, Template]) -> list[str]:
-    """The game and info-board rules, run after the shared shape and grounding checks."""
+    """The game, info-board, scale and breakdown rules, run after the shared shape and grounding checks."""
     errors: list[str] = _info_board_errors(storyboard)
+    errors += _scale_errors(storyboard)
+    errors += _breakdown_errors(storyboard)
     games = _game_scenes(storyboard)
     if not games:
         return errors

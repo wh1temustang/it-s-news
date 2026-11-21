@@ -9,6 +9,8 @@ import re
 import unittest
 
 from itsnews_common import testing
+from itsnews_common.article import Article
+from template_rendering import rules
 from template_rendering.kit import KIT
 
 TEMPLATES = KIT.load_templates()
@@ -40,6 +42,65 @@ class KitTests(testing.KitTests, unittest.TestCase):
         self.assertTrue(emitted)
         for name in sorted(emitted):
             self.assertIn(f".{name}", css, name)
+
+
+class ScaleAndBreakdownRules(unittest.TestCase):
+    """rules.py: explicit scale bounds must bracket, breakdown totals
+    must be positive. The shared checker grounds the numbers; these
+    rules are the cross-field checks it cannot see."""
+
+    def _storyboard(self, template, data):
+        return {"headline": {"title": "T", "dek": "D", "topic": "world"},
+                "scenes": [{"template": template, "question": "Q?",
+                            "why": "W", "data": data}]}
+
+    def test_scale_min_must_not_exclude_the_value(self):
+        article = Article(body="The gauge read 4.2 m, above the 4.0 m "
+                               "threshold and below the 4.6 m record.")
+        sb = self._storyboard("scale", {
+            "value": 4.2,
+            "marks": [{"value": 4.0, "label": "Threshold"},
+                      {"value": 4.6, "label": "Record"}],
+            "min": 4.3, "max": 5.0})
+        errors = rules.check(sb, article, TEMPLATES)
+        self.assertTrue(any("axis floor" in e for e in errors), errors)
+
+    def test_scale_max_must_be_above_min(self):
+        sb = self._storyboard("scale", {
+            "value": 4.2,
+            "marks": [{"value": 4.0, "label": "Threshold"}],
+            "min": 5.0, "max": 4.0})
+        errors = rules.check(sb, Article(body=""), TEMPLATES)
+        self.assertTrue(any("not above the axis floor" in e
+                            for e in errors), errors)
+
+    def test_scale_with_bracketing_bounds_passes(self):
+        sb = self._storyboard("scale", {
+            "value": 4.2,
+            "marks": [{"value": 4.0, "label": "Threshold"},
+                      {"value": 4.6, "label": "Record"}],
+            "min": 3.5, "max": 5.0})
+        self.assertEqual(rules.check(sb, Article(body=""), TEMPLATES), [])
+
+    def test_breakdown_total_must_be_above_zero(self):
+        sb = self._storyboard("breakdown", {
+            "total": {"value": 0, "label": "Budget"},
+            "parts": [{"name": "Grant", "value": 60000}]})
+        errors = rules.check(sb, Article(body=""), TEMPLATES)
+        self.assertTrue(any("not above 0" in e for e in errors), errors)
+
+    def test_breakdown_part_must_not_be_negative(self):
+        sb = self._storyboard("breakdown", {
+            "total": {"value": 120000, "label": "Budget"},
+            "parts": [{"name": "Grant", "value": -1}]})
+        errors = rules.check(sb, Article(body=""), TEMPLATES)
+        self.assertTrue(any("below 0" in e for e in errors), errors)
+
+    def test_breakdown_with_positive_total_passes(self):
+        sb = self._storyboard("breakdown", {
+            "total": {"value": 120000, "label": "Budget"},
+            "parts": [{"name": "Grant", "value": 60000}]})
+        self.assertEqual(rules.check(sb, Article(body=""), TEMPLATES), [])
 
 
 if __name__ == "__main__":

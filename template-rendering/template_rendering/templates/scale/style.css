@@ -1,0 +1,99 @@
+
+/* --- scale --- */
+
+.scl-value {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 80ms + 200ms);
+}
+
+.scl-label {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.scl-axis {
+  position: relative;
+  height: 112px;
+  margin-top: 14px;
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 80ms + 280ms);
+}
+
+.scl-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 26px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+/* A mark is a short tick crossing the track. */
+.scl-tick {
+  position: absolute;
+  top: 20px;
+  width: 2px;
+  height: 16px;
+  margin-left: -1px;
+  background: var(--muted);
+}
+
+/* The value sits on the track as a ring, so it reads against the marks. */
+.scl-pointer {
+  position: absolute;
+  top: 20px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  background: var(--surface);
+  box-sizing: border-box;
+}
+
+.scl-marks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Mark labels sit below the track, centred on their tick. The position
+   is clamped in visuals.py so a label near either end stays on the page. */
+.scl-mark {
+  position: absolute;
+  top: 48px;
+  width: 100px;
+  margin-left: -50px;
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: center;
+  color: var(--muted);
+}
+
+.scl-mark-value {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.scl-ends {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}

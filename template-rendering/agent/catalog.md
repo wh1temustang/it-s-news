@@ -16,6 +16,9 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 | What did someone say that matters? | `quote` | a direct quote from a named speaker | the quote is filler ("We are pleased to announce…") |
 | What does it feel like to touch? | `reactive` | one number or turn the reader should feel: a figure worth uncovering, a before and after to compare, or a value to fill up by holding | the number is small enough to just read, or the turn needs a chart's precision |
 | What is the answer — can I guess it first? | `game` | a number or fact worth guessing: a total, a price, a count | the news is grave, or the story has no number or fact worth guessing |
+| Where does this number stand? | `scale` | one headline number plus 1–4 reference points from the article: a previous value, a threshold, a target | the article gives no reference point (use `big-number`) |
+| How does it work, step by step? | `flow` | 3–5 ordered stages of a process, with no dates | the stages have dates (use `timeline`) or the article states each step causing the next (use `cause-effect`) |
+| What's in it? Where does it go? | `breakdown` | one total plus 2–6 named parts, all in the same unit | the parts aren't shares of one total (use `bar-chart`) |
 
 If no row fits a question, leave the question out. Fewer, stronger scenes
 beat a full page.
@@ -129,13 +132,38 @@ news: no games on deaths, disasters, war or suffering, full stop.
 Affordances over instructions: a game shows no helper sentences — the
 slider and the buttons are the only cues, plus one-word buttons.
 
+**`scale`**: the upgrade of a bare big number — one figure on an axis
+with the reference points the article states, so the reader sees where
+it stands instead of just what it is. The value and every mark are
+article numbers; `min` and `max` are display choices, not facts — leave
+them out and the axis fits the value and the marks. Pick marks the
+reader can tell apart: a previous value, a threshold, a target. When
+two marks sit close together their labels crowd, so pick the ones that
+read apart.
+
+**`flow`**: a process in order, with no dates. Use it for how something
+works, how it unfolds, what happens next — a procedure, a mechanism, a
+run of stages. Each step is one short phrase from the article, titled
+with the stage's name. When the stages have dates, that is a `timeline`;
+when the article states each step causing the next, that is a
+`cause-effect`; when the steps are only loosely related facts, that is
+an `info-board`.
+
+**`breakdown`**: one total with its named parts — where the money goes,
+what a deal is made of. The parts are shares of the one total, largest
+first, all in the same unit; the bars are sized against the total, not
+against each other. When the values are peers being compared rather
+than shares of a whole, that is a `bar-chart`. Articles round figures,
+so the parts need not sum exactly to the total.
+
 ## Ordering
 
 1. Lead with the scene that answers the main question.
 2. Then context: *where* (`map`) and *when* (`timeline`).
 3. Then reaction and consequence: `quote`, `cause-effect`.
 
-When two scenes matter equally, use this order: `game`, `big-number`, `info-board`,
+When two scenes matter equally, use this order: `game`, `scale`, `flow`,
+`breakdown`, `big-number`, `info-board`,
 `bar-chart` or `line-chart`, `comparison`, `timeline`, `map`,
 `cause-effect`, `quote`.
 
@@ -146,8 +174,9 @@ These are starting points, not rules.
 | Story | Scenes |
 |---|---|
 | Disaster or accident | `big-number` (the toll) + `map` + `timeline` |
-| Policy decision | `info-board` + `cause-effect` + `quote` |
-| Economic data release | `big-number` + `line-chart` |
+| Policy decision | `breakdown` + `cause-effect` + `quote` |
+| Economic data release | `scale` + `line-chart` |
+| Process or mechanism | `flow` + `quote` |
 | Election result | `bar-chart` + `map` |
 | Company deal or results | `big-number` + `info-board` + `quote` |
 | Conflict or negotiation | `timeline` + `map` + `comparison` |
