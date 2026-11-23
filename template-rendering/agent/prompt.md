@@ -39,17 +39,17 @@ before or after it. Its shape:
    from two different news items, even when they share a section — if the
    article bundles several unrelated items, each scene renders one item's
    facts only.
-2. **Check the background a first-time reader needs. Read the article as
+2. **Check the background a first-time reader needs.** Read the article as
    someone who has never heard of this story, and list what they would need
-  to understand it: what a named law, organisation or acronym is; who a
+   to understand it: what a named law, organisation or acronym is; who a
    named person is — name and role; why a number matters. If the article
-      does not carry it, do not silently render a thin page: ask the writer
-      for more background, or fetch it from a verified source and add it to
-      the article first. Never render a page that assumes background the
-      article does not supply. The pipeline runs both ways: the article is
-      not only an input to the storyboard — the storyboard stage may send a
-      request back upstream to the writer when the article is missing the
-      background the reader needs.
+   does not carry it, do not silently render a thin page: ask the writer
+   for more background, or fetch it from a verified source and add it to
+   the article first. Never render a page that assumes background the
+   article does not supply. The pipeline runs both ways: the article is
+   not only an input to the storyboard — the storyboard stage may send a
+   request back upstream to the writer when the article is missing the
+   background the reader needs.
 3. **List the reader's questions.** For example: What happened? Where? How
    did we get here, and what's next? How big is it? Compared with what? Why
    is it happening? What does it mean for me? Who said what?
@@ -70,7 +70,9 @@ before or after it. Its shape:
      marked `now` and what's scheduled marked `next`.
    - A specific place the story turns on → `map`, even when the article
      also states the place in words.
-   - Two sides answering the same 2+ points → `comparison`.
+   - Two sides answering the same 2+ points → `comparison`. Each side's
+     cell must answer the point with that side's own content — a cell
+     that only restates a position from another row is not an answer.
    - A stated chain of 3+ linked steps → `cause-effect`.
    - A quote that carries the story → `quote`.
    - A headline number with reference points the article states — a
@@ -143,7 +145,10 @@ before or after it. Its shape:
    reader would ask it, and becomes the scene's heading. Each `why` is one
    sentence on why this template fits; reviewers read it, readers don't.
 9. **Write the headline:** a plain `title`, a one-sentence `dek`, and the
-   closest `topic`. The headline names the topic in plain words — no
+   closest `topic`. The dek is a complete sentence with a subject — never
+   a fragment, and never a sentence that starts with a conjunction and
+   leaves the subject in the headline. The headline names the topic in
+   plain words — no
    numbers. The numbers live in the scenes below (the list, the scale,
    the game), never in the headline, and the dek doesn't restate them
    either. With the list carrying the facts, the headline can stay
@@ -189,6 +194,9 @@ before or after it. Its shape:
 - A list value is the punch — a number, a word, a few words — and the label
   carries the topic, holding the fuller phrase when the value shortens it.
   Extra context goes in `note`.
+- A list `note` must add a fact the value does not carry. If it only
+  restates the value in longer words, drop the note — a note that repeats
+  the value is noise, not context.
 - Show each fact once. Repeating it is fine only when it does different work
   in each place, such as a headline number that a chart then puts in context.
 
@@ -205,6 +213,17 @@ Opinion pieces, interviews and short briefs often have little structure to
 show. Use what fits, often a quote or a list, and don't force charts
 or maps.
 
+### Who checks quality
+
+The checker verifies mechanical things only: every number and quote is
+grounded in the article, the storyboard matches the schema, the structure
+holds. Writing quality — whether a sentence is complete, whether a scene
+adds anything new, whether a note repeats its value, whether the reader
+has enough background — is your job, verified by the self-check above,
+not by code. The checker cannot read, and no rule in code can tell a
+complete sentence from a fragment in every language this kit supports,
+so do not ask it to.
+
 ## Self-check before answering
 
 - Each scene answers a different question, worded the way a reader would ask it.
@@ -214,10 +233,16 @@ or maps.
   flattened into a list.
 - The first scene answers the most important question.
 - The article gives a first-time reader the background the story needs:
-  every named law, organisation or acronym is explained, and every named
-    person has a role. If it did not, you asked the writer for it first.
+  every named law, organisation and acronym is explained, and every named
+  person has a role. If it did not, you asked the writer for it first.
 - The headline and dek carry no numbers — the numbers are in the scenes
   below.
+- The dek is a complete sentence with a subject — not a fragment.
+- Every comparison row gives each side its own content for that point; no
+  cell merely restates a position from another row, and each side is named
+  with their role.
+- Every list note adds a fact the value does not carry; a note that only
+  restates the value is dropped.
 - Every number shown appears in the article, written the same way.
 - Every quote matches the article word for word.
 - Every required field is present, no field is over its limit, and there are
