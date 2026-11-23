@@ -9,7 +9,7 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 | Where does it happen? | `map` | a specific place that matters to the story | the place is only a dateline or a company's headquarters |
 | How do these compare in size? | `bar-chart` | 2+ values in the same unit, for the same time | the values use different units or come from different times |
 | How has it changed over time? | `line-chart` | 3+ values of one measure at different times | the article gives only a start and an end (use `list` for the two values) |
-| How do two sides differ? | `comparison` | two sides answering the same 2+ points | the sides don't answer the same questions |
+| How do two sides differ? | `comparison` | two sides answering the same 2+ points, each named with their role | the sides don't answer the same questions |
 | Why is it happening? What does it lead to? | `cause-effect` | 3+ linked steps, each one stated in the article | the links are your own inference |
 | What did someone say that matters? | `quote` | a direct quote from a named speaker | the quote is filler ("We are pleased to announce…") |
 | What does it feel like to touch? | `reactive` | one number or turn the reader should feel: a figure worth uncovering, a before and after to compare, or a value to fill up by holding | the number is small enough to just read, or the turn needs a chart's precision |
@@ -21,6 +21,14 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 
 If no row fits a question, leave the question out. Fewer, stronger scenes
 beat a full page.
+
+**Background first. A template can only show what the article gives it.
+Before matching questions to templates, check the article gives a
+first-time reader the background the story needs (prompt.md step 2): what a
+named law, organisation or acronym is, who a named person is. If it does
+not, ask the writer for more background first. A comparison of two people
+the reader cannot place, or a list about a law the reader has never heard
+of, is a thin page — and no template fixes that.
 
 ## Notes per template
 
