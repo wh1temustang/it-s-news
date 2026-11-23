@@ -9,7 +9,7 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 | Where does it happen? | `map` | a specific place that matters to the story | the place is only a dateline or a company's headquarters |
 | How do these compare in size? | `bar-chart` | 2+ values in the same unit, for the same time | the values use different units or come from different times |
 | How has it changed over time? | `line-chart` | 3+ values of one measure at different times | the article gives only a start and an end (use `list` for the two values) |
-| How do two sides differ? | `comparison` | two sides answering the same 2+ points | the sides don't answer the same questions |
+| How do two sides differ? | `comparison` | two sides answering the same 2+ points, each named with their role | the sides don't answer the same questions |
 | Why is it happening? What does it lead to? | `cause-effect` | 3+ linked steps, each one stated in the article | the links are your own inference |
 | What did someone say that matters? | `quote` | a direct quote from a named speaker | the quote is filler ("We are pleased to announce…") |
 | What does it feel like to touch? | `reactive` | one number or turn the reader should feel: a figure worth uncovering, a before and after to compare, or a value to fill up by holding | the number is small enough to just read, or the turn needs a chart's precision |
@@ -22,6 +22,14 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 If no row fits a question, leave the question out. Fewer, stronger scenes
 beat a full page.
 
+**Background first.** A template can only show what the article gives it.
+Before matching questions to templates, check the article gives a
+first-time reader the background the story needs (prompt.md step 2): what a
+named law, organisation or acronym is, who a named person is. If it does
+not, ask the writer for more background first. A comparison of two people
+the reader cannot place, or a list about a law the reader has never heard
+of, is a thin page — and no template fixes that.
+
 ## Notes per template
 
 **`list`**: the fallback for loose essentials — the same facts a board
@@ -33,7 +41,9 @@ the order means something: lead with the fact the story turns on.
 With the list carrying the facts, the headline can stay simple: it
 names the topic in plain words, no numbers — the numbers live in the
 list, the scale or the game below, and the dek doesn't restate them
-either.
+either. A `note` must add a fact the value does not carry. If it only
+restates the value in longer words, leave the note out — the row reads
+cleaner without it.
 
 **`timeline`**: oldest first. Mark the news itself `now` and anything
 scheduled or expected `next`. Use the article's own dates ("Thursday",
@@ -57,7 +67,11 @@ measure and its unit in `unit` ("Passengers, millions").
 **`comparison`**: two sides, the same questions. Typical pairs: two options
 (train against plane), before and after, two parties' positions. Lead with
 the row that shows the biggest difference. Write "Not stated" when the
-article gives one side's answer but not the other's.
+article gives one side's answer but not the other's. Name each side with
+their role as well as their name, when it fits the label — a bare name
+tells the reader nothing about who is speaking. Each row must give both
+sides their own content for that point: a cell that only restates a side's
+position from another row is not an answer to the point.
 
 **`cause-effect`**: a chain of three to five steps in which each step leads
 to the next, ideally ending with what it means for the reader. Every link
