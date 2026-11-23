@@ -39,14 +39,25 @@ before or after it. Its shape:
    from two different news items, even when they share a section — if the
    article bundles several unrelated items, each scene renders one item's
    facts only.
-2. **List the reader's questions.** For example: What happened? Where? How
+2. **Check the background a first-time reader needs. Read the article as
+   someone who has never heard of this story, and list what they would need
+  to understand it: what a named law, organisation or acronym is; who a
+   named person is — name and role; why a number matters. If the article
+      does not carry it, do not silently render a thin page: ask the writer
+      for more background, or fetch it from a verified source and add it to
+      the article first. Never render a page that assumes background the
+      article does not supply. The pipeline runs both ways: the article is
+      not only an input to the storyboard — the storyboard stage may send a
+      request back upstream to the writer when the article is missing the
+      background the reader needs.
+3. **List the reader's questions.** For example: What happened? Where? How
    did we get here, and what's next? How big is it? Compared with what? Why
    is it happening? What does it mean for me? Who said what?
-3. **Keep only the questions the article can answer.** A question qualifies
+4. **Keep only the questions the article can answer.** A question qualifies
    when the article holds enough material to fill a template's minimum (the
    catalog's "Needs" column). Drop the others. Don't stretch thin material
    into a scene.
-4. **Inventory the article's data shapes before matching.** List what the
+5. **Inventory the article's data shapes before matching.** List what the
    article actually holds: sets of numbers in one unit, sequences of dated
    events or deadlines, places that matter, direct quotes, two sides
    answering the same points, chains of cause and effect. Each shape has a
@@ -121,25 +132,25 @@ before or after it. Its shape:
    row in the list, never a scene of its own. The list is the fallback,
    not the default. Prefer `scale`, `flow` and `breakdown` whenever
    their shape fits.
-5. **Match each question to one template** with the catalog table. If two
+6. **Match each question to one template** with the catalog table. If two
    templates fit, pick the one that shows the answer faster — and prefer
    the more specific template from the inventory above over a list.
-5. **Choose and order the scenes.** Two to four is typical, five at most,
+7. **Choose and order the scenes.** Two to four is typical, five at most,
    and one is fine for a short item. The first scene answers the question
    your one-sentence summary raises. No two scenes may answer the same
    question.
-6. **Fill each scene from the article.** Each `question` is phrased the way a
+8. **Fill each scene from the article.** Each `question` is phrased the way a
    reader would ask it, and becomes the scene's heading. Each `why` is one
    sentence on why this template fits; reviewers read it, readers don't.
-7. **Write the headline:** a plain `title`, a one-sentence `dek`, and the
+9. **Write the headline:** a plain `title`, a one-sentence `dek`, and the
    closest `topic`. The headline names the topic in plain words — no
    numbers. The numbers live in the scenes below (the list, the scale,
    the game), never in the headline, and the dek doesn't restate them
    either. With the list carrying the facts, the headline can stay
    simple: it just says what the story is about.
-8. **Add a `bottom_line` only if it tells the reader something the scenes
+10. **Add a `bottom_line` only if it tells the reader something the scenes
    don't**, usually what changes for them. Otherwise leave it out.
-9. **Run the self-check below, then answer.**
+11. **Run the self-check below, then answer.**
 
 ## Rules
 
@@ -202,6 +213,9 @@ or maps.
   number with reference points, process, or total with parts was
   flattened into a list.
 - The first scene answers the most important question.
+- The article gives a first-time reader the background the story needs:
+  every named law, organisation or acronym is explained, and every named
+    person has a role. If it did not, you asked the writer for it first.
 - The headline and dek carry no numbers — the numbers are in the scenes
   below.
 - Every number shown appears in the article, written the same way.
@@ -214,5 +228,7 @@ or maps.
 
 Your storyboard goes through `python -m template_rendering check`, which
 reports schema problems and every number or quote it can't find in the
-article. If it reports anything, fix exactly what it names and answer again
-with the whole corrected storyboard.
+article. It does not check background: a storyboard can pass the check
+and still leave a first-time reader lost, which is why step 2 comes
+before the check, not after it. If it reports anything, fix exactly what
+it names and answer again with the whole corrected storyboard.
