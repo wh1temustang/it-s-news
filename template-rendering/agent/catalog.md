@@ -144,7 +144,9 @@ A number earns a scale only when the article gives it reference points —
 without them it is one row in the `list`, never a scene of its own. The
 value and every mark are article numbers; `min` and `max` are display
 choices, not facts — leave them out and the axis fits the value and the
-marks. Pick marks the reader can tell apart: a previous value, a
+marks. When the scale has a `unit`, it is printed after every number —
+the value, each mark and both axis ends — so no number on the axis reads
+bare. Pick marks the reader can tell apart: a previous value, a
 threshold, a target. When two marks sit close together their labels
 crowd, so pick the ones that read apart.
 
