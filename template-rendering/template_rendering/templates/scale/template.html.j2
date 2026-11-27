@@ -1,7 +1,4 @@
-{% if data.unit is defined %}
-<p class="chart-unit">{{ data.unit }}</p>
-{% endif %}
-<p class="scl-value">{{ data.value_display }}{% if data.label is defined %} <span class="scl-label">{{ data.label }}</span>{% endif %}</p>
+<p class="scl-value">{{ data.value_display }}{% if data.unit is defined %} {{ data.unit }}{% endif %}{% if data.label is defined %} <span class="scl-label">{{ data.label }}</span>{% endif %}</p>
 <div class="scl-axis">
   <span class="scl-track" aria-hidden="true"></span>
 {% for mark in data.marks %}
@@ -10,8 +7,8 @@
   <span class="scl-pointer" style="left: {{ data.value_pct }}%;" aria-hidden="true"></span>
   <ul class="scl-marks">
 {% for mark in data.marks %}
-    <li class="scl-mark" style="left: {{ mark.label_pct }}%;"><span class="scl-mark-value">{{ mark.display }}</span> {{ mark.label }}</li>
+    <li class="scl-mark" style="left: {{ mark.label_pct }}%;"><span class="scl-mark-value">{{ mark.display }}{% if data.unit is defined %} {{ data.unit }}{% endif %}</span> {{ mark.label }}</li>
 {% endfor %}
   </ul>
-  <p class="scl-ends" aria-hidden="true"><span>{{ data.lo_display }}</span><span>{{ data.hi_display }}</span></p>
+  <p class="scl-ends" aria-hidden="true"><span>{{ data.lo_display }}{% if data.unit is defined %} {{ data.unit }}{% endif %}</span><span>{{ data.hi_display }}{% if data.unit is defined %} {{ data.unit }}{% endif %}</span></p>
 </div>

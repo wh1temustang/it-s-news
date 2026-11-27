@@ -9,7 +9,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 from itsnews_common import testing
-from template_rendering import article, cli, storyboard
+from template_rendering import article, cli, storyboard, visuals
 from template_rendering.kit import KIT, PACKAGE_DIR
 from template_rendering.render import FICTIONAL_BANNER, render_gallery, render_page
 
@@ -310,6 +310,106 @@ class CliTests(unittest.TestCase):
             self.assertEqual(code, 1)
             self.assertIn("the number 999 is not in the article", err)
             self.assertFalse(target.exists())
+
+
+class ScaleUnitTests(unittest.TestCase):
+    """The scale's unit rides on every number: value, marks, axis ends.
+
+    The template used to print the unit once, as a small line above the
+    big number, so the numbers on the axis read bare — a scale of 46
+    against a 70 mark, on an axis from 42.4 to 73.6, never said 萬人.
+    The computed ends also showed artefacts like 107.854.
+    """
+
+    def _render(self, data, body):
+        parsed = article.parse("---\nsource: Test\n---\n" + body)
+        sb = {"headline": {"title": "T", "dek": "D", "topic": "world"},
+              "scenes": [{"template": "scale", "question": "Q?",
+                          "why": "W", "data": data}]}
+        return render_page(sb, parsed)
+
+    def test_unit_follows_value_marks_and_axis_ends(self):
+        html = self._render(
+            {"value": 4.2, "unit": "Metres", "label": "Gauge at noon",
+             "marks": [{"value": 4.0, "label": "Flood threshold"},
+                       {"value": 4.6, "label": "Previous high, 2009"}]},
+            "The gauge read 4.2 Metres at noon, above the 4.0 Metres "
+            "flood threshold and below the 4.6 Metres record from 2009.")
+        for shown in ("4.2 Metres", "4 Metres", "4.6 Metres",
+                      "3.9 Metres", "4.7 Metres"):
+            self.assertIn(shown, html)
+
+    def test_reported_case_russia_unit_on_every_number(self):
+        html = self._render(
+            {"value": 46, "unit": "萬人", "label": "俄軍死亡人數",
+             "marks": [{"value": 70, "label": "計埋失蹤"}]},
+            "俄軍死亡人數超過 46 萬，計埋失蹤人員，數字可能去到約 70 萬。")
+        for shown in ("46 萬人", "70 萬人", "42.4 萬人", "73.6 萬人"):
+            self.assertIn(shown, html)
+
+    def test_reported_case_nvidia_ends_lose_the_extra_decimals(self):
+        html = self._render(
+            {"value": 165.05, "unit": "美元", "label": "Monday close",
+             "marks": [{"value": 243.37, "label": "Oct 6 high"},
+                       {"value": 155, "label": "Tuesday open"},
+                       {"value": 125.53, "label": "Friday close"}]},
+            "Nvidia closed Monday at 165.05 dollars, below the October 6 "
+            "high of 243.37 dollars; it opened Tuesday at 155 dollars "
+            "after closing Friday at 125.53 dollars.")
+        for shown in ("165.05 美元", "243.37 美元", "155 美元",
+                      "125.53 美元", "107.8 美元", "261.1 美元"):
+            self.assertIn(shown, html)
+        self.assertNotIn("107.854", html)
+        self.assertNotIn("261.046", html)
+
+    def test_no_chart_unit_line_in_scale_output(self):
+        html = self._render(
+            {"value": 4.2, "unit": "Metres", "label": "Gauge at noon",
+             "marks": [{"value": 4.0, "label": "Flood threshold"}]},
+            "The gauge read 4.2 Metres at noon, above the 4.0 Metres "
+            "flood threshold.")
+        # The shared stylesheet still defines .chart-unit for bar-chart;
+        # the scale scene itself must emit no unit line.
+        self.assertNotIn('<p class="chart-unit">', html)
+
+    def test_computed_ends_bracket_and_are_one_decimal(self):
+        prepared = visuals.scale(
+            {"value": 165.05,
+             "marks": [{"value": 243.37, "label": "High"},
+                       {"value": 155, "label": "Open"},
+                       {"value": 125.53, "label": "Friday"}]})
+        self.assertEqual(prepared["lo_display"], "107.8")
+        self.assertEqual(prepared["hi_display"], "261.1")
+        for shown in (prepared["lo_display"], prepared["hi_display"]):
+            self.assertRegex(shown, r"^-?\d+(\.\d)?$")
+        self.assertLessEqual(float(prepared["lo_display"]), 125.53)
+        self.assertGreaterEqual(float(prepared["hi_display"]), 243.37)
+
+    def test_explicit_bounds_are_kept_exact(self):
+        prepared = visuals.scale(
+            {"value": 4.2, "min": 3.55, "max": 4.65,
+             "marks": [{"value": 4.0, "label": "Threshold"},
+                       {"value": 4.6, "label": "Record"}]})
+        self.assertEqual(prepared["lo_display"], "3.55")
+        self.assertEqual(prepared["hi_display"], "4.65")
+
+    def test_scale_without_a_unit_renders_unchanged(self):
+        html = self._render(
+            {"value": 4.2, "label": "Gauge at noon",
+             "marks": [{"value": 4.0, "label": "Flood threshold"}]},
+            "The gauge read 4.2 at noon, above the 4.0 threshold.")
+        self.assertIn("4.2 <span class=\"scl-label\">", html)
+        self.assertIn("4</span>", html)
+        self.assertIn("<span>3.9</span><span>4.3</span>", html)
+        self.assertNotIn('<p class="chart-unit">', html)
+
+    def test_committed_scale_examples_still_pass_the_check(self):
+        for name in ("fallowfield-river", "fallowfield-snow"):
+            md = EXAMPLES / f"{name}.md"
+            sb = EXAMPLES / f"{name}.storyboard.json"
+            parsed, loaded = load(md, sb)
+            errors = storyboard.check(loaded, parsed)
+            self.assertEqual(errors, [], name)
 
 
 if __name__ == "__main__":

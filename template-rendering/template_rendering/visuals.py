@@ -6,6 +6,7 @@ always produces the same picture.
 """
 from __future__ import annotations
 
+import math
 from typing import Callable
 
 from . import geo
@@ -83,6 +84,19 @@ def line_chart(data: dict) -> dict:
             "left": left, "right": right}
 
 
+def _floor_tenth(value: float) -> float:
+    """Round down to one decimal place; _ceil_tenth rounds up.
+
+    The round(..., 9) first clears binary float dust, so a computed end
+    of 42.4 stays 42.4 instead of slipping to 42.3.
+    """
+    return math.floor(round(value, 9) * 10) / 10
+
+
+def _ceil_tenth(value: float) -> float:
+    return math.ceil(round(value, 9) * 10) / 10
+
+
 def scale(data: dict) -> dict:
     """Place one number on an axis with its reference marks.
 
@@ -90,6 +104,12 @@ def scale(data: dict) -> dict:
     fit the value and the marks with room at both ends. Mark labels are
     centred on their ticks, clamped so a label near either end stays on
     the page — the tick keeps the exact position, only the label shifts.
+
+    A computed end is rounded to one decimal place — floored on the
+    left, ceiled on the right — so the axis never shows an artefact
+    like 107.854, and still brackets the value and every mark. An
+    explicit min/max is the author's own display choice and is kept
+    exact.
     """
     value = data["value"]
     marks = data.get("marks") or []
@@ -100,9 +120,9 @@ def scale(data: dict) -> dict:
         span = max(points) - min(points)
         pad = span * 0.15 if span > 0 else max(abs(value), 1) * 0.15
         if lo is None:
-            lo = min(points) - pad
+            lo = _floor_tenth(min(points) - pad)
         if hi is None:
-            hi = max(points) + pad
+            hi = _ceil_tenth(max(points) + pad)
     if hi <= lo:
         hi = lo + 1
 
