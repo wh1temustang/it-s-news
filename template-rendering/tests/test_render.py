@@ -105,7 +105,7 @@ class GameTests(unittest.TestCase):
     def quiz(self, **over):
         data = {"kind": "quiz", "label": "The IPO price", "unit": "$",
                 "unit_after": False,
-                "options": [70, 78, 85], "correct": [70, 78]}
+                "options": [70, 78, 85, 200], "correct": [70, 78]}
         data.update(over)
         return data
 
@@ -129,10 +129,10 @@ class GameTests(unittest.TestCase):
         self.assertIn("btn.textContent = btn.dataset.retry", html)
 
     def test_quiz_renders_options_and_no_reset_button(self):
-        # Three option buttons and nothing else clickable: once answered
+        # Four option buttons and nothing else clickable: once answered
         # the quiz stays answered, so no reset or replay button exists.
         html = self.render(self.quiz())
-        self.assertEqual(html.count("<button"), 3)
+        self.assertEqual(html.count("<button"), 4)
         self.assertIn('data-correct="70,78"', html)
         self.assertIn('data-v="85"', html)
         self.assertNotIn("Try again", html)
@@ -167,13 +167,20 @@ class GameTests(unittest.TestCase):
     def test_distractor_too_far_fails(self):
         art = self.article("Anthropic priced its IPO at $70 to $78 a share.")
         errors = storyboard.check(
-            self.board(self.quiz(options=[70, 78, 200])), art)
-        self.assertTrue(any("200 is too far" in e for e in errors), errors)
+            self.board(self.quiz(options=[70, 78, 85, 500])), art)
+        self.assertTrue(any("500 is too far" in e for e in errors), errors)
+
+    def test_distractor_four_times_passes(self):
+        # The wider band lets a $200 distractor stand for a $70–78
+        # range: four times the nearest right answer, not twice.
+        art = self.article("Anthropic priced its IPO at $70 to $78 a share.")
+        self.assertEqual(storyboard.check(
+            self.board(self.quiz(options=[70, 78, 120, 200])), art), [])
 
     def test_correct_must_be_among_the_options(self):
         art = self.article("Anthropic priced its IPO at $70 to $78 a share.")
         errors = storyboard.check(
-            self.board(self.quiz(options=[70, 85, 90], correct=[70, 78])),
+            self.board(self.quiz(options=[70, 85, 90, 120], correct=[70, 78])),
             art)
         self.assertTrue(any("must also be an option" in e for e in errors),
                         errors)
@@ -183,7 +190,7 @@ class GameTests(unittest.TestCase):
         # them even though the options as a whole are exempt.
         art = self.article("Anthropic priced its IPO at $70 to $78 a share.")
         errors = storyboard.check(
-            self.board(self.quiz(options=[70, 78, 99], correct=[70, 99])),
+            self.board(self.quiz(options=[70, 78, 99, 130], correct=[70, 99])),
             art)
         self.assertTrue(any("99" in e for e in errors), errors)
 
@@ -231,7 +238,7 @@ class GameTests(unittest.TestCase):
     def test_large_numbers_get_thousands_separators(self):
         # The result reads "1,087億美元", like the scale after it shows —
         # not "1087億美元".
-        html = self.render(self.quiz(options=[900, 1087, 1200],
+        html = self.render(self.quiz(options=[900, 1087, 1200, 1500],
                                      correct=[1087], unit="億美元",
                                      unit_after=True))
         self.assertIn("1,087億美元", html)
