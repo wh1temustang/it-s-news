@@ -4,7 +4,7 @@ English by default. A host that publishes in another language passes its own
 labels, as a dict or (from the command line) a JSON file with --labels. Any
 key it leaves out falls back to English. `lang` sets the page's language.
 
-    {"lang": "fr", "bottom_line": "L'essentiel", "topic.world": "Monde",
+    {"lang": "fr", "bottom_line": "Question à suivre", "topic.world": "Monde",
      "template.timeline": "Chronologie"}
 
 Keys named `topic.<id>` label the topics; keys named `template.<id>` rename a
@@ -24,6 +24,9 @@ __all__ = ["BRAND", "DEFAULTS", "Labels", "LabelsError", "load_labels"]
 
 DEFAULTS: dict[str, str] = {
     **common.DEFAULTS,
+    # In this approach bottom_line is the story's follow-up question,
+    # not a takeaway (meme-rendering keeps its own "TL;DR").
+    "bottom_line": "Follow-up question",
     "timeline.now": "Now",
     "timeline.next": "Ahead",
     "comparison.vs": "vs",
