@@ -173,6 +173,19 @@ against each other. When the values are peers being compared rather
 than shares of a whole, that is a `bar-chart`. Articles round figures,
 so the parts need not sum exactly to the total.
 
+## The closing line
+
+Every story ends with exactly one follow-up question, in `bottom_line` —
+what happens next and when, what it means for the reader, the mechanism
+behind a number, who gains or loses, what to watch for. It is a question
+for the reader to pursue, not a summary: never a takeaway the scenes
+already say, never generic ("what happens next?"), and never built on a
+premise the article does not state. Every number in it must appear in the
+article — the checker validates `bottom_line` against the article. If the
+article supports no sharp question, fall back to the next verifiable
+milestone it names. `bottom_line` holds the question text only; the page
+heading supplies the label.
+
 ## Ordering
 
 1. Lead with the scene that answers the main question.

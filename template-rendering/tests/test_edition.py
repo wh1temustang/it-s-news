@@ -148,7 +148,7 @@ class LabelTests(unittest.TestCase):
 
     def test_labels_replace_the_page_words(self):
         a, sb = NIGHT_TRAIN
-        html = render_page({**sb, "bottom_line": "Book early."}, a, labels=self.T)
+        html = render_page({**sb, "bottom_line": "Will the night train run in winter?"}, a, labels=self.T)
         self.assertIn('<html lang="fr">', html)
         self.assertIn('<p class="kicker">Monde</p>', html)
         self.assertIn("</span> Chronologie</p>", html)
