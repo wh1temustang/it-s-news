@@ -27,7 +27,7 @@ before or after it. Its shape:
   "scenes": [
     {"template": "…", "question": "…", "why": "…", "data": {"…": "…"}}
   ],
-  "bottom_line": "… (optional)"
+  "bottom_line": "…"
 }
 ```
 
@@ -160,8 +160,21 @@ before or after it. Its shape:
    the game), never in the headline, and the dek doesn't restate them
    either. With the list carrying the facts, the headline can stay
    simple: it just says what the story is about.
-10. **Add a `bottom_line` only if it tells the reader something the scenes
-   don't**, usually what changes for them. Otherwise leave it out.
+10. **End every story with one follow-up question in `bottom_line`.**
+    Research it: it must be sharp and specific — what happens next and
+    when, what it means for the reader, the mechanism behind a number, who
+    gains or loses, what to watch for. Never generic ("what happens
+    next?"). Never invent a premise: every number or factual claim inside
+    the question must be grounded in the article — the checker validates
+    `bottom_line` against the article, so an ungrounded number fails the
+    check. You may search for the next milestone, the context or the
+    mechanism behind the question; if what you find is solid, add it to
+    the article first (verified, as in step 2) so the question can rest on
+    it. If the article supports no sharp question, fall back to the next
+    verifiable milestone (the next date, decision or release the article
+    names). Write it in the article's language. `bottom_line` holds the
+    question text only — no "Follow-up:" prefix; the page heading supplies
+    it. Never add a question the article cannot support.
 11. **Run the self-check below, then answer.**
 
 ## Rules
@@ -253,6 +266,9 @@ so do not ask it to.
   restates the value is dropped.
 - Every number shown appears in the article, written the same way.
 - Every quote matches the article word for word.
+- Every story ends with exactly one researched follow-up question in
+  `bottom_line`, in the article's language, with no number or premise the
+  article does not support.
 - Every required field is present, no field is over its limit, and there are
   no fields the schema doesn't define.
 - The answer is the JSON object and nothing else.
