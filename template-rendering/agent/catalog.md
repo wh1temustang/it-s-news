@@ -12,6 +12,7 @@ Each template's schema (fields, limits, field descriptions) follows this catalog
 | How do two sides differ? | `comparison` | two sides answering the same 2+ points, each named with their role | the sides don't answer the same questions |
 | Why is it happening? What does it lead to? | `cause-effect` | 3+ linked steps, each one stated in the article | the links are your own inference |
 | What did someone say that matters? | `quote` | a direct quote from a named speaker | the quote is filler ("We are pleased to announce…") |
+| Who is saying what — and who are they? | `voices` | 2–4 stakeholders with different positions, each with a quote or a stance in the article | the story has one voice (use `quote`), or the news is grave |
 | What does it feel like to touch? | `reactive` | one number or turn the reader should feel: a figure worth uncovering, a before and after to compare, or a value to fill up by holding | the number is small enough to just read, or the turn needs a chart's precision |
 | What is the answer — can I guess it first? | `game` | a number or fact worth guessing: a total, a price, a count | the news is grave, or the story has no number or fact worth guessing |
 | Where does this number stand? | `scale` | one headline number plus 1–4 reference points from the article: a previous value, a threshold, a target | the article gives no reference point (the number goes in the `list` as one row) |
@@ -80,6 +81,30 @@ must be something the article says, not something you conclude.
 **`quote`**: one quote that carries the story: a decision, a warning, a
 stance. Name the speaker as the article does, and give their `role` when it
 explains why their words matter.
+
+**`voices`**: the room, not one voice — each stakeholder gets a cartoon
+figure and a speech bubble. Pick the figure by role, from the fixed set
+below: the figure is a symbol of the job (a hard hat, a suit, a gavel),
+never a likeness of the person — a named individual still gets the figure
+of their role. The bubble holds a verbatim quote where the article has
+one, or one line on where they stand when it does not; every bubble is
+grounded in the article, and each voice needs exactly one of the two.
+Use it only when the story has 2–4 stakeholders with different things
+to say — different positions, not the same point twice. Never for grave
+news: a cartoon figure on deaths, disasters, war or suffering is the
+wrong tone. To add a character, add one value to the schema's enum, one
+prop in the template, and one row here.
+
+| Character | Who it is | Prop | Fill |
+|---|---|---|---|
+| `worker` | someone who does the job | hard hat | `--alt` |
+| `executive` | a company chief or boss | tie | `--accent` |
+| `official` | a councillor, minister or civil servant | rosette badge | `--good` |
+| `judge` | a judge or magistrate | gavel | `--coast` |
+| `scientist` | a researcher or expert | flask | `--water` |
+| `resident` | an ordinary person affected | house | `--land` |
+| `activist` | a campaigner or protester | placard | `--bad` |
+| `farmer` | someone who works the land | straw hat | `--pending` |
 
 **`reactive`**: one scene the reader touches, for the number or turn that
 lands harder felt than read. Pick the kind by what the reader does:
@@ -190,12 +215,12 @@ heading supplies the label.
 
 1. Lead with the scene that answers the main question.
 2. Then context: *where* (`map`) and *when* (`timeline`).
-3. Then reaction and consequence: `quote`, `cause-effect`.
+3. Then reaction and consequence: `voices`, `quote`, `cause-effect`.
 
 When two scenes matter equally, use this order: `game`, `scale`, `flow`,
 `breakdown`, `list`,
 `bar-chart` or `line-chart`, `comparison`, `timeline`, `map`,
-`cause-effect`, `quote`.
+`cause-effect`, `quote`, `voices`.
 
 ## Pairings that often work
 
@@ -213,3 +238,4 @@ These are starting points, not rules.
 | New transport link | `list` + `map` + `comparison` |
 | Science finding | `list` + `cause-effect` + `quote` |
 | Local pilot or trial | `scale` + `bar-chart` + `quote` |
+| Debate with several voices | `voices` + `list` |
