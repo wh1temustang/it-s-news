@@ -24,6 +24,9 @@ text renders:
 - Breakdown totals. A breakdown's parts are shares of its total, so
   the total has to be above 0 and no part below 0, or the bars have
   nothing to be a fraction of.
+- Voices. A voice needs exactly one of a verbatim quote and a grounded
+  stance; the shared checker grounds both, this module enforces the
+  either/or.
 
 The kind-conditional requirements also live here — the shared schema
 validator has no if/then, so "answer is required for guess-number" and
@@ -287,12 +290,47 @@ def _breakdown_errors(storyboard: dict) -> list[str]:
     return errors
 
 
+def _voices_errors(storyboard: dict) -> list[str]:
+    """Each voice says exactly one thing: a verbatim quote or one grounded line."""
+    errors: list[str] = []
+    scenes = storyboard.get("scenes")
+    if not isinstance(scenes, list):
+        return errors
+    for i, scene in enumerate(scenes):
+        if not (isinstance(scene, dict) and scene.get("template") == "voices"
+                and isinstance(scene.get("data"), dict)):
+            continue
+        voices = scene["data"].get("voices")
+        if not isinstance(voices, list):
+            continue
+        for j, voice in enumerate(voices):
+            if not isinstance(voice, dict):
+                continue
+            path = f"$.scenes[{i}].data.voices[{j}]"
+            has_quote = isinstance(voice.get("quote"), str) and voice["quote"] != ""
+            has_stance = isinstance(voice.get("stance"), str) and voice["stance"] != ""
+            if has_quote and has_stance:
+                errors.append(
+                    f"{path}: both a quote and a stance. Give one or the other — "
+                    "a verbatim quote when the article quotes them, one grounded "
+                    "line on where they stand when it does not."
+                )
+            elif not has_quote and not has_stance:
+                errors.append(
+                    f"{path}: neither a quote nor a stance. Every voice needs "
+                    "one thing to say — a verbatim quote, or one grounded line "
+                    "on where they stand."
+                )
+    return errors
+
+
 def check(storyboard: dict, article: Article,
           templates: dict[str, Template]) -> list[str]:
-    """The game, scale and breakdown rules, run after the shared shape and grounding checks."""
+    """The game, scale, breakdown and voices rules, run after the shared shape and grounding checks."""
     errors: list[str] = []
     errors += _scale_errors(storyboard)
     errors += _breakdown_errors(storyboard)
+    errors += _voices_errors(storyboard)
     games = _game_scenes(storyboard)
     if not games:
         return errors
