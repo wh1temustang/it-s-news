@@ -8,9 +8,10 @@ text renders:
 - Distractors. A quiz's wrong options are guesses, not facts, so the
   schema marks `options` x-ungrounded and this module enforces the
   distractor rule instead: a wrong option must not appear in the
-  article, and must be a near miss — within twice the nearest right
-  answer (and at least half of it) — close enough that a reader could
-  plausibly guess it, but never stated by the article.
+  article, and must be a clearly distinct value in a wider range —
+  within four times the nearest right answer (and at least a quarter
+  of it) — far enough apart that the reader must know the ballpark,
+  but still a plausible guess, never stated by the article.
 - Spoilers. A game is where the answer is first revealed, so the
   headline, the dek, the game's question and its label must not state
   any of the game's answers.
@@ -36,9 +37,10 @@ from itsnews_common.article import Article
 from itsnews_common.catalog import Template
 
 # A distractor must lie within this factor of the nearest right answer,
-# on either side: close enough to be a plausible guess, far enough from
-# nothing the article says.
-NEAR_MISS_FACTOR = 2.0
+# on either side: far enough apart that the four options are clearly
+# distinct values and the reader must know the ballpark, close enough
+# that each is still a plausible guess — never a number the article states.
+NEAR_MISS_FACTOR = 4.0
 
 
 def _numbers(text) -> set[float]:
@@ -166,8 +168,8 @@ def _distractor_errors(data: dict, source: grounding.Source, path: str) -> list[
             errors.append(
                 f"{path}.options[{i}]: {opt} is too far from the right "
                 f"answer ({nearest:g}) to be a plausible guess — a "
-                "distractor must be within twice the nearest right answer "
-                "(and at least half of it). Pick a nearer miss."
+                "distractor must be within four times the nearest right answer "
+                "(and at least a quarter of it). Pick a nearer miss."
             )
     return errors
 

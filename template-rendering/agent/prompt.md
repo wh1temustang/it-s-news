@@ -114,13 +114,22 @@ before or after it. Its shape:
      and one reveal button: they guess the article's number, then the
      page states the answer and how close the guess was (exact, close,
      or far, with the difference), and they may try again; `quiz`
-     gives three or four options to pick from, and a question may have
-     more than one right answer — a price range has two ends — so
-     `correct` is a list, and a right pick lights up every right
-     answer. A wrong option is a guess, not a fact: it must not appear
-     in the article, and it must be a near miss — within twice the
-     nearest right answer (and at least half of it) — so $85 is a fair
-     distractor for a $70–78 range, but $200 is not. A game is where
+     gives four options to pick from, like Who Wants to Be a
+     Millionaire, and a question may have more than one right answer —
+     a price range has two ends — so `correct` is a list, and a right
+     pick lights up every right answer. A wrong option is a guess, not
+     a fact: it must not appear in the article, and the four options
+     must be clearly distinct values spanning a wider range — the
+     reader must know the ballpark, not pick between near-identical
+     numbers. Each wrong option must lie within four times the nearest
+     right answer (and at least a quarter of it) — so $85 is a fair
+     distractor for a $70–78 range, and so is $200, but $500 is not.
+     For `guess-number`, set the slider's `min` and `max` to cover the
+     whole plausible ballpark, not a narrow band around the answer —
+     the reader should have to know the rough size, not just nudge
+     the middle — and check the step still lands on the answer: the
+     default step is the range ÷ 60, so set `step` explicitly if it
+     doesn't. A game is where
      the answer is first revealed: the headline, the dek, the game's
      question and its label must not state any of the answers — write
      them so the answer stays hidden until the reveal, and let the scale
