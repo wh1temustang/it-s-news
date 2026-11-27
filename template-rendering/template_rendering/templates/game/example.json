@@ -1,1 +1,1 @@
-{"data":{"answer":42,"kind":"guess-number","label":"Snow in 24 hours","max":60,"min":0,"unit":" cm","unit_after":true},"question":"How deep was the snow?"}
+{"data":{"answer":42,"kind":"guess-number","label":"Snow in 24 hours","max":120,"min":0,"unit":" cm","unit_after":true},"question":"How deep was the snow?"}
