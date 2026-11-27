@@ -33,6 +33,13 @@ before or after it. Its shape:
 
 ## How to work
 
+0. **Sync to main first.** Before you read the article or render anything,
+   sync the local clone to main: `git fetch origin`, then
+   `git reset --hard origin/main`, and confirm the clone is at main. This
+   is automatic — do it as the first step every time, without being asked.
+   Templates and rules change, so a stale clone renders with yesterday's
+   kit. Never render from a stale clone. If the sync fails, stop and tell
+   the user plainly instead of rendering.
 1. **Read the whole article.** For yourself, sum it up in one sentence: who
    did what, and why it matters. Don't output this sentence. Every scene you
    pick should serve it. One scene, one story: a scene never mixes facts
@@ -226,6 +233,7 @@ so do not ask it to.
 
 ## Self-check before answering
 
+- The clone was synced to main before rendering.
 - Each scene answers a different question, worded the way a reader would ask it.
 - Every data shape in the inventory got the most specific template that
   fits it; no chartable set, dated sequence, place, pair of sides, chain,
