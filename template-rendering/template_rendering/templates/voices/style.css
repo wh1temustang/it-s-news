@@ -7,17 +7,65 @@
 
 .vc-fig { flex: none; width: 84px; height: 84px; }
 
-.vc-head, .vc-body { fill: var(--ink); }
+/* The face: a light head with an ink outline, ears, hair, eyes and a
+   smile. Hats replace the hair; everything else keeps it. */
+.vc-head { fill: var(--surface); stroke: var(--ink); stroke-width: 2.5; }
 
+.vc-ear { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+
+.vc-hair { fill: var(--ink); }
+
+.vc-eye { fill: var(--ink); }
+
+.vc-smile { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
+
+.vc-neck { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+
+/* The shirt takes the role's colour; the judge wears a robe. */
+.vc-body { fill: var(--neutral); }
+
+.vc-worker .vc-body { fill: var(--alt); }
+.vc-executive .vc-body { fill: var(--neutral); }
+.vc-official .vc-body { fill: var(--good); }
+.vc-judge .vc-body { fill: var(--ink); }
+.vc-scientist .vc-body { fill: var(--surface); stroke: var(--ink); stroke-width: 2.5; }
+.vc-resident .vc-body { fill: var(--neutral); }
+.vc-activist .vc-body { fill: var(--bad); }
+.vc-farmer .vc-body { fill: var(--good); }
+
+/* Shirt collar, worn by the executive and the judge. */
+.vc-collar { fill: var(--surface); }
+
+/* Thin ink lines: hard-hat ridges and the lab coat's front. */
+.vc-prop-line { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+
+/* The prop takes the role's colour. The flask and the house walls are
+   pale fills, so they keep a border stroke to stay visible. */
 .vc-worker .vc-prop { fill: var(--alt); }
 .vc-executive .vc-prop { fill: var(--accent); }
-.vc-official .vc-prop { fill: var(--good); }
-.vc-official .vc-prop-dot { fill: var(--surface); }
 .vc-judge .vc-prop { fill: var(--coast); }
-.vc-scientist .vc-prop { fill: var(--water); stroke: var(--border); }
-.vc-resident .vc-prop { fill: var(--land); stroke: var(--border); }
-.vc-activist .vc-prop { fill: var(--bad); }
+.vc-scientist .vc-prop { fill: var(--water); stroke: var(--border); stroke-width: 2; }
+.vc-resident .vc-prop { fill: var(--land); stroke: var(--border); stroke-width: 2; }
 .vc-farmer .vc-prop { fill: var(--pending); }
+
+/* Rosette badge on the official's chest. */
+.vc-badge { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+.vc-badge-dot { fill: var(--good); }
+
+/* Straw hat band. */
+.vc-band { fill: var(--ink); }
+
+/* Liquid in the scientist's flask. */
+.vc-liquid { fill: var(--accent); }
+
+/* House roof and fittings for the resident. */
+.vc-roof { fill: var(--bad); }
+.vc-detail { fill: var(--ink); }
+
+/* Placard board, its text lines and its stick, for the activist. */
+.vc-sign { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+.vc-sign-line { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+.vc-stick { fill: var(--ink); }
 
 .vc-bubble { position: relative; flex: 1; margin: 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 
