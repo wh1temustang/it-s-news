@@ -26,7 +26,10 @@ text renders:
   nothing to be a fraction of.
 - Voices. A voice needs exactly one of a verbatim quote and a grounded
   stance; the shared checker grounds both, this module enforces the
-  either/or.
+  either/or. A custom figure draws its own prop, shapes only — this
+  module rejects text, scripts, links and any paint but the drawing
+  classes, and the shared checker skips the drawing's coordinates
+  (x-ungrounded) so they are never mistaken for article numbers.
 
 The kind-conditional requirements also live here — the shared schema
 validator has no if/then, so "answer is required for guess-number" and
@@ -34,6 +37,8 @@ validator has no if/then, so "answer is required for guess-number" and
 messages that name the missing field.
 """
 from __future__ import annotations
+
+import xml.etree.ElementTree as ET
 
 from itsnews_common import grounding
 from itsnews_common.article import Article
@@ -321,6 +326,98 @@ def _voices_errors(storyboard: dict) -> list[str]:
                     "one thing to say — a verbatim quote, or one grounded line "
                     "on where they stand."
                 )
+            is_custom = voice.get("character") == "custom"
+            drawing = voice.get("drawing")
+            has_drawing = isinstance(drawing, str) and drawing.strip() != ""
+            if is_custom and not has_drawing:
+                errors.append(
+                    f"{path}: a custom figure needs a drawing. Draw the "
+                    "prop that names the job — a stethoscope, a cap, a "
+                    "toque — as SVG shapes, or pick the closest fixed "
+                    "archetype instead."
+                )
+            elif has_drawing and not is_custom:
+                errors.append(
+                    f"{path}: a drawing on a {voice.get('character')} "
+                    "figure. Only a custom figure draws its own prop — "
+                    "a fixed archetype already has one."
+                )
+            elif has_drawing:
+                errors += _drawing_errors(drawing, f"{path}.drawing")
+    return errors
+
+
+# A custom prop is shapes only. The allowlists below are the whole
+# vocabulary a drawing may use: shape elements, geometry attributes,
+# and the drawing classes in the voices stylesheet. Anything else —
+# text, scripts, event handlers, links, paint of its own — is rejected,
+# so nothing ungrounded can be painted into the picture. The shared
+# checker cannot read words inside an image, so the rule has to live
+# here, before render.
+_DRAWING_TAGS = {"g", "path", "circle", "ellipse", "rect", "line",
+                 "polyline", "polygon"}
+_DRAWING_ATTRS = {"class", "d", "cx", "cy", "r", "rx", "ry", "x", "y",
+                  "width", "height", "x1", "y1", "x2", "y2", "points",
+                  "transform"}
+_DRAWING_CLASSES = {"vc-prop", "vc-prop-line", "vc-tube", "vc-liquid",
+                    "vc-detail"}
+
+
+def _drawing_errors(drawing: str, path: str) -> list[str]:
+    """A custom prop is shapes only: no words, no scripts, no links."""
+    try:
+        root = ET.fromstring("<svg>" + drawing + "</svg>")
+    except ET.ParseError:
+        return [f"{path}: not well-formed SVG shapes. Give the prop as "
+                "plain SVG elements — <path>, <circle>, <rect> and the "
+                "like — with no <svg> wrapper around them."]
+    errors: list[str] = []
+    shapes = 0
+    for el in root.iter():
+        if el is root:
+            continue
+        tag = el.tag.rsplit("}", 1)[-1]
+        if tag == "svg":
+            errors.append(
+                f"{path}: a nested <svg> element. Give the prop's shapes "
+                "directly — the template supplies the <svg> wrapper."
+            )
+            continue
+        if tag not in _DRAWING_TAGS:
+            errors.append(
+                f"{path}: <{tag}> is not allowed in a drawing. Draw the "
+                "prop with shapes only — path, circle, ellipse, rect, "
+                "line, polyline, polygon — and no text, scripts or links."
+            )
+            continue
+        shapes += 1
+        for attr, value in el.attrib.items():
+            name = attr.rsplit("}", 1)[-1]
+            if name not in _DRAWING_ATTRS:
+                errors.append(
+                    f"{path}: the attribute {name} is not allowed in a "
+                    "drawing. Colour the shapes with a class (vc-prop, "
+                    "vc-prop-line, vc-tube, vc-liquid or vc-detail) and "
+                    "keep the rest to geometry."
+                )
+            elif "url(" in value or "http" in value.lower():
+                errors.append(
+                    f"{path}: a link inside a drawing. Draw the prop "
+                    "with shapes only — no links to anything outside "
+                    "the page."
+                )
+        for cls in el.attrib.get("class", "").split():
+            if cls not in _DRAWING_CLASSES:
+                errors.append(
+                    f"{path}: the class {cls} is not a drawing class. "
+                    "Paint a custom prop with vc-prop, vc-prop-line, "
+                    "vc-tube, vc-liquid or vc-detail."
+                )
+    if not shapes and not errors:
+        errors.append(
+            f"{path}: no shapes in the drawing. Draw the prop that "
+            "names the job — a stethoscope, a cap, a toque."
+        )
     return errors
 
 
