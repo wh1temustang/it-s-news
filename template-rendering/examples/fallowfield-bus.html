@@ -332,17 +332,65 @@ a { color: var(--accent); }
 
 .vc-fig { flex: none; width: 84px; height: 84px; }
 
-.vc-head, .vc-body { fill: var(--ink); }
+/* The face: a light head with an ink outline, ears, hair, eyes and a
+   smile. Hats replace the hair; everything else keeps it. */
+.vc-head { fill: var(--surface); stroke: var(--ink); stroke-width: 2.5; }
 
+.vc-ear { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+
+.vc-hair { fill: var(--ink); }
+
+.vc-eye { fill: var(--ink); }
+
+.vc-smile { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
+
+.vc-neck { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+
+/* The shirt takes the role's colour; the judge wears a robe. */
+.vc-body { fill: var(--neutral); }
+
+.vc-worker .vc-body { fill: var(--alt); }
+.vc-executive .vc-body { fill: var(--neutral); }
+.vc-official .vc-body { fill: var(--good); }
+.vc-judge .vc-body { fill: var(--ink); }
+.vc-scientist .vc-body { fill: var(--surface); stroke: var(--ink); stroke-width: 2.5; }
+.vc-resident .vc-body { fill: var(--neutral); }
+.vc-activist .vc-body { fill: var(--bad); }
+.vc-farmer .vc-body { fill: var(--good); }
+
+/* Shirt collar, worn by the executive and the judge. */
+.vc-collar { fill: var(--surface); }
+
+/* Thin ink lines: hard-hat ridges and the lab coat's front. */
+.vc-prop-line { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+
+/* The prop takes the role's colour. The flask and the house walls are
+   pale fills, so they keep a border stroke to stay visible. */
 .vc-worker .vc-prop { fill: var(--alt); }
 .vc-executive .vc-prop { fill: var(--accent); }
-.vc-official .vc-prop { fill: var(--good); }
-.vc-official .vc-prop-dot { fill: var(--surface); }
 .vc-judge .vc-prop { fill: var(--coast); }
-.vc-scientist .vc-prop { fill: var(--water); stroke: var(--border); }
-.vc-resident .vc-prop { fill: var(--land); stroke: var(--border); }
-.vc-activist .vc-prop { fill: var(--bad); }
+.vc-scientist .vc-prop { fill: var(--water); stroke: var(--border); stroke-width: 2; }
+.vc-resident .vc-prop { fill: var(--land); stroke: var(--border); stroke-width: 2; }
 .vc-farmer .vc-prop { fill: var(--pending); }
+
+/* Rosette badge on the official's chest. */
+.vc-badge { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+.vc-badge-dot { fill: var(--good); }
+
+/* Straw hat band. */
+.vc-band { fill: var(--ink); }
+
+/* Liquid in the scientist's flask. */
+.vc-liquid { fill: var(--accent); }
+
+/* House roof and fittings for the resident. */
+.vc-roof { fill: var(--bad); }
+.vc-detail { fill: var(--ink); }
+
+/* Placard board, its text lines and its stick, for the activist. */
+.vc-sign { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+.vc-sign-line { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+.vc-stick { fill: var(--ink); }
 
 .vc-bubble { position: relative; flex: 1; margin: 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 
@@ -400,10 +448,17 @@ a { color: var(--accent); }
     <div class="vc">
   <div class="vc-voice">
     <svg class="vc-fig vc-official" viewBox="0 0 96 96" role="img" aria-label="Councillor Priya Nair">
-      <circle class="vc-head" cx="48" cy="32" r="17" />
-      <path class="vc-body" d="M20 88 Q20 58 48 58 Q76 58 76 88 Z" />
-      <circle class="vc-prop" cx="63" cy="72" r="7" />
-      <circle class="vc-prop-dot" cx="63" cy="72" r="3" />
+      <path class="vc-body" d="M18 88 Q18 56 48 56 Q78 56 78 88 Z" />
+      <rect class="vc-neck" x="44" y="47" width="8" height="11" />
+      <circle class="vc-ear" cx="30" cy="34" r="3.5" />
+      <circle class="vc-ear" cx="66" cy="34" r="3.5" />
+      <circle class="vc-head" cx="48" cy="32" r="18" />
+      <path class="vc-hair" d="M30 34 C30 19 38 13.5 48 13.5 C58 13.5 66 19 66 34 C62 25 58 24 54 25.5 C55 28.5 51 29.5 49 26 C47 23 45 23 43 26 C41 29.5 37 28.5 38 25.5 C34 24 30 26 30 34 Z" />
+      <circle class="vc-eye" cx="41.5" cy="36" r="2.3" />
+      <circle class="vc-eye" cx="54.5" cy="36" r="2.3" />
+      <path class="vc-smile" d="M41 43 Q48 48 55 43" />
+      <circle class="vc-badge" cx="62" cy="70" r="6.5" />
+      <circle class="vc-badge-dot" cx="62" cy="70" r="2.8" />
     </svg>
     <div class="vc-bubble">
       <p>We have heard the night shift for years, and this trial is our answer.</p>
@@ -412,9 +467,17 @@ a { color: var(--accent); }
   </div>
   <div class="vc-voice">
     <svg class="vc-fig vc-worker" viewBox="0 0 96 96" role="img" aria-label="Tom Okafor">
-      <circle class="vc-head" cx="48" cy="32" r="17" />
-      <path class="vc-body" d="M20 88 Q20 58 48 58 Q76 58 76 88 Z" />
-      <path class="vc-prop" d="M28 30 Q28 12 48 12 Q68 12 68 30 L74 30 L74 36 L22 36 L22 30 Z" />
+      <path class="vc-body" d="M18 88 Q18 56 48 56 Q78 56 78 88 Z" />
+      <rect class="vc-neck" x="44" y="47" width="8" height="11" />
+      <circle class="vc-ear" cx="30" cy="34" r="3.5" />
+      <circle class="vc-ear" cx="66" cy="34" r="3.5" />
+      <circle class="vc-head" cx="48" cy="32" r="18" />
+      <circle class="vc-eye" cx="41.5" cy="36" r="2.3" />
+      <circle class="vc-eye" cx="54.5" cy="36" r="2.3" />
+      <path class="vc-smile" d="M41 43 Q48 48 55 43" />
+      <path class="vc-prop" d="M29 30 Q29 12 48 12 Q67 12 67 30 Z" />
+      <rect class="vc-prop" x="24" y="27" width="48" height="5" rx="2.5" />
+      <path class="vc-prop-line" d="M42 13 L42 27 M54 13 L54 27" />
     </svg>
     <div class="vc-bubble">
       <p>The last run ends at 3 am, and I am the one driving it home.</p>
@@ -423,9 +486,20 @@ a { color: var(--accent); }
   </div>
   <div class="vc-voice">
     <svg class="vc-fig vc-resident" viewBox="0 0 96 96" role="img" aria-label="June Park">
-      <circle class="vc-head" cx="48" cy="32" r="17" />
-      <path class="vc-body" d="M20 88 Q20 58 48 58 Q76 58 76 88 Z" />
-      <path class="vc-prop" d="M60 52 L72 40 L84 52 V68 H60 Z" />
+      <path class="vc-body" d="M18 88 Q18 56 48 56 Q78 56 78 88 Z" />
+      <rect class="vc-neck" x="44" y="47" width="8" height="11" />
+      <circle class="vc-ear" cx="30" cy="34" r="3.5" />
+      <circle class="vc-ear" cx="66" cy="34" r="3.5" />
+      <circle class="vc-head" cx="48" cy="32" r="18" />
+      <path class="vc-hair" d="M30 34 C30 19 38 13.5 48 13.5 C58 13.5 66 19 66 34 C62 25 58 24 54 25.5 C55 28.5 51 29.5 49 26 C47 23 45 23 43 26 C41 29.5 37 28.5 38 25.5 C34 24 30 26 30 34 Z" />
+      <circle class="vc-eye" cx="41.5" cy="36" r="2.3" />
+      <circle class="vc-eye" cx="54.5" cy="36" r="2.3" />
+      <path class="vc-smile" d="M41 43 Q48 48 55 43" />
+      <path class="vc-roof" d="M59 57 L73 45 L87 57 Z" />
+      <rect class="vc-prop" x="62" y="57" width="22" height="15" />
+      <rect class="vc-detail" x="70" y="63" width="6" height="9" />
+      <rect class="vc-detail" x="64.5" y="60" width="4" height="4" />
+      <rect class="vc-detail" x="79.5" y="60" width="4" height="4" />
     </svg>
     <div class="vc-bubble">
       <p>Would take the bus four nights a week.</p>
