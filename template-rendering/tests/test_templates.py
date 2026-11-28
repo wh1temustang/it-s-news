@@ -7,9 +7,13 @@ from __future__ import annotations
 
 import re
 import unittest
+from pathlib import Path
 
 from itsnews_common import testing
 from itsnews_common.article import Article
+from itsnews_common.article import load as load_article
+from itsnews_common.schema import validate
+from itsnews_common.storyboard import load as load_storyboard
 from template_rendering import rules
 from template_rendering.kit import KIT
 
@@ -101,6 +105,218 @@ class ScaleAndBreakdownRules(unittest.TestCase):
             "total": {"value": 120000, "label": "Budget"},
             "parts": [{"name": "Grant", "value": 60000}]})
         self.assertEqual(rules.check(sb, Article(body=""), TEMPLATES), [])
+
+
+class VoicesRules(unittest.TestCase):
+    """rules.py: each voice says exactly one thing — a verbatim quote or
+    one grounded line. The shared checker grounds both; these rules are
+    the either/or the generic walk cannot see."""
+
+    BUS = (Path(__file__).resolve().parent.parent
+           / "examples" / "fallowfield-bus")
+
+    def _storyboard(self, voices):
+        return {"headline": {"title": "T", "dek": "D", "topic": "local"},
+                "scenes": [{"template": "voices",
+                            "question": "Who is saying what?",
+                            "why": "W", "data": {"voices": voices}}]}
+
+    def _bus(self):
+        return (load_article(self.BUS.with_suffix(".md")),
+                load_storyboard(self.BUS.with_suffix(".storyboard.json")))
+
+    def test_voices_needs_exactly_one_of_quote_and_stance(self):
+        both = self._storyboard([
+            {"name": "A", "character": "worker",
+             "quote": "Q.", "stance": "S."},
+            {"name": "B", "character": "official", "quote": "R."}])
+        errors = rules.check(both, Article(body=""), TEMPLATES)
+        self.assertTrue(any("both a quote and a stance" in e
+                            for e in errors), errors)
+        neither = self._storyboard([
+            {"name": "A", "character": "worker"},
+            {"name": "B", "character": "official", "quote": "R."}])
+        errors = rules.check(neither, Article(body=""), TEMPLATES)
+        self.assertTrue(any("neither a quote nor a stance" in e
+                            for e in errors), errors)
+
+    def test_voices_quote_must_be_verbatim(self):
+        article, _ = self._bus()
+        sb = self._storyboard([
+            {"name": "Councillor Priya Nair", "character": "official",
+             "quote": "We have heard the night shift for years, and "
+                      "this trial is our reply."},
+            {"name": "Tom Okafor", "character": "worker",
+             "quote": "The last run ends at 3 am, and I am the one "
+                      "driving it home."}])
+        errors = KIT.check(sb, article, TEMPLATES)
+        self.assertTrue(errors, errors)
+        self.assertTrue(any("quote" in e for e in errors), errors)
+
+    def test_voices_stance_numbers_must_be_grounded(self):
+        article, _ = self._bus()
+        sb = self._storyboard([
+            {"name": "June Park", "character": "resident",
+             "stance": "Would take the bus 12 nights a week."},
+            {"name": "Tom Okafor", "character": "worker",
+             "quote": "The last run ends at 3 am, and I am the one "
+                      "driving it home."}])
+        errors = KIT.check(sb, article, TEMPLATES)
+        self.assertTrue(errors, errors)
+
+    def test_voices_with_quote_and_stance_passes(self):
+        article, sb = self._bus()
+        self.assertEqual(KIT.check(sb, article, TEMPLATES), [])
+
+    def test_voices_schema_rejects_unknown_character(self):
+        data = {"voices": [
+            {"name": "A", "character": "wizard", "quote": "Q."},
+            {"name": "B", "character": "worker", "quote": "R."}]}
+        self.assertTrue(validate(data, TEMPLATES["voices"].schema))
+
+    def test_voices_schema_requires_two_to_four(self):
+        one = {"voices": [{"name": "A", "character": "worker",
+                           "quote": "Q."}]}
+        self.assertTrue(validate(one, TEMPLATES["voices"].schema))
+        five = {"voices": [{"name": f"V{i}", "character": "worker",
+                            "quote": "Q."} for i in range(5)]}
+        self.assertTrue(validate(five, TEMPLATES["voices"].schema))
+
+    def test_every_voices_character_renders(self):
+        characters = ["worker", "executive", "official", "judge",
+                      "scientist", "resident", "activist", "farmer"]
+        scenes = []
+        for i in range(0, len(characters), 4):
+            voices = [{"name": f"Voice {c}", "character": c,
+                       "stance": "Standing by."}
+                      for c in characters[i:i + 4]]
+            scenes.append({"template": "voices",
+                           "question": "Who is saying what?",
+                           "why": "W", "data": {"voices": voices}})
+        sb = {"headline": {"title": "T", "dek": "D", "topic": "local"},
+              "scenes": scenes}
+        env = KIT.environment()
+        view = KIT.story_view(env, TEMPLATES, sb, Article(body=""),
+                              KIT.labels())
+        html = "".join(scene["html"] for scene in view["scenes"])
+        for character in characters:
+            self.assertIn(f"vc-{character}", html, character)
+        self.assertNotIn("{{", html)
+
+    def test_every_voices_class_the_template_emits_has_a_css_rule(self):
+        # A class with no CSS rule silently does nothing: the scene
+        # template did exactly this once — it emitted sc-fall while the
+        # sheet only defined .sc-drop, so the rain never fell.
+        voices = TEMPLATES["voices"]
+        template_text = (voices.dir / "template.html.j2").read_text(encoding="utf-8")
+        css = (voices.dir / "style.css").read_text(encoding="utf-8")
+        emitted = set(re.findall(r"vc-[a-z-]+", template_text))
+        self.assertTrue(emitted)
+        for name in sorted(emitted):
+            self.assertIn(f".{name}", css, name)
+
+    # A stethoscope for the night-shift nurse in the bus example: the
+    # tube hangs down the chest, the round chest piece sits at its foot.
+    NURSE_DRAWING = ('<path class="vc-tube" d="M41 57 Q37 75 46 80 '
+                     'Q50 83 54 80 Q63 75 59 57" />'
+                     '<circle class="vc-prop" cx="50" cy="82" r="4.5" />')
+
+    def _custom_voice(self, **overrides):
+        voice = {"name": "Mara Chen", "character": "custom",
+                 "role": "Night-shift nurse",
+                 "drawing": self.NURSE_DRAWING,
+                 "quote": "The taxi home after a night shift costs $18, "
+                          "and the bus costs $2."}
+        voice.update(overrides)
+        return voice
+
+    def test_custom_voice_renders(self):
+        sb = self._storyboard([
+            self._custom_voice(),
+            {"name": "Tom Okafor", "character": "worker",
+             "stance": "Worried about the 3 am finish."}])
+        env = KIT.environment()
+        view = KIT.story_view(env, TEMPLATES, sb, Article(body=""),
+                              KIT.labels())
+        html = "".join(scene["html"] for scene in view["scenes"])
+        self.assertIn("vc-custom", html)
+        self.assertIn("vc-tube", html)
+        self.assertIn("M41 57", html)
+        self.assertNotIn("{{", html)
+
+    def test_custom_without_drawing_is_rejected(self):
+        voice = self._custom_voice()
+        del voice["drawing"]
+        errors = rules.check(self._storyboard([voice]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("needs a drawing" in e for e in errors), errors)
+
+    def test_drawing_on_a_fixed_archetype_is_rejected(self):
+        voice = {"name": "A", "character": "worker",
+                 "quote": "Q.", "drawing": self.NURSE_DRAWING}
+        errors = rules.check(self._storyboard([voice]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("Only a custom figure" in e for e in errors),
+                        errors)
+
+    def test_drawing_with_text_is_rejected(self):
+        voice = self._custom_voice(
+            drawing='<text x="10" y="10">Nurse</text>')
+        errors = rules.check(self._storyboard([voice]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("<text> is not allowed" in e for e in errors),
+                        errors)
+
+    def test_drawing_with_script_or_event_is_rejected(self):
+        script = self._custom_voice(drawing="<script>alert(1)</script>")
+        errors = rules.check(self._storyboard([script]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("<script> is not allowed" in e for e in errors),
+                        errors)
+        handler = self._custom_voice(
+            drawing='<circle class="vc-prop" cx="50" cy="50" r="5" '
+                    'onclick="steal()" />')
+        errors = rules.check(self._storyboard([handler]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("attribute onclick is not allowed" in e
+                            for e in errors), errors)
+
+    def test_drawing_with_external_ref_is_rejected(self):
+        image = self._custom_voice(
+            drawing='<image href="https://example.com/x.png" x="0" y="0" '
+                    'width="10" height="10" />')
+        errors = rules.check(self._storyboard([image]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("<image> is not allowed" in e for e in errors),
+                        errors)
+        link = self._custom_voice(
+            drawing='<circle class="vc-prop" cx="50" cy="50" r="5" '
+                    'fill="url(#g)" />')
+        errors = rules.check(self._storyboard([link]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("attribute fill is not allowed" in e
+                            for e in errors), errors)
+
+    def test_drawing_coordinates_are_not_grounded(self):
+        # The drawing's coordinates (41, 57, 82, ...) are not in the
+        # article — they are geometry, not facts. The schema marks the
+        # field x-ungrounded, so the shared walker skips it; a stance
+        # with an ungrounded number still fails (see
+        # test_voices_stance_numbers_must_be_grounded), so the
+        # exemption is exactly for the drawing field.
+        article, _ = self._bus()
+        sb = self._storyboard([
+            self._custom_voice(),
+            {"name": "Tom Okafor", "character": "worker",
+             "quote": "The last run ends at 3 am, and I am the one "
+                      "driving it home."}])
+        self.assertEqual(KIT.check(sb, article, TEMPLATES), [])
+
+    def test_custom_classes_have_css_rules(self):
+        css = (TEMPLATES["voices"].dir / "style.css").read_text(
+            encoding="utf-8")
+        self.assertIn(".vc-custom", css)
+        self.assertIn(".vc-tube", css)
 
 
 if __name__ == "__main__":

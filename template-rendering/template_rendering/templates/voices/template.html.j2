@@ -1,0 +1,74 @@
+{# Voices: one cartoon figure and speech bubble per stakeholder. The
+   figure is a role symbol from a fixed set — never a likeness of the
+   person. The bubble holds a verbatim quote or one grounded line on
+   where they stand. Each figure is a bust: a face with eyes and a
+   smile, a shirt in the role's colour, and one prop that names the
+   job — a hard hat, a tie, a rosette, a gavel, a flask, a house, a
+   placard, a straw hat. A stakeholder no archetype fits gets `custom`:
+   the agent draws the prop itself, shapes only — the person above stays
+   the template's, the drawing is only what names the job. #}
+<div class="vc">
+  {% for voice in data.voices %}
+  <div class="vc-voice">
+    <svg class="vc-fig vc-{{ voice.character }}" viewBox="0 0 96 96" role="img" aria-label="{{ voice.name }}">
+      {% if voice.character == "judge" %}
+      <path class="vc-body" d="M14 88 Q14 54 48 54 Q82 54 82 88 Z" />
+      {% else %}
+      <path class="vc-body" d="M18 88 Q18 56 48 56 Q78 56 78 88 Z" />
+      {% endif %}
+      <rect class="vc-neck" x="44" y="47" width="8" height="11" />
+      <circle class="vc-ear" cx="30" cy="34" r="3.5" />
+      <circle class="vc-ear" cx="66" cy="34" r="3.5" />
+      <circle class="vc-head" cx="48" cy="32" r="18" />
+      {% if voice.character != "worker" and voice.character != "farmer" %}
+      <path class="vc-hair" d="M30 34 C30 19 38 13.5 48 13.5 C58 13.5 66 19 66 34 C62 25 58 24 54 25.5 C55 28.5 51 29.5 49 26 C47 23 45 23 43 26 C41 29.5 37 28.5 38 25.5 C34 24 30 26 30 34 Z" />
+      {% endif %}
+      <circle class="vc-eye" cx="41.5" cy="36" r="2.3" />
+      <circle class="vc-eye" cx="54.5" cy="36" r="2.3" />
+      <path class="vc-smile" d="M41 43 Q48 48 55 43" />
+      {% if voice.character == "custom" %}
+      {# The agent's own prop, shapes only — rules.py validates it before
+         render, so it holds no text, scripts or links. The person above
+         (face, hair, shirt) is the template's; this draws only the prop. #}
+      {{ voice.drawing | safe }}
+      {% elif voice.character == "worker" %}
+      <path class="vc-prop" d="M29 30 Q29 12 48 12 Q67 12 67 30 Z" />
+      <rect class="vc-prop" x="24" y="27" width="48" height="5" rx="2.5" />
+      <path class="vc-prop-line" d="M42 13 L42 27 M54 13 L54 27" />
+      {% elif voice.character == "executive" %}
+      <path class="vc-collar" d="M39 56 L48 65 L57 56 L53 54 L48 58 L43 54 Z" />
+      <path class="vc-prop" d="M45.5 62 L50.5 62 L49.5 67 L46.5 67 Z" />
+      <path class="vc-prop" d="M46.5 67 L49.5 67 L52 76 L48 87 L44 76 Z" />
+      {% elif voice.character == "official" %}
+      <circle class="vc-badge" cx="62" cy="70" r="6.5" />
+      <circle class="vc-badge-dot" cx="62" cy="70" r="2.8" />
+      {% elif voice.character == "judge" %}
+      <path class="vc-collar" d="M42 54 L48 63 L54 54 Z" />
+      <g transform="rotate(-32 76 58)"><rect class="vc-prop" x="66" y="50" width="19" height="9" rx="2" /><rect class="vc-prop" x="73.5" y="58" width="4.5" height="22" rx="2" /></g>
+      {% elif voice.character == "scientist" %}
+      <path class="vc-prop-line" d="M48 60 L48 88" />
+      <path class="vc-prop" d="M71 40 h9 v11 l9 15 a5.5 5.5 0 0 1 -5 8 h-16 a5.5 5.5 0 0 1 -5 -8 l9 -15 Z" />
+      <path class="vc-liquid" d="M66.5 58 L83.5 58 L85.8 64.5 a4.5 4.5 0 0 1 -4.2 6 h-13.2 a4.5 4.5 0 0 1 -4.2 -6 Z" />
+      {% elif voice.character == "resident" %}
+      <path class="vc-roof" d="M59 57 L73 45 L87 57 Z" />
+      <rect class="vc-prop" x="62" y="57" width="22" height="15" />
+      <rect class="vc-detail" x="70" y="63" width="6" height="9" />
+      <rect class="vc-detail" x="64.5" y="60" width="4" height="4" />
+      <rect class="vc-detail" x="79.5" y="60" width="4" height="4" />
+      {% elif voice.character == "activist" %}
+      <rect class="vc-sign" x="5" y="8" width="27" height="18" rx="2" />
+      <path class="vc-sign-line" d="M10 14 L27 14 M10 19 L23 19" />
+      <rect class="vc-stick" x="17" y="26" width="3.5" height="32" />
+      {% elif voice.character == "farmer" %}
+      <path class="vc-prop" d="M32 29 Q32 15 48 15 Q64 15 64 29 Z" />
+      <rect class="vc-band" x="32" y="24" width="32" height="4.5" />
+      <ellipse class="vc-prop" cx="48" cy="28.5" rx="25" ry="4" />
+      {% endif %}
+    </svg>
+    <div class="vc-bubble">
+      <p>{{ voice.quote if voice.quote is defined else voice.stance }}</p>
+      <footer class="vc-by"><b>{{ voice.name }}</b>{% if voice.role is defined %} <span>{{ voice.role }}</span>{% endif %}</footer>
+    </div>
+  </div>
+  {% endfor %}
+</div>
