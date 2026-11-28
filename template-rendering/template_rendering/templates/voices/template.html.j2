@@ -4,7 +4,9 @@
    where they stand. Each figure is a bust: a face with eyes and a
    smile, a shirt in the role's colour, and one prop that names the
    job — a hard hat, a tie, a rosette, a gavel, a flask, a house, a
-   placard, a straw hat. #}
+   placard, a straw hat. A stakeholder no archetype fits gets `custom`:
+   the agent draws the prop itself, shapes only — the person above stays
+   the template's, the drawing is only what names the job. #}
 <div class="vc">
   {% for voice in data.voices %}
   <div class="vc-voice">
@@ -24,7 +26,12 @@
       <circle class="vc-eye" cx="41.5" cy="36" r="2.3" />
       <circle class="vc-eye" cx="54.5" cy="36" r="2.3" />
       <path class="vc-smile" d="M41 43 Q48 48 55 43" />
-      {% if voice.character == "worker" %}
+      {% if voice.character == "custom" %}
+      {# The agent's own prop, shapes only — rules.py validates it before
+         render, so it holds no text, scripts or links. The person above
+         (face, hair, shirt) is the template's; this draws only the prop. #}
+      {{ voice.drawing | safe }}
+      {% elif voice.character == "worker" %}
       <path class="vc-prop" d="M29 30 Q29 12 48 12 Q67 12 67 30 Z" />
       <rect class="vc-prop" x="24" y="27" width="48" height="5" rx="2.5" />
       <path class="vc-prop-line" d="M42 13 L42 27 M54 13 L54 27" />

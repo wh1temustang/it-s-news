@@ -33,11 +33,20 @@
 .vc-activist .vc-body { fill: var(--bad); }
 .vc-farmer .vc-body { fill: var(--good); }
 
+/* A custom figure wears a neutral shirt; its agent-drawn prop takes
+   the accent, like the executive's tie. */
+.vc-custom .vc-body { fill: var(--neutral); }
+.vc-custom .vc-prop { fill: var(--accent); }
+
 /* Shirt collar, worn by the executive and the judge. */
 .vc-collar { fill: var(--surface); }
 
 /* Thin ink lines: hard-hat ridges and the lab coat's front. */
 .vc-prop-line { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+
+/* A thick line for tubes and cords in a custom prop — a stethoscope,
+   a headset cable. The agent may only paint with the drawing classes. */
+.vc-tube { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
 
 /* The prop takes the role's colour. The flask and the house walls are
    pale fills, so they keep a border stroke to stay visible. */
