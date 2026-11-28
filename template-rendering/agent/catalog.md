@@ -106,6 +106,20 @@ prop in the template, and one row here.
 | `activist` | a campaigner or protester | placard | `--bad` |
 | `farmer` | someone who works the land | straw hat | `--pending` |
 
+No archetype fits a stakeholder? Draw the prop ad hoc instead of
+forcing the wrong one: set `character` to `custom` and give `drawing`
+— the prop as SVG shapes, with no `<svg>` wrapper around them. The
+template still draws the person (face, hair, shirt); the drawing is
+only what names the job: a stethoscope for a nurse, a cap for a pilot,
+a toque for a chef. Shapes only — no words, no numbers as content, no
+scripts, no links: the checker cannot read words painted into a
+picture, so any text in the drawing would be an ungrounded claim on
+the page. Paint with the drawing classes only: `vc-prop` for a filled
+shape, `vc-prop-line` for a thin ink line, `vc-tube` for a thick line
+like a cord, `vc-liquid` for a filled detail, `vc-detail` for an ink
+detail. A custom figure needs a drawing, and a fixed archetype never
+carries one.
+
 **`reactive`**: one scene the reader touches, for the number or turn that
 lands harder felt than read. Pick the kind by what the reader does:
 `scratch` hides one headline number under a foil the reader rubs away;

@@ -87,7 +87,13 @@ before or after it. Its shape:
      bubble each: the figure is a role symbol (a hard hat, a suit, a
      gavel), never a likeness of the person; the bubble is a verbatim
      quote where the article has one, or one grounded line on where
-     they stand. Never for grave news.
+     they stand. Pick the closest fixed archetype for each stakeholder,
+     and draw ad hoc (`character: "custom"` with a `drawing`) only when
+     none fits — a nurse gets a stethoscope, a pilot a cap. The drawing
+     is the prop only: the template draws the person, you draw what
+     names the job, as SVG shapes with no words, no numbers as content,
+     no scripts and no links, painted with the drawing classes only.
+     Never for grave news.
    - A headline number with reference points the article states — a
      previous value, a threshold, a target → `scale`, not a row in the
      list. The axis shows where the number stands; give `min`/`max`
@@ -286,7 +292,9 @@ so do not ask it to.
   article does not support.
 - Every `voices` scene has 2–4 stakeholders with different things to say,
   each drawn as a role symbol (never a likeness), every bubble grounded
-  in the article, and no voices scene on grave news.
+  in the article, and no voices scene on grave news. A custom figure
+  carries a drawing only when no fixed archetype fits, and the drawing
+  is shapes only — no words, no numbers as content, no scripts, no links.
 - Every required field is present, no field is over its limit, and there are
   no fields the schema doesn't define.
 - The answer is the JSON object and nothing else.
