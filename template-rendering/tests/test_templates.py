@@ -215,6 +215,109 @@ class VoicesRules(unittest.TestCase):
         for name in sorted(emitted):
             self.assertIn(f".{name}", css, name)
 
+    # A stethoscope for the night-shift nurse in the bus example: the
+    # tube hangs down the chest, the round chest piece sits at its foot.
+    NURSE_DRAWING = ('<path class="vc-tube" d="M41 57 Q37 75 46 80 '
+                     'Q50 83 54 80 Q63 75 59 57" />'
+                     '<circle class="vc-prop" cx="50" cy="82" r="4.5" />')
+
+    def _custom_voice(self, **overrides):
+        voice = {"name": "Mara Chen", "character": "custom",
+                 "role": "Night-shift nurse",
+                 "drawing": self.NURSE_DRAWING,
+                 "quote": "The taxi home after a night shift costs $18, "
+                          "and the bus costs $2."}
+        voice.update(overrides)
+        return voice
+
+    def test_custom_voice_renders(self):
+        sb = self._storyboard([
+            self._custom_voice(),
+            {"name": "Tom Okafor", "character": "worker",
+             "stance": "Worried about the 3 am finish."}])
+        env = KIT.environment()
+        view = KIT.story_view(env, TEMPLATES, sb, Article(body=""),
+                              KIT.labels())
+        html = "".join(scene["html"] for scene in view["scenes"])
+        self.assertIn("vc-custom", html)
+        self.assertIn("vc-tube", html)
+        self.assertIn("M41 57", html)
+        self.assertNotIn("{{", html)
+
+    def test_custom_without_drawing_is_rejected(self):
+        voice = self._custom_voice()
+        del voice["drawing"]
+        errors = rules.check(self._storyboard([voice]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("needs a drawing" in e for e in errors), errors)
+
+    def test_drawing_on_a_fixed_archetype_is_rejected(self):
+        voice = {"name": "A", "character": "worker",
+                 "quote": "Q.", "drawing": self.NURSE_DRAWING}
+        errors = rules.check(self._storyboard([voice]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("Only a custom figure" in e for e in errors),
+                        errors)
+
+    def test_drawing_with_text_is_rejected(self):
+        voice = self._custom_voice(
+            drawing='<text x="10" y="10">Nurse</text>')
+        errors = rules.check(self._storyboard([voice]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("<text> is not allowed" in e for e in errors),
+                        errors)
+
+    def test_drawing_with_script_or_event_is_rejected(self):
+        script = self._custom_voice(drawing="<script>alert(1)</script>")
+        errors = rules.check(self._storyboard([script]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("<script> is not allowed" in e for e in errors),
+                        errors)
+        handler = self._custom_voice(
+            drawing='<circle class="vc-prop" cx="50" cy="50" r="5" '
+                    'onclick="steal()" />')
+        errors = rules.check(self._storyboard([handler]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("attribute onclick is not allowed" in e
+                            for e in errors), errors)
+
+    def test_drawing_with_external_ref_is_rejected(self):
+        image = self._custom_voice(
+            drawing='<image href="https://example.com/x.png" x="0" y="0" '
+                    'width="10" height="10" />')
+        errors = rules.check(self._storyboard([image]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("<image> is not allowed" in e for e in errors),
+                        errors)
+        link = self._custom_voice(
+            drawing='<circle class="vc-prop" cx="50" cy="50" r="5" '
+                    'fill="url(#g)" />')
+        errors = rules.check(self._storyboard([link]), Article(body=""),
+                             TEMPLATES)
+        self.assertTrue(any("attribute fill is not allowed" in e
+                            for e in errors), errors)
+
+    def test_drawing_coordinates_are_not_grounded(self):
+        # The drawing's coordinates (41, 57, 82, ...) are not in the
+        # article — they are geometry, not facts. The schema marks the
+        # field x-ungrounded, so the shared walker skips it; a stance
+        # with an ungrounded number still fails (see
+        # test_voices_stance_numbers_must_be_grounded), so the
+        # exemption is exactly for the drawing field.
+        article, _ = self._bus()
+        sb = self._storyboard([
+            self._custom_voice(),
+            {"name": "Tom Okafor", "character": "worker",
+             "quote": "The last run ends at 3 am, and I am the one "
+                      "driving it home."}])
+        self.assertEqual(KIT.check(sb, article, TEMPLATES), [])
+
+    def test_custom_classes_have_css_rules(self):
+        css = (TEMPLATES["voices"].dir / "style.css").read_text(
+            encoding="utf-8")
+        self.assertIn(".vc-custom", css)
+        self.assertIn(".vc-tube", css)
+
 
 if __name__ == "__main__":
     unittest.main()
