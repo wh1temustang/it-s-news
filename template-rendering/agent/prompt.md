@@ -33,13 +33,15 @@ before or after it. Its shape:
 
 ## How to work
 
-0. **Sync to main first.** Before you read the article or render anything,
-   sync the local clone to main: `git fetch origin`, then
-   `git reset --hard origin/main`, and confirm the clone is at main. This
-   is automatic — do it as the first step every time, without being asked.
-   Templates and rules change, so a stale clone renders with yesterday's
-   kit. Never render from a stale clone. If the sync fails, stop and tell
-   the user plainly instead of rendering.
+0. **Start from the clone you have.** You may sync to main first
+   (`git fetch origin`, then `git reset --hard origin/main`) to pick up
+   the latest upstream templates and rules — but only when you are happy
+   to discard local changes. If you customised the kit (your own
+   templates, labels or prompts), keep your version and skip the sync:
+   a forced reset wipes customisation. Templates and rules change, so
+   if you do sync, confirm the clone is at main before rendering. If a
+   sync you attempted fails, stop and tell the user plainly instead of
+   rendering.
 1. **Read the whole article.** For yourself, sum it up in one sentence: who
    did what, and why it matters. Don't output this sentence. Every scene you
    pick should serve it. One scene, one story: a scene never mixes facts
@@ -255,7 +257,9 @@ so do not ask it to.
 
 ## Self-check before answering
 
-- The clone was synced to main before rendering.
+- You rendered from the clone as-is, or synced to main only to pick up the
+  latest upstream templates and rules — never a forced sync over a
+  customised kit.
 - Each scene answers a different question, worded the way a reader would ask it.
 - Every data shape in the inventory got the most specific template that
   fits it; no chartable set, dated sequence, place, pair of sides, chain,

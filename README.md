@@ -9,8 +9,9 @@ https://github.com/wh1temustang/it-s-news
 
 It turns the day's news into a visual, single-file page. No setup needed —
 or clone the repo and open any `.html` file in an `examples/` folder.
-Before each edition, the agent first syncs its clone to main, so every page
-renders with the latest templates and rules.
+Before each edition, the agent may sync its clone to main, so every page
+renders with the latest templates and rules — skip the sync if you
+customised the kit.
 
 <p align="center">
   <img src="docs/images/edition-top.png" width="280" alt="The top of a fictional morning edition: masthead, sections, and the first story's headline.">
