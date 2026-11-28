@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="it's news">
+<title>Fallowfield tries a night bus · it's news</title>
+<meta name="description" content="The town will run buses through the night on a trial, then decide if the route stays.">
+<style>
+/* it's news: page shell and design tokens.
+   Templates style themselves with these tokens only, never raw colours, so
+   light and dark mode come for free. Template CSS lives in <id>/style.css. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --ink: #15171c;
+  --muted: #5b616d;
+  --line: #e4e0d6;
+  --accent: #2563eb;
+  --on-accent: #ffffff;
+  --alt: #b45309;
+  --good: #15803d;
+  --bad: #b91c1c;
+  --pending: #b45309;
+  --neutral: #6b7280;
+  --water: #dce9f2;
+  --land: #ebe6da;
+  --coast: #b8ae98;
+  --border: #c9bfa8;
+  --radius: 18px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+[data-topic="world"]    { --accent: #2563eb; }
+[data-topic="politics"] { --accent: #7c3aed; }
+[data-topic="business"] { --accent: #0f766e; }
+[data-topic="science"]  { --accent: #0e7490; }
+[data-topic="tech"]     { --accent: #4f46e5; }
+[data-topic="climate"]  { --accent: #15803d; }
+[data-topic="health"]   { --accent: #be185d; }
+[data-topic="local"]    { --accent: #c2410c; }
+[data-topic="culture"]  { --accent: #a21caf; }
+[data-topic="sports"]   { --accent: #b91c1c; }
+
+/* Dark mode follows the reader's system, unless the page's host sets
+   data-theme="light" or "dark" on the root element for a reader's own choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --ink: #eef0f4;
+    --muted: #a3a9b5;
+    --line: #2a2e37;
+    --on-accent: #0b0d10;
+    --alt: #fbbf24;
+    --good: #4ade80;
+    --bad: #f87171;
+    --pending: #fbbf24;
+    --neutral: #9ca3af;
+    --water: #142130;
+    --land: #262a32;
+    --coast: #414856;
+    --border: #4a5160;
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) [data-topic="world"]    { --accent: #7aa2ff; }
+  :root:not([data-theme="light"]) [data-topic="politics"] { --accent: #b197fc; }
+  :root:not([data-theme="light"]) [data-topic="business"] { --accent: #2dd4bf; }
+  :root:not([data-theme="light"]) [data-topic="science"]  { --accent: #22d3ee; }
+  :root:not([data-theme="light"]) [data-topic="tech"]     { --accent: #8b93ff; }
+  :root:not([data-theme="light"]) [data-topic="climate"]  { --accent: #4ade80; }
+  :root:not([data-theme="light"]) [data-topic="health"]   { --accent: #f472b6; }
+  :root:not([data-theme="light"]) [data-topic="local"]    { --accent: #fb923c; }
+  :root:not([data-theme="light"]) [data-topic="culture"]  { --accent: #e879f9; }
+  :root:not([data-theme="light"]) [data-topic="sports"]   { --accent: #f87171; }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #181b21;
+  --ink: #eef0f4;
+  --muted: #a3a9b5;
+  --line: #2a2e37;
+  --on-accent: #0b0d10;
+  --alt: #fbbf24;
+  --good: #4ade80;
+  --bad: #f87171;
+  --pending: #fbbf24;
+  --neutral: #9ca3af;
+  --water: #142130;
+  --land: #262a32;
+  --coast: #414856;
+  --border: #4a5160;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] [data-topic="world"]    { --accent: #7aa2ff; }
+:root[data-theme="dark"] [data-topic="politics"] { --accent: #b197fc; }
+:root[data-theme="dark"] [data-topic="business"] { --accent: #2dd4bf; }
+:root[data-theme="dark"] [data-topic="science"]  { --accent: #22d3ee; }
+:root[data-theme="dark"] [data-topic="tech"]     { --accent: #8b93ff; }
+:root[data-theme="dark"] [data-topic="climate"]  { --accent: #4ade80; }
+:root[data-theme="dark"] [data-topic="health"]   { --accent: #f472b6; }
+:root[data-theme="dark"] [data-topic="local"]    { --accent: #fb923c; }
+:root[data-theme="dark"] [data-topic="culture"]  { --accent: #e879f9; }
+:root[data-theme="dark"] [data-topic="sports"]   { --accent: #f87171; }
+
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.banner {
+  margin: 0;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.story {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+
+/* --- headline --- */
+
+.hero { margin-bottom: 28px; }
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero :is(h1, h3) {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.dek {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2.6vw, 21px);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+.byline {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* --- scenes --- */
+
+.scene,
+.bottom-line {
+  margin-top: 18px;
+  padding: 22px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+}
+
+.scene-kind {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene :is(h2, h4),
+.bottom-line :is(h2, h4) {
+  margin: 0 0 18px;
+  font-size: clamp(21px, 3.4vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.bottom-line {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.bottom-line :is(h2, h4) {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom-line p {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Shared by the chart templates. */
+.chart-unit {
+  margin: -10px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.colophon {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.colophon p { margin: 4px 0; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+  .story { padding-top: 28px; }
+  .scene, .bottom-line { padding: 18px 16px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* --- list --- */
+
+/* One fact per line, in reading order: the label on the left, the punch
+   on the right, the note underneath. Full width, so a value has room
+   and nothing wraps mid-phrase in a half-width tile. */
+.lst {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lst-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  animation: rise 0.5s both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--j, 0) * 60ms + 200ms);
+}
+
+.lst-row:last-child { border-bottom: none; }
+
+.lst-label {
+  flex: 1 1 auto;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lst-value {
+  flex: 0 0 auto;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.lst-note {
+  flex: 1 1 100%;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+/* --- voices --- */
+
+.vc { display: grid; gap: 18px; }
+
+.vc-voice { display: flex; gap: 16px; align-items: flex-start; }
+
+.vc-fig { flex: none; width: 84px; height: 84px; }
+
+.vc-head, .vc-body { fill: var(--ink); }
+
+.vc-worker .vc-prop { fill: var(--alt); }
+.vc-executive .vc-prop { fill: var(--accent); }
+.vc-official .vc-prop { fill: var(--good); }
+.vc-official .vc-prop-dot { fill: var(--surface); }
+.vc-judge .vc-prop { fill: var(--coast); }
+.vc-scientist .vc-prop { fill: var(--water); stroke: var(--border); }
+.vc-resident .vc-prop { fill: var(--land); stroke: var(--border); }
+.vc-activist .vc-prop { fill: var(--bad); }
+.vc-farmer .vc-prop { fill: var(--pending); }
+
+.vc-bubble { position: relative; flex: 1; margin: 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+
+.vc-bubble::before { content: ""; position: absolute; left: -8px; top: 26px; width: 14px; height: 14px; background: var(--surface); border-left: 1px solid var(--line); border-bottom: 1px solid var(--line); transform: rotate(45deg); }
+
+.vc-bubble p { margin: 0; font-size: 17px; line-height: 1.45; text-wrap: pretty; }
+
+.vc-by { display: flex; flex-wrap: wrap; gap: 2px 8px; margin-top: 10px; font-size: 14px; }
+
+.vc-by span { color: var(--muted); }
+
+@media (max-width: 520px) {
+  .vc-fig { width: 64px; height: 64px; }
+  .vc-voice { gap: 12px; }
+}
+
+</style>
+</head>
+<body data-topic="local">
+<p class="banner" role="note">Fictional sample: this is not real news.</p>
+<main class="story">
+  <header class="hero">
+    <p class="kicker">Local</p>
+    <h1>Fallowfield tries a night bus</h1>
+    <p class="dek">The town will run buses through the night on a trial, then decide if the route stays.</p>
+    <p class="byline">Fallowfield Gazette (fictional) · <span>November 20, 2026</span></p>
+  </header>
+
+  <section class="scene scene--list" style="--i: 0" aria-labelledby="q1">
+    <p class="scene-kind"><span aria-hidden="true">📝</span> List</p>
+    <h2 id="q1">What is the trial?</h2>
+    <ul class="lst">
+  <li class="lst-row" style="--j: 0">
+    <span class="lst-label">Council vote</span>
+    <span class="lst-value">7-2</span>
+  </li>
+  <li class="lst-row" style="--j: 1">
+    <span class="lst-label">Single fare</span>
+    <span class="lst-value">$2</span>
+  </li>
+  <li class="lst-row" style="--j: 2">
+    <span class="lst-label">Buses run</span>
+    <span class="lst-value">Every 30 minutes</span>
+  </li>
+  <li class="lst-row" style="--j: 3">
+    <span class="lst-label">Hours</span>
+    <span class="lst-value">11 pm to 3 am</span>
+  </li>
+</ul>
+
+  </section>
+  <section class="scene scene--voices" style="--i: 1" aria-labelledby="q2">
+    <p class="scene-kind"><span aria-hidden="true">🗣️</span> Voices</p>
+    <h2 id="q2">Who is saying what?</h2>
+    <div class="vc">
+  <div class="vc-voice">
+    <svg class="vc-fig vc-official" viewBox="0 0 96 96" role="img" aria-label="Councillor Priya Nair">
+      <circle class="vc-head" cx="48" cy="32" r="17" />
+      <path class="vc-body" d="M20 88 Q20 58 48 58 Q76 58 76 88 Z" />
+      <circle class="vc-prop" cx="63" cy="72" r="7" />
+      <circle class="vc-prop-dot" cx="63" cy="72" r="3" />
+    </svg>
+    <div class="vc-bubble">
+      <p>We have heard the night shift for years, and this trial is our answer.</p>
+      <footer class="vc-by"><b>Councillor Priya Nair</b> <span>Chair of the transport committee</span></footer>
+    </div>
+  </div>
+  <div class="vc-voice">
+    <svg class="vc-fig vc-worker" viewBox="0 0 96 96" role="img" aria-label="Tom Okafor">
+      <circle class="vc-head" cx="48" cy="32" r="17" />
+      <path class="vc-body" d="M20 88 Q20 58 48 58 Q76 58 76 88 Z" />
+      <path class="vc-prop" d="M28 30 Q28 12 48 12 Q68 12 68 30 L74 30 L74 36 L22 36 L22 30 Z" />
+    </svg>
+    <div class="vc-bubble">
+      <p>The last run ends at 3 am, and I am the one driving it home.</p>
+      <footer class="vc-by"><b>Tom Okafor</b> <span>Night-bus driver</span></footer>
+    </div>
+  </div>
+  <div class="vc-voice">
+    <svg class="vc-fig vc-resident" viewBox="0 0 96 96" role="img" aria-label="June Park">
+      <circle class="vc-head" cx="48" cy="32" r="17" />
+      <path class="vc-body" d="M20 88 Q20 58 48 58 Q76 58 76 88 Z" />
+      <path class="vc-prop" d="M60 52 L72 40 L84 52 V68 H60 Z" />
+    </svg>
+    <div class="vc-bubble">
+      <p>Would take the bus four nights a week.</p>
+      <footer class="vc-by"><b>June Park</b> <span>Night-shift baker</span></footer>
+    </div>
+  </div>
+</div>
+
+  </section>
+
+  <section class="bottom-line" style="--i: 2">
+    <h2>Follow-up question</h2>
+    <p>The council decides in February — will the buses be full enough to keep the route?</p>
+  </section>
+
+  <footer class="colophon">
+    <p>Presented by <b>it's news</b>. Every figure and quote in this story was checked against the article.</p>
+  </footer>
+</main>
+</body>
+</html>
