@@ -25,3 +25,7 @@ he said.
 June Park, who bakes through the night at the bakery quarter, would
 take the bus four nights a week if it ran. The council will decide in
 February whether the route becomes permanent.
+
+Mara Chen, a nurse on the night shift at the hospital, said the bus
+would get her home without a taxi. "The taxi home after a night shift
+costs $18, and the bus costs $2," she said.

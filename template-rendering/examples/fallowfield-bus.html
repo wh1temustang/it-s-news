@@ -358,11 +358,20 @@ a { color: var(--accent); }
 .vc-activist .vc-body { fill: var(--bad); }
 .vc-farmer .vc-body { fill: var(--good); }
 
+/* A custom figure wears a neutral shirt; its agent-drawn prop takes
+   the accent, like the executive's tie. */
+.vc-custom .vc-body { fill: var(--neutral); }
+.vc-custom .vc-prop { fill: var(--accent); }
+
 /* Shirt collar, worn by the executive and the judge. */
 .vc-collar { fill: var(--surface); }
 
 /* Thin ink lines: hard-hat ridges and the lab coat's front. */
 .vc-prop-line { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+
+/* A thick line for tubes and cords in a custom prop — a stethoscope,
+   a headset cable. The agent may only paint with the drawing classes. */
+.vc-tube { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
 
 /* The prop takes the role's colour. The flask and the house walls are
    pale fills, so they keep a border stroke to stay visible. */
@@ -504,6 +513,24 @@ a { color: var(--accent); }
     <div class="vc-bubble">
       <p>Would take the bus four nights a week.</p>
       <footer class="vc-by"><b>June Park</b> <span>Night-shift baker</span></footer>
+    </div>
+  </div>
+  <div class="vc-voice">
+    <svg class="vc-fig vc-custom" viewBox="0 0 96 96" role="img" aria-label="Mara Chen">
+      <path class="vc-body" d="M18 88 Q18 56 48 56 Q78 56 78 88 Z" />
+      <rect class="vc-neck" x="44" y="47" width="8" height="11" />
+      <circle class="vc-ear" cx="30" cy="34" r="3.5" />
+      <circle class="vc-ear" cx="66" cy="34" r="3.5" />
+      <circle class="vc-head" cx="48" cy="32" r="18" />
+      <path class="vc-hair" d="M30 34 C30 19 38 13.5 48 13.5 C58 13.5 66 19 66 34 C62 25 58 24 54 25.5 C55 28.5 51 29.5 49 26 C47 23 45 23 43 26 C41 29.5 37 28.5 38 25.5 C34 24 30 26 30 34 Z" />
+      <circle class="vc-eye" cx="41.5" cy="36" r="2.3" />
+      <circle class="vc-eye" cx="54.5" cy="36" r="2.3" />
+      <path class="vc-smile" d="M41 43 Q48 48 55 43" />
+      <path class="vc-tube" d="M41 57 Q37 75 46 80 Q50 83 54 80 Q63 75 59 57" /><circle class="vc-prop" cx="50" cy="82" r="4.5" />
+    </svg>
+    <div class="vc-bubble">
+      <p>The taxi home after a night shift costs $18, and the bus costs $2.</p>
+      <footer class="vc-by"><b>Mara Chen</b> <span>Night-shift nurse</span></footer>
     </div>
   </div>
 </div>
